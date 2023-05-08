@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:valuable/valuable.dart';
 
@@ -9,6 +10,7 @@ class Server {
     String password;
     StatefulValuable<bool> power_status;
     StatefulValuable<bool> mute_audio;
+    StatefulValuable<Float> volume;
     StatefulValuable<bool> connected;
 
     // Constructor
@@ -20,6 +22,7 @@ class Server {
         this.password,
         this.power_status,
         this.mute_audio,
+        this.volume,
         this.connected,
     });
 }

@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/component/appBarActionItems.dart';
 import 'package:responsive_dashboard/component/ConnectionDetailList.dart';
+import 'package:responsive_dashboard/component/rive_utils.dart';
+import 'package:responsive_dashboard/component/side_menu2.dart';
+import 'package:responsive_dashboard/data/menu.dart';
 import 'package:responsive_dashboard/pages/select_page.dart';
-// import 'package:responsive_dashboard/old_component/sideMenu.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
-// import 'package:responsive_dashboard/old_component/sideMenu.dart';
-import 'package:responsive_dashboard/pages/detail_projector.dart';
-import 'package:responsive_dashboard/pages/home_page.dart';
-import 'package:responsive_dashboard/pages/page_2.dart';
-import 'package:responsive_dashboard/pages/page_3.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:valuable/valuable.dart';
 
@@ -23,6 +20,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
+  Menu selectedSideMenu = sidebarMenus.first;
 
   void changePage(int index) {
     setState(() {
@@ -66,7 +64,7 @@ class _DashboardState extends State<Dashboard> {
                     iconSize: 20,
                     padding: EdgeInsets.symmetric(vertical: 20.0),
                     icon: SvgPicture.asset(
-                      'assets/clipboard.svg',
+                      'assets/pie-char.svg',
                       color: current_page.getValue() == 2 ? AppColors.navy_blue : AppColors.iconGray,
                     ),
                     onPressed: () => changePage(2)),
@@ -74,7 +72,7 @@ class _DashboardState extends State<Dashboard> {
                     iconSize: 20,
                     padding: EdgeInsets.symmetric(vertical: 20.0),
                     icon: SvgPicture.asset(
-                      'assets/credit-card.svg',
+                      'assets/pie-char.svg',
                       color: current_page.getValue() == 3 ? AppColors.navy_blue : AppColors.iconGray,
                     ),
                     onPressed: () => changePage(3)),
@@ -82,18 +80,10 @@ class _DashboardState extends State<Dashboard> {
                     iconSize: 20,
                     padding: EdgeInsets.symmetric(vertical: 20.0),
                     icon: SvgPicture.asset(
-                      'assets/trophy.svg',
+                      'assets/pie-char.svg',
                       color: current_page.getValue() == 4 ? AppColors.navy_blue : AppColors.iconGray,
                     ),
                     onPressed: () => changePage(4)),
-                IconButton(
-                    iconSize: 20,
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
-                    icon: SvgPicture.asset(
-                      'assets/invoice.svg',
-                      color: current_page.getValue() == 5 ? AppColors.navy_blue : AppColors.iconGray,
-                    ),
-                    onPressed: () => changePage(5)),
               ],
             ),
           ),
@@ -122,69 +112,28 @@ class _DashboardState extends State<Dashboard> {
           children: [
             if (Responsive.isDesktop(context))
               Expanded(
-                flex: 1,
-                child: Drawer(
-                  elevation: 0,
-                  child: Container(
-                    width: double.infinity,
-                    height: SizeConfig.screenHeight,
-                    decoration: BoxDecoration(color: AppColors.secondaryBg),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          IconButton(
-                              iconSize: 20,
-                              padding: EdgeInsets.symmetric(vertical: 20.0),
-                              icon: SvgPicture.asset(
-                                'assets/home.svg',
-                                color: current_page.getValue() == 0 ? AppColors.navy_blue : AppColors.iconGray,
-                              ),
-                              onPressed: () => changePage(0)),
-                          IconButton(
-                              iconSize: 20,
-                              padding: EdgeInsets.symmetric(vertical: 20.0),
-                              icon: SvgPicture.asset(
-                                'assets/pie-chart.svg',
-                                color: current_page.getValue() == 1 ? AppColors.navy_blue : AppColors.iconGray,
-                              ),
-                              onPressed: () => changePage(1)),
-                          IconButton(
-                              iconSize: 20,
-                              padding: EdgeInsets.symmetric(vertical: 20.0),
-                              icon: SvgPicture.asset(
-                                'assets/clipboard.svg',
-                                color: current_page.getValue() == 2 ? AppColors.navy_blue : AppColors.iconGray,
-                              ),
-                              onPressed: () => changePage(2)),
-                          IconButton(
-                              iconSize: 20,
-                              padding: EdgeInsets.symmetric(vertical: 20.0),
-                              icon: SvgPicture.asset(
-                                'assets/credit-card.svg',
-                                color: current_page.getValue() == 3 ? AppColors.navy_blue : AppColors.iconGray,
-                              ),
-                              onPressed: () => changePage(3)),
-                          IconButton(
-                              iconSize: 20,
-                              padding: EdgeInsets.symmetric(vertical: 20.0),
-                              icon: SvgPicture.asset(
-                                'assets/trophy.svg',
-                                color: current_page.getValue() == 4 ? AppColors.navy_blue : AppColors.iconGray,
-                              ),
-                              onPressed: () => changePage(4)),
-                          IconButton(
-                              iconSize: 20,
-                              padding: EdgeInsets.symmetric(vertical: 20.0),
-                              icon: SvgPicture.asset(
-                                'assets/invoice.svg',
-                                color: current_page.getValue() == 5 ? AppColors.navy_blue : AppColors.iconGray,
-                              ),
-                              onPressed: () => changePage(5)),
-                        ],
+                flex: 2,
+                child: Column(
+                  children:
+                    List.generate(
+                      sidebarMenus.length,
+                          (index) => SideMenu(
+                            menu: sidebarMenus[index],
+                              selectedMenu: selectedSideMenu,
+                              press: () {
+                                RiveUtils.changeSMIBoolState(sidebarMenus[index].rive.status);
+                                setState(() {
+                                  selectedSideMenu = sidebarMenus[index];
+                                  current_page.setValue(index);
+                                });
+                              },
+                              riveOnInit: (artboard) {
+                                sidebarMenus[index].rive.status = RiveUtils.getRiveInput(artboard,
+                                    stateMachineName: sidebarMenus[index].rive.stateMachineName);
+                              },
                       ),
                     ),
-                  ),
+
                 ),
               ),
             Expanded(flex: 10, child: SelectPage()),

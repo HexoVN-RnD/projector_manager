@@ -1,73 +1,91 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/component/rive_utils.dart';
+import 'package:responsive_dashboard/data/menu.dart';
 
-import 'package:flutter/material.dart';
+import '../component/side_menu2.dart';
 
-class Projector {
-  String name;
-  bool powerOn;
+class SideBar extends StatefulWidget {
+  const SideBar();
 
-  Projector({this.name, this.powerOn});
-}
-
-class ProjectorListPage extends StatefulWidget {
   @override
-  _ProjectorListPageState createState() => _ProjectorListPageState();
+  State<SideBar> createState() => _SideBarState();
 }
 
-class _ProjectorListPageState extends State<ProjectorListPage> {
-  List<Projector> list_projector = [
-    Projector(name: 'Projector 1', powerOn: false),
-    Projector(name: 'Projector 2', powerOn: true),
-    Projector(name: 'Projector 3', powerOn: false),
-    Projector(name: 'Projector 4', powerOn: true),
-  ];
-
+class _SideBarState extends State<SideBar> {
+  Menu selectedSideMenu = sidebarMenus.first;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Projector List'),
+    return SafeArea(
+      child: Container(
+        width: 288,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          color: Color(0xFF17203A),
+          borderRadius: BorderRadius.all(
+            Radius.circular(30),
+          ),
+        ),
+        child: DefaultTextStyle(
+          style: const TextStyle(color: Colors.white),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 24, top: 32, bottom: 16),
+                child: Text(
+                  "Browse".toUpperCase(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      .copyWith(color: Colors.white70),
+                ),
+              ),
+              ...sidebarMenus
+                  .map((menu) => SideMenu(
+                        menu: menu,
+                        selectedMenu: selectedSideMenu,
+                        press: () {
+                          RiveUtils.changeSMIBoolState(menu.rive.status);
+                          setState(() {
+                            selectedSideMenu = menu;
+                          });
+                        },
+                        riveOnInit: (artboard) {
+                          menu.rive.status = RiveUtils.getRiveInput(artboard,
+                              stateMachineName: menu.rive.stateMachineName);
+                        },
+                      ))
+                  .toList(),
+              Padding(
+                padding: const EdgeInsets.only(left: 24, top: 40, bottom: 16),
+                child: Text(
+                  "History".toUpperCase(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      .copyWith(color: Colors.white70),
+                ),
+              ),
+              ...sidebarMenus2
+                  .map((menu) => SideMenu(
+                        menu: menu,
+                        selectedMenu: selectedSideMenu,
+                        press: () {
+                          RiveUtils.changeSMIBoolState(menu.rive.status);
+                          setState(() {
+                            selectedSideMenu = menu;
+                          });
+                        },
+                        riveOnInit: (artboard) {
+                          menu.rive.status = RiveUtils.getRiveInput(artboard,
+                              stateMachineName: menu.rive.stateMachineName);
+                        },
+                      ))
+                  .toList(),
+            ],
+          ),
+        ),
       ),
-      body: ListView.builder(
-        itemCount: list_projector.length,
-        itemBuilder: (context, index) {
-          return InfoProjector(projector: list_projector[index]);
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          refreshList();
-        },
-        tooltip: 'Refresh',
-        child: Icon(Icons.refresh),
-      ),
-    );
-  }
-
-  void refreshList() {
-    setState(() {
-      // Update list_projector here
-      list_projector = [
-        Projector(name: 'Projector 1', powerOn: true),
-        Projector(name: 'Projector 2', powerOn: false),
-        Projector(name: 'Projector 3', powerOn: true),
-        Projector(name: 'Projector 4', powerOn: false),
-      ];
-    });
-  }
-}
-
-class InfoProjector extends StatelessWidget {
-  final Projector projector;
-
-  InfoProjector({this.projector});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(projector.name),
-      subtitle: Text('Power: ${projector.powerOn ? 'On' : 'Off'}'),
     );
   }
 }

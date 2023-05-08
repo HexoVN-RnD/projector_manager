@@ -34,10 +34,10 @@ class _SelectPageState extends State<SelectPage> {
     // Or less then that we called it mobile
     else if (current_page.getValue() == 2) {
       return Page2();
-    } else if (current_page.getValue() == 3){
+    } else if (current_page.getValue() == 3) {
       return Page3();
     } else {
-      return ProjectorListPage();
+      return SideBar();
     }
   }
 }
