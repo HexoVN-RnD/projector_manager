@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/component/serverConnection.dart';
 import 'package:responsive_dashboard/component/paymentListTile.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/data/data.dart';
+import 'package:responsive_dashboard/pages/detail_projector.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
-class PaymentDetailList extends StatelessWidget {
+class PaymentDetailList extends StatefulWidget {
   const PaymentDetailList({
     Key key,
   }) : super(key: key);
 
+  @override
+  State<PaymentDetailList> createState() => _PaymentDetailListState();
+}
+
+class _PaymentDetailListState extends State<PaymentDetailList> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -36,8 +43,7 @@ class PaymentDetailList extends StatelessWidget {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PrimaryText(
-              text: 'Room 4', size: 18, fontWeight: FontWeight.w800),
+          PrimaryText(text: rooms[currentRoom.getValue()].name, size: 18, fontWeight: FontWeight.w800),
           PrimaryText(
             text: 'Kiểm tra tín hiệu server',
             size: 14,
@@ -51,8 +57,10 @@ class PaymentDetailList extends StatelessWidget {
       ),
       Column(
         children: List.generate(
-          projectors.length,
-          (index) => PaymentListTile(projector: projectors[index],),
+          rooms[currentRoom.getValue()].projectors.length,
+          (index) => PaymentListTile(
+            projector: rooms[currentRoom.getValue()].projectors[index],
+          ),
         ),
       ),
       SizedBox(
@@ -74,8 +82,10 @@ class PaymentDetailList extends StatelessWidget {
       ),
       Column(
         children: List.generate(
-          projectors.length,
-          (index) => PaymentListTile(projector: projectors[index],),
+          rooms[currentRoom.getValue()].servers.length,
+          (index) => ServerConnection(
+            server: rooms[currentRoom.getValue()].servers[index],
+          ),
         ),
       ),
     ]);

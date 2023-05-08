@@ -3,20 +3,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_cmd.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 import 'package:auto_reload/auto_reload.dart';
 
-class PaymentListTile extends StatefulWidget {
-  Projector projector;
+class ServerConnection extends StatefulWidget {
+  Server server;
 
-  PaymentListTile({this.projector});
+  ServerConnection({this.server});
 
   @override
-  State<PaymentListTile> createState() => _PaymentListTileState();
+  State<ServerConnection> createState() => _ServerConnection();
 }
 
-class _PaymentListTileState extends State<PaymentListTile> {
+class _ServerConnection extends State<ServerConnection> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -30,30 +31,30 @@ class _PaymentListTileState extends State<PaymentListTile> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Icon(
-            widget.projector.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
+            widget.server.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
             // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
       title: PrimaryText(
-          text: widget.projector.name, size: 14, fontWeight: FontWeight.w500),
+          text: widget.server.name, size: 14, fontWeight: FontWeight.w500),
       subtitle: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           PrimaryText(
-            text: widget.projector.ip,
+            text: widget.server.ip,
             size: 12,
             fontWeight: FontWeight.w400,
             color: AppColors.secondary,
           ),
           PrimaryText(
-              text: widget.projector.connected.getValue().toString(),
+              text: widget.server.connected.getValue().toString(),
               size: 16,
               fontWeight: FontWeight.w600),
         ],
       ),
       onTap: () {
         setState(() {
-          check_connection(widget.projector.ip, widget.projector.connected);
+          check_connection(widget.server.ip, widget.server.connected);
         });
         // startAutoReload();
       },

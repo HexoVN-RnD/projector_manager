@@ -24,7 +24,7 @@ class DetailProjector extends StatefulWidget {
 class _DetailProjector extends State<DetailProjector> {
   List<Projector> list_projector = rooms[currentRoom.getValue()].projectors;
 
-  bool shouldRefreshList = false;
+  bool shouldRefreshList = true;
 
   void refreshList() {
     // Simulate a network delay
