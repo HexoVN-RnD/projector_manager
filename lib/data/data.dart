@@ -55,7 +55,7 @@ List<Room> rooms = [
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
-        connected: StatefulValuable<bool>(false),
+        connected: StatefulValuable<bool>(true),
       ),
       Projector(
         ip: '192.168.0.105',
@@ -65,7 +65,7 @@ List<Room> rooms = [
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
-        connected: StatefulValuable<bool>(false),
+        connected: StatefulValuable<bool>(true),
       ),
     ],
     servers:  [
@@ -76,6 +76,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
+        mute_audio: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
       ),
       Server(
@@ -85,7 +86,8 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
-        connected: StatefulValuable<bool>(false),
+        mute_audio: StatefulValuable<bool>(false),
+        connected: StatefulValuable<bool>(true),
       ),
     ],
   ),
@@ -162,6 +164,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
+        mute_audio: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
       ),
       Server(
@@ -171,6 +174,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
+        mute_audio: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
       ),
     ],
@@ -248,6 +252,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
+        mute_audio: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
       ),
       Server(
@@ -257,6 +262,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
+        mute_audio: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
       ),
     ],
@@ -334,6 +340,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
+        mute_audio: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
       ),
       Server(
@@ -343,6 +350,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
+        mute_audio: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
       ),
     ],

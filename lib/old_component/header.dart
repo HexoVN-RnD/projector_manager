@@ -19,11 +19,11 @@ class Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               PrimaryText(
-                  text: 'Detail projector',
+                  text: 'Quản lý các phòng'.toUpperCase(),
                   size: 30,
                   fontWeight: FontWeight.w800),
               PrimaryText(
-                text: 'Manage projector',
+                text: 'Quản lý server và máy chiếu',
                 size: 16,
                 fontWeight: FontWeight.w400,
                 color: AppColors.secondary,

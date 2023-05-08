@@ -10,6 +10,9 @@ class Projector {
     StatefulValuable<bool> power_status;
     StatefulValuable<bool> shutter_status;
     StatefulValuable<bool> connected;
+    // lamp hours
+    // position
+    // color disconnect/off/on
 
     // Constructor
     Projector({

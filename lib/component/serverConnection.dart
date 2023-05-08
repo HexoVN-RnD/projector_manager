@@ -32,6 +32,7 @@ class _ServerConnection extends State<ServerConnection> {
         ),
         child: Icon(
             widget.server.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
+            color: widget.server.connected.getValue() ? AppColors.navy_blue: AppColors.red,
             // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
@@ -47,7 +48,7 @@ class _ServerConnection extends State<ServerConnection> {
             color: AppColors.secondary,
           ),
           PrimaryText(
-              text: widget.server.connected.getValue().toString(),
+              text: widget.server.connected.getValue()? 'Connected': 'Disconnected',
               size: 16,
               fontWeight: FontWeight.w600),
         ],

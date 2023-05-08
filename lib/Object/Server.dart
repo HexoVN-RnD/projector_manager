@@ -8,6 +8,7 @@ class Server {
     String username;
     String password;
     StatefulValuable<bool> power_status;
+    StatefulValuable<bool> mute_audio;
     StatefulValuable<bool> connected;
 
     // Constructor
@@ -18,6 +19,7 @@ class Server {
         this.username,
         this.password,
         this.power_status,
+        this.mute_audio,
         this.connected,
     });
 }

@@ -9,5 +9,6 @@ class AppColors {
   static const primaryBg = Color(0xfff5f5fd);
   static const secondaryBg = Color(0xffececf6);
   static const barBg = Color(0xffe3e3ee);
-  static const green = Color.fromRGBO(51, 192, 87, 1.0);
+  static const navy_blue = Color.fromRGBO(46, 204, 196, 1.0);
+  static const red = Color.fromRGBO(246, 75, 75, 1.0);
 }

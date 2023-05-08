@@ -39,7 +39,7 @@ class _SideMenuState extends State<SideMenu> {
                   padding: EdgeInsets.symmetric(vertical: 20.0),
                   icon: SvgPicture.asset(
                     'assets/home.svg',
-                    color: current_page.getValue() == 0 ? AppColors.green : AppColors.iconGray,
+                    color: current_page.getValue() == 0 ? AppColors.navy_blue : AppColors.iconGray,
                   ),
                   onPressed: () => changePage(0)),
               IconButton(
@@ -47,7 +47,7 @@ class _SideMenuState extends State<SideMenu> {
                   padding: EdgeInsets.symmetric(vertical: 20.0),
                   icon: SvgPicture.asset(
                     'assets/pie-chart.svg',
-                    color: current_page.getValue() == 1 ? AppColors.green : AppColors.iconGray,
+                    color: current_page.getValue() == 1 ? AppColors.navy_blue : AppColors.iconGray,
                   ),
                   onPressed: () => changePage(1)),
               IconButton(
@@ -55,7 +55,7 @@ class _SideMenuState extends State<SideMenu> {
                   padding: EdgeInsets.symmetric(vertical: 20.0),
                   icon: SvgPicture.asset(
                     'assets/clipboard.svg',
-                    color: current_page.getValue() == 2 ? AppColors.green : AppColors.iconGray,
+                    color: current_page.getValue() == 2 ? AppColors.navy_blue : AppColors.iconGray,
                   ),
                   onPressed: () => changePage(2)),
               IconButton(
@@ -63,7 +63,7 @@ class _SideMenuState extends State<SideMenu> {
                   padding: EdgeInsets.symmetric(vertical: 20.0),
                   icon: SvgPicture.asset(
                     'assets/credit-card.svg',
-                    color: current_page.getValue() == 3 ? AppColors.green : AppColors.iconGray,
+                    color: current_page.getValue() == 3 ? AppColors.navy_blue : AppColors.iconGray,
                   ),
                   onPressed: () => changePage(3)),
               IconButton(
@@ -71,7 +71,7 @@ class _SideMenuState extends State<SideMenu> {
                   padding: EdgeInsets.symmetric(vertical: 20.0),
                   icon: SvgPicture.asset(
                     'assets/trophy.svg',
-                    color: current_page.getValue() == 4 ? AppColors.green : AppColors.iconGray,
+                    color: current_page.getValue() == 4 ? AppColors.navy_blue : AppColors.iconGray,
                   ),
                   onPressed: () => changePage(4)),
               IconButton(
@@ -79,7 +79,7 @@ class _SideMenuState extends State<SideMenu> {
                   padding: EdgeInsets.symmetric(vertical: 20.0),
                   icon: SvgPicture.asset(
                     'assets/invoice.svg',
-                    color: current_page.getValue() == 5 ? AppColors.green : AppColors.iconGray,
+                    color: current_page.getValue() == 5 ? AppColors.navy_blue : AppColors.iconGray,
                   ),
                   onPressed: () => changePage(5)),
             ],

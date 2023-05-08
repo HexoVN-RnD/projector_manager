@@ -33,6 +33,7 @@ dependencies:
   window_manager: ^0.3.2
   valuable: ^1.2.0
   auto_reload: ^1.1.0
+  flutter_spinkit: ^5.2.0
 
 dev_dependencies:
   flutter_test:

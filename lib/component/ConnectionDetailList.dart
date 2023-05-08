@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/component/serverConnection.dart';
-import 'package:responsive_dashboard/component/paymentListTile.dart';
+import 'package:responsive_dashboard/component/proejectorConnection.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/pages/detail_projector.dart';
@@ -23,23 +23,23 @@ class _PaymentDetailListState extends State<PaymentDetailList> {
       SizedBox(
         height: SizeConfig.blockSizeVertical * 5,
       ),
-      // Container(
-      //   decoration:
-      //       BoxDecoration(borderRadius: BorderRadius.circular(30), boxShadow: [
-      //     BoxShadow(
-      //       color: Colors.grey[400],
-      //       blurRadius: 15.0,
-      //       offset: const Offset(
-      //         10.0,
-      //         15.0,
-      //       ),
-      //     )
-      //   ]),
-      //   child: Image.asset('assets/card.png'),
-      // ),
-      // SizedBox(
-      //   height: SizeConfig.blockSizeVertical * 5,
-      // ),
+      Container(
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(30), boxShadow: [
+          // BoxShadow(
+          //   color: Colors.grey[400],
+          //   blurRadius: 15.0,
+          //   offset: const Offset(
+          //     10.0,
+          //     15.0,
+          //   ),
+          // )
+        ]),
+        child: Image.asset('assets/logo2.png'),
+      ),
+      SizedBox(
+        height: SizeConfig.blockSizeVertical * 5,
+      ),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -57,9 +57,9 @@ class _PaymentDetailListState extends State<PaymentDetailList> {
       ),
       Column(
         children: List.generate(
-          rooms[currentRoom.getValue()].projectors.length,
-          (index) => PaymentListTile(
-            projector: rooms[currentRoom.getValue()].projectors[index],
+          rooms[currentRoom.getValue()].servers.length,
+          (index) => ServerConnection(
+            server: rooms[currentRoom.getValue()].servers[index],
           ),
         ),
       ),
@@ -82,9 +82,9 @@ class _PaymentDetailListState extends State<PaymentDetailList> {
       ),
       Column(
         children: List.generate(
-          rooms[currentRoom.getValue()].servers.length,
-          (index) => ServerConnection(
-            server: rooms[currentRoom.getValue()].servers[index],
+          rooms[currentRoom.getValue()].projectors.length,
+          (index) => ProejectorConnection(
+            projector: rooms[currentRoom.getValue()].projectors[index],
           ),
         ),
       ),

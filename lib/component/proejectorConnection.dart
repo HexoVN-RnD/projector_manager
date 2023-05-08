@@ -7,16 +7,16 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 import 'package:auto_reload/auto_reload.dart';
 
-class PaymentListTile extends StatefulWidget {
+class ProejectorConnection extends StatefulWidget {
   Projector projector;
 
-  PaymentListTile({this.projector});
+  ProejectorConnection({this.projector});
 
   @override
-  State<PaymentListTile> createState() => _PaymentListTileState();
+  State<ProejectorConnection> createState() => _ProejectorConnectionState();
 }
 
-class _PaymentListTileState extends State<PaymentListTile> {
+class _ProejectorConnectionState extends State<ProejectorConnection> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -31,6 +31,7 @@ class _PaymentListTileState extends State<PaymentListTile> {
         ),
         child: Icon(
             widget.projector.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
+            color: widget.projector.connected.getValue() ? AppColors.navy_blue: AppColors.red,
             // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
@@ -46,7 +47,7 @@ class _PaymentListTileState extends State<PaymentListTile> {
             color: AppColors.secondary,
           ),
           PrimaryText(
-              text: widget.projector.connected.getValue().toString(),
+              text: widget.projector.connected.getValue()? 'Connected': 'Disconnected',
               size: 16,
               fontWeight: FontWeight.w600),
         ],

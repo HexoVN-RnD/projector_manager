@@ -6,6 +6,9 @@ import 'package:valuable/valuable.dart';
 class Room {
     String name;
     String general;
+    // list sensor (bool on/off)
+    // resolume/brightsign: bool
+    // preset int : 1,2,3
     List<Projector> projectors;
     List<Server> servers;
 
