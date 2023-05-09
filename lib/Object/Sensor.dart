@@ -2,27 +2,17 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:valuable/valuable.dart';
 
-class Server {
+class Sensor {
     String ip;
     String name;
     int port;
-    String username;
-    String password;
-    StatefulValuable<bool> power_status;
-    // StatefulValuable<bool> mute_audio;
-    StatefulValuable<double> volume;
     StatefulValuable<bool> connected;
 
     // Constructor
-    Server({
+    Sensor({
         @required this.ip,
         @required this.name,
         @required this.port,
-        this.username,
-        this.password,
-        this.power_status,
-        // this.mute_audio,
-        this.volume,
         this.connected,
     });
 }

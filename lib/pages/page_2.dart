@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/component/barChart.dart';
 import 'package:responsive_dashboard/data/data.dart';
-import 'package:responsive_dashboard/old_component/header.dart';
+import 'package:responsive_dashboard/new_component/header.dart';
 import 'package:responsive_dashboard/component/historyTable.dart';
-import 'package:responsive_dashboard/old_component/info_projector.dart';
+import 'package:responsive_dashboard/new_component/info_projector.dart';
 import 'package:responsive_dashboard/component/ConnectionDetailList.dart';
-import 'package:responsive_dashboard/old_component/projector_manager.dart';
+import 'package:responsive_dashboard/new_component/projector_manager.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/style/colors.dart';

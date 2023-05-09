@@ -53,16 +53,16 @@ class _InfoProjector extends State<InfoProjector> {
     return Container(
       constraints: BoxConstraints(
           minWidth: Responsive.isDesktop(context)
-              ? 300
-              : SizeConfig.screenWidth / 2 - 40,
+              ? 280
+              : SizeConfig.screenWidth / 2 - 75,
           maxWidth: Responsive.isDesktop(context)
-              ? SizeConfig.screenWidth / 3 - 40
-              : SizeConfig.screenWidth / 2 - 40),
+              ? SizeConfig.screenWidth / 3 - 75
+              : SizeConfig.screenWidth / 2 - 45),
       padding: EdgeInsets.only(
           top: 20,
           bottom: 20,
           left: 20,
-          right: Responsive.isMobile(context) ? 20 : 40),
+          right: Responsive.isMobile(context) ? 20 : 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: AppColors.white,

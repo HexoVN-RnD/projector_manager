@@ -3,7 +3,7 @@ import 'package:responsive_dashboard/component/serverConnection.dart';
 import 'package:responsive_dashboard/component/proejectorConnection.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/data/data.dart';
-import 'package:responsive_dashboard/pages/detail_projector.dart';
+import 'package:responsive_dashboard/pages/roomManager.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 

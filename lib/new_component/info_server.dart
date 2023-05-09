@@ -30,7 +30,11 @@ class _InfoServer extends State<InfoServer> {
   void PowerModeProjector() {
     // server.power_status.getValue()? sendPJLinkCommand(server.ip,server.port, '(PWR 0)'): sendPJLinkCommand(server.ip,server.port, '(PWR 1)');
     server.power_status.setValue(!server.power_status.getValue());
-    print(server.ip + " " +server.port.toString() +" PWR " +server.power_status.getValue().toString());
+    print(server.ip +
+        " " +
+        server.port.toString() +
+        " PWR " +
+        server.power_status.getValue().toString());
   }
 
   // void ShutterModeProjector() {
@@ -44,9 +48,14 @@ class _InfoServer extends State<InfoServer> {
   //   print(projector.ip + " " +projector.port.toString() +" MUTE_Video " +projector.shutter_status.getValue().toString());
   // }
   //
-  void MuteAudioProjector() {
-    server.mute_audio.setValue(!server.mute_audio.getValue());
-    print(server.ip + " " +server.port.toString() +" MUTE_Audio " +server.mute_audio.getValue().toString());
+  void ChangeVolume(double index) {
+    server.volume.setValue(index);
+    // server.mute_audio.setValue(!server.mute_audio.getValue());
+    print(server.ip +
+        " " +
+        server.port.toString() +
+        " Volume " +
+        server.volume.getValue().toString());
   }
 
   @override
@@ -55,15 +64,15 @@ class _InfoServer extends State<InfoServer> {
       constraints: BoxConstraints(
           minWidth: Responsive.isDesktop(context)
               ? 300
-              : SizeConfig.screenWidth / 2 - 40,
+              : SizeConfig.screenWidth / 2 - 75,
           maxWidth: Responsive.isDesktop(context)
-              ? SizeConfig.screenWidth / 3 - 40
-              : SizeConfig.screenWidth / 2 - 40),
+              ? SizeConfig.screenWidth / 3 - 75
+              : SizeConfig.screenWidth / 2 - 45),
       padding: EdgeInsets.only(
           top: 20,
           bottom: 20,
           left: 20,
-          right: Responsive.isMobile(context) ? 20 : 40),
+          right: Responsive.isMobile(context) ? 20 : 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: AppColors.white,
@@ -87,10 +96,7 @@ class _InfoServer extends State<InfoServer> {
                   width: SizeConfig.blockSizeHorizontal,
                 ),
               ),
-              PrimaryText(
-                  text: server.ip,
-                  color: AppColors.secondary,
-                  size: 16)
+              PrimaryText(text: server.ip, color: AppColors.secondary, size: 16)
             ],
           ),
           Row(
@@ -131,7 +137,7 @@ class _InfoServer extends State<InfoServer> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               PrimaryText(
-                text: "Bật/Tắt âm thanh",
+                text: "Âm thanh",
                 size: 18,
                 fontWeight: FontWeight.w500,
               ),
@@ -140,22 +146,26 @@ class _InfoServer extends State<InfoServer> {
                   width: SizeConfig.blockSizeHorizontal,
                 ),
               ),
-              PrimaryText(
-                  text: server.mute_audio.getValue().toString(),
-                  color: AppColors.secondary,
-                  size: 16),
-              SizedBox(
-                width: SizeConfig.blockSizeHorizontal,
-              ),
-              Transform.scale(
-                scale: 1,
-                child: CupertinoSwitch(
-                  value: server.mute_audio.getValue(),
-                  onChanged: (value) {
-                    setState(() {
-                      MuteAudioProjector();
-                    });
-                  },
+              // PrimaryText(
+              //     text: server.volume.getValue().toString(),
+              //     color: AppColors.secondary,
+              //     size: 16),
+              // SizedBox(
+              //   width: SizeConfig.blockSizeHorizontal,
+              // ),
+              Expanded(
+                child: Transform.scale(
+                  scale: 1,
+                  child: Slider(
+                    activeColor: AppColors.navy_blue,
+                    value: server.volume.getValue(),
+                    onChanged: (index) {
+                      setState(() => ChangeVolume(index));
+                    },
+                    min: 0,
+                    max: 1,
+                    // divisions: 5,
+                  ),
                 ),
               ),
             ],

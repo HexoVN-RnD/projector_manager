@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/component/rive_utils.dart';
 import 'package:responsive_dashboard/data/menu.dart';
+import 'package:responsive_dashboard/new_component/side_menu.dart';
 
-import '../component/side_menu2.dart';
 
 class SideBar extends StatefulWidget {
   const SideBar();
@@ -41,32 +41,6 @@ class _SideBarState extends State<SideBar> {
                 ),
               ),
               ...sidebarMenus
-                  .map((menu) => SideMenu(
-                        menu: menu,
-                        selectedMenu: selectedSideMenu,
-                        press: () {
-                          RiveUtils.changeSMIBoolState(menu.rive.status);
-                          setState(() {
-                            selectedSideMenu = menu;
-                          });
-                        },
-                        riveOnInit: (artboard) {
-                          menu.rive.status = RiveUtils.getRiveInput(artboard,
-                              stateMachineName: menu.rive.stateMachineName);
-                        },
-                      ))
-                  .toList(),
-              Padding(
-                padding: const EdgeInsets.only(left: 24, top: 40, bottom: 16),
-                child: Text(
-                  "History".toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleMedium
-                      .copyWith(color: Colors.white70),
-                ),
-              ),
-              ...sidebarMenus2
                   .map((menu) => SideMenu(
                         menu: menu,
                         selectedMenu: selectedSideMenu,

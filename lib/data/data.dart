@@ -4,8 +4,8 @@ import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:valuable/valuable.dart';
 List<Room> rooms = [
   Room(
-    name: 'PHÒNG 1',
-    general: 'Immersive room',
+    name: 'PHÒNG 2',
+    general: 'Sảnh đón tiếp',
     projectors:  [
       Projector(
         ip: '192.168.2.1',
@@ -76,7 +76,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
-        mute_audio: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
         connected: StatefulValuable<bool>(false),
       ),
       Server(
@@ -86,14 +86,14 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
-        mute_audio: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
         connected: StatefulValuable<bool>(true),
       ),
     ],
   ),
   Room(
-    name: 'PHÒNG 2',
-    general: 'Interactive room',
+    name: 'PHÒNG 4',
+    general: 'Immersive room',
     projectors:  [
       Projector(
         ip: '192.168.2.2',
@@ -164,7 +164,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
-        mute_audio: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
         connected: StatefulValuable<bool>(false),
       ),
       Server(
@@ -174,14 +174,14 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
-        mute_audio: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
         connected: StatefulValuable<bool>(false),
       ),
     ],
   ),
   Room(
-    name: 'PHÒNG 3',
-    general: 'FK room',
+    name: 'PHÒNG 5',
+    general: 'Khu vực tương tác',
     projectors:  [
       Projector(
         ip: '192.168.2.3',
@@ -252,7 +252,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
-        mute_audio: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
         connected: StatefulValuable<bool>(false),
       ),
       Server(
@@ -262,14 +262,14 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
-        mute_audio: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
         connected: StatefulValuable<bool>(false),
       ),
     ],
   ),
   Room(
-    name: 'PHÒNG 4',
-    general: 'F@ck room',
+    name: 'PHÒNG 6',
+    general: 'Khu vực hội thảo event',
     projectors:  [
       Projector(
         ip: '192.168.2.4',
@@ -340,7 +340,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
-        mute_audio: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
         connected: StatefulValuable<bool>(false),
       ),
       Server(
@@ -350,7 +350,7 @@ List<Room> rooms = [
         username: 'admin',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
-        mute_audio: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
         connected: StatefulValuable<bool>(false),
       ),
     ],
