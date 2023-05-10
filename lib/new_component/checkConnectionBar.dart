@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/component/serverConnection.dart';
-import 'package:responsive_dashboard/component/proejectorConnection.dart';
+import 'package:responsive_dashboard/new_component/projectorConnection.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
+import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/pages/roomManager.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
-class PaymentDetailList extends StatefulWidget {
-  const PaymentDetailList({
-    Key key,
-  }) : super(key: key);
-
+class CheckConnectionBar extends StatefulWidget {
   @override
-  State<PaymentDetailList> createState() => _PaymentDetailListState();
+  State<CheckConnectionBar> createState() => _CheckConnectionBarState();
 }
 
-class _PaymentDetailListState extends State<PaymentDetailList> {
+class _CheckConnectionBarState extends State<CheckConnectionBar> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -43,7 +40,7 @@ class _PaymentDetailListState extends State<PaymentDetailList> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PrimaryText(text: rooms[currentRoom.getValue()].name, size: 18, fontWeight: FontWeight.w800),
+          PrimaryText(text: rooms[(current_page.getValue()>0)? current_page.getValue()-1: 1].name, size: 18, fontWeight: FontWeight.w800),
           PrimaryText(
             text: 'Kiểm tra tín hiệu server',
             size: 14,
@@ -57,9 +54,9 @@ class _PaymentDetailListState extends State<PaymentDetailList> {
       ),
       Column(
         children: List.generate(
-          rooms[currentRoom.getValue()].servers.length,
+          rooms[(current_page.getValue()>0)? current_page.getValue()-1: 1].servers.length,
           (index) => ServerConnection(
-            server: rooms[currentRoom.getValue()].servers[index],
+            server: rooms[(current_page.getValue()>0)? current_page.getValue()-1: 1].servers[index],
           ),
         ),
       ),
@@ -82,9 +79,9 @@ class _PaymentDetailListState extends State<PaymentDetailList> {
       ),
       Column(
         children: List.generate(
-          rooms[currentRoom.getValue()].projectors.length,
-          (index) => ProejectorConnection(
-            projector: rooms[currentRoom.getValue()].projectors[index],
+          rooms[(current_page.getValue()>0)? current_page.getValue()-1: 1].projectors.length,
+          (index) => ProjectorConnection(
+            projector: rooms[(current_page.getValue()>0)? current_page.getValue()-1: 1].projectors[index],
           ),
         ),
       ),

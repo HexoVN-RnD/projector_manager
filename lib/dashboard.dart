@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:responsive_dashboard/component/appBarActionItems.dart';
-import 'package:responsive_dashboard/component/ConnectionDetailList.dart';
+import 'package:responsive_dashboard/new_component/appBarActionItems.dart';
+import 'package:responsive_dashboard/new_component/checkConnectionBar.dart';
 import 'package:responsive_dashboard/component/rive_utils.dart';
 import 'package:responsive_dashboard/new_component/side_menu.dart';
 import 'package:responsive_dashboard/data/menu.dart';
@@ -150,7 +150,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
             Expanded(flex: 10, child: SelectPage()),
-            if (Responsive.isDesktop(context))
+            if (Responsive.isDesktop(context) && current_page.getValue() != 0)
               Expanded(
                 flex: 4,
                 child: SafeArea(
@@ -164,7 +164,7 @@ class _DashboardState extends State<Dashboard> {
                       child: Column(
                         children: [
                           AppBarActionItems(),
-                          PaymentDetailList(),
+                          CheckConnectionBar(),
                         ],
                       ),
                     ),

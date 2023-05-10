@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/projector_cmd.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
@@ -9,6 +10,8 @@ import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/data/global_value.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
+
+List<Projector> projectors = rooms[0].projectors;
 
 class ProjectorsManager extends StatefulWidget {
   @override

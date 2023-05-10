@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/component/barChart.dart';
+import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/new_component/header.dart';
 import 'package:responsive_dashboard/component/historyTable.dart';
 import 'package:responsive_dashboard/new_component/info_projector.dart';
-import 'package:responsive_dashboard/component/ConnectionDetailList.dart';
+import 'package:responsive_dashboard/new_component/checkConnectionBar.dart';
 import 'package:responsive_dashboard/new_component/projector_manager.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -53,10 +54,10 @@ class _HomePage extends State<HomePage> {
                 runSpacing: 20,
                 alignment: WrapAlignment.spaceBetween,
                 children: [
-                  InfoProjector(projector: projectors[0]),
-                  InfoProjector(projector: projectors[1]),
-                  InfoProjector(projector: projectors[2]),
-                  InfoProjector(projector: projectors[3]),
+                  // InfoProjector(projector: projectors[0]),
+                  // InfoProjector(projector: projectors[1]),
+                  // InfoProjector(projector: projectors[2]),
+                  // InfoProjector(projector: projectors[3]),
                 ],
               ),
             ),
@@ -118,8 +119,8 @@ class _HomePage extends State<HomePage> {
             SizedBox(
               height: SizeConfig.blockSizeVertical * 3,
             ),
-            HistoryTable(),
-            if (!Responsive.isDesktop(context)) PaymentDetailList()
+            // HistoryTable(),
+            if (!Responsive.isDesktop(context) && current_page.getValue() != 0) CheckConnectionBar()
           ],
         ),
       ),

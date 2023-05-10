@@ -7,16 +7,16 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 import 'package:auto_reload/auto_reload.dart';
 
-class ProejectorConnection extends StatefulWidget {
+class ProjectorConnection extends StatefulWidget {
   Projector projector;
 
-  ProejectorConnection({this.projector});
+  ProjectorConnection({this.projector});
 
   @override
-  State<ProejectorConnection> createState() => _ProejectorConnectionState();
+  State<ProjectorConnection> createState() => _ProjectorConnectionState();
 }
 
-class _ProejectorConnectionState extends State<ProejectorConnection> {
+class _ProjectorConnectionState extends State<ProjectorConnection> {
   @override
   Widget build(BuildContext context) {
     return ListTile(

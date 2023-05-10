@@ -4,7 +4,7 @@ import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/new_component/header.dart';
 import 'package:responsive_dashboard/component/historyTable.dart';
 import 'package:responsive_dashboard/new_component/info_projector.dart';
-import 'package:responsive_dashboard/component/ConnectionDetailList.dart';
+import 'package:responsive_dashboard/new_component/checkConnectionBar.dart';
 import 'package:responsive_dashboard/new_component/projector_manager.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -43,8 +43,8 @@ class _Page3 extends State<Page3> {
             SizedBox(
               height: SizeConfig.blockSizeVertical * 3,
             ),
-            HistoryTable(),
-            if (!Responsive.isDesktop(context)) PaymentDetailList()
+            // HistoryTable(),
+            if (!Responsive.isDesktop(context)) CheckConnectionBar()
           ],
         ),
       ),

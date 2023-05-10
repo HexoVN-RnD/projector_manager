@@ -1,12 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
+import 'package:responsive_dashboard/dashboard.dart';
+import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
-class Header extends StatelessWidget {
-  const Header({
-    Key key,
-  }) : super(key: key);
+class Header extends StatefulWidget {
+  String name;
+  String general;
+  Header({
+    @required this.name,
+    @required this.general,
+  });
+
+  @override
+  State<Header> createState() => _HeaderState(this.name, this.general);
+}
+
+class _HeaderState extends State<Header> {
+  String name = rooms[current_page.getValue()-1].name;
+  String general =rooms[current_page.getValue()-1].general;
+
+  _HeaderState(String name, String general);
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +34,11 @@ class Header extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               PrimaryText(
-                  text: 'Quản lý các phòng'.toUpperCase(),
+                  text: name.toUpperCase(),
                   size: 30,
                   fontWeight: FontWeight.w800),
               PrimaryText(
-                text: 'Quản lý server và máy chiếu',
+                text: general,
                 size: 16,
                 fontWeight: FontWeight.w400,
                 color: AppColors.secondary,
