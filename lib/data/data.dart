@@ -12,10 +12,10 @@ List<Room> rooms = [
     sensors: [],
     current_preset: StatefulValuable<int>(0),
     presets: [
-      Preset(name: 'Preset 1', image: 'assets/card.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 2', image: 'assets/card.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 3', image: 'assets/card.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 4', image: 'assets/card.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 1', image: 'assets/watching-a-movie.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 2', image: 'assets/watching-a-movie.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 3', image: 'assets/watching-a-movie.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 4', image: 'assets/watching-a-movie.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
     ],
     projectors:  [
       Projector(
@@ -109,10 +109,10 @@ List<Room> rooms = [
     sensors: [],
     current_preset: StatefulValuable<int>(0),
     presets: [
-      Preset(name: 'Preset 1', image: 'assets/card.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 2', image: 'assets/card.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 3', image: 'assets/card.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 4', image: 'assets/card.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 1', image: 'assets/watching-a-movie.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 2', image: 'assets/watching-a-movie.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 3', image: 'assets/watching-a-movie.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 4', image: 'assets/watching-a-movie.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
     ],
     projectors:  [
       Projector(
@@ -210,10 +210,10 @@ List<Room> rooms = [
     ],
     current_preset: StatefulValuable<int>(0),
     presets: [
-      Preset(name: 'Preset 1', image: 'assets/card.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 2', image: 'assets/card.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 3', image: 'assets/card.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 4', image: 'assets/card.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 1', image: 'assets/watching-a-movie.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 2', image: 'assets/watching-a-movie.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 3', image: 'assets/watching-a-movie.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 4', image: 'assets/watching-a-movie.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
     ],
     projectors:  [
       Projector(
@@ -307,10 +307,10 @@ List<Room> rooms = [
     sensors: [],
     current_preset: StatefulValuable<int>(0),
     presets: [
-      Preset(name: 'Preset 1', image: 'assets/card.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 2', image: 'assets/card.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 3', image: 'assets/card.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 4', image: 'assets/card.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 1', image: 'assets/watching-a-movie.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 2', image: 'assets/watching-a-movie.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 3', image: 'assets/watching-a-movie.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
+      Preset(name: 'Preset 4', image: 'assets/watching-a-movie.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
     ],
     projectors:  [
       Projector(

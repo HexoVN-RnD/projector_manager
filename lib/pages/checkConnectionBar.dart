@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_dashboard/component/serverConnection.dart';
+import 'package:responsive_dashboard/new_component/serverConnection.dart';
 import 'package:responsive_dashboard/new_component/projectorConnection.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
@@ -18,24 +18,7 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(
-        height: SizeConfig.blockSizeVertical * 5,
-      ),
-      Container(
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(30), boxShadow: [
-          // BoxShadow(
-          //   color: Colors.grey[400],
-          //   blurRadius: 15.0,
-          //   offset: const Offset(
-          //     10.0,
-          //     15.0,
-          //   ),
-          // )
-        ]),
-        child: Image.asset('assets/logo2.png'),
-      ),
-      SizedBox(
-        height: SizeConfig.blockSizeVertical * 5,
+        height: SizeConfig.blockSizeVertical * 3,
       ),
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,

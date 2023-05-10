@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:responsive_dashboard/new_component/appBarActionItems.dart';
-import 'package:responsive_dashboard/new_component/checkConnectionBar.dart';
+import 'package:responsive_dashboard/pages/appBarActionItems.dart';
+import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
 import 'package:responsive_dashboard/component/rive_utils.dart';
-import 'package:responsive_dashboard/new_component/side_menu.dart';
+import 'package:responsive_dashboard/pages/side_menu.dart';
 import 'package:responsive_dashboard/data/menu.dart';
 import 'package:responsive_dashboard/pages/select_page.dart';
 import 'package:responsive_dashboard/config/responsive.dart';

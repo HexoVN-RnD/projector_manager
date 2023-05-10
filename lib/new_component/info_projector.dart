@@ -16,23 +16,21 @@ class InfoProjector extends StatefulWidget {
   });
 
   @override
-  _InfoProjector createState() => _InfoProjector(this.projector);
+  _InfoProjector createState() => _InfoProjector();
 }
 
 // class _MainPageState extends State<MainPage> {
 //   bool value = true;
 
 class _InfoProjector extends State<InfoProjector> {
-  Projector projector;
-  _InfoProjector(this.projector);
 
-  void PowerModeProjector() {
+  void PowerModeProjector(Projector projector) {
     projector.power_status.getValue()? sendPJLinkCommand(projector.ip,projector.port, '(PWR 0)'): sendPJLinkCommand(projector.ip,projector.port, '(PWR 1)');
     projector.power_status.setValue(!projector.power_status.getValue());
     print(projector.ip + " " +projector.port.toString() +" PWR " +projector.power_status.getValue().toString());
   }
 
-  void ShutterModeProjector() {
+  void ShutterModeProjector(Projector projector) {
     projector.shutter_status.getValue()? sendPJLinkCommand(projector.ip,projector.port, '(SHU 0)'): sendPJLinkCommand(projector.ip,projector.port, '(SHU 1)');
     projector.shutter_status.setValue(!projector.shutter_status.getValue());
     print(projector.ip + " " +projector.port.toString() +" SHU " +projector.shutter_status.getValue().toString());
@@ -50,6 +48,7 @@ class _InfoProjector extends State<InfoProjector> {
 
   @override
   Widget build(BuildContext context) {
+    Projector projector=widget.projector;
     return Container(
       constraints: BoxConstraints(
           minWidth: Responsive.isDesktop(context)
@@ -119,7 +118,7 @@ class _InfoProjector extends State<InfoProjector> {
                   activeColor: AppColors.navy_blue,
                   onChanged: (value) {
                     setState(() {
-                      PowerModeProjector();
+                      PowerModeProjector(projector);
                     });
                   },
                 ),
@@ -150,9 +149,10 @@ class _InfoProjector extends State<InfoProjector> {
                 scale: 1,
                 child: CupertinoSwitch(
                   value: projector.shutter_status.getValue(),
+                  activeColor: AppColors.navy_blue,
                   onChanged: (value) {
                     setState(() {
-                      ShutterModeProjector();
+                      ShutterModeProjector(projector);
                     });
                   },
                 ),

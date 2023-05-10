@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/component/rive_utils.dart';
 import 'package:responsive_dashboard/data/menu.dart';
-import 'package:responsive_dashboard/new_component/side_menu.dart';
+import 'package:responsive_dashboard/pages/side_menu.dart';
 
 
 class SideBar extends StatefulWidget {

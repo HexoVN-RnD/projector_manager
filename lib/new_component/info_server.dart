@@ -17,17 +17,17 @@ class InfoServer extends StatefulWidget {
   });
 
   @override
-  _InfoServer createState() => _InfoServer(this.server);
+  _InfoServer createState() => _InfoServer();
 }
 
 // class _MainPageState extends State<MainPage> {
 //   bool value = true;
 
 class _InfoServer extends State<InfoServer> {
-  Server server;
-  _InfoServer(this.server);
+  // Server server;
+  // _InfoServer(this.server);
 
-  void PowerModeProjector() {
+  void PowerModeProjector(Server server) {
     // server.power_status.getValue()? sendPJLinkCommand(server.ip,server.port, '(PWR 0)'): sendPJLinkCommand(server.ip,server.port, '(PWR 1)');
     server.power_status.setValue(!server.power_status.getValue());
     print(server.ip +
@@ -48,7 +48,7 @@ class _InfoServer extends State<InfoServer> {
   //   print(projector.ip + " " +projector.port.toString() +" MUTE_Video " +projector.shutter_status.getValue().toString());
   // }
   //
-  void ChangeVolume(double index) {
+  void ChangeVolume(Server server,double index) {
     server.volume.setValue(index);
     // server.mute_audio.setValue(!server.mute_audio.getValue());
     print(server.ip +
@@ -60,6 +60,7 @@ class _InfoServer extends State<InfoServer> {
 
   @override
   Widget build(BuildContext context) {
+    Server server =widget.server;
     return Container(
       constraints: BoxConstraints(
           minWidth: Responsive.isDesktop(context)
@@ -126,7 +127,7 @@ class _InfoServer extends State<InfoServer> {
                   activeColor: AppColors.navy_blue,
                   onChanged: (value) {
                     setState(() {
-                      PowerModeProjector();
+                      PowerModeProjector(server);
                     });
                   },
                 ),
@@ -160,7 +161,7 @@ class _InfoServer extends State<InfoServer> {
                     activeColor: AppColors.navy_blue,
                     value: server.volume.getValue(),
                     onChanged: (index) {
-                      setState(() => ChangeVolume(index));
+                      setState(() => ChangeVolume(server, index));
                     },
                     min: 0,
                     max: 1,
