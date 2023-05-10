@@ -3,21 +3,69 @@ import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
+import 'package:responsive_dashboard/Object/allRoom.dart';
 import 'package:valuable/valuable.dart';
+
+AllRoom allRoom = AllRoom(
+  current_preset: StatefulValuable<int>(10),
+  power_all_projectors:  StatefulValuable<bool>(false),
+  power_all_servers:  StatefulValuable<bool>(false),
+  shutter_all_projectors:  StatefulValuable<bool>(false),
+  volume_all:  StatefulValuable<double>(1),
+  presets: [
+    Preset(
+        name: 'Nội dung 1',
+        image: 'assets/watching-a-movie_black.png',
+        osc_message: 'column 1',
+        transport: StatefulValuable<double>(0)),
+    Preset(
+        name: 'Nội dung 2',
+        image: 'assets/watching-a-movie_black.png',
+        osc_message: 'column 2',
+        transport: StatefulValuable<double>(0)),
+    Preset(
+        name: 'Nội dung 3',
+        image: 'assets/watching-a-movie_black.png',
+        osc_message: 'column 3',
+        transport: StatefulValuable<double>(0)),
+    Preset(
+        name: 'Nội dung 4',
+        image: 'assets/watching-a-movie_black.png',
+        osc_message: 'column 4',
+        transport: StatefulValuable<double>(0)),
+  ],
+);
+
 List<Room> rooms = [
   Room(
     name: 'PHÒNG 2',
     general: 'Sảnh đón tiếp',
     resolume: false,
     sensors: [],
-    current_preset: StatefulValuable<int>(0),
+    current_preset: StatefulValuable<int>(10),
     presets: [
-      Preset(name: 'Preset 1', image: 'assets/watching-a-movie.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 2', image: 'assets/watching-a-movie.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 3', image: 'assets/watching-a-movie.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 4', image: 'assets/watching-a-movie.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 1',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 2',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 2',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 3',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 3',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 4',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 4',
+          transport: StatefulValuable<double>(0)),
     ],
-    projectors:  [
+    projectors: [
       Projector(
         ip: '192.168.2.1',
         name: 'Máy chiếu 1',
@@ -79,7 +127,7 @@ List<Room> rooms = [
         connected: StatefulValuable<bool>(true),
       ),
     ],
-    servers:  [
+    servers: [
       Server(
         ip: '192.168.2.1',
         name: 'Server 1',
@@ -107,14 +155,30 @@ List<Room> rooms = [
     general: 'Immersive room',
     resolume: true,
     sensors: [],
-    current_preset: StatefulValuable<int>(0),
+    current_preset: StatefulValuable<int>(10),
     presets: [
-      Preset(name: 'Preset 1', image: 'assets/watching-a-movie.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 2', image: 'assets/watching-a-movie.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 3', image: 'assets/watching-a-movie.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 4', image: 'assets/watching-a-movie.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 1',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 2',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 2',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 3',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 3',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 4',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 4',
+          transport: StatefulValuable<double>(0)),
     ],
-    projectors:  [
+    projectors: [
       Projector(
         ip: '192.168.2.2',
         name: 'Máy chiếu 1',
@@ -176,7 +240,7 @@ List<Room> rooms = [
         connected: StatefulValuable<bool>(false),
       ),
     ],
-    servers:  [
+    servers: [
       Server(
         ip: '192.168.2.1',
         name: 'Server 1',
@@ -204,18 +268,46 @@ List<Room> rooms = [
     general: 'Khu vực tương tác',
     resolume: true,
     sensors: [
-      Sensor(ip: '192.168.1.1', name: 'Sensor1', port: 9999, connected: StatefulValuable<bool>(false)),
-      Sensor(ip: '192.168.1.2', name: 'Sensor2', port: 9999, connected: StatefulValuable<bool>(false)),
-      Sensor(ip: '192.168.1.3', name: 'Sensor3', port: 9999, connected: StatefulValuable<bool>(false)),
+      Sensor(
+          ip: '192.168.1.1',
+          name: 'Sensor1',
+          port: 9999,
+          connected: StatefulValuable<bool>(false)),
+      Sensor(
+          ip: '192.168.1.2',
+          name: 'Sensor2',
+          port: 9999,
+          connected: StatefulValuable<bool>(false)),
+      Sensor(
+          ip: '192.168.1.3',
+          name: 'Sensor3',
+          port: 9999,
+          connected: StatefulValuable<bool>(false)),
     ],
-    current_preset: StatefulValuable<int>(0),
+    current_preset: StatefulValuable<int>(10),
     presets: [
-      Preset(name: 'Preset 1', image: 'assets/watching-a-movie.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 2', image: 'assets/watching-a-movie.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 3', image: 'assets/watching-a-movie.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 4', image: 'assets/watching-a-movie.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 1',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 2',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 2',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 3',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 3',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 4',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 4',
+          transport: StatefulValuable<double>(0)),
     ],
-    projectors:  [
+    projectors: [
       Projector(
         ip: '192.168.2.3',
         name: 'Máy chiếu 1',
@@ -277,7 +369,7 @@ List<Room> rooms = [
         connected: StatefulValuable<bool>(false),
       ),
     ],
-    servers:  [
+    servers: [
       Server(
         ip: '192.168.2.0',
         name: 'Server 1',
@@ -305,14 +397,30 @@ List<Room> rooms = [
     general: 'Khu vực hội thảo event',
     resolume: true,
     sensors: [],
-    current_preset: StatefulValuable<int>(0),
+    current_preset: StatefulValuable<int>(10),
     presets: [
-      Preset(name: 'Preset 1', image: 'assets/watching-a-movie.png', osc_message: 'column 1', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 2', image: 'assets/watching-a-movie.png', osc_message: 'column 2', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 3', image: 'assets/watching-a-movie.png', osc_message: 'column 3', transport: StatefulValuable<double>(0)),
-      Preset(name: 'Preset 4', image: 'assets/watching-a-movie.png', osc_message: 'column 4', transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 1',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 2',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 2',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 3',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 3',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 4',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 4',
+          transport: StatefulValuable<double>(0)),
     ],
-    projectors:  [
+    projectors: [
       Projector(
         ip: '192.168.2.4',
         name: 'Máy chiếu 1',
@@ -374,7 +482,7 @@ List<Room> rooms = [
         connected: StatefulValuable<bool>(false),
       ),
     ],
-    servers:  [
+    servers: [
       Server(
         ip: '192.168.2.1',
         name: 'Server 1',

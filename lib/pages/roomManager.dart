@@ -7,18 +7,14 @@ import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/component/barChart.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
-import 'package:responsive_dashboard/new_component/Preset.dart';
 import 'package:responsive_dashboard/new_component/header.dart';
-import 'package:responsive_dashboard/component/historyTable.dart';
 import 'package:responsive_dashboard/new_component/info_projector.dart';
 import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
 import 'package:responsive_dashboard/new_component/info_server.dart';
-import 'package:responsive_dashboard/new_component/projector_manager.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
-import 'package:valuable/valuable.dart';
 
 class RoomManager extends StatefulWidget {
   @override
@@ -26,33 +22,16 @@ class RoomManager extends StatefulWidget {
 }
 
 class _RoomManagerState extends State<RoomManager> {
-  // int no_room;
-
-  // _RoomManagerState(int no_room);
-  // List<Projector> list_projector = rooms[current_page.getValue()].projectors;
-  // List<Server> list_server = rooms[current_page.getValue()].servers;
-
-  // bool shouldRefreshList = true;
-
   void select_preset(Room room, int index) async {
     setState(() {
       room.current_preset.setValue(index);
       print(room.name);
     });
   }
-  // Future<void> double_refreshList() async {
-  //   // Simulate a network delay
-  //   await Future.delayed(Duration(milliseconds: 300));
-  //   setState(() {
-  //     list_projector = rooms[current_page.getValue()].projectors;
-  //     list_server = rooms[current_page.getValue()].servers;
-  //     shouldRefreshList = !shouldRefreshList;
-  //     print(shouldRefreshList);
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
+    Room room = rooms[current_page.getValue() - 1];
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
@@ -60,7 +39,7 @@ class _RoomManagerState extends State<RoomManager> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Header(
-              room: rooms[current_page.getValue() - 1],
+              room: room,
             ),
             SizedBox(
               height: SizeConfig.blockSizeVertical * 2,
@@ -72,18 +51,19 @@ class _RoomManagerState extends State<RoomManager> {
                   size: 20,
                   fontWeight: FontWeight.w500),
             ),
-            Padding(
+            Container(
               padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+              margin: EdgeInsets.fromLTRB(0, 20, 0, 30),
+              decoration: BoxDecoration(
+                color: AppColors.gray,
+                borderRadius: BorderRadius.circular(30),
+              ),
               child: Row(
-                children: List.generate(
-                    rooms[current_page.getValue() - 1].presets.length, (index) {
-                  bool isSelected = rooms[current_page.getValue() - 1]
-                          .current_preset
-                          .getValue() ==
-                      index;
+                children: List.generate(room.presets.length, (index) {
+                  bool isSelected = room.current_preset.getValue() == index;
                   return GestureDetector(
                     onTap: () {
-                      select_preset(rooms[current_page.getValue() - 1], index);
+                      select_preset(room, index);
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -96,8 +76,8 @@ class _RoomManagerState extends State<RoomManager> {
                           margin: EdgeInsets.all(20.0),
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? AppColors.navy_blue
-                                : AppColors.black,
+                                ? AppColors.navy_blue2
+                                : AppColors.white,
                             borderRadius:
                                 BorderRadius.circular(isSelected ? 20.0 : 15),
                           ),
@@ -107,9 +87,7 @@ class _RoomManagerState extends State<RoomManager> {
                               borderRadius:
                                   BorderRadius.circular(isSelected ? 15.0 : 10),
                               child: Image.asset(
-                                rooms[current_page.getValue() - 1]
-                                    .presets[index]
-                                    .image,
+                                room.presets[index].image,
                               ),
                             ),
                           ),
@@ -126,11 +104,11 @@ class _RoomManagerState extends State<RoomManager> {
                                     borderRadius: BorderRadius.circular(10),
                                     child: LinearProgressIndicator(
                                       value:
-                                          0.4, //rooms[current_page.getValue() - 1].presets[index].transport.getValue(),
+                                          0.4, //room.presets[index].transport.getValue(),
                                       semanticsLabel:
                                           'Linear progress indicator',
-                                      color: AppColors.navy_blue,
-                                      backgroundColor: AppColors.primary,
+                                      color: AppColors.navy_blue2,
+                                      backgroundColor: AppColors.white,
                                     ),
                                   ),
                                 ),
@@ -143,18 +121,29 @@ class _RoomManagerState extends State<RoomManager> {
                                 Icon(
                                   Icons.account_balance,
                                   size: isSelected ? 26 : 15,
-                                  color: AppColors.primary,
+                                  color: AppColors.white,
                                 ),
                                 SizedBox(
                                     width: SizeConfig.blockSizeHorizontal *
                                         (isSelected ? 1.5 : 0.75)),
-                                PrimaryText(
-                                    text: rooms[current_page.getValue() - 1]
-                                        .presets[index]
-                                        .name,
-                                    size: isSelected ? 17 : 12,
-                                    color: AppColors.primary,
-                                    fontWeight: FontWeight.w600),
+                                AnimatedDefaultTextStyle(
+                                  style: isSelected
+                                      ? TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.w600)
+                                      : TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.w600),
+                                  duration: const Duration(milliseconds: 200),
+                                  child: Text(room.presets[index].name),
+                                ),
+                                // PrimaryText(
+                                //     text: room.presets[index].name,
+                                //     size: isSelected ? 17 : 12,
+                                //     color: AppColors.white,
+                                //     fontWeight: FontWeight.w600),
                               ],
                             ),
                           ],
@@ -165,6 +154,7 @@ class _RoomManagerState extends State<RoomManager> {
                 }),
               ),
             ),
+            //List server
             SizedBox(
               height: SizeConfig.blockSizeVertical * 8,
               child: PrimaryText(
@@ -181,16 +171,14 @@ class _RoomManagerState extends State<RoomManager> {
                     runSpacing: 20,
                     alignment: WrapAlignment.spaceBetween,
                     children: List.generate(
-                      rooms[current_page.getValue() - 1].servers.length,
-                          (index) => InfoServer(
-                          server: rooms[current_page.getValue() - 1]
-                              .servers[index]),
+                      room.servers.length,
+                      (index) => InfoServer(server: room.servers[index]),
                     ))
-              // : SpinKitThreeBounce(
-              //     color: AppColors.navy_blue,
-              //     size: 20,
-              //   ),
-            ),
+                // : SpinKitThreeBounce(
+                //     color: AppColors.navy_blue,
+                //     size: 20,
+                //   ),
+                ),
             SizedBox(
               height: SizeConfig.blockSizeVertical * 4,
             ),
@@ -208,10 +196,9 @@ class _RoomManagerState extends State<RoomManager> {
                     runSpacing: 20,
                     alignment: WrapAlignment.spaceBetween,
                     children: List.generate(
-                      rooms[current_page.getValue() - 1].projectors.length,
-                      (index) => InfoProjector(
-                          projector: rooms[current_page.getValue() - 1]
-                              .projectors[index]),
+                      room.projectors.length,
+                      (index) =>
+                          InfoProjector(projector: room.projectors[index]),
                     ))
                 // : SpinKitThreeBounce(
                 //     color: AppColors.navy_blue,

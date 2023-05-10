@@ -9,7 +9,7 @@ Future<void> main() async {
 
   WindowOptions windowOptions = const WindowOptions(
     title: 'Projector Manager',
-    size: Size(1350, 800),
+    size: Size(1400, 800),
     minimumSize: Size(800, 650),
     center: true,
     backgroundColor: Colors.transparent,

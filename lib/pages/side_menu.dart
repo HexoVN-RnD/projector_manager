@@ -59,11 +59,14 @@ class SideMenu extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: SizeConfig.blockSizeHorizontal*0.5),
-                      PrimaryText(
-                        text: menu.title,
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.w500,
-                        size: 16,
+                      Padding(
+                        padding: const EdgeInsets.only(top: 7.0),
+                        child: PrimaryText(
+                          text: menu.title,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w500,
+                          size: 16,
+                        ),
                       ),
                     ],
                   ),

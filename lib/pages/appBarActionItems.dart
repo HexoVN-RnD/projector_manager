@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 
 class AppBarActionItems extends StatelessWidget {
@@ -12,14 +13,28 @@ class AppBarActionItems extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Expanded(
-            child: Container(
-              alignment: Alignment.centerLeft,
-                width: 100,
-                height: 30,
-                child: Image.asset('assets/logo2.png')
-            )
-        ),
+        !Responsive.isDesktop(context)
+            ? Container(
+                alignment: Alignment.centerLeft,
+                width: 160,
+                height: 50,
+                child: Image.asset(
+                  'assets/small_logo.png',
+                  filterQuality: FilterQuality.high,
+                  fit: BoxFit.fitHeight,
+                ))
+            : Expanded(
+              child: Container(
+                  alignment: Alignment.centerLeft,
+                  width: 150,
+                  height: 50,
+                  child: Image.asset(
+                    'assets/small_logo.png',
+                    filterQuality: FilterQuality.high,
+                    fit: BoxFit.fitHeight,
+                  )),
+            ),
+        SizedBox(width: 10),
         IconButton(
             icon: SvgPicture.asset(
               'assets/calendar.svg',

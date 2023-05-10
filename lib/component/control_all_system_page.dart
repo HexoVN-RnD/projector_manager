@@ -30,7 +30,7 @@ class _HomePage extends State<HomePage> {
             SizedBox(
               height: SizeConfig.blockSizeVertical * 2,
             ),
-            ProjectorsManager(),
+            // ProjectorsManager(),
             SizedBox(
               height: SizeConfig.blockSizeVertical * 4,
             ),

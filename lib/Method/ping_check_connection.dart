@@ -1,5 +1,11 @@
 import 'package:responsive_dashboard/Method/networkAddress.dart';
+import 'package:responsive_dashboard/dashboard.dart';
+import 'package:responsive_dashboard/data/data.dart';
 import 'package:valuable/valuable.dart';
+
+void CheckRoomConnection() {
+  print(current_page.getValue());
+}
 
 void check_connection(String ip, StatefulValuable<bool> connection) {
   // NetworkAnalyzer.discover pings PORT:IP one by one according to timeout.

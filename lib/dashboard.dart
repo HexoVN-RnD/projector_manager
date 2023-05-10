@@ -104,10 +104,14 @@ class _DashboardState extends State<Dashboard> {
               leading: IconButton(
                   onPressed: () {
                     _drawerKey.currentState.openDrawer();
+                    print('done');
                   },
                   icon: Icon(Icons.menu, color: AppColors.black)),
               actions: [
-                AppBarActionItems(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AppBarActionItems(),
+                ),
               ],
             )
           : PreferredSize(
@@ -121,8 +125,22 @@ class _DashboardState extends State<Dashboard> {
             if (Responsive.isDesktop(context))
               Container(
                 width: 160,
+                // decoration: BoxDecoration(
+                //   color: Colors.amber,
+                //   borderRadius: BorderRadius.horizontal(right: Radius.circular(1))
+                // ),
+                color: AppColors.barBg,
                 child: Column(
                   children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(20,0,20,0),
+                        alignment: Alignment.centerLeft,
+                        height: 84,
+                        child: Image.asset(
+                          'assets/small_logo.png',
+                          filterQuality: FilterQuality.high,
+                          fit: BoxFit.fitHeight,
+                        )),
                     Column(
                       children: List.generate(
                         sidebarMenus.length,

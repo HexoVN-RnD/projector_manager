@@ -9,13 +9,13 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
 
-class ManageAllProjectors extends StatefulWidget {
+class ManageAllServers extends StatefulWidget {
 
   @override
-  _ManageAllProjectorsState createState() => _ManageAllProjectorsState();
+  _ManageAllServersState createState() => _ManageAllServersState();
 }
 
-class _ManageAllProjectorsState extends State<ManageAllProjectors> {
+class _ManageAllServersState extends State<ManageAllServers> {
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                   width: SizeConfig.blockSizeHorizontal,
                 ),
                 PrimaryText(
-                  text: 'Quản lý máy chiếu',
+                  text: 'Quản lý servers',
                   color: AppColors.gray,
                   size: 20,
                   fontWeight: FontWeight.w600,
@@ -49,7 +49,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                   ),
                 ),
                 PrimaryText(
-                text: 'num',//projectors.length.toString(),
+                text: 'server',//projectors.length.toString(),
                 color: AppColors.iconDeepGray,
                 size: 16
                 )
@@ -59,7 +59,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 PrimaryText(
-                  text: "Bật/tắt toàn bộ máy chiếu",
+                  text: "Bật/tắt toàn bộ servers",
                   color: AppColors.gray,
                   size: 18,
                   fontWeight: FontWeight.w500,
@@ -70,7 +70,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                   ),
                 ),
                 PrimaryText(
-                    text: allRoom.power_all_projectors.getValue().toString(),
+                    text: allRoom.power_all_servers.getValue().toString(),
                     color: AppColors.iconDeepGray,
                     size: 16),
                 SizedBox(
@@ -79,11 +79,11 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                 Transform.scale(
                   scale: 1,
                   child: CupertinoSwitch(
-                    value: allRoom.power_all_projectors.getValue(),
+                    value: allRoom.power_all_servers.getValue(),
                     activeColor: AppColors.navy_blue,
                     onChanged: (value) {
                       setState(() {
-                        PowerAllProjectors();
+                        PowerAllServers();
                       });
                     },
                   ),
@@ -94,7 +94,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 PrimaryText(
-                  text: "Bật/tắt toàn bộ màn chập",
+                  text: "Điều chỉnh âm thanh",
                   color: AppColors.gray,
                   size: 18,
                   fontWeight: FontWeight.w500,
@@ -105,7 +105,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                   ),
                 ),
                 PrimaryText(
-                    text:allRoom.shutter_all_projectors.getValue().toString(),
+                    text:allRoom.volume_all.getValue().toStringAsFixed(2),
                     color: AppColors.iconDeepGray,
                     size: 16),
                 SizedBox(
@@ -113,14 +113,15 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                 ),
                 Transform.scale(
                   scale: 1,
-                  child: CupertinoSwitch(
-                  value: allRoom.shutter_all_projectors.getValue(),
-                  activeColor: AppColors.navy_blue,
-                  onChanged: (value) {
-                      setState(() {
-                        ShutterAllProjectors();
-                      });
+                  child: Slider(
+                    activeColor: AppColors.navy_blue,
+                    value: allRoom.volume_all.getValue(),
+                    onChanged: (index) {
+                      setState(() => ChangeAllVolume(index));
                     },
+                    min: 0,
+                    max: 1,
+                    // divisions: 5,
                   ),
                 ),
               ],
