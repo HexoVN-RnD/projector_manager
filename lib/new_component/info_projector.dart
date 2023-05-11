@@ -23,17 +23,28 @@ class InfoProjector extends StatefulWidget {
 //   bool value = true;
 
 class _InfoProjector extends State<InfoProjector> {
-
   void PowerModeProjector(Projector projector) {
-    projector.power_status.getValue()? sendPJLinkCommand(projector.ip,projector.port, '(PWR 0)'): sendPJLinkCommand(projector.ip,projector.port, '(PWR 1)');
+    projector.power_status.getValue()
+        ? sendPJLinkCommand(projector.ip, projector.port, '(PWR 0)')
+        : sendPJLinkCommand(projector.ip, projector.port, '(PWR 1)');
     projector.power_status.setValue(!projector.power_status.getValue());
-    print(projector.ip + " " +projector.port.toString() +" PWR " +projector.power_status.getValue().toString());
+    print(projector.ip +
+        " " +
+        projector.port.toString() +
+        " PWR " +
+        projector.power_status.getValue().toString());
   }
 
   void ShutterModeProjector(Projector projector) {
-    projector.shutter_status.getValue()? sendPJLinkCommand(projector.ip,projector.port, '(SHU 0)'): sendPJLinkCommand(projector.ip,projector.port, '(SHU 1)');
+    projector.shutter_status.getValue()
+        ? sendPJLinkCommand(projector.ip, projector.port, '(SHU 0)')
+        : sendPJLinkCommand(projector.ip, projector.port, '(SHU 1)');
     projector.shutter_status.setValue(!projector.shutter_status.getValue());
-    print(projector.ip + " " +projector.port.toString() +" SHU " +projector.shutter_status.getValue().toString());
+    print(projector.ip +
+        " " +
+        projector.port.toString() +
+        " SHU " +
+        projector.shutter_status.getValue().toString());
   }
 
   // void MuteVideoProjector() {
@@ -48,7 +59,7 @@ class _InfoProjector extends State<InfoProjector> {
 
   @override
   Widget build(BuildContext context) {
-    Projector projector=widget.projector;
+    Projector projector = widget.projector;
     return Container(
       constraints: BoxConstraints(
           minWidth: Responsive.isDesktop(context)
@@ -86,9 +97,7 @@ class _InfoProjector extends State<InfoProjector> {
                 ),
               ),
               PrimaryText(
-                  text: projector.ip,
-                  color: AppColors.secondary,
-                  size: 16)
+                  text: projector.ip, color: AppColors.secondary, size: 14)
             ],
           ),
           Row(
@@ -104,10 +113,6 @@ class _InfoProjector extends State<InfoProjector> {
                   width: SizeConfig.blockSizeHorizontal,
                 ),
               ),
-              PrimaryText(
-                  text: projector.power_status.getValue().toString(),
-                  color: AppColors.secondary,
-                  size: 16),
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal,
               ),
@@ -125,6 +130,10 @@ class _InfoProjector extends State<InfoProjector> {
               ),
             ],
           ),
+          PrimaryText(
+              text: projector.power_status.getValue() ? 'Đã bật máy chiếu' : 'Đã tắt máy chiếu',
+              color: AppColors.secondary,
+              size: 14),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -138,10 +147,6 @@ class _InfoProjector extends State<InfoProjector> {
                   width: SizeConfig.blockSizeHorizontal,
                 ),
               ),
-              PrimaryText(
-                  text: projector.shutter_status.getValue().toString(),
-                  color: AppColors.secondary,
-                  size: 16),
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal,
               ),
@@ -159,6 +164,10 @@ class _InfoProjector extends State<InfoProjector> {
               ),
             ],
           ),
+          PrimaryText(
+              text: projector.shutter_status.getValue()? 'Đã bật màn chập' : 'Đã tắt màn chập',
+              color: AppColors.secondary,
+              size: 14),
           // Row(
           //   crossAxisAlignment: CrossAxisAlignment.center,
           //   children: [
@@ -175,7 +184,7 @@ class _InfoProjector extends State<InfoProjector> {
           //     PrimaryText(
           //         text: projector.mute_video.getValue().toString(),
           //         color: AppColors.secondary,
-          //         size: 16),
+          //         size: 14),
           //     SizedBox(
           //       width: SizeConfig.blockSizeHorizontal,
           //     ),
@@ -208,7 +217,7 @@ class _InfoProjector extends State<InfoProjector> {
           //     PrimaryText(
           //         text: projector.mute_audio.getValue().toString(),
           //         color: AppColors.secondary,
-          //         size: 16),
+          //         size: 14),
           //     SizedBox(
           //       width: SizeConfig.blockSizeHorizontal,
           //     ),

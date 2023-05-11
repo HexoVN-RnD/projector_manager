@@ -69,13 +69,6 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                     width: SizeConfig.blockSizeHorizontal,
                   ),
                 ),
-                PrimaryText(
-                    text: allRoom.power_all_projectors.getValue().toString(),
-                    color: AppColors.iconDeepGray,
-                    size: 16),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
                 Transform.scale(
                   scale: 1,
                   child: CupertinoSwitch(
@@ -90,6 +83,22 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                 ),
               ],
             ),
+            PrimaryText(
+                text: 'Phòng 2 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
+            PrimaryText(
+                text: 'Phòng 4 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
+            PrimaryText(
+                text: 'Phòng 5 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
+            PrimaryText(
+                text: 'Phòng 6 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -103,13 +112,6 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                   child: SizedBox(
                     width: SizeConfig.blockSizeHorizontal,
                   ),
-                ),
-                PrimaryText(
-                    text:allRoom.shutter_all_projectors.getValue().toString(),
-                    color: AppColors.iconDeepGray,
-                    size: 16),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
                 ),
                 Transform.scale(
                   scale: 1,
@@ -125,6 +127,22 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                 ),
               ],
             ),
+            PrimaryText(
+                text: 'Phòng 2 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
+            PrimaryText(
+                text: 'Phòng 4 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
+            PrimaryText(
+                text: 'Phòng 5 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
+            PrimaryText(
+                text: 'Phòng 6 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
           ],
         ),);
   }

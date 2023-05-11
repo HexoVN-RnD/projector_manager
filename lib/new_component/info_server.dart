@@ -113,10 +113,6 @@ class _InfoServer extends State<InfoServer> {
                   width: SizeConfig.blockSizeHorizontal,
                 ),
               ),
-              PrimaryText(
-                  text: server.power_status.getValue().toString(),
-                  color: AppColors.secondary,
-                  size: 16),
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal,
               ),
@@ -134,6 +130,10 @@ class _InfoServer extends State<InfoServer> {
               ),
             ],
           ),
+          PrimaryText(
+              text: server.power_status.getValue()? 'Đã bật': 'Đã tắt',
+              color: AppColors.secondary,
+              size: 16),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

@@ -59,7 +59,15 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
 
             ],
           ),
-          SizedBox(height: SizeConfig.blockSizeVertical * 2,),
+
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
+            height: 200,
+            decoration: BoxDecoration(
+              color: AppColors.gray,
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
           PrimaryText(
             text: 'Kiểm tra tín hiệu server',
             size: 16,

@@ -69,13 +69,6 @@ class _ManageAllServersState extends State<ManageAllServers> {
                     width: SizeConfig.blockSizeHorizontal,
                   ),
                 ),
-                PrimaryText(
-                    text: allRoom.power_all_servers.getValue().toString(),
-                    color: AppColors.iconDeepGray,
-                    size: 16),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
                 Transform.scale(
                   scale: 1,
                   child: CupertinoSwitch(
@@ -90,6 +83,22 @@ class _ManageAllServersState extends State<ManageAllServers> {
                 ),
               ],
             ),
+            PrimaryText(
+                text: 'Phòng 2 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
+            PrimaryText(
+                text: 'Phòng 4 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
+            PrimaryText(
+                text: 'Phòng 5 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
+            PrimaryText(
+                text: 'Phòng 6 đã bật 2/2',
+                color: AppColors.iconDeepGray,
+                size: 16),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

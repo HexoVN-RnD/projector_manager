@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
 import 'package:responsive_dashboard/data/data.dart';
-import 'package:responsive_dashboard/new_component/projector_manager.dart';
+import 'package:responsive_dashboard/new_component/manageAllProjectors.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
-import 'package:responsive_dashboard/new_component/server_manager.dart';
+import 'package:responsive_dashboard/new_component/manageAllServers.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
