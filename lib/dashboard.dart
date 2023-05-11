@@ -133,7 +133,7 @@ class _DashboardState extends State<Dashboard> {
                 child: Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.fromLTRB(20,0,20,0),
+                      padding: EdgeInsets.fromLTRB(30,0,30,0),
                         alignment: Alignment.centerLeft,
                         height: 84,
                         child: Image.asset(
