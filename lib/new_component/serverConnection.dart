@@ -36,22 +36,27 @@ class _ServerConnection extends State<ServerConnection> {
             // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
-      title: PrimaryText(
-          text: widget.server.name, size: 14, fontWeight: FontWeight.w500),
-      subtitle: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      title: Row(
         children: [
+          Expanded(
+            child: PrimaryText(
+                text: widget.server.name, size: 15, fontWeight: FontWeight.w700),
+          ),
+
           PrimaryText(
             text: widget.server.ip,
-            size: 12,
+            size: 13,
             fontWeight: FontWeight.w400,
             color: AppColors.secondary,
           ),
-          PrimaryText(
-              text: widget.server.connected.getValue()? 'Connected': 'Disconnected',
-              size: 16,
-              fontWeight: FontWeight.w600),
         ],
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: PrimaryText(
+            text: widget.server.connected.getValue()? 'Connected': 'Disconnected',
+            size: 13,
+            fontWeight: FontWeight.w600),
       ),
       onTap: () {
         setState(() {

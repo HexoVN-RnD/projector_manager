@@ -32,7 +32,7 @@ class SideMenu extends StatelessWidget {
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.fastOutSlowIn,
-                width: selectedMenu == menu ? 160 : 0,
+                width: selectedMenu == menu ? 200 : 0,
                 height: 70,
                 left: 0,
                 child: Container(
@@ -46,7 +46,7 @@ class SideMenu extends StatelessWidget {
               GestureDetector(
                 onTap: press,
                 child: Container(
-                  padding: const EdgeInsets.fromLTRB(10, 15, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(20, 15, 0, 0),
                   child: Row(
                     children: [
                       SizedBox(

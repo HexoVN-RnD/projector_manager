@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
+import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/new_component/serverConnection.dart';
 import 'package:responsive_dashboard/new_component/projectorConnection.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -43,7 +44,7 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
                   style:ElevatedButton.styleFrom(
                     backgroundColor: AppColors.navy_blue,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(20),
                     ),
                   ),
                   onPressed: () {
@@ -53,6 +54,7 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
                   },
                   child: PrimaryText(text: 'Kiểm tra',
                   size: 14,
+                  // color: AppColors.white,
                   fontWeight: FontWeight.w500,),
                 ),
               )
@@ -62,7 +64,7 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
 
           Container(
             margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-            height: 200,
+            height: Responsive.isDesktop(context)? MediaQuery.of(context).size.width/6: MediaQuery.of(context).size.width/1.66,
             decoration: BoxDecoration(
               color: AppColors.gray,
               borderRadius: BorderRadius.circular(15),

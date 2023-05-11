@@ -67,7 +67,7 @@ class _InfoServer extends State<InfoServer> {
               ? 300
               : SizeConfig.screenWidth / 2 - 75,
           maxWidth: Responsive.isDesktop(context)
-              ? SizeConfig.screenWidth / 3 - 75
+              ? SizeConfig.screenWidth / 3 - 110
               : SizeConfig.screenWidth / 2 - 45),
       padding: EdgeInsets.only(
           top: 20,
@@ -134,48 +134,11 @@ class _InfoServer extends State<InfoServer> {
               text: server.power_status.getValue()? 'Đã bật': 'Đã tắt',
               color: AppColors.secondary,
               size: 16),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              PrimaryText(
-                text: "Âm thanh",
-                size: 18,
-                fontWeight: FontWeight.w500,
-              ),
-              Expanded(
-                child: SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-              ),
-              // PrimaryText(
-              //     text: server.volume.getValue().toString(),
-              //     color: AppColors.secondary,
-              //     size: 16),
-              // SizedBox(
-              //   width: SizeConfig.blockSizeHorizontal,
-              // ),
-              Expanded(
-                child: Transform.scale(
-                  scale: 1,
-                  child: Slider(
-                    activeColor: AppColors.navy_blue,
-                    value: server.volume.getValue(),
-                    onChanged: (index) {
-                      setState(() => ChangeVolume(server, index));
-                    },
-                    min: 0,
-                    max: 1,
-                    // divisions: 5,
-                  ),
-                ),
-              ),
-            ],
-          ),
           // Row(
           //   crossAxisAlignment: CrossAxisAlignment.center,
           //   children: [
           //     PrimaryText(
-          //       text: "Mute video",
+          //       text: "Âm thanh",
           //       size: 18,
           //       fontWeight: FontWeight.w500,
           //     ),
@@ -184,59 +147,35 @@ class _InfoServer extends State<InfoServer> {
           //         width: SizeConfig.blockSizeHorizontal,
           //       ),
           //     ),
-          //     PrimaryText(
-          //         text: projector.mute_video.getValue().toString(),
-          //         color: AppColors.secondary,
-          //         size: 16),
-          //     SizedBox(
-          //       width: SizeConfig.blockSizeHorizontal,
-          //     ),
-          //     Transform.scale(
-          //       scale: 1,
-          //       child: CupertinoSwitch(
-          //         value: projector.mute_video.getValue(),
-          //         onChanged: (value) {
-          //           setState(() {
-          //             MuteVideoProjector();
-          //           });
-          //         },
-          //       ),
-          //     ),
-          //   ],
-          // ),
-          // Row(
-          //   crossAxisAlignment: CrossAxisAlignment.center,
-          //   children: [
-          //     PrimaryText(
-          //       text: "Mute audio",
-          //       size: 18,
-          //       fontWeight: FontWeight.w500,
-          //     ),
+          //     // PrimaryText(
+          //     //     text: server.volume.getValue().toString(),
+          //     //     color: AppColors.secondary,
+          //     //     size: 16),
+          //     // SizedBox(
+          //     //   width: SizeConfig.blockSizeHorizontal,
+          //     // ),
           //     Expanded(
-          //       child: SizedBox(
-          //         width: SizeConfig.blockSizeHorizontal,
-          //       ),
-          //     ),
-          //     PrimaryText(
-          //         text: projector.mute_audio.getValue().toString(),
-          //         color: AppColors.secondary,
-          //         size: 16),
-          //     SizedBox(
-          //       width: SizeConfig.blockSizeHorizontal,
-          //     ),
-          //     Transform.scale(
-          //       scale: 1,
-          //       child: CupertinoSwitch(
-          //         value: projector.mute_audio.getValue(),
-          //         onChanged: (value) {
-          //           setState(() {
-          //             MuteAudioProjector();
-          //           });
-          //         },
+          //       child: Transform.scale(
+          //         scale: 1,
+          //         child: Slider(
+          //           activeColor: AppColors.navy_blue,
+          //           inactiveColor: AppColors.light_navy_blue,
+          //           value: server.volume.getValue(),
+          //           onChanged: (index) {
+          //             setState(() => ChangeVolume(server, index));
+          //           },
+          //           min: 0,
+          //           max: 1,
+          //           // divisions: 5,
+          //         ),
           //       ),
           //     ),
           //   ],
           // ),
+          // PrimaryText(
+          //     text: (server.volume.getValue()*100).toStringAsFixed(0), //+'%',
+          //     color: AppColors.secondary,
+          //     size: 16),
         ],
       ),
     );

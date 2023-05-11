@@ -35,22 +35,28 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
             // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
-      title: PrimaryText(
-          text: widget.projector.name, size: 14, fontWeight: FontWeight.w500),
-      subtitle: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      title: Row(
         children: [
+          Expanded(
+            child: PrimaryText(
+                text: widget.projector.name, size: 15, fontWeight: FontWeight.w700),
+
+          ),
+
           PrimaryText(
             text: widget.projector.ip,
-            size: 12,
+            size: 13,
             fontWeight: FontWeight.w400,
             color: AppColors.secondary,
           ),
-          PrimaryText(
-              text: widget.projector.connected.getValue()? 'Connected': 'Disconnected',
-              size: 16,
-              fontWeight: FontWeight.w600),
         ],
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: PrimaryText(
+            text: widget.projector.connected.getValue()? 'Connected': 'Disconnected',
+            size: 13,
+            fontWeight: FontWeight.w600),
       ),
       onTap: () {
         setState(() {

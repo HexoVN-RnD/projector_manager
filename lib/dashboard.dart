@@ -26,6 +26,7 @@ class _DashboardState extends State<Dashboard> {
   void changePage(int index) {
     setState(() {
       _drawerKey.currentState?.closeDrawer();
+      selectedSideMenu = sidebarMenus[index];
       current_page.setValue(index);
     });
   }
@@ -124,12 +125,11 @@ class _DashboardState extends State<Dashboard> {
           children: [
             if (Responsive.isDesktop(context))
               Container(
-                width: 160,
-                // decoration: BoxDecoration(
-                //   color: Colors.amber,
-                //   borderRadius: BorderRadius.horizontal(right: Radius.circular(1))
-                // ),
-                color: AppColors.barBg,
+                width: 200,
+                decoration: BoxDecoration(
+                  color: AppColors.barBg,
+                  borderRadius: BorderRadius.horizontal(right: Radius.circular(30))
+                ),
                 child: Column(
                   children: [
                     Container(
@@ -151,8 +151,7 @@ class _DashboardState extends State<Dashboard> {
                             RiveUtils.changeSMIBoolState(
                                 sidebarMenus[index].rive.status!);
                             setState(() {
-                              selectedSideMenu = sidebarMenus[index];
-                              current_page.setValue(index);
+                              changePage(index);
                             });
                           },
                           riveOnInit: (artboard) {
@@ -170,7 +169,7 @@ class _DashboardState extends State<Dashboard> {
             Expanded(flex: 10, child: SelectPage()),
             if (Responsive.isDesktop(context) && current_page.getValue() != 0)
               Expanded(
-                flex: 4,
+                flex: 5,
                 child: SafeArea(
                   child: Container(
                     width: double.infinity,

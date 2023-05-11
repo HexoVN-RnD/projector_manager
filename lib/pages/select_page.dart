@@ -23,11 +23,9 @@ class SelectPage extends StatefulWidget {
 class _SelectPageState extends State<SelectPage> {
   @override
   Widget build(BuildContext context) {
-    // If our width is more than 1200 then we consider it a desktop
     if (current_page.getValue() == 0) {
       return HomePage();
     }
-    // If width it less then 1200 and more then 768 we consider it as tablet
     else {
       return RoomManager();
     }

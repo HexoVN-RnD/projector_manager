@@ -48,9 +48,9 @@ void ShutterAllProjectors() {
   }
 }
 
-void PowerAllServers() {
-  allRoom.power_all_servers
-      .setValue(!allRoom.power_all_servers.getValue());
+void PowerAllServers(bool mode) {
+  print(mode);
+  allRoom.power_all_servers.setValue(mode);
   for (var room in rooms) {
     for (var server in room.servers) {
       server.power_status.setValue(allRoom.power_all_servers.getValue());

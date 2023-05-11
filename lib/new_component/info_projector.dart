@@ -66,7 +66,7 @@ class _InfoProjector extends State<InfoProjector> {
               ? 280
               : SizeConfig.screenWidth / 2 - 75,
           maxWidth: Responsive.isDesktop(context)
-              ? SizeConfig.screenWidth / 3 - 75
+              ? SizeConfig.screenWidth / 3 - 110
               : SizeConfig.screenWidth / 2 - 45),
       padding: EdgeInsets.only(
           top: 20,

@@ -5,6 +5,7 @@ import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/data/data.dart';
+import 'package:responsive_dashboard/new_component/borderButton.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
@@ -20,8 +21,9 @@ class _ManageAllServersState extends State<ManageAllServers> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 600 : SizeConfig.screenWidth - 40,
-                                  maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth-40 : SizeConfig.screenWidth- 40),
+      height: Responsive.isDesktop(context)? 350:null,
+      constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth-40,
+                                  maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth/2-150 :SizeConfig.screenWidth-40),
         padding: EdgeInsets.only(
             top: 20, bottom: 20, left: 20, right: Responsive.isMobile(context) ? 20 : 40),
         decoration: BoxDecoration(
@@ -55,33 +57,81 @@ class _ManageAllServersState extends State<ManageAllServers> {
                 )
               ],
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                PrimaryText(
-                  text: "Bật/tắt toàn bộ servers",
-                  color: AppColors.gray,
-                  size: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-                Expanded(
-                  child: SizedBox(
-                    width: SizeConfig.blockSizeHorizontal,
+            Container(
+              height: 50,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  PrimaryText(
+                    text: "Bật/tắt toàn bộ servers",
+                    color: AppColors.gray,
+                    size: 18,
+                    fontWeight: FontWeight.w500,
                   ),
-                ),
-                Transform.scale(
-                  scale: 1,
-                  child: CupertinoSwitch(
-                    value: allRoom.power_all_servers.getValue(),
-                    activeColor: AppColors.navy_blue,
-                    onChanged: (value) {
-                      setState(() {
-                        PowerAllServers();
-                      });
-                    },
+                  Expanded(
+                    child: SizedBox(
+                      width: SizeConfig.blockSizeHorizontal,
+                    ),
                   ),
-                ),
-              ],
+                  Container(
+                      height: 40,
+                      width: 60,
+                    child: ElevatedButton(
+                      style:ElevatedButton.styleFrom(
+                        backgroundColor: allRoom.power_all_servers.getValue()? AppColors.navy_blue: AppColors.gray,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          PowerAllServers(true);
+                        });
+                      },
+                      child: PrimaryText(text: 'On',
+                        size: 14,
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w500,),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(35,0,15,0),
+                    child: Container(
+                      height: 40,
+                      width: 60,
+                      child: ElevatedButton(
+                        style:ElevatedButton.styleFrom(
+                          backgroundColor: !allRoom.power_all_servers.getValue()? AppColors.navy_blue: AppColors.gray,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            PowerAllServers(false);
+                          });
+                        },
+                        child: PrimaryText(text: 'Off',
+                          size: 14,
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w500,),
+                      ),
+                    ),
+                  ),
+                  // Transform.scale(
+                  //   scale: 1,
+                  //   child: CupertinoSwitch(
+                  //     value: allRoom.power_all_servers.getValue(),
+                  //     activeColor: AppColors.navy_blue,
+                  //     onChanged: (value) {
+                  //       setState(() {
+                  //         PowerAllServers(true);
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
             PrimaryText(
                 text: 'Phòng 2 đã bật 2/2',
@@ -99,42 +149,46 @@ class _ManageAllServersState extends State<ManageAllServers> {
                 text: 'Phòng 6 đã bật 2/2',
                 color: AppColors.iconDeepGray,
                 size: 16),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                PrimaryText(
-                  text: "Điều chỉnh âm thanh",
-                  color: AppColors.gray,
-                  size: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-                Expanded(
-                  child: SizedBox(
-                    width: SizeConfig.blockSizeHorizontal,
-                  ),
-                ),
-                PrimaryText(
-                    text:allRoom.volume_all.getValue().toStringAsFixed(2),
-                    color: AppColors.iconDeepGray,
-                    size: 16),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Transform.scale(
-                  scale: 1,
-                  child: Slider(
-                    activeColor: AppColors.navy_blue,
-                    value: allRoom.volume_all.getValue(),
-                    onChanged: (index) {
-                      setState(() => ChangeAllVolume(index));
-                    },
-                    min: 0,
-                    max: 1,
-                    // divisions: 5,
-                  ),
-                ),
-              ],
-            ),
+            // Container(
+            //   height: 50,
+            //   child: Row(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       PrimaryText(
+            //         text: "Điều chỉnh âm thanh",
+            //         color: AppColors.gray,
+            //         size: 18,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //       Expanded(
+            //         child: SizedBox(
+            //           width: SizeConfig.blockSizeHorizontal,
+            //         ),
+            //       ),
+            //       PrimaryText(
+            //           text:allRoom.volume_all.getValue().toStringAsFixed(2),
+            //           color: AppColors.iconDeepGray,
+            //           size: 16),
+            //       SizedBox(
+            //         width: SizeConfig.blockSizeHorizontal,
+            //       ),
+            //       Transform.scale(
+            //         scale: 1,
+            //         child: Slider(
+            //           activeColor: AppColors.navy_blue,
+            //           inactiveColor: AppColors.light_navy_blue,
+            //           value: allRoom.volume_all.getValue(),
+            //           onChanged: (index) {
+            //             setState(() => ChangeAllVolume(index));
+            //           },
+            //           min: 0,
+            //           max: 1,
+            //           // divisions: 5,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),);
   }

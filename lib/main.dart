@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:window_manager/window_manager.dart';
@@ -9,19 +10,21 @@ Future<void> main() async {
 
   WindowOptions windowOptions = const WindowOptions(
     title: 'Projector Manager',
-    size: Size(1400, 800),
+    size: Size(1920, 1050),
+    // fullScreen: true,
     minimumSize: Size(800, 650),
     center: true,
     backgroundColor: Colors.transparent,
     skipTaskbar: false,
     titleBarStyle: TitleBarStyle.normal,
-    windowButtonVisibility: false,
+    windowButtonVisibility: true,
   );
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
     await windowManager.focus();
   });
   runApp(MyApp());
+  CheckAllConnectionOpening();
 }
 
 class MyApp extends StatelessWidget {

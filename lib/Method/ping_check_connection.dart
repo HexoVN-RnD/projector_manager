@@ -3,6 +3,10 @@ import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:valuable/valuable.dart';
 
+void CheckAllConnectionOpening() {
+  print(current_page.getValue());
+}
+
 void CheckRoomConnection() {
   print(current_page.getValue());
 }

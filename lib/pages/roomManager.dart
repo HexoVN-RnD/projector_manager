@@ -9,6 +9,7 @@ import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/new_component/header.dart';
 import 'package:responsive_dashboard/new_component/info_projector.dart';
+import 'package:responsive_dashboard/new_component/volume_edit.dart';
 import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
 import 'package:responsive_dashboard/new_component/info_server.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
@@ -46,10 +47,19 @@ class _RoomManagerState extends State<RoomManager> {
             ),
             SizedBox(
               height: SizeConfig.blockSizeVertical * 4,
-              child: PrimaryText(
-                  text: 'Nội dung'.toUpperCase(),
-                  size: 20,
-                  fontWeight: FontWeight.w500),
+              child: Row(
+                children: [
+                  Icon(Icons.movie_filter, size: 25,color: AppColors.gray,),
+                  SizedBox(
+                    width: SizeConfig.blockSizeVertical,
+                  ),
+                  PrimaryText(
+                      text: 'Nội dung'.toUpperCase(),
+                      size: 20,
+                      color: AppColors.gray,
+                      fontWeight: FontWeight.w500),
+                ],
+              ),
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
@@ -58,109 +68,135 @@ class _RoomManagerState extends State<RoomManager> {
                 color: AppColors.gray,
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: Row(
-                children: List.generate(room.presets.length, (index) {
-                  bool isSelected = room.current_preset.getValue() == index;
-                  return GestureDetector(
-                    onTap: () {
-                      select_preset(room, index);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        AnimatedContainer(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.easeInOut,
-                          width: isSelected ? 180.0 : 120.0,
-                          height: isSelected ? 180.0 : 120.0,
-                          margin: EdgeInsets.all(20.0),
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? AppColors.navy_blue2
-                                : AppColors.white,
-                            borderRadius:
-                                BorderRadius.circular(isSelected ? 20.0 : 15),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.all(5),
-                            child: ClipRRect(
-                              borderRadius:
-                                  BorderRadius.circular(isSelected ? 15.0 : 10),
-                              child: Image.asset(
-                                room.presets[index].image,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (isSelected)
-                              SizedBox(
-                                height: 10,
-                                width: 160,
-                                child: Container(
+              child: Column(
+                children: [
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(room.presets.length, (index) {
+                        bool isSelected = room.current_preset.getValue() == index;
+                        return GestureDetector(
+                          onTap: () {
+                            select_preset(room, index);
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AnimatedContainer(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                                width: isSelected ? 180.0 : 120.0,
+                                height: isSelected ? 180.0 : 120.0,
+                                margin: EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? AppColors.navy_blue2
+                                      : AppColors.white,
+                                  borderRadius:
+                                      BorderRadius.circular(isSelected ? 20.0 : 15),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(5),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: LinearProgressIndicator(
-                                      value:
-                                          0.4, //room.presets[index].transport.getValue(),
-                                      semanticsLabel:
-                                          'Linear progress indicator',
-                                      color: AppColors.navy_blue2,
-                                      backgroundColor: AppColors.white,
+                                    borderRadius:
+                                        BorderRadius.circular(isSelected ? 15.0 : 10),
+                                    child: Image.asset(
+                                      room.presets[index].image,
                                     ),
                                   ),
                                 ),
                               ),
-                            if (isSelected)
-                              SizedBox(height: SizeConfig.blockSizeVertical),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.account_balance,
-                                  size: isSelected ? 26 : 15,
-                                  color: AppColors.white,
-                                ),
-                                SizedBox(
-                                    width: SizeConfig.blockSizeHorizontal *
-                                        (isSelected ? 1.5 : 0.75)),
-                                AnimatedDefaultTextStyle(
-                                  style: isSelected
-                                      ? TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 17.0,
-                                          fontWeight: FontWeight.w600)
-                                      : TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 12.0,
-                                          fontWeight: FontWeight.w600),
-                                  duration: const Duration(milliseconds: 200),
-                                  child: Text(room.presets[index].name),
-                                ),
-                                // PrimaryText(
-                                //     text: room.presets[index].name,
-                                //     size: isSelected ? 17 : 12,
-                                //     color: AppColors.white,
-                                //     fontWeight: FontWeight.w600),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  if (isSelected)
+                                    SizedBox(
+                                      height: 10,
+                                      width: 160,
+                                      child: Container(
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(10),
+                                          child: LinearProgressIndicator(
+                                            value:
+                                                0.4, //room.presets[index].transport.getValue(),
+                                            semanticsLabel:
+                                                'Linear progress indicator',
+                                            color: AppColors.navy_blue2,
+                                            backgroundColor: AppColors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  if (isSelected)
+                                    SizedBox(height: SizeConfig.blockSizeVertical),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.account_balance,
+                                        size: isSelected ? 26 : 15,
+                                        color: AppColors.white,
+                                      ),
+                                      SizedBox(
+                                          width: SizeConfig.blockSizeHorizontal *
+                                              (isSelected ? 1.5 : 0.75)),
+                                      AnimatedDefaultTextStyle(
+                                        style: isSelected
+                                            ? TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 17.0,
+                                                fontWeight: FontWeight.w600)
+                                            : TextStyle(
+                                                fontFamily: 'Poppins',
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.w600),
+                                        duration: const Duration(milliseconds: 200),
+                                        child: Text(room.presets[index].name),
+                                      ),
+                                      // PrimaryText(
+                                      //     text: room.presets[index].name,
+                                      //     size: isSelected ? 17 : 12,
+                                      //     color: AppColors.white,
+                                      //     fontWeight: FontWeight.w600),
+                                    ],
+                                  ),
+
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                     ),
-                  );
-                }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: List.generate(
+                        room.servers.length,
+                            (index) => VolumeEdit(server: room.servers[index]),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             //List server
             SizedBox(
               height: SizeConfig.blockSizeVertical * 8,
-              child: PrimaryText(
-                  text: 'Quản lý server'.toUpperCase(),
-                  size: 20,
-                  fontWeight: FontWeight.w500),
+              child: Row(
+                children: [
+                  Icon(Icons.personal_video, size: 25,color: AppColors.gray,),
+                  SizedBox(
+                    width: SizeConfig.blockSizeVertical,
+                  ),
+                  PrimaryText(
+                      text: 'Quản lý server'.toUpperCase(),
+                      color: AppColors.gray,
+                      size: 20,
+                      fontWeight: FontWeight.w500),
+                ],
+              ),
             ),
 
             // List Projector
@@ -184,10 +220,19 @@ class _RoomManagerState extends State<RoomManager> {
             ),
             SizedBox(
               height: SizeConfig.blockSizeVertical * 8,
-              child: PrimaryText(
-                  text: 'Quản lý máy chiếu'.toUpperCase(),
-                  size: 20,
-                  fontWeight: FontWeight.w500),
+              child: Row(
+                children: [
+                  Image.asset('assets/small_projector.png', height: 30,),
+                  SizedBox(
+                    width: SizeConfig.blockSizeVertical,
+                  ),
+                  PrimaryText(
+                      text: 'Quản lý máy chiếu'.toUpperCase(),
+                      color: AppColors.gray,
+                      size: 20,
+                      fontWeight: FontWeight.w500),
+                ],
+              ),
             ),
             SizedBox(
                 width: SizeConfig.screenWidth,
