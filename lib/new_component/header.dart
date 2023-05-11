@@ -8,7 +8,7 @@ import 'package:responsive_dashboard/style/style.dart';
 
 class Header extends StatefulWidget {
   Room room;
-  Header({@required this.room, });
+  Header({required this.room, });
 
   @override
   State<Header> createState() => _HeaderState();

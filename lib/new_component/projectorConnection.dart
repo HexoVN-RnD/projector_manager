@@ -10,7 +10,7 @@ import 'package:auto_reload/auto_reload.dart';
 class ProjectorConnection extends StatefulWidget {
   Projector projector;
 
-  ProjectorConnection({@required this.projector});
+  ProjectorConnection({required this.projector});
 
   @override
   State<ProjectorConnection> createState() => _ProjectorConnectionState();

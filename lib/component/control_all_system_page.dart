@@ -26,7 +26,7 @@ class _HomePage extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Header(),
+            Header(room: rooms[current_page.getValue()-1],),
             SizedBox(
               height: SizeConfig.blockSizeVertical * 2,
             ),

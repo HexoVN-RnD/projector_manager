@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
 
 class RiveModel {
   final String src, artboard, stateMachineName;
-  SMIBool status;
+  late SMIBool? status;
 
   RiveModel({
-    @required this.src,
-    @required this.artboard,
-    @required this.stateMachineName,
+    required this.src,
+    required this.artboard,
+    required this.stateMachineName,
     this.status,
   });
 

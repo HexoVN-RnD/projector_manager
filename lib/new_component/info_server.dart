@@ -13,7 +13,7 @@ class InfoServer extends StatefulWidget {
   Server server;
 
   InfoServer({
-    @required this.server,
+    required this.server,
   });
 
   @override

@@ -11,7 +11,7 @@ import 'package:auto_reload/auto_reload.dart';
 class ServerConnection extends StatefulWidget {
   Server server;
 
-  ServerConnection({this.server});
+  ServerConnection({required this.server});
 
   @override
   State<ServerConnection> createState() => _ServerConnection();

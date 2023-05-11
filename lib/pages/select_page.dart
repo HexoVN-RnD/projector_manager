@@ -12,7 +12,7 @@ class SelectPage extends StatefulWidget {
   // final int current_page;
 
   const SelectPage({
-    Key key,
+    Key? key,
     // @required this.current_page,
   }) : super(key: key);
 

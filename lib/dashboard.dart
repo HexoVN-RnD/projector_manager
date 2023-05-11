@@ -25,7 +25,7 @@ class _DashboardState extends State<Dashboard> {
 
   void changePage(int index) {
     setState(() {
-      _drawerKey.currentState.closeDrawer();
+      _drawerKey.currentState?.closeDrawer();
       current_page.setValue(index);
     });
   }
@@ -103,7 +103,7 @@ class _DashboardState extends State<Dashboard> {
               backgroundColor: AppColors.white,
               leading: IconButton(
                   onPressed: () {
-                    _drawerKey.currentState.openDrawer();
+                    _drawerKey.currentState?.openDrawer();
                     print('done');
                   },
                   icon: Icon(Icons.menu, color: AppColors.black)),
@@ -149,7 +149,7 @@ class _DashboardState extends State<Dashboard> {
                           selectedMenu: selectedSideMenu,
                           press: () {
                             RiveUtils.changeSMIBoolState(
-                                sidebarMenus[index].rive.status);
+                                sidebarMenus[index].rive.status!);
                             setState(() {
                               selectedSideMenu = sidebarMenus[index];
                               current_page.setValue(index);

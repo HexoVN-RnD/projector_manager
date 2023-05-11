@@ -14,14 +14,14 @@ class Server {
 
     // Constructor
     Server({
-        @required this.ip,
-        @required this.name,
-        @required this.port,
-        this.username,
-        this.password,
-        this.power_status,
+        required this.ip,
+        required this.name,
+        required this.port,
+        required this.username,
+        required this.password,
+        required this.power_status,
         // this.mute_audio,
-        this.volume,
-        this.connected,
+        required this.volume,
+        required this.connected,
     });
 }

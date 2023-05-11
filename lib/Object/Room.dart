@@ -17,13 +17,13 @@ class Room {
 
     // Constructor
     Room({
-        @required this.name,
-        @required this.general,
-        @required this.resolume,
-        this.sensors,
-        @required this.current_preset,
-        @required this.presets,
-        @required this.projectors,
-        @required this.servers,
+        required this.name,
+        required this.general,
+        required this.resolume,
+        required this.sensors,
+        required this.current_preset,
+        required this.presets,
+        required this.projectors,
+        required this.servers,
     });
 }

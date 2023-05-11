@@ -21,15 +21,15 @@ class AllRoom {
 
     // Constructor
     AllRoom({
-        @required this.power_all_projectors,
-        @required this.shutter_all_projectors,
-        @required this.power_all_servers,
-        @required this.volume_all,
-        @required this.current_preset,
-        @required this.presets,
-        this.num_servers_connected,
-        this.num_projectors_connected,
-        this.num_servers,
-        this.num_projectors,
+        required this.power_all_projectors,
+        required this.shutter_all_projectors,
+        required this.power_all_servers,
+        required this.volume_all,
+        required this.current_preset,
+        required this.presets,
+        required this.num_servers_connected,
+        required this.num_projectors_connected,
+        required this.num_servers,
+        required this.num_projectors,
     });
 }

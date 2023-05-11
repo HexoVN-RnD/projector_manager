@@ -8,10 +8,14 @@ import 'package:valuable/valuable.dart';
 
 AllRoom allRoom = AllRoom(
   current_preset: StatefulValuable<int>(10),
-  power_all_projectors:  StatefulValuable<bool>(false),
-  power_all_servers:  StatefulValuable<bool>(false),
-  shutter_all_projectors:  StatefulValuable<bool>(false),
-  volume_all:  StatefulValuable<double>(1),
+  power_all_projectors: StatefulValuable<bool>(false),
+  power_all_servers: StatefulValuable<bool>(false),
+  shutter_all_projectors: StatefulValuable<bool>(false),
+  volume_all: StatefulValuable<double>(1),
+  num_servers_connected: StatefulValuable<int>(10),
+  num_projectors_connected: StatefulValuable<int>(10),
+  num_servers: StatefulValuable<int>(10),
+  num_projectors: StatefulValuable<int>(10),
   presets: [
     Preset(
         name: 'Nội dung 1',

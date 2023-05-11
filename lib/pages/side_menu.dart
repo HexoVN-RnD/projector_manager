@@ -7,10 +7,10 @@ import 'package:rive/rive.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu(
-      {@required this.menu,
-      @required this.press,
-      @required this.riveOnInit,
-      @required this.selectedMenu});
+      {required this.menu,
+      required this.press,
+      required this.riveOnInit,
+      required this.selectedMenu});
 
   final Menu menu;
   final VoidCallback press;

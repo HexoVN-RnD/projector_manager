@@ -37,7 +37,7 @@ class _SideBarState extends State<SideBar> {
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium
-                      .copyWith(color: Colors.white70),
+                      ?.copyWith(color: Colors.white70),
                 ),
               ),
               ...sidebarMenus
@@ -45,7 +45,7 @@ class _SideBarState extends State<SideBar> {
                         menu: menu,
                         selectedMenu: selectedSideMenu,
                         press: () {
-                          RiveUtils.changeSMIBoolState(menu.rive.status);
+                          RiveUtils.changeSMIBoolState(menu.rive.status!);
                           setState(() {
                             selectedSideMenu = menu;
                           });

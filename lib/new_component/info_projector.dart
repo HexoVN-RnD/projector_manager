@@ -12,7 +12,7 @@ class InfoProjector extends StatefulWidget {
   Projector projector;
 
   InfoProjector({
-    @required this.projector,
+    required this.projector,
   });
 
   @override

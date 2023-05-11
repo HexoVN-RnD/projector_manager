@@ -5,7 +5,7 @@ import 'package:responsive_dashboard/style/colors.dart';
 
 class AppBarActionItems extends StatelessWidget {
   const AppBarActionItems({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

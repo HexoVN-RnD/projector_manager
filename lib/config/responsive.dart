@@ -7,11 +7,11 @@ class Responsive extends StatelessWidget {
   final Widget smallMobile;
 
   const Responsive({
-    Key key,
-    @required this.mobile,
-    this.tablet,
-    @required this.desktop,
-    this.smallMobile
+    Key? key,
+    required this.mobile,
+    required this.tablet,
+    required this.desktop,
+    required this.smallMobile
   }) : super(key: key);
 
 // This size work fine on my design, maybe you need some customization depends on your design

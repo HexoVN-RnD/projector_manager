@@ -7,7 +7,7 @@ class Menu {
   final String title;
   final RiveModel rive;
 
-  Menu({@required this.title, @required this.rive});
+  Menu({required this.title, required this.rive});
 }
 
 List<Menu> sidebarMenus = [

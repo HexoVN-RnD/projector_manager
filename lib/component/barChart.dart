@@ -6,7 +6,7 @@ import 'package:responsive_dashboard/style/colors.dart';
 
 class BarChartCopmponent extends StatelessWidget {
   const BarChartCopmponent({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

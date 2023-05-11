@@ -9,9 +9,9 @@ class Sensor {
 
     // Constructor
     Sensor({
-        @required this.ip,
-        @required this.name,
-        @required this.port,
-        this.connected,
+        required this.ip,
+        required this.name,
+        required this.port,
+        required this.connected,
     });
 }
