@@ -68,6 +68,11 @@ List<Room> rooms = [
           image: 'assets/watching-a-movie_black.png',
           osc_message: 'column 4',
           transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Nội dung 5',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 5',
+          transport: StatefulValuable<double>(0)),
     ],
     projectors: [
       Projector(

@@ -35,9 +35,10 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
                             : 1]
                         .name,
                     size: 18,
-                    fontWeight: FontWeight.w800),
+                    fontWeight: FontWeight.w600),
               ),
               SizedBox(
+                height: 40,
                 width: 110,
                 child: ElevatedButton(
 

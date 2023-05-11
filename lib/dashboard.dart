@@ -172,9 +172,12 @@ class _DashboardState extends State<Dashboard> {
                 flex: 5,
                 child: SafeArea(
                   child: Container(
+                    decoration: BoxDecoration(
+                        color: AppColors.barBg,
+                        borderRadius: BorderRadius.horizontal(left: Radius.circular(30))
+                    ),
                     width: double.infinity,
                     height: SizeConfig.screenHeight,
-                    decoration: BoxDecoration(color: AppColors.secondaryBg),
                     child: SingleChildScrollView(
                       padding:
                           EdgeInsets.symmetric(vertical: 30, horizontal: 30),

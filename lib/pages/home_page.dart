@@ -25,10 +25,18 @@ class _HomePage extends State<HomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PrimaryText(
-                text: 'Trung tâm điều khiển'.toUpperCase(),
-                size: 30,
-                fontWeight: FontWeight.w600),
+            Row(
+              children: [
+                Icon(Icons.tune, size: 30,color: AppColors.gray,),
+                SizedBox(
+                  width: SizeConfig.blockSizeVertical,
+                ),
+                PrimaryText(
+                    text: 'Trung tâm điều khiển'.toUpperCase(),
+                    size: 28,
+                    fontWeight: FontWeight.w600),
+              ],
+            ),
             PrimaryText(
               text: 'Điểu khiển toàn bộ các phòng',
               size: 16,

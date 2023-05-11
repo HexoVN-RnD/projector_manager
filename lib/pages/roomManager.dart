@@ -186,7 +186,7 @@ class _RoomManagerState extends State<RoomManager> {
               height: SizeConfig.blockSizeVertical * 8,
               child: Row(
                 children: [
-                  Icon(Icons.personal_video, size: 25,color: AppColors.gray,),
+                  Icon(Icons.airplay, size: 25,color: AppColors.gray,),
                   SizedBox(
                     width: SizeConfig.blockSizeVertical,
                   ),
