@@ -19,8 +19,9 @@ class AppBarActionItems extends StatelessWidget {
                 width: 160,
                 height: 50,
                 child: Image.asset(
+
                   'assets/small_logo.png',
-                  filterQuality: FilterQuality.high,
+                  // filterQuality: FilterQuality.high,
                   fit: BoxFit.fitHeight,
                 ))
             : Expanded(
@@ -30,7 +31,7 @@ class AppBarActionItems extends StatelessWidget {
                   height: 50,
                   child: Image.asset(
                     'assets/small_logo.png',
-                    filterQuality: FilterQuality.high,
+                    // filterQuality: FilterQuality.high,
                     fit: BoxFit.fitHeight,
                   )),
             ),

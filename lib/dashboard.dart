@@ -138,7 +138,7 @@ class _DashboardState extends State<Dashboard> {
                         height: 84,
                         child: Image.asset(
                           'assets/small_logo.png',
-                          filterQuality: FilterQuality.high,
+                          // filterQuality: FilterQuality.high,
                           fit: BoxFit.fitHeight,
                         )),
                     Column(
