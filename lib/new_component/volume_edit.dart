@@ -81,7 +81,7 @@ class _VolumeEditState extends State<VolumeEdit> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(right: 10),
+          padding: EdgeInsets.only(right: 30),
           child: PrimaryText(
               text: (server.volume.getValue() * 100)
                   .toStringAsFixed(0),

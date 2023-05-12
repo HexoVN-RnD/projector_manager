@@ -169,7 +169,8 @@ class _RoomManagerState extends State<RoomManager> {
                       }),
                     ),
                   ),
-                  Padding(
+                  Container(
+                    margin: EdgeInsets.only(top: 20),
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       children: List.generate(

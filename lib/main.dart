@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Method/openingCheck.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/style/colors.dart';
@@ -24,7 +25,7 @@ Future<void> main() async {
     await windowManager.focus();
   });
   runApp(MyApp());
-  CheckAllConnectionOpening();
+  OpeningCheck();
 }
 
 class MyApp extends StatelessWidget {

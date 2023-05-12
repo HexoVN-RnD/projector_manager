@@ -16,8 +16,6 @@ class HomePage extends StatefulWidget {
 class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    // AllRoom allRoom = allRoom;
-    final ScrollController controller = ScrollController();
 
     return SafeArea(
       child: SingleChildScrollView(
@@ -63,8 +61,7 @@ class _HomePage extends State<HomePage> {
                     height: SizeConfig.blockSizeVertical * 4,
                     child: Row(
                       children: [
-                        SvgPicture.asset('assets/credit-card.svg',
-                            width: 35, color: AppColors.white),
+                        Icon(Icons.movie_filter, size: 30,color: AppColors.white,),
                         SizedBox(
                           width: SizeConfig.blockSizeHorizontal,
                         ),

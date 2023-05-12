@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
+import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
+import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/data/data.dart';
-import 'package:responsive_dashboard/new_component/borderButton.dart';
+import 'package:responsive_dashboard/PopUp/PopupOffServer.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
@@ -35,7 +37,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
           children: [
             Row(
               children: [
-                SvgPicture.asset('assets/credit-card.svg', width: 35, color: AppColors.gray),
+                Icon(Icons.airplay, size: 30,color: AppColors.gray,),
                 SizedBox(
                   width: SizeConfig.blockSizeHorizontal,
                 ),
@@ -99,22 +101,31 @@ class _ManageAllServersState extends State<ManageAllServers> {
                     child: Container(
                       height: 40,
                       width: 60,
-                      child: ElevatedButton(
-                        style:ElevatedButton.styleFrom(
-                          backgroundColor: !allRoom.power_all_servers.getValue()? AppColors.navy_blue: AppColors.gray,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            PowerAllServers(false);
-                          });
+                      child: Hero(
+                        tag: heroOffServer,
+                        createRectTween: (begin, end) {
+                          return CustomRectTween(begin: begin, end: end);
                         },
-                        child: PrimaryText(text: 'Off',
-                          size: 14,
-                          color: AppColors.white,
-                          fontWeight: FontWeight.w500,),
+                        child: ElevatedButton(
+                          style:ElevatedButton.styleFrom(
+                            backgroundColor: !allRoom.power_all_servers.getValue()? AppColors.navy_blue: AppColors.gray,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                                return const PopupOffServer();
+                              }));
+                              // PowerAllServers(false);
+                            });
+                          },
+                          child: PrimaryText(text: 'Off',
+                            size: 14,
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w500,),
+                        ),
                       ),
                     ),
                   ),
@@ -134,19 +145,19 @@ class _ManageAllServersState extends State<ManageAllServers> {
               ),
             ),
             PrimaryText(
-                text: 'Phòng 2 đã bật 2/2',
+                text: 'Phòng 2 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
                 color: AppColors.iconDeepGray,
                 size: 16),
             PrimaryText(
-                text: 'Phòng 4 đã bật 2/2',
+                text: 'Phòng 4 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
                 color: AppColors.iconDeepGray,
                 size: 16),
             PrimaryText(
-                text: 'Phòng 5 đã bật 2/2',
+                text: 'Phòng 5 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
                 color: AppColors.iconDeepGray,
                 size: 16),
             PrimaryText(
-                text: 'Phòng 6 đã bật 2/2',
+                text: 'Phòng 6 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
                 color: AppColors.iconDeepGray,
                 size: 16),
             // Container(

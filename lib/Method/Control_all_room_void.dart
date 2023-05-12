@@ -9,9 +9,9 @@ void select_preset(int index) async {
   }
 }
 
-void PowerAllProjectors() {
+void PowerAllProjectors(bool mode) {
   allRoom.power_all_projectors
-      .setValue(!allRoom.power_all_projectors.getValue());
+      .setValue(mode);
   for (var room in rooms) {
     for (var projector in room.projectors) {
       if (projector.power_status.getValue() !=
@@ -28,9 +28,9 @@ void PowerAllProjectors() {
   }
 }
 
-void ShutterAllProjectors() {
+void ShutterAllProjectors(bool mode) {
   allRoom.shutter_all_projectors
-      .setValue(!allRoom.shutter_all_projectors.getValue());
+      .setValue(mode);
   for (var room in rooms) {
     for (var projector in room.projectors) {
       if (projector.shutter_status.getValue() !=
