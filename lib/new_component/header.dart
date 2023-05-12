@@ -61,42 +61,39 @@ class _HeaderState extends State<Header> {
       Spacer(
         flex: 1,
       ),
-      Expanded(
-        flex: Responsive.isDesktop(context) ? 1 : 3,
-        child: Container(
-          width: 100,
-          child: TextField(
-            controller: text_controller,
-            onChanged: (value) {
-              setState(() {
-                text_search.setValue(value);
-                if (value!='') {
-                  Search(value);
-                }
-              });
-            },
-            decoration: InputDecoration(
-                filled: true,
-                fillColor: AppColors.white,
-                contentPadding: EdgeInsets.only(left: 40.0, right: 5),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(color: AppColors.white),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(color: AppColors.white),
-                ),
-                prefixIcon: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        Search(text_search.getValue().toString());
-                      });
-                    },
-                    child: Icon(Icons.search, color: AppColors.black)),
-                hintText: 'Search',
-                hintStyle: TextStyle(color: AppColors.secondary, fontSize: 14)),
-          ),
+      Container(
+        width: Responsive.isDesktop(context)? SizeConfig.screenWidth/4: SizeConfig.screenWidth/2.5,
+        child: TextField(
+          controller: text_controller,
+          onChanged: (value) {
+            setState(() {
+              text_search.setValue(value);
+              if (value!='') {
+                Search(value);
+              }
+            });
+          },
+          decoration: InputDecoration(
+              filled: true,
+              fillColor: AppColors.white,
+              contentPadding: EdgeInsets.only(left: 40.0, right: 5),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: BorderSide(color: AppColors.white),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: BorderSide(color: AppColors.white),
+              ),
+              prefixIcon: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      Search(text_search.getValue().toString());
+                    });
+                  },
+                  child: Icon(Icons.search, color: AppColors.black)),
+              hintText: 'Search',
+              hintStyle: TextStyle(color: AppColors.secondary, fontSize: 14)),
         ),
       ),
     ]);

@@ -22,12 +22,10 @@ class CheckConnectionBar extends StatefulWidget {
 }
 
 class _CheckConnectionBarState extends State<CheckConnectionBar> {
-
-
   @override
   Widget build(BuildContext context) {
     Room room =
-    rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
+        rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(
         height: SizeConfig.blockSizeVertical * 3,
@@ -75,47 +73,54 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
         },
         child: Container(
           // constraints: BoxConstraints.expand(),
-          margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-          // height: Responsive.isDesktop(context)
-          //     ? MediaQuery.of(context).size.width / 5.15
-          //     : MediaQuery.of(context).size.width / 2,
+          margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+          height: Responsive.isDesktop(context)
+              ? MediaQuery.of(context).size.width / 5.15
+              : MediaQuery.of(context).size.width / 2,
           width: Responsive.isDesktop(context)
               ? MediaQuery.of(context).size.width / 3.8
               : MediaQuery.of(context).size.width - 40,
           decoration: BoxDecoration(
-            color: AppColors.gray,
+            // color: AppColors.gray,
             borderRadius: BorderRadius.circular(15),
           ),
-          child: Stack(
-            alignment: Alignment.topRight,
-            children: [
-              Image.asset('assets/card.png', fit: BoxFit.fitWidth,),
-              ElevatedButton(
-                style:ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.white_trans,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                      return const PopupZoom();
-                    }));
-                    // PowerAllServers(false);
-                  });
-                },
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                  child: Icon(
-                    Icons.zoom_in,
-                    size: 25,
-                    color: AppColors.white,
-                  ),
+          child: Stack(alignment: Alignment.topRight, children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Transform.scale(
+                scale: 1,
+                child: Image.asset(
+                  'assets/map.png',
+                  fit: BoxFit.fitWidth,
+                )),
+          ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.white_trans,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
                 ),
               ),
-    ]
-          ),
+              onPressed: () {
+                setState(() {
+                  Navigator.of(context)
+                      .push(HeroDialogRoute(builder: (context) {
+                    return const PopupZoom();
+                  }));
+                  // PowerAllServers(false);
+                });
+              },
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                child: Icon(
+                  Icons.zoom_in,
+                  size: 25,
+                  color: AppColors.white,
+                ),
+              ),
+            ),
+          ])
+
         ),
       ),
       PrimaryText(
@@ -131,15 +136,14 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
         children: List.generate(
           room.servers.length,
           (index) => ServerConnection(
-            server: room
-                .servers[index],
+            server: room.servers[index],
           ),
         ),
       ),
       SizedBox(
         height: SizeConfig.blockSizeVertical * 2,
       ),
-      if (room.sensors.length!=0)
+      if (room.sensors.length != 0)
         Column(
           children: [
             Container(
@@ -158,8 +162,7 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
               children: List.generate(
                 room.sensors.length,
                 (index) => SensorConnection(
-                  sensor: room
-                      .sensors[index],
+                  sensor: room.sensors[index],
                 ),
               ),
             ),

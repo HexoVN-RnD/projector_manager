@@ -35,40 +35,47 @@ class _PopupZoomState extends State<PopupZoom> {
               width: SizeConfig.screenWidth - 80,
               height: SizeConfig.screenHeight - 80,
               decoration: BoxDecoration(
-                color: AppColors.gray,
-                  borderRadius: BorderRadius.circular(30)
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child:  Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      Image.asset('assets/card.png', fit: BoxFit.fitWidth,),
-                      ElevatedButton(
-                        style:ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.white_trans,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
+                  color: AppColors.gray,
+                  borderRadius: BorderRadius.circular(30)),
+              child: Stack(alignment: Alignment.topRight, children: [
+                Container(
+                  width: SizeConfig.screenWidth - 80,
+                  height: SizeConfig.screenHeight - 80,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Transform.scale(
+                          scale: 2.5,
+                        child: Image.asset(
+                          'assets/map.png',
                         ),
-                        onPressed: () {
-                          setState(() {
-                            // print('check');
-                            Navigator.of(context).pop();
-                          });
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                          child: Icon(
-                            Icons.zoom_out,
-                            size: 25,
-                            color: AppColors.white,
-                          ),
-                        ),
-                      ),
-                    ]
+                      )),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.white_trans,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        // print('check');
+                        Navigator.of(context).pop();
+                      });
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                      child: Icon(
+                        Icons.zoom_out,
+                        size: 25,
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ]),
             ),
           ),
         ),

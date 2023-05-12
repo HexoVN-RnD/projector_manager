@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
+import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/style/colors.dart';
+import 'package:responsive_dashboard/style/style.dart';
 
 const String heroOffProjector = 'add-off-projector';
 
@@ -10,10 +13,15 @@ const String heroOffProjector = 'add-off-projector';
 ///
 /// Uses a [Hero] with tag [_heroAddTodo].
 /// {@endtemplate}
-class PopupOffProjector extends StatelessWidget {
+class PopupOffProjector extends StatefulWidget {
   /// {@macro add_todo_popup_card}
   const PopupOffProjector({Key? key}) : super(key: key);
 
+  @override
+  State<PopupOffProjector> createState() => _PopupOffProjectorState();
+}
+
+class _PopupOffProjectorState extends State<PopupOffProjector> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -29,38 +37,78 @@ class PopupOffProjector extends StatelessWidget {
             elevation: 2,
             shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
+            child: Container(
+              width: 450,
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'New todo',
-                        border: InputBorder.none,
+                    Container(
+                      padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+                      child: PrimaryText(
+                        text: 'Bạn chắc chắn muốn tắt toàn bộ máy chiếu?',
+                        size: 16,
+                        color: AppColors.gray,
+                        fontWeight: FontWeight.w500,
                       ),
-                      cursorColor: Colors.white,
                     ),
-                    const Divider(
-                      color: Colors.white,
-                      thickness: 0.2,
-                    ),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Write a note',
-                        border: InputBorder.none,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 80,
+                            height: 50,
+                            margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.gray,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  Navigator.of(context).pop();
+                                });
+                              },
+                              child: PrimaryText(
+                                text: 'Huỷ'.toUpperCase(),
+                                size: 14,
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 80,
+                            height: 50,
+                            margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.navy_blue,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  PowerAllProjectors(false);
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+                                });
+                              },
+                              child: PrimaryText(
+                                text: 'Tắt'.toUpperCase(),
+                                size: 14,
+                                color: AppColors.white,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      cursorColor: Colors.white,
-                      maxLines: 6,
-                    ),
-                    const Divider(
-                      color: Colors.white,
-                      thickness: 0.2,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: const Text('Add'),
                     ),
                   ],
                 ),

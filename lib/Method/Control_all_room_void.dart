@@ -1,4 +1,4 @@
-import 'package:responsive_dashboard/Method/projector_cmd.dart';
+import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/data/data.dart';
 
@@ -14,16 +14,16 @@ void PowerAllProjectors(bool mode) {
       .setValue(mode);
   for (var room in rooms) {
     for (var projector in room.projectors) {
-      if (projector.power_status.getValue() !=
+      if (projector.power_status_button.getValue() !=
           allRoom.power_all_projectors.getValue()) {
         allRoom.power_all_projectors.getValue()
             ? print(projector.ip.toString() + '(PWR 1)')
             : print(projector.ip.toString() + '(PWR 0)');
         allRoom.power_all_projectors.getValue()
-            ? sendPJLinkCommand(projector.ip, projector.port, '(PWR 1)')
-            : sendPJLinkCommand(projector.ip, projector.port, '(PWR 0)');
+            ? sendTCPIPCommand(projector, '(PWR 1)')
+            : sendTCPIPCommand(projector, '(PWR 0)');
       }
-      projector.power_status.setValue(allRoom.power_all_projectors.getValue());
+      projector.power_status_button.setValue(allRoom.power_all_projectors.getValue());
     }
   }
 }
@@ -33,16 +33,16 @@ void ShutterAllProjectors(bool mode) {
       .setValue(mode);
   for (var room in rooms) {
     for (var projector in room.projectors) {
-      if (projector.shutter_status.getValue() !=
+      if (projector.shutter_status_button.getValue() !=
           allRoom.shutter_all_projectors.getValue()) {
         allRoom.shutter_all_projectors.getValue()
             ? print(projector.ip.toString() + '(SHU 1)')
             : print(projector.ip.toString() + '(SHU 0)');
         allRoom.shutter_all_projectors.getValue()
-            ? sendPJLinkCommand(projector.ip, projector.port, '(SHU 1)')
-            : sendPJLinkCommand(projector.ip, projector.port, '(SHU 0)');
+            ? sendTCPIPCommand(projector, '(SHU 1)')
+            : sendTCPIPCommand(projector, '(SHU 0)');
       }
-      projector.shutter_status
+      projector.shutter_status_button
           .setValue(allRoom.shutter_all_projectors.getValue());
     }
   }

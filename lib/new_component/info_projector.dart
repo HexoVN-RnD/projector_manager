@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:responsive_dashboard/Method/projector_cmd.dart';
+import 'package:responsive_dashboard/Method/projector_command.dart';
+import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -23,29 +24,7 @@ class InfoProjector extends StatefulWidget {
 //   bool value = true;
 
 class _InfoProjector extends State<InfoProjector> {
-  void PowerModeProjector(Projector projector) {
-    projector.power_status.getValue()
-        ? sendPJLinkCommand(projector.ip, projector.port, '(PWR 0)')
-        : sendPJLinkCommand(projector.ip, projector.port, '(PWR 1)');
-    projector.power_status.setValue(!projector.power_status.getValue());
-    print(projector.ip +
-        " " +
-        projector.port.toString() +
-        " PWR " +
-        projector.power_status.getValue().toString());
-  }
 
-  void ShutterModeProjector(Projector projector) {
-    projector.shutter_status.getValue()
-        ? sendPJLinkCommand(projector.ip, projector.port, '(SHU 0)')
-        : sendPJLinkCommand(projector.ip, projector.port, '(SHU 1)');
-    projector.shutter_status.setValue(!projector.shutter_status.getValue());
-    print(projector.ip +
-        " " +
-        projector.port.toString() +
-        " SHU " +
-        projector.shutter_status.getValue().toString());
-  }
 
   // void MuteVideoProjector() {
   //   projector.mute_video.setValue(!projector.mute_video.getValue());
@@ -105,7 +84,7 @@ class _InfoProjector extends State<InfoProjector> {
             children: [
               PrimaryText(
                 text: "Bật/Tắt máy chiếu",
-                size: 18,
+                size: 17,
                 fontWeight: FontWeight.w500,
               ),
               Expanded(
@@ -119,7 +98,7 @@ class _InfoProjector extends State<InfoProjector> {
               Transform.scale(
                 scale: 1,
                 child: CupertinoSwitch(
-                  value: projector.power_status.getValue(),
+                  value: projector.power_status_button.getValue(),
                   activeColor: AppColors.navy_blue,
                   onChanged: (value) {
                     setState(() {
@@ -130,16 +109,38 @@ class _InfoProjector extends State<InfoProjector> {
               ),
             ],
           ),
-          PrimaryText(
-              text: projector.power_status.getValue() ? 'Đã bật máy chiếu' : 'Đã tắt máy chiếu',
-              color: AppColors.secondary,
-              size: 14),
+          Row(
+            children: [
+              PrimaryText(
+                  text: projector.power_status.getValue() ? 'Đã bật máy chiếu' : 'Đã tắt máy chiếu',
+                  color: AppColors.secondary,
+                  size: 14),
+              Expanded(
+                child: SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    PowerStatus(projector);
+                  });
+                },
+                child: PrimaryText(
+                    text: 'Kiểm tra',
+                    color: AppColors.navy_blue2,
+                    size: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               PrimaryText(
                 text: "Bật/Tắt màn chập",
-                size: 18,
+                size: 17,
                 fontWeight: FontWeight.w500,
               ),
               Expanded(
@@ -153,7 +154,7 @@ class _InfoProjector extends State<InfoProjector> {
               Transform.scale(
                 scale: 1,
                 child: CupertinoSwitch(
-                  value: projector.shutter_status.getValue(),
+                  value: projector.shutter_status_button.getValue(),
                   activeColor: AppColors.navy_blue,
                   onChanged: (value) {
                     setState(() {
@@ -164,16 +165,66 @@ class _InfoProjector extends State<InfoProjector> {
               ),
             ],
           ),
-          PrimaryText(
-              text: projector.shutter_status.getValue()? 'Đã bật màn chập' : 'Đã tắt màn chập',
-              color: AppColors.secondary,
-              size: 14),
+          Row(
+            children: [
+              PrimaryText(
+                  text: projector.shutter_status.getValue()? 'Đã bật màn chập' : 'Đã tắt màn chập',
+                  color: AppColors.secondary,
+                  size: 14),
+              Expanded(
+                child: SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    ShutterStatus(projector);
+                  });
+                },
+                child: PrimaryText(
+                  text: 'Kiểm tra',
+                  color: AppColors.navy_blue2,
+                  size: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: SizeConfig.blockSizeVertical,),
+          Row(
+            children: [
+              PrimaryText(
+                text: "Số giờ bóng: ${projector.lamp_hours.getValue().toStringAsFixed(1)}",
+                size: 17,
+                fontWeight: FontWeight.w500,
+              ),
+              Expanded(
+                child: SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    LampStatus(projector);
+                  });
+                },
+                child: PrimaryText(
+                  text: 'Kiểm tra',
+                  color: AppColors.navy_blue2,
+                  size: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
           // Row(
           //   crossAxisAlignment: CrossAxisAlignment.center,
           //   children: [
           //     PrimaryText(
           //       text: "Mute video",
-          //       size: 18,
+          //       size: 17,
           //       fontWeight: FontWeight.w500,
           //     ),
           //     Expanded(
@@ -206,7 +257,7 @@ class _InfoProjector extends State<InfoProjector> {
           //   children: [
           //     PrimaryText(
           //       text: "Mute audio",
-          //       size: 18,
+          //       size: 17,
           //       fontWeight: FontWeight.w500,
           //     ),
           //     Expanded(
