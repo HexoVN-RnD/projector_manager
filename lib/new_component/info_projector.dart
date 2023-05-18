@@ -192,33 +192,33 @@ class _InfoProjector extends State<InfoProjector> {
             ],
           ),
           SizedBox(height: SizeConfig.blockSizeVertical,),
-          Row(
-            children: [
-              PrimaryText(
-                text: "Số giờ bóng: ${projector.lamp_hours.getValue().toStringAsFixed(1)}",
-                size: 17,
-                fontWeight: FontWeight.w500,
-              ),
-              Expanded(
-                child: SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-              ),
-              GestureDetector(
-                onTap: (){
-                  setState(() {
-                    LampStatus(projector);
-                  });
-                },
-                child: PrimaryText(
-                  text: 'Kiểm tra',
-                  color: AppColors.navy_blue2,
-                  size: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     PrimaryText(
+          //       text: "Số giờ bóng: ${projector.lamp_hours.getValue().toStringAsFixed(1)}",
+          //       size: 17,
+          //       fontWeight: FontWeight.w500,
+          //     ),
+          //     Expanded(
+          //       child: SizedBox(
+          //         width: SizeConfig.blockSizeHorizontal,
+          //       ),
+          //     ),
+          //     GestureDetector(
+          //       onTap: (){
+          //         setState(() {
+          //           LampStatus(projector);
+          //         });
+          //       },
+          //       child: PrimaryText(
+          //         text: 'Kiểm tra',
+          //         color: AppColors.navy_blue2,
+          //         size: 14,
+          //         fontWeight: FontWeight.w500,
+          //       ),
+          //     ),
+          //   ],
+          // ),
           // Row(
           //   crossAxisAlignment: CrossAxisAlignment.center,
           //   children: [

@@ -2,12 +2,12 @@ import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/data/data.dart';
 
-void select_preset(int index) async {
-  allRoom.current_preset.setValue(index);
-  for (Room room in rooms) {
-    room.current_preset.setValue(index);
-  }
-}
+// void select_preset(int index) async {
+//   allRoom.current_preset.setValue(index);
+//   for (Room room in rooms) {
+//     room.current_preset.setValue(index);
+//   }
+// }
 
 void PowerAllProjectors(bool mode) {
   allRoom.power_all_projectors
@@ -58,13 +58,13 @@ void PowerAllServers(bool mode) {
   }
 }
 
-void ChangeAllVolume(double index) {
-  allRoom.volume_all.setValue(index);
-  for (var room in rooms) {
-    for (var server in room.servers) {
-      server.volume.setValue(index);
-    }
-  }
-}
+// void ChangeAllVolume(double index) {
+//   allRoom.volume_all.setValue(index);
+//   for (var room in rooms) {
+//     for (var server in room.servers) {
+//       server.volume.setValue(index);
+//     }
+//   }
+// }
 
 

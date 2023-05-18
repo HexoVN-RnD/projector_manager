@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
+import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/new_component/manageAllProjectors.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -160,7 +161,7 @@ class _HomePage extends State<HomePage> {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
-                              select_preset(index);
+                              SelectAllPresetOSC(index);
                             });
                           },
                           child: Column(
@@ -261,7 +262,7 @@ class _HomePage extends State<HomePage> {
                                 inactiveColor: AppColors.light_navy_blue,
                                 value: allRoom.volume_all.getValue(),
                                 onChanged: (index) {
-                                  setState(() => ChangeAllVolume(index));
+                                  setState(() => EditAllAudioOSC(index));
                                 },
                                 min: 0,
                                 max: 1,

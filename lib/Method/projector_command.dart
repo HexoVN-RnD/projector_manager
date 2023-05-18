@@ -56,6 +56,28 @@ String sendTCPIPCommand(Projector projector, String command) {
   return response;
 }
 
+String sendTCPIPCommand2(String ip , int port, String command) {
+  String response='';
+  try {
+    Socket.connect(ip, port).then((socket) {
+      print('Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
+      socket.write(command);
+      socket.listen((data) {
+        response = utf8.decode(data);
+        print('Response: $response');
+        socket.close();
+      }, onDone: () {
+        print('Connection closed');
+      });
+    }, onError: (error) {
+      print('Error: $error');
+    });
+  } catch (e) {
+    print('Error: $e');
+  }
+  return response;
+}
+
 
 String sendPJLinkCommand(Projector projector, String command) {
   String response='';

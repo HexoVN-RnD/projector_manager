@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
@@ -26,13 +27,10 @@ class VolumeEdit extends StatefulWidget {
 class _VolumeEditState extends State<VolumeEdit> {
 
   void ChangeVolume(Server server,double index) {
+    SendAudioOSC(server.ip, server.port, [index]);
+    // sendUDPMessage();
+    // sendTCPIPCommand2('192.168.2.75', 7000, 'hiiiii');
     server.volume.setValue(index);
-    // server.mute_audio.setValue(!server.mute_audio.getValue());
-    print(server.ip +
-        " " +
-        server.port.toString() +
-        " Volume " +
-        server.volume.getValue().toString());
   }
 
   @override

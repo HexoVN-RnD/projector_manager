@@ -37,6 +37,8 @@ dependencies:
   rive: ^0.9.1
   percent_indicator: ^4.0.1
   animated_text_kit: ^4.2.1
+  osc: ^1.0.0
+  udp: ^5.0.3
 
 dev_dependencies:
   flutter_test:

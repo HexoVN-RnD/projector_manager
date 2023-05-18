@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
@@ -26,7 +29,23 @@ class _RoomManagerState extends State<RoomManager> {
   void select_preset(Room room, int index) async {
     setState(() {
       room.current_preset.setValue(index);
+      for (Server server in room.servers) {
+        SendPresetOSC(server.ip, server.port, room.current_preset.getValue());
+      }
       print(room.name);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Đặt một Timer để cập nhật widget sau mỗi giây
+    Timer.periodic(Duration(milliseconds: 50), (timer) {
+      Room room = rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
+      setState(() {
+
+        OSCReceive(room,room.servers[0].ip, 7001);
+      });
     });
   }
 
@@ -49,7 +68,11 @@ class _RoomManagerState extends State<RoomManager> {
               height: SizeConfig.blockSizeVertical * 4,
               child: Row(
                 children: [
-                  Icon(Icons.movie_filter, size: 25,color: AppColors.gray,),
+                  Icon(
+                    Icons.movie_filter,
+                    size: 25,
+                    color: AppColors.gray,
+                  ),
                   SizedBox(
                     width: SizeConfig.blockSizeVertical,
                   ),
@@ -74,7 +97,8 @@ class _RoomManagerState extends State<RoomManager> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: List.generate(room.presets.length, (index) {
-                        bool isSelected = room.current_preset.getValue() == index;
+                        bool isSelected =
+                            room.current_preset.getValue() == index;
                         return GestureDetector(
                           onTap: () {
                             select_preset(room, index);
@@ -92,14 +116,14 @@ class _RoomManagerState extends State<RoomManager> {
                                   color: isSelected
                                       ? AppColors.navy_blue2
                                       : AppColors.white,
-                                  borderRadius:
-                                      BorderRadius.circular(isSelected ? 20.0 : 15),
+                                  borderRadius: BorderRadius.circular(
+                                      isSelected ? 20.0 : 15),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.all(5),
                                   child: ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.circular(isSelected ? 15.0 : 10),
+                                    borderRadius: BorderRadius.circular(
+                                        isSelected ? 15.0 : 10),
                                     child: Image.asset(
                                       room.presets[index].image,
                                     ),
@@ -115,10 +139,11 @@ class _RoomManagerState extends State<RoomManager> {
                                       width: 160,
                                       child: Container(
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           child: LinearProgressIndicator(
-                                            value:
-                                                0.4, //room.presets[index].transport.getValue(),
+                                            value: room.presets[index].transport
+                                                .getValue(),
                                             semanticsLabel:
                                                 'Linear progress indicator',
                                             color: AppColors.navy_blue2,
@@ -128,7 +153,8 @@ class _RoomManagerState extends State<RoomManager> {
                                       ),
                                     ),
                                   if (isSelected)
-                                    SizedBox(height: SizeConfig.blockSizeVertical),
+                                    SizedBox(
+                                        height: SizeConfig.blockSizeVertical),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -138,8 +164,9 @@ class _RoomManagerState extends State<RoomManager> {
                                         color: AppColors.white,
                                       ),
                                       SizedBox(
-                                          width: SizeConfig.blockSizeHorizontal *
-                                              (isSelected ? 1.5 : 0.75)),
+                                          width:
+                                              SizeConfig.blockSizeHorizontal *
+                                                  (isSelected ? 1.5 : 0.75)),
                                       AnimatedDefaultTextStyle(
                                         style: isSelected
                                             ? TextStyle(
@@ -150,7 +177,8 @@ class _RoomManagerState extends State<RoomManager> {
                                                 fontFamily: 'Poppins',
                                                 fontSize: 12.0,
                                                 fontWeight: FontWeight.w600),
-                                        duration: const Duration(milliseconds: 200),
+                                        duration:
+                                            const Duration(milliseconds: 200),
                                         child: Text(room.presets[index].name),
                                       ),
                                       // PrimaryText(
@@ -160,7 +188,6 @@ class _RoomManagerState extends State<RoomManager> {
                                       //     fontWeight: FontWeight.w600),
                                     ],
                                   ),
-
                                 ],
                               ),
                             ],
@@ -175,7 +202,7 @@ class _RoomManagerState extends State<RoomManager> {
                     child: Column(
                       children: List.generate(
                         room.servers.length,
-                            (index) => VolumeEdit(server: room.servers[index]),
+                        (index) => VolumeEdit(server: room.servers[index]),
                       ),
                     ),
                   ),
@@ -187,7 +214,11 @@ class _RoomManagerState extends State<RoomManager> {
               height: SizeConfig.blockSizeVertical * 8,
               child: Row(
                 children: [
-                  Icon(Icons.airplay, size: 25,color: AppColors.gray,),
+                  Icon(
+                    Icons.airplay,
+                    size: 25,
+                    color: AppColors.gray,
+                  ),
                   SizedBox(
                     width: SizeConfig.blockSizeVertical,
                   ),
@@ -223,7 +254,10 @@ class _RoomManagerState extends State<RoomManager> {
               height: SizeConfig.blockSizeVertical * 8,
               child: Row(
                 children: [
-                  Image.asset('assets/small_projector.png', height: 30,),
+                  Image.asset(
+                    'assets/small_projector.png',
+                    height: 30,
+                  ),
                   SizedBox(
                     width: SizeConfig.blockSizeVertical,
                   ),
