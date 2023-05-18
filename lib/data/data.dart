@@ -43,6 +43,7 @@ AllRoom allRoom = AllRoom(
 List<Room> rooms = [
   Room(
     name: 'PHÒNG 2',
+    map: 'assets/Map/map_room2.png',
     general: 'Sảnh đón tiếp',
     resolume: false,
     sensors: [],
@@ -86,7 +87,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.2.5',
@@ -99,7 +101,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.2.11',
@@ -112,7 +115,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.103',
@@ -125,7 +129,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.104',
@@ -138,7 +143,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(true),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.105',
@@ -151,7 +157,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(true),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
     ],
     servers: [
@@ -179,6 +186,7 @@ List<Room> rooms = [
   ),
   Room(
     name: 'PHÒNG 4',
+    map: 'assets/Map/map_room4.png',
     general: 'Phòng trải nghiệm không gian đa chiều',
     resolume: true,
     current_preset: StatefulValuable<int>(10),
@@ -233,7 +241,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.2.5',
@@ -246,7 +255,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.2.11',
@@ -259,7 +269,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.103',
@@ -272,7 +283,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.104',
@@ -285,7 +297,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.105',
@@ -298,7 +311,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
     ],
     servers: [
@@ -326,6 +340,7 @@ List<Room> rooms = [
   ),
   Room(
     name: 'PHÒNG 5',
+    map: 'assets/Map/map_room5.png',
     general: 'Khu vực tương tác',
     resolume: true,
     sensors: [
@@ -380,7 +395,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.2.5',
@@ -393,7 +409,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.2.11',
@@ -406,7 +423,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.103',
@@ -419,7 +437,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.104',
@@ -432,7 +451,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.105',
@@ -445,7 +465,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
     ],
     servers: [
@@ -473,6 +494,7 @@ List<Room> rooms = [
   ),
   Room(
     name: 'PHÒNG 6',
+    map: 'assets/Map/map_room6.png',
     general: 'Khu vực hội thảo event',
     resolume: true,
     sensors: [],
@@ -511,7 +533,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.2.5',
@@ -524,7 +547,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.2.11',
@@ -537,7 +561,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.103',
@@ -550,7 +575,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.104',
@@ -563,7 +589,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
       Projector(
         ip: '192.168.0.105',
@@ -576,7 +603,8 @@ List<Room> rooms = [
         power_status: StatefulValuable<bool>(false),
         shutter_status: StatefulValuable<bool>(false),
         connected: StatefulValuable<bool>(false),
-        lamp_hours: StatefulValuable<double>(0),
+        lamp_hours: StatefulValuable<double>(0), 
+        color_state: StatefulValuable<bool>(false),
       ),
     ],
     servers: [
@@ -613,7 +641,8 @@ List<Room> rooms = [
 //     power_status: StatefulValuable<bool>(false),
 //     shutter_status: StatefulValuable<bool>(false),
 //     connected: StatefulValuable<bool>(false),
-//         lamp_hours: StatefulValuable<double>(0),
+//         lamp_hours: StatefulValuable<double>(0), 
+//         color_state: StatefulValuable<bool>(false),
 //   ),
 //   Projector(
 //     ip: '192.168.2.5',
@@ -624,7 +653,8 @@ List<Room> rooms = [
 //     power_status: StatefulValuable<bool>(false),
 //     shutter_status: StatefulValuable<bool>(false),
 //     connected: StatefulValuable<bool>(false),
-//         lamp_hours: StatefulValuable<double>(0),
+//         lamp_hours: StatefulValuable<double>(0), 
+//         color_state: StatefulValuable<bool>(false),
 //   ),
 //   Projector(
 //     ip: '192.168.2.11',
@@ -635,7 +665,8 @@ List<Room> rooms = [
 //     power_status: StatefulValuable<bool>(false),
 //     shutter_status: StatefulValuable<bool>(false),
 //     connected: StatefulValuable<bool>(false),
-//         lamp_hours: StatefulValuable<double>(0),
+//         lamp_hours: StatefulValuable<double>(0), 
+//         color_state: StatefulValuable<bool>(false),
 //   ),
 //   Projector(
 //     ip: '192.168.0.103',
@@ -646,7 +677,8 @@ List<Room> rooms = [
 //     power_status: StatefulValuable<bool>(false),
 //     shutter_status: StatefulValuable<bool>(false),
 //     connected: StatefulValuable<bool>(false),
-//         lamp_hours: StatefulValuable<double>(0),
+//         lamp_hours: StatefulValuable<double>(0), 
+//         color_state: StatefulValuable<bool>(false),
 //   ),
 //   Projector(
 //     ip: '192.168.0.104',
@@ -657,7 +689,8 @@ List<Room> rooms = [
 //     power_status: StatefulValuable<bool>(false),
 //     shutter_status: StatefulValuable<bool>(false),
 //     connected: StatefulValuable<bool>(false),
-//         lamp_hours: StatefulValuable<double>(0),
+//         lamp_hours: StatefulValuable<double>(0), 
+//         color_state: StatefulValuable<bool>(false),
 //   ),
 //   Projector(
 //     ip: '192.168.0.105',
@@ -668,7 +701,8 @@ List<Room> rooms = [
 //     power_status: StatefulValuable<bool>(false),
 //     shutter_status: StatefulValuable<bool>(false),
 //     connected: StatefulValuable<bool>(false),
-//         lamp_hours: StatefulValuable<double>(0),
+//         lamp_hours: StatefulValuable<double>(0), 
+//         color_state: StatefulValuable<bool>(false),
 //   ),
 // ];
 //

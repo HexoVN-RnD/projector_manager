@@ -7,6 +7,7 @@ import 'package:valuable/valuable.dart';
 
 class Room {
     String name;
+    String map;
     String general;
     bool resolume;
     List<Sensor> sensors;
@@ -18,6 +19,7 @@ class Room {
     // Constructor
     Room({
         required this.name,
+        required this.map,
         required this.general,
         required this.resolume,
         required this.sensors,

@@ -26,6 +26,10 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
   Widget build(BuildContext context) {
     Room room =
         rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
+    double width = Responsive.isDesktop(context)
+        ? (MediaQuery.of(context).size.width-200) / 3
+        : MediaQuery.of(context).size.width - 40;
+    double height = width*1050/1920;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(
         height: SizeConfig.blockSizeVertical * 3,
@@ -73,13 +77,9 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
         },
         child: Container(
           // constraints: BoxConstraints.expand(),
-          margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-          height: Responsive.isDesktop(context)
-              ? MediaQuery.of(context).size.width / 5.15
-              : MediaQuery.of(context).size.width / 2,
-          width: Responsive.isDesktop(context)
-              ? MediaQuery.of(context).size.width / 3.8
-              : MediaQuery.of(context).size.width - 40,
+          margin: EdgeInsets.fromLTRB(0, 30, 0, 10),
+          height: height,
+          width: width,
           decoration: BoxDecoration(
             // color: AppColors.gray,
             borderRadius: BorderRadius.circular(15),
@@ -90,8 +90,8 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
               child: Transform.scale(
                 scale: 1,
                 child: Image.asset(
-                  'assets/map.png',
-                  fit: BoxFit.fitWidth,
+                  room.map,
+                  fit: BoxFit.fill,
                 )),
           ),
             ElevatedButton(

@@ -13,8 +13,8 @@ class Projector {
     StatefulValuable<bool> power_status;
     StatefulValuable<bool> shutter_status;
     StatefulValuable<double> lamp_hours;
-    // position
-    // StatefulValuable<Colors> color_state;
+    Offset position = Offset(1,1);
+    StatefulValuable<bool> color_state;
 
     // Constructor
     Projector({
@@ -30,6 +30,6 @@ class Projector {
         required this.lamp_hours,
         required this.connected,
         // this.lamp_hours = StatefulValuable<double>(0),
-        // required this.color_state,
+        required this.color_state,
     });
 }
