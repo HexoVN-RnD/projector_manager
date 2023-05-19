@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
+import 'package:responsive_dashboard/Method/server_void.dart';
+import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
@@ -24,39 +27,6 @@ class InfoServer extends StatefulWidget {
 //   bool value = true;
 
 class _InfoServer extends State<InfoServer> {
-  // Server server;
-  // _InfoServer(this.server);
-
-  void PowerModeProjector(Server server) {
-    // server.power_status.getValue()? sendPJLinkCommand(server.ip,server.port, '(PWR 0)'): sendPJLinkCommand(server.ip,server.port, '(PWR 1)');
-    server.power_status.setValue(!server.power_status.getValue());
-    print(server.ip +
-        " " +
-        server.port.toString() +
-        " PWR " +
-        server.power_status.getValue().toString());
-  }
-
-  // void ShutterModeProjector() {
-  //   server.shutter_status.getValue()? sendPJLinkCommand(server.ip,server.port, '(SHU 0)'): sendPJLinkCommand(server.ip,server.port, '(SHU 1)');
-  //   server.shutter_status.setValue(!server.shutter_status.getValue());
-  //   print(server.ip + " " +server.port.toString() +" SHU " +server.shutter_status.getValue().toString());
-  // }
-
-  // void MuteVideoProjector() {
-  //   projector.mute_video.setValue(!projector.mute_video.getValue());
-  //   print(projector.ip + " " +projector.port.toString() +" MUTE_Video " +projector.shutter_status.getValue().toString());
-  // }
-  //
-  void ChangeVolume(Server server,double index) {
-    server.volume.setValue(index);
-    // server.mute_audio.setValue(!server.mute_audio.getValue());
-    print(server.ip +
-        " " +
-        server.port.toString() +
-        " Volume " +
-        server.volume.getValue().toString());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,17 +93,42 @@ class _InfoServer extends State<InfoServer> {
                   activeColor: AppColors.navy_blue,
                   onChanged: (value) {
                     setState(() {
-                      PowerModeProjector(server);
+                      PowerModeServer(server);
                     });
                   },
                 ),
               ),
             ],
           ),
-          PrimaryText(
-              text: server.power_status.getValue()? 'Đã bật': 'Đã tắt',
-              color: AppColors.secondary,
-              size: 16),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical,
+          ),
+          Row(
+            children: [
+              PrimaryText(
+                  text: server.connected.getValue()? 'Đã bật': 'Đã tắt',
+                  color: AppColors.secondary,
+                  size: 14),
+              Expanded(
+                child: SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  setState(() {
+                    checkServerPing(server.ip, server.connected);
+                  });
+                },
+                child: PrimaryText(
+                  text: 'Kiểm tra',
+                  color: AppColors.navy_blue2,
+                  size: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
           // Row(
           //   crossAxisAlignment: CrossAxisAlignment.center,
           //   children: [

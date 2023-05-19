@@ -88,7 +88,7 @@ class _PopupOffProjectorState extends State<PopupOffProjector> {
                             margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.navy_blue,
+                                backgroundColor: AppColors.red,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),

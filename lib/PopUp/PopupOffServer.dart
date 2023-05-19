@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
+import 'package:responsive_dashboard/Method/server_void.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/pages/home_page.dart';
@@ -87,14 +88,14 @@ class _PopupOffServerState extends State<PopupOffServer> {
                           margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.navy_blue,
+                              backgroundColor: AppColors.red,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
                             onPressed: () {
                               setState(() {
-                                PowerAllServers(false);
+                                ShutdownAllServer();
                                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
                                 // Navigator.of(context).pop();
                               });

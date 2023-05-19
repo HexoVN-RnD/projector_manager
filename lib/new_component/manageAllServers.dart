@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
+import 'package:responsive_dashboard/Method/server_void.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
@@ -87,7 +88,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
                       ),
                       onPressed: () {
                         setState(() {
-                          PowerAllServers(true);
+                          PowerOnAllServer();
                         });
                       },
                       child: PrimaryText(text: 'On',
@@ -108,7 +109,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
                         },
                         child: ElevatedButton(
                           style:ElevatedButton.styleFrom(
-                            backgroundColor: !allRoom.power_all_servers.getValue()? AppColors.navy_blue: AppColors.gray,
+                            backgroundColor: !allRoom.power_all_servers.getValue()? AppColors.red: AppColors.gray,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),

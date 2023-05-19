@@ -161,7 +161,7 @@ class _HomePage extends State<HomePage> {
                         return GestureDetector(
                           onTap: () {
                             setState(() {
-                              SelectAllPresetOSC(index);
+                              SelectAllPreset(index);
                             });
                           },
                           child: Column(
@@ -262,7 +262,7 @@ class _HomePage extends State<HomePage> {
                                 inactiveColor: AppColors.light_navy_blue,
                                 value: allRoom.volume_all.getValue(),
                                 onChanged: (index) {
-                                  setState(() => EditAllAudioOSC(index));
+                                  setState(() => EditAllAudio(index));
                                 },
                                 min: 0,
                                 max: 1,

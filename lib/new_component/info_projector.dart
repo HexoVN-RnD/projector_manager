@@ -109,6 +109,9 @@ class _InfoProjector extends State<InfoProjector> {
               ),
             ],
           ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical,
+          ),
           Row(
             children: [
               PrimaryText(
@@ -164,6 +167,9 @@ class _InfoProjector extends State<InfoProjector> {
                 ),
               ),
             ],
+          ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical,
           ),
           Row(
             children: [

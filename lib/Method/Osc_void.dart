@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:osc/osc.dart';
+import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/dashboard.dart';
@@ -33,66 +34,68 @@ void SendPresetOSC(String ip, int port, int column) async {
   SendOscMessage(ip, port, '/composition/columns/$column/connect', [1]);
 }
 
-void SelectAllPresetOSC(index) {
+void SelectAllPreset(index) {
   allRoom.current_preset.setValue(index);
   for (Room room in rooms) {
     room.current_preset.setValue(index);
-    for (Server server in room.servers) {
-      final column = index + 1;
-      SendOscMessage(
-          server.ip, server.port, '/composition/columns/$column/connect', [1]);
+    if (room.resolume) {
+      for (Server server in room.servers) {
+        final column = index + 1;
+        SendOscMessage(server.ip, server.preset_port,
+            '/composition/columns/$column/connect', [1]);
+      }
+    } else {
+      for (Server server in room.servers) {
+        SendUDPMessage(server, 'Preset' + index.toString());
+      }
     }
   }
 }
 
-void EditAllAudioOSC(index) {
+void EditAllAudio(index) {
   allRoom.volume_all.setValue(index);
   for (Room room in rooms) {
-    for (Server server in room.servers) {
-      server.volume.setValue(index);
-      SendOscMessage(server.ip, server.port,
-          '/composition/layers/1/audio/volume', [index]);
-      SendOscMessage(server.ip, server.port,
-          '/composition/layers/2/audio/volume', [index]);
-      SendOscMessage(server.ip, server.port,
-          '/composition/layers/3/audio/volume', [index]);
+    if (room.resolume) {
+      for (Server server in room.servers) {
+        server.volume.setValue(index);
+        SendOscMessage(server.ip, server.preset_port,
+            '/composition/layers/1/audio/volume', [index]);
+        SendOscMessage(server.ip, server.preset_port,
+            '/composition/layers/2/audio/volume', [index]);
+        SendOscMessage(server.ip, server.preset_port,
+            '/composition/layers/3/audio/volume', [index]);
+      }
+    } else {
+      for (Server server in room.servers) {
+        SendUDPVolumeMessage(server, index);
+      }
     }
   }
 }
 
-void OSCReceive(Room room, String ip, int port) async {
-  final socket = await RawDatagramSocket.bind(InternetAddress('127.0.0.1'),
-      7001); // Đặt cổng lắng nghe OSC (ví dụ: 7001)
+void OSCReceive(Room room, Server server) async {
+  final socket = await RawDatagramSocket.bind(
+      InternetAddress(server.ip), 7001); // Đặt cổng lắng nghe OSC (ví dụ: 7001)
   OSCMessage oscMessage;
   socket.listen((event) {
     if (event == RawSocketEvent.read) {
       final datagram = socket.receive();
       if (datagram != null) {
-        oscMessage = OSCMessage.fromBytes(datagram.data);
-        if (room.current_preset.getValue() < 10) {
-          if (room.presets[room.current_preset.getValue()].transport
-                  .getValue() <= 1) {
-            room.presets[room.current_preset.getValue()].transport.setValue(
-                double.tryParse(oscMessage.arguments[0].toString()) ?? 0.0);
-          }
+        if (!server.connected.getValue()) {
+          server.connected.setValue(true);
         }
-        print('Argument value: ' + oscMessage.arguments[0].toString());
+
+        oscMessage = OSCMessage.fromBytes(datagram.data);
+
+        double transport =
+            double.tryParse(oscMessage.arguments[0].toString()) ?? 0.0;
+        if (room.presets[room.current_preset.getValue()].transport.getValue() <=
+            1) {
+          room.presets[room.current_preset.getValue()].transport
+              .setValue(transport);
+        }
+        print('Argument value: ' + transport.toString());
       }
     }
   });
-}
-
-void sendUDPMessage() async {
-  final socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 0);
-
-  // Địa chỉ IP và cổng của máy chủ hoặc thiết bị mà bạn muốn gửi tin nhắn tới
-  final remoteIP = InternetAddress('192.168.2.75');
-  final remotePort = 7000;
-
-  final message = '/composition/layers/1/audio/volume';
-
-  socket.send(message.codeUnits, remoteIP, remotePort);
-
-  socket.close();
-  print(remoteIP);
 }

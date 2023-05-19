@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
+import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -11,9 +13,11 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
 class VolumeEdit extends StatefulWidget {
+  Room room;
   Server server;
 
   VolumeEdit({
+    required this.room,
     required this.server,
   });
 
@@ -26,8 +30,12 @@ class VolumeEdit extends StatefulWidget {
 
 class _VolumeEditState extends State<VolumeEdit> {
 
-  void ChangeVolume(Server server,double index) {
-    SendAudioOSC(server.ip, server.port, [index]);
+  void ChangeVolume(Room room, Server server,double index) {
+    if (room.resolume) {
+      SendAudioOSC(server.ip, server.preset_port, [index]);
+    } else {
+      SendUDPVolumeMessage(server, index);
+    }
     // sendUDPMessage();
     // sendTCPIPCommand2('192.168.2.75', 7000, 'hiiiii');
     server.volume.setValue(index);
@@ -35,6 +43,7 @@ class _VolumeEditState extends State<VolumeEdit> {
 
   @override
   Widget build(BuildContext context) {
+    Room room = widget.room;
     Server server =widget.server;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,7 +78,7 @@ class _VolumeEditState extends State<VolumeEdit> {
                 inactiveColor: AppColors.light_navy_blue,
                 value: server.volume.getValue(),
                 onChanged: (index) {
-                  setState(() => ChangeVolume(server, index));
+                  setState(() => ChangeVolume(room, server, index));
                 },
                 min: 0,
                 max: 1,

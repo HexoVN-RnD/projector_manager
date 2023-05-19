@@ -105,7 +105,6 @@ class _DashboardState extends State<Dashboard> {
               leading: IconButton(
                   onPressed: () {
                     _drawerKey.currentState?.openDrawer();
-                    print('done');
                   },
                   icon: Icon(Icons.menu, color: AppColors.black)),
               actions: [

@@ -108,7 +108,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                       },
                       child: ElevatedButton(
                         style:ElevatedButton.styleFrom(
-                          backgroundColor: !allRoom.power_all_projectors.getValue()? AppColors.navy_blue: AppColors.gray,
+                          backgroundColor: !allRoom.power_all_projectors.getValue()? AppColors.red: AppColors.gray,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -206,7 +206,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                       },
                       child: ElevatedButton(
                         style:ElevatedButton.styleFrom(
-                          backgroundColor: !allRoom.shutter_all_projectors.getValue()? AppColors.navy_blue: AppColors.gray,
+                          backgroundColor: !allRoom.shutter_all_projectors.getValue()? AppColors.red: AppColors.gray,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),

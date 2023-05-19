@@ -12,7 +12,6 @@ class BorderButton extends StatefulWidget {
   late String text;
   double radius = 20;
   FontWeight fontWeight = FontWeight.w500;
-  void method = PowerAllServers(true);
 
   BorderButton({required this.text});
 
@@ -35,7 +34,6 @@ class _BorderButtonState extends State<BorderButton> {
         ),
         onPressed: () {
           setState(() {
-            widget.method;
           });
         },
         child: PrimaryText(

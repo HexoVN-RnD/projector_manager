@@ -29,7 +29,7 @@ class _PopupZoomState extends State<PopupZoom> {
     rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: const EdgeInsets.all(0.0),
         child: Hero(
           tag: heroZoom,
           createRectTween: (begin, end) {
@@ -37,8 +37,8 @@ class _PopupZoomState extends State<PopupZoom> {
           },
           child: SingleChildScrollView(
             child: Container(
-              width: SizeConfig.screenWidth - 80,
-              height: (SizeConfig.screenWidth - 80)*1050/1920,
+              width: SizeConfig.screenWidth - 200,
+              height: (SizeConfig.screenWidth - 200)*1050/1920,
               decoration: BoxDecoration(
                   color: AppColors.gray,
                   borderRadius: BorderRadius.circular(30)),

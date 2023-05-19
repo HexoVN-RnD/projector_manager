@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
+import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
@@ -30,9 +31,12 @@ class _RoomManagerState extends State<RoomManager> {
     setState(() {
       room.current_preset.setValue(index);
       for (Server server in room.servers) {
-        SendPresetOSC(server.ip, server.port, room.current_preset.getValue());
+        if(room.resolume) {
+          SendPresetOSC(server.ip, server.preset_port, room.current_preset.getValue());
+        } else {
+          SendUDPMessage(server, 'Preset'+room.current_preset.getValue().toString());
+        }
       }
-      print(room.name);
     });
   }
 
@@ -43,8 +47,9 @@ class _RoomManagerState extends State<RoomManager> {
     Timer.periodic(Duration(milliseconds: 50), (timer) {
       Room room = rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
       setState(() {
-
-        OSCReceive(room,room.servers[0].ip, 7001);
+        if (room.resolume){
+          OSCReceive(room,room.servers[0]);
+        }
       });
     });
   }
@@ -133,7 +138,7 @@ class _RoomManagerState extends State<RoomManager> {
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  if (isSelected)
+                                  if (isSelected && room.resolume)
                                     SizedBox(
                                       height: 10,
                                       width: 160,
@@ -202,7 +207,7 @@ class _RoomManagerState extends State<RoomManager> {
                     child: Column(
                       children: List.generate(
                         room.servers.length,
-                        (index) => VolumeEdit(server: room.servers[index]),
+                        (index) => VolumeEdit(room: room, server: room.servers[index]),
                       ),
                     ),
                   ),
@@ -210,88 +215,93 @@ class _RoomManagerState extends State<RoomManager> {
               ),
             ),
             //List server
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 8,
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.airplay,
-                    size: 25,
-                    color: AppColors.gray,
+            if (room.resolume) Column(
+              children: [
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 8,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.airplay,
+                        size: 25,
+                        color: AppColors.gray,
+                      ),
+                      SizedBox(
+                        width: SizeConfig.blockSizeVertical,
+                      ),
+                      PrimaryText(
+                          text: 'Quản lý server'.toUpperCase(),
+                          color: AppColors.gray,
+                          size: 20,
+                          fontWeight: FontWeight.w500),
+                    ],
                   ),
-                  SizedBox(
-                    width: SizeConfig.blockSizeVertical,
+                ),
+
+                // List Projector
+                SizedBox(
+                    width: SizeConfig.screenWidth,
+                    child: Wrap(
+                        spacing: 20,
+                        runSpacing: 20,
+                        alignment: WrapAlignment.spaceBetween,
+                        children: List.generate(
+                          room.servers.length,
+                              (index) => InfoServer(server: room.servers[index]),
+                        ))
+                  // : SpinKitThreeBounce(
+                  //     color: AppColors.navy_blue,
+                  //     size: 20,
+                  //   ),
+                ),
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 4,
+                ),
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 8,
+                  child: Row(
+                    children: [
+                      Image.asset(
+                        'assets/small_projector.png',
+                        height: 30,
+                      ),
+                      SizedBox(
+                        width: SizeConfig.blockSizeVertical,
+                      ),
+                      PrimaryText(
+                          text: 'Quản lý máy chiếu'.toUpperCase(),
+                          color: AppColors.gray,
+                          size: 20,
+                          fontWeight: FontWeight.w500),
+                    ],
                   ),
-                  PrimaryText(
-                      text: 'Quản lý server'.toUpperCase(),
-                      color: AppColors.gray,
-                      size: 20,
-                      fontWeight: FontWeight.w500),
-                ],
-              ),
+                ),
+                SizedBox(
+                    width: SizeConfig.screenWidth,
+                    child: Wrap(
+                        spacing: 20,
+                        runSpacing: 20,
+                        alignment: WrapAlignment.spaceBetween,
+                        children: List.generate(
+                          room.projectors.length,
+                              (index) =>
+                              InfoProjector(projector: room.projectors[index]),
+                        ))
+                  // : SpinKitThreeBounce(
+                  //     color: AppColors.navy_blue,
+                  //     size: 20,
+                  //   ),
+                ),
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 4,
+                ),
+
+                SizedBox(
+                  height: SizeConfig.blockSizeVertical * 4,
+                ),
+              ],
             ),
 
-            // List Projector
-            SizedBox(
-                width: SizeConfig.screenWidth,
-                child: Wrap(
-                    spacing: 20,
-                    runSpacing: 20,
-                    alignment: WrapAlignment.spaceBetween,
-                    children: List.generate(
-                      room.servers.length,
-                      (index) => InfoServer(server: room.servers[index]),
-                    ))
-                // : SpinKitThreeBounce(
-                //     color: AppColors.navy_blue,
-                //     size: 20,
-                //   ),
-                ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 4,
-            ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 8,
-              child: Row(
-                children: [
-                  Image.asset(
-                    'assets/small_projector.png',
-                    height: 30,
-                  ),
-                  SizedBox(
-                    width: SizeConfig.blockSizeVertical,
-                  ),
-                  PrimaryText(
-                      text: 'Quản lý máy chiếu'.toUpperCase(),
-                      color: AppColors.gray,
-                      size: 20,
-                      fontWeight: FontWeight.w500),
-                ],
-              ),
-            ),
-            SizedBox(
-                width: SizeConfig.screenWidth,
-                child: Wrap(
-                    spacing: 20,
-                    runSpacing: 20,
-                    alignment: WrapAlignment.spaceBetween,
-                    children: List.generate(
-                      room.projectors.length,
-                      (index) =>
-                          InfoProjector(projector: room.projectors[index]),
-                    ))
-                // : SpinKitThreeBounce(
-                //     color: AppColors.navy_blue,
-                //     size: 20,
-                //   ),
-                ),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 4,
-            ),
-
-            SizedBox(
-              height: SizeConfig.blockSizeVertical * 4,
-            ),
             if (!Responsive.isDesktop(context)) CheckConnectionBar(),
           ],
         ),
