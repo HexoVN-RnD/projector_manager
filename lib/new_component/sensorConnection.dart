@@ -61,7 +61,7 @@ class _SensorConnectionState extends State<SensorConnection> {
       ),
       onTap: () {
         setState(() {
-          check_connection(widget.sensor.ip, widget.sensor.connected);
+          checkConnection(widget.sensor.ip, widget.sensor.connected);
         });
         // startAutoReload();
       },

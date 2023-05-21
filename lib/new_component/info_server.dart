@@ -117,7 +117,7 @@ class _InfoServer extends State<InfoServer> {
               GestureDetector(
                 onTap: (){
                   setState(() {
-                    checkServerPing(server.ip, server.connected);
+                    checkConnection(server.ip, server.connected);
                   });
                 },
                 child: PrimaryText(

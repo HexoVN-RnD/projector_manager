@@ -61,7 +61,7 @@ class _ServerConnection extends State<ServerConnection> {
       onTap: () {
         setState(() {
           // check_connection(widget.server.ip, widget.server.connected);
-          checkServerPing(widget.server.ip, widget.server.connected);
+          checkConnection(widget.server.ip, widget.server.connected);
         });
         // startAutoReload();
       },

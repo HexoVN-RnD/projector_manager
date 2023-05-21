@@ -48,7 +48,11 @@ class _RoomManagerState extends State<RoomManager> {
       Room room = rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
       setState(() {
         if (room.resolume){
-          OSCReceive(room,room.servers[0]);
+          for (Server server in room.servers){
+            if (server.connected.getValue()) {
+              // OSCReceive(room, server);
+            }
+          }
         }
       });
     });

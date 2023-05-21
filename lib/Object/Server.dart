@@ -9,7 +9,7 @@ class Server {
     String mac_address;
     String password;
     StatefulValuable<bool> power_status;
-    // StatefulValuable<bool> mute_audio;
+    Offset position;
     StatefulValuable<double> volume;
     StatefulValuable<bool> connected;
 
@@ -21,8 +21,8 @@ class Server {
         required this.power_port,
         required this.mac_address,
         required this.password,
+        required this.position,
         required this.power_status,
-        // this.mute_audio,
         required this.volume,
         required this.connected,
     });

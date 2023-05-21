@@ -44,7 +44,7 @@ class _VolumeEditState extends State<VolumeEdit> {
   @override
   Widget build(BuildContext context) {
     Room room = widget.room;
-    Server server =widget.server;
+    Server server = widget.server;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -59,7 +59,7 @@ class _VolumeEditState extends State<VolumeEdit> {
           width: SizeConfig.blockSizeHorizontal,
         ),
         Container(
-          width: 200,
+          width: widget.room.resolume? 200:230,
           child: PrimaryText(
             text: "Âm thanh " + server.name,
             color: AppColors.white,

@@ -74,8 +74,8 @@ void EditAllAudio(index) {
 }
 
 void OSCReceive(Room room, Server server) async {
-  final socket = await RawDatagramSocket.bind(
-      InternetAddress(server.ip), 7001); // Đặt cổng lắng nghe OSC (ví dụ: 7001)
+  final socket = await RawDatagramSocket.bind(InternetAddress(server.ip), 7001);
+  // Đặt cổng lắng nghe OSC (ví dụ: 7001)
   OSCMessage oscMessage;
   socket.listen((event) {
     if (event == RawSocketEvent.read) {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
+import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/PopUp/PopupZoom.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
@@ -57,7 +58,7 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
               ),
               onPressed: () {
                 setState(() {
-                  CheckRoomConnection();
+                  checkAllConnection(room);
                 });
               },
               child: PrimaryText(
@@ -70,61 +71,9 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
           )
         ],
       ),
-      Hero(
-        tag: heroZoom,
-        createRectTween: (begin, end) {
-          return CustomRectTween(begin: begin, end: end);
-        },
-        child: Container(
-          // constraints: BoxConstraints.expand(),
-          margin: EdgeInsets.fromLTRB(0, 30, 0, 10),
-          height: height,
-          width: width,
-          decoration: BoxDecoration(
-            // color: AppColors.gray,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Stack(alignment: Alignment.topRight, children: [
-          ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Transform.scale(
-                scale: 1,
-                child: Image.asset(
-                  room.map,
-                  fit: BoxFit.fill,
-                )),
-          ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.white_trans,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              onPressed: () {
-                setState(() {
-                  Navigator.of(context)
-                      .push(HeroDialogRoute(builder: (context) {
-                    return const PopupZoom();
-                  }));
-                  // PowerAllServers(false);
-                });
-              },
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                child: Icon(
-                  Icons.zoom_in,
-                  size: 25,
-                  color: AppColors.white,
-                ),
-              ),
-            ),
-          ])
-
-        ),
-      ),
+      MiniMap(),
       PrimaryText(
-        text: 'Kiểm tra tín hiệu server',
+        text: room.resolume? 'Kiểm tra tín hiệu server': 'Kiểm tra tín hiệu Bright Sign',
         size: 16,
         fontWeight: FontWeight.w500,
         color: AppColors.iconDeepGray,
@@ -171,7 +120,7 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
           ],
         ),
-      Column(
+      if (room.resolume) Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PrimaryText(

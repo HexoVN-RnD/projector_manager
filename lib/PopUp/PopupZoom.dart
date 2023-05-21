@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
+import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
@@ -26,63 +27,119 @@ class _PopupZoomState extends State<PopupZoom> {
   @override
   Widget build(BuildContext context) {
     Room room =
-    rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
+        rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
+    final width = Responsive.isDesktop(context)
+        ? SizeConfig.screenWidth - 200
+        : SizeConfig.screenWidth - 60;
+    final height = width * 1050 / 1920;
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: Hero(
-          tag: heroZoom,
-          createRectTween: (begin, end) {
-            return CustomRectTween(begin: begin, end: end);
-          },
-          child: SingleChildScrollView(
-            child: Container(
-              width: SizeConfig.screenWidth - 200,
-              height: (SizeConfig.screenWidth - 200)*1050/1920,
-              decoration: BoxDecoration(
-                  color: AppColors.gray,
-                  borderRadius: BorderRadius.circular(30)),
-              child: Stack(alignment: Alignment.topRight, children: [
-                Container(
-                  // width: SizeConfig.screenWidth - 80,
-                  // height: (SizeConfig.screenWidth - 80)*1050/1920,
-                  child: ClipRRect(
+      child: Hero(
+        tag: heroZoom,
+        createRectTween: (begin, end) {
+          return CustomRectTween(begin: begin, end: end);
+        },
+        child: SingleChildScrollView(
+          child: Container(
+            width: width,
+            height: height,
+            // decoration: BoxDecoration(
+            //     color: AppColors.gray,
+            //     borderRadius: BorderRadius.circular(30)),
+            child: Stack(alignment: Alignment.topRight, children: [
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(30),
+                  child: Image.asset(
+                    room.map,
+                    fit: BoxFit.fill,
+                  )),
+              Padding(
+                // padding: EdgeInsets.only(left: width-10,bottom: height-10),
+                padding:
+                    EdgeInsets.only(left: width - 100, bottom: height - 100),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.white_trans,
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
-                      child: Transform.scale(
-                          scale: 1,
-                        child: Image.asset(
-                          room.map,
-                          fit: BoxFit.fill,
-                        ),
-                      )),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      // print('check');
+                      Navigator.of(context).pop();
+                    });
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                    child: Icon(
+                      Icons.zoom_out,
+                      size: 25,
+                      color: AppColors.white,
+                    ),
+                  ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.white_trans,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+              ),
+              if (current_page.getValue() == 2)
+                Stack(
+                  children: List.generate(
+                    room.projectors.length,
+                    (index) => Positioned(
+                      left: width * room.projectors[index].position.dx,
+                      top: height * room.projectors[index].position.dy,
+                      width: width * 0.0095,
+                      height: width * 0.0095,
+                      child: Container(
+                        color: AppColors.navy_blue,
                       ),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        // print('check');
-                        Navigator.of(context).pop();
-                      });
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                      child: Icon(
-                        Icons.zoom_out,
-                        size: 25,
-                        color: AppColors.white,
+                  ),
+                )
+              else if (current_page.getValue() == 3)
+                Stack(
+                  children: List.generate(
+                    room.projectors.length,
+                    (index) => Positioned(
+                      left: width * room.projectors[index].position.dx,
+                      top: height * room.projectors[index].position.dy,
+                      width: width * 0.018,
+                      height: width * 0.018,
+                      child: Container(
+                        color: AppColors.navy_blue,
+                      ),
+                    ),
+                  ),
+                )
+              else if (current_page.getValue() == 4)
+                Stack(
+                  children: List.generate(
+                    room.projectors.length,
+                    (index) => Positioned(
+                      left: width * room.projectors[index].position.dx,
+                      top: height * room.projectors[index].position.dy,
+                      width: width * 0.012,
+                      height: width * 0.012,
+                      child: Container(
+                        color: AppColors.navy_blue,
+                      ),
+                    ),
+                  ),
+                )
+              else if (current_page.getValue() == 1)
+                Stack(
+                  children: List.generate(
+                    room.servers.length,
+                    (index) => Positioned(
+                      left: width * room.servers[index].position.dx,
+                      top: height * room.servers[index].position.dy,
+                      width: width * 0.009,
+                      height: height * 0.09,
+                      child: Container(
+                        color: AppColors.navy_blue,
                       ),
                     ),
                   ),
                 ),
-              ]),
-            ),
+            ]),
           ),
         ),
       ),

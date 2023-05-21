@@ -60,7 +60,7 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
       ),
       onTap: () {
         setState(() {
-          check_connection(widget.projector.ip, widget.projector.connected);
+          checkConnection(widget.projector.ip, widget.projector.connected);
         });
         // startAutoReload();
       },
