@@ -50,7 +50,7 @@ class _RoomManagerState extends State<RoomManager> {
         if (room.resolume){
           for (Server server in room.servers){
             if (server.connected.getValue()) {
-              // OSCReceive(room, server);
+              OSCReceive(room, server);
             }
           }
         }
