@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/openingCheck.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/dashboard.dart';
+import 'package:responsive_dashboard/openingScene.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         scaffoldBackgroundColor: AppColors.primaryBg
       ),
-      home: Dashboard(),
+      home: OpeningScene(),
     );
   }
 }

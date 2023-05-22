@@ -89,7 +89,11 @@ class _PopupZoomState extends State<PopupZoom> {
                       width: width * 0.0095,
                       height: width * 0.0095,
                       child: Container(
-                        color: AppColors.navy_blue,
+                        color: room.projectors[index].connected.getValue()
+                          ? (room.projectors[index].power_status.getValue()
+                              ? AppColors.navy_blue
+                              : AppColors.red)
+                          : AppColors.gray,
                       ),
                     ),
                   ),
@@ -104,7 +108,11 @@ class _PopupZoomState extends State<PopupZoom> {
                       width: width * 0.018,
                       height: width * 0.018,
                       child: Container(
-                        color: AppColors.navy_blue,
+                        color: room.projectors[index].connected.getValue()
+                          ? (room.projectors[index].power_status.getValue()
+                              ? AppColors.navy_blue
+                              : AppColors.red)
+                          : AppColors.gray,
                       ),
                     ),
                   ),
@@ -119,7 +127,11 @@ class _PopupZoomState extends State<PopupZoom> {
                       width: width * 0.012,
                       height: width * 0.012,
                       child: Container(
-                        color: AppColors.navy_blue,
+                        color: room.projectors[index].connected.getValue()
+                          ? (room.projectors[index].power_status.getValue()
+                              ? AppColors.navy_blue
+                              : AppColors.red)
+                          : AppColors.gray,
                       ),
                     ),
                   ),
@@ -134,7 +146,11 @@ class _PopupZoomState extends State<PopupZoom> {
                       width: width * 0.009,
                       height: height * 0.09,
                       child: Container(
-                        color: AppColors.navy_blue,
+                        color: room.servers[index].connected.getValue()
+                          ? (room.servers[index].power_status.getValue()
+                              ? AppColors.navy_blue
+                              : AppColors.red)
+                          : AppColors.gray,
                       ),
                     ),
                   ),
