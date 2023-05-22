@@ -656,7 +656,7 @@ List<Room> rooms = [
         connected: StatefulValuable<bool>(false),
       ),
       Server(
-        ip: '192.168.3.108',
+        ip: '192.168.3.104',
         name: 'Server 2',
         preset_port: 7000,
         power_port: 1234,

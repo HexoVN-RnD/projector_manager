@@ -1,8 +1,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/new_component/animated_btn.dart';
+import 'package:responsive_dashboard/style/colors.dart';
 import 'package:rive/rive.dart';
 
 class OpeningScene extends StatefulWidget {
@@ -32,9 +35,6 @@ class _OpeningSceneState extends State<OpeningScene> {
       body: Stack(
         children: [
           Positioned(
-            width: MediaQuery.of(context).size.width * 1.7,
-            left: 100,
-            bottom: 100,
             child: Image.asset(
               "assets/Backgrounds/Spline.png",
             ),
@@ -114,6 +114,21 @@ class _OpeningSceneState extends State<OpeningScene> {
                 ),
               ),
             ),
+          ),
+
+          Positioned(
+              left: MediaQuery.of(context).size.width*0.3,
+              bottom: MediaQuery.of(context).size.height*0.2,
+              width: MediaQuery.of(context).size.width*0.4,
+              height: MediaQuery.of(context).size.height*0.03,
+              child: LinearPercentIndicator(
+                percent: 0.6,
+                lineHeight: 10,
+                animationDuration: 2000,
+                backgroundColor: AppColors.gray,
+                progressColor: AppColors.navy_blue,
+                linearStrokeCap: LinearStrokeCap.roundAll,
+              )
           ),
         ],
       ),

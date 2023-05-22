@@ -1,0 +1,1 @@
+start "" "C:\Users\Hex Interactive 02\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\udp_shutdown.pyw"

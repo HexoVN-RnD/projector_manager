@@ -10,17 +10,21 @@ import 'package:udp/udp.dart';
 
 void SendOscMessage(
     String ip, int port, String oscAddress, List<Object> oscParameters) async {
-  final remoteIP = InternetAddress(ip); // Địa chỉ IP của máy chủ OSC
-  final udp = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 0);
-  final oscMessage = OSCMessage(oscAddress, arguments: oscParameters);
-  final oscData = oscMessage.toBytes();
+  try {
+    final remoteIP = InternetAddress(ip); // Địa chỉ IP của máy chủ OSC
+    final udp = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 0);
+    final oscMessage = OSCMessage(oscAddress, arguments: oscParameters);
+    final oscData = oscMessage.toBytes();
 
-  // Send message
-  udp.send(oscData, remoteIP, port);
-  print('Sent $oscMessage to $remoteIP at port: $port');
+    // Send message
+    udp.send(oscData, remoteIP, port);
+    print('Sent $oscMessage to $remoteIP at port: $port');
 
-  // Đóng kết nối UDP
-  udp.close();
+    // Đóng kết nối UDP
+    udp.close();
+  } catch (e) {
+    print(e);
+  }
 }
 
 void SendAudioOSC(String ip, int port, List<Object> oscParameters) async {
@@ -74,28 +78,34 @@ void EditAllAudio(index) {
 }
 
 void OSCReceive(Room room, Server server) async {
-  final socket = await RawDatagramSocket.bind(InternetAddress(server.ip), 7001);
-  // Đặt cổng lắng nghe OSC (ví dụ: 7001)
-  OSCMessage oscMessage;
-  socket.listen((event) {
-    if (event == RawSocketEvent.read) {
-      final datagram = socket.receive();
-      if (datagram != null) {
-        if (!server.connected.getValue()) {
-          server.connected.setValue(true);
-        }
+  try {
+    final socket =
+        await RawDatagramSocket.bind(InternetAddress(server.ip), 7001);
+    // Đặt cổng lắng nghe OSC (ví dụ: 7001)
+    OSCMessage oscMessage;
+    socket.listen((event) {
+      if (event == RawSocketEvent.read) {
+        final datagram = socket.receive();
+        if (datagram != null) {
+          if (!server.connected.getValue()) {
+            server.connected.setValue(true);
+          }
 
-        oscMessage = OSCMessage.fromBytes(datagram.data);
+          oscMessage = OSCMessage.fromBytes(datagram.data);
 
-        double transport =
-            double.tryParse(oscMessage.arguments[0].toString()) ?? 0.0;
-        if (room.presets[room.current_preset.getValue()].transport.getValue() <=
-            1) {
-          room.presets[room.current_preset.getValue()].transport
-              .setValue(transport);
+          double transport =
+              double.tryParse(oscMessage.arguments[0].toString()) ?? 0.0;
+          if (room.presets[room.current_preset.getValue()].transport
+                  .getValue() <=
+              1) {
+            room.presets[room.current_preset.getValue()].transport
+                .setValue(transport);
+          }
+          print('Argument value: ' + transport.toString());
         }
-        print('Argument value: ' + transport.toString());
       }
-    }
-  });
+    });
+  } catch (e) {
+    print(e);
+  }
 }
