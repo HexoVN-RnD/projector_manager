@@ -6,7 +6,13 @@ import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/new_component/animated_btn.dart';
 import 'package:responsive_dashboard/style/colors.dart';
+import 'package:responsive_dashboard/style/style.dart';
 import 'package:rive/rive.dart';
+import 'package:valuable/valuable.dart';
+
+// StatefulValuable<double> opening_per = StatefulValuable<double>(0);
+
+double progressValue = 0.0;
 
 class OpeningScene extends StatefulWidget {
   const OpeningScene({key});
@@ -15,10 +21,11 @@ class OpeningScene extends StatefulWidget {
   State<OpeningScene> createState() => _OpeningSceneState();
 }
 
-class _OpeningSceneState extends State<OpeningScene> {
+class _OpeningSceneState extends State<OpeningScene> with TickerProviderStateMixin{
   late RiveAnimationController _btnAnimationController;
 
   bool isShowSignInDialog = false;
+  late AnimationController _animationController;
 
   @override
   void initState() {
@@ -27,6 +34,21 @@ class _OpeningSceneState extends State<OpeningScene> {
       autoplay: false,
     );
     super.initState();
+    _animationController = AnimationController(
+      duration: Duration(seconds: 10),
+      vsync: this,
+    )..addListener(() {
+      setState(() {
+        progressValue = _animationController.value;
+      });
+    });
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -34,9 +56,12 @@ class _OpeningSceneState extends State<OpeningScene> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            child: Image.asset(
-              "assets/Backgrounds/Spline.png",
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(200.0),
+              child: Image.asset(
+                "assets/logo2.png",
+              ),
             ),
           ),
           Positioned.fill(
@@ -45,9 +70,9 @@ class _OpeningSceneState extends State<OpeningScene> {
               child: const SizedBox(),
             ),
           ),
-          const RiveAnimation.asset(
-            "assets/RiveAssets/shapes.riv",
-          ),
+          // const RiveAnimation.asset(
+          //   "assets/RiveAssets/shapes.riv",
+          // ),
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
@@ -85,7 +110,7 @@ class _OpeningSceneState extends State<OpeningScene> {
                         ],
                       ),
                     ),
-                    const Spacer(flex: 2),
+                    const Spacer(flex: 4),
                     AnimatedBtn(
                       btnAnimationController: _btnAnimationController,
                       press: () {
@@ -107,28 +132,26 @@ class _OpeningSceneState extends State<OpeningScene> {
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 24),
-                      child: Text(
-                          "Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates."),
+                      child: PrimaryText(text: 'Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates.'),
                     )
                   ],
                 ),
               ),
             ),
           ),
-
           Positioned(
-              left: MediaQuery.of(context).size.width*0.3,
-              bottom: MediaQuery.of(context).size.height*0.2,
-              width: MediaQuery.of(context).size.width*0.4,
-              height: MediaQuery.of(context).size.height*0.03,
-              child: LinearPercentIndicator(
-                percent: 0.6,
-                lineHeight: 10,
-                animationDuration: 2000,
-                backgroundColor: AppColors.gray,
-                progressColor: AppColors.navy_blue,
-                linearStrokeCap: LinearStrokeCap.roundAll,
-              )
+            left: MediaQuery.of(context).size.width * 0.3,
+            bottom: MediaQuery.of(context).size.height * 0.15,
+            width: MediaQuery.of(context).size.width * 0.4,
+            height: MediaQuery.of(context).size.height*0.025,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: LinearProgressIndicator(
+                value: progressValue,
+                color: AppColors.navy_blue,
+                backgroundColor: AppColors.white,
+              ),
+            ),
           ),
         ],
       ),

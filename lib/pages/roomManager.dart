@@ -49,7 +49,7 @@ class _RoomManagerState extends State<RoomManager> {
       setState(() {
         if (room.resolume){
           for (Server server in room.servers){
-            if (server.connected.getValue()) {
+            if (server.connected.getValue() && room.current_preset.getValue() <= room.presets.length) {
               OSCReceive(room, server);
             }
           }

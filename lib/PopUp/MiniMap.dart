@@ -8,9 +8,15 @@ import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/style/colors.dart';
+import 'package:responsive_dashboard/style/style.dart';
 
 class MiniMap extends StatefulWidget {
-  const MiniMap({Key? key}) : super(key: key);
+  Room room;
+  int page;
+  MiniMap({
+    required this.room,
+    required this.page,
+  });
 
   @override
   State<MiniMap> createState() => _MiniMapState();
@@ -19,10 +25,12 @@ class MiniMap extends StatefulWidget {
 class _MiniMapState extends State<MiniMap> {
   @override
   Widget build(BuildContext context) {
-    Room room =
-        rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
+    Room room = widget.room;
+    int page = widget.page;
     double width = Responsive.isDesktop(context)
-        ? (SizeConfig.screenWidth - 200) / 3 - 60
+        ? ((current_page.getValue() != 0)
+            ? (SizeConfig.screenWidth - 200) / 3 - 60
+            : SizeConfig.screenWidth / 2 - 150)
         : SizeConfig.screenWidth - 60;
     double height = width * 1050 / 1920;
     return Hero(
@@ -62,7 +70,10 @@ class _MiniMapState extends State<MiniMap> {
                 setState(() {
                   Navigator.of(context)
                       .push(HeroDialogRoute(builder: (context) {
-                    return const PopupZoom();
+                    return PopupZoom(
+                      room: room,
+                      page: page,
+                    );
                   }));
                   // PowerAllServers(false);
                 });
@@ -76,8 +87,10 @@ class _MiniMapState extends State<MiniMap> {
                 ),
               ),
             ),
-            // room.resolume?
-            if (current_page.getValue() == 2)
+            if (current_page.getValue() == 0)
+              Positioned(
+                  left: 20, top: 15, child: PrimaryText(text: room.name)),
+            if (page == 2)
               Stack(
                 children: List.generate(
                   room.projectors.length,
@@ -87,8 +100,8 @@ class _MiniMapState extends State<MiniMap> {
                     width: width * 0.0095,
                     height: width * 0.0095,
                     child: Container(
-                      color: !room.projectors[index].connected.getValue()
-                          ? (room.projectors[index].power_status_button.getValue()
+                      color: room.projectors[index].connected.getValue()
+                          ? (room.projectors[index].power_status.getValue()
                               ? AppColors.navy_blue
                               : AppColors.red)
                           : AppColors.gray,
@@ -96,7 +109,7 @@ class _MiniMapState extends State<MiniMap> {
                   ),
                 ),
               )
-            else if (current_page.getValue() == 3)
+            else if (page == 3)
               Stack(
                 children: List.generate(
                   room.projectors.length,
@@ -106,8 +119,8 @@ class _MiniMapState extends State<MiniMap> {
                     width: width * 0.018,
                     height: width * 0.018,
                     child: Container(
-                      color: !room.projectors[index].connected.getValue()
-                          ? (room.projectors[index].power_status_button.getValue()
+                      color: room.projectors[index].connected.getValue()
+                          ? (room.projectors[index].power_status.getValue()
                               ? AppColors.navy_blue
                               : AppColors.red)
                           : AppColors.gray,
@@ -115,7 +128,7 @@ class _MiniMapState extends State<MiniMap> {
                   ),
                 ),
               )
-            else if (current_page.getValue() == 4)
+            else if (page == 4)
               Stack(
                 children: List.generate(
                   room.projectors.length,
@@ -125,8 +138,8 @@ class _MiniMapState extends State<MiniMap> {
                     width: width * 0.012,
                     height: width * 0.012,
                     child: Container(
-                      color: !room.projectors[index].connected.getValue()
-                          ? (room.projectors[index].power_status_button.getValue()
+                      color: room.projectors[index].connected.getValue()
+                          ? (room.projectors[index].power_status.getValue()
                               ? AppColors.navy_blue
                               : AppColors.red)
                           : AppColors.gray,
@@ -134,7 +147,7 @@ class _MiniMapState extends State<MiniMap> {
                   ),
                 ),
               )
-            else if (current_page.getValue() == 1)
+            else if (page == 1)
               Stack(
                 children: List.generate(
                   room.servers.length,
@@ -144,7 +157,7 @@ class _MiniMapState extends State<MiniMap> {
                     width: width * 0.009,
                     height: height * 0.09,
                     child: Container(
-                      color: room.servers[index].power_status.getValue()
+                      color: room.servers[index].connected.getValue()
                           ? AppColors.navy_blue
                           : AppColors.red,
                     ),

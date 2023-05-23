@@ -14,6 +14,7 @@ class AllRoom {
     StatefulValuable<int> num_servers_connected;
     StatefulValuable<int> num_projectors_connected;
     StatefulValuable<int> num_servers;
+    StatefulValuable<int> num_sensors;
     StatefulValuable<int> num_projectors;
     List<Preset> presets; // : 1,2,3
     // List<Projector> projectors;
@@ -30,6 +31,7 @@ class AllRoom {
         required this.num_servers_connected,
         required this.num_projectors_connected,
         required this.num_servers,
+        required this.num_sensors,
         required this.num_projectors,
     });
 }

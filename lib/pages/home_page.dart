@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
+import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/new_component/manageAllProjectors.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -285,18 +286,29 @@ class _HomePage extends State<HomePage> {
 
             Container(
               child: Wrap(
-                spacing: 20,
-                runSpacing: 20,
+                spacing: 40,
+                runSpacing: 40,
                 alignment: WrapAlignment.spaceBetween,
                 children: [
                   ManageAllServers(),
-                  SizedBox(width: 0,),
                   ManageAllProjectors(),
+                ],
+              ),
+            ), //p
+            Container(
+              child: Wrap(
+                spacing: 40,
+                alignment: WrapAlignment.spaceBetween,
+                children: [
+                  MiniMap(room: rooms[0],page: 1,),
+                  MiniMap(room: rooms[1],page: 2,),
+                  MiniMap(room: rooms[2],page: 3,),
+                  MiniMap(room: rooms[3],page: 4,),
                 ],
               ),
             ), //power_all: PowerAllProjectors, shutter_all: ShutterAllProjectors),
             SizedBox(
-              height: SizeConfig.blockSizeVertical * 4,
+              height: SizeConfig.blockSizeVertical ,
             ),
           ],
         ),

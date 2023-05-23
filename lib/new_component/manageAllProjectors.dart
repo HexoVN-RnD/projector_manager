@@ -25,7 +25,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Responsive.isDesktop(context)? 350:null,
+      height: Responsive.isDesktop(context)? 180:null,
       constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
                                   maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth/2-150: SizeConfig.screenWidth- 40),
         padding: EdgeInsets.only(
@@ -143,22 +143,25 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                 // ),
               ],
             ),
-            PrimaryText(
-                text: 'Phòng 2 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
-            PrimaryText(
-                text: 'Phòng 4 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
-            PrimaryText(
-                text: 'Phòng 5 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
-            PrimaryText(
-                text: 'Phòng 6 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 2 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 4 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 5 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 6 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical*2,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -241,22 +244,22 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                 // ),
               ],
             ),
-            PrimaryText(
-                text: 'Phòng 2 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
-            PrimaryText(
-                text: 'Phòng 4 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
-            PrimaryText(
-                text: 'Phòng 5 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
-            PrimaryText(
-                text: 'Phòng 6 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 2 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 4 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 5 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 6 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
           ],
         ),);
   }

@@ -36,12 +36,16 @@ String sendTCPIPCommand(Projector projector, String command) {
         print('Response: $response');
         if (response.contains('PWR!1')) {
           projector.power_status.setValue(true);
+          projector.power_status_button.setValue(true);
         } else if (response.contains('PWR!0')){
           projector.power_status.setValue(false);
+          projector.power_status_button.setValue(false);
         } else if (response.contains('SHU!01')){
           projector.shutter_status.setValue(true);
+          projector.shutter_status_button.setValue(true);
         } else if (response.contains('SHU!00')){
           projector.shutter_status.setValue(false);
+          projector.shutter_status_button.setValue(false);
         }
         socket.close();
       }, onDone: () {

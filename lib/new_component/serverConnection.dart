@@ -10,7 +10,6 @@ import 'package:auto_reload/auto_reload.dart';
 
 class ServerConnection extends StatefulWidget {
   Server server;
-
   ServerConnection({required this.server});
 
   @override
@@ -20,6 +19,7 @@ class ServerConnection extends StatefulWidget {
 class _ServerConnection extends State<ServerConnection> {
   @override
   Widget build(BuildContext context) {
+    Server server = widget.server;
     return ListTile(
       contentPadding: EdgeInsets.only(left: 0, right: 20),
       visualDensity: VisualDensity.standard,
@@ -31,8 +31,8 @@ class _ServerConnection extends State<ServerConnection> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Icon(
-            widget.server.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
-            color: widget.server.connected.getValue() ? AppColors.navy_blue: AppColors.red,
+            server.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
+            color: server.connected.getValue() ? AppColors.navy_blue: AppColors.red,
             // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
@@ -40,11 +40,11 @@ class _ServerConnection extends State<ServerConnection> {
         children: [
           Expanded(
             child: PrimaryText(
-                text: widget.server.name, size: 15, fontWeight: FontWeight.w700),
+                text: server.name, size: 15, fontWeight: FontWeight.w700),
           ),
 
           PrimaryText(
-            text: widget.server.ip,
+            text: server.ip,
             size: 13,
             fontWeight: FontWeight.w400,
             color: AppColors.secondary,
@@ -54,14 +54,14 @@ class _ServerConnection extends State<ServerConnection> {
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: PrimaryText(
-            text: widget.server.connected.getValue()? 'Connected': 'Disconnected',
+            text: server.connected.getValue()? 'Connected': 'Disconnected',
             size: 13,
             fontWeight: FontWeight.w600),
       ),
       onTap: () {
         setState(() {
           // check_connection(widget.server.ip, widget.server.connected);
-          checkConnection(widget.server.ip, widget.server.connected);
+          checkConnectionServer(server.ip, server.connected, server.power_status);
         });
         // startAutoReload();
       },

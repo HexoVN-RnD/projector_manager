@@ -10,39 +10,89 @@ import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:valuable/valuable.dart';
 
-void checkConnection(String serverIP, StatefulValuable<bool> connected) {
+void checkConnectionServer(String ip, StatefulValuable<bool> connected,
+    StatefulValuable<bool> button) {
   // serverIP = '192.168.1.15';
-  final ping = Ping(serverIP, count: 3); // Thay đổi số lần ping tùy ý
+  final ping = Ping(ip, count: 3); // Thay đổi số lần ping tùy ý
 
   ping.stream.listen((event) {
-    print('Ping to $serverIP: ${event.response?.time} ms');
+    print('Ping to $ip: ${event.response?.time} ms');
+    if (event.response?.time != null) {
+      connected.setValue(true);
+      button.setValue(true);
+      ping.stop();
+    } else {
+      Socket.connect(ip, 9).then((socket) {}, onError: (error) {
+        connected.setValue(false);
+        button.setValue(false);
+        print('Error');
+      });
+    }
+  });
+  ping.command;
+}
+
+void checkConnectionSensor(String ip, StatefulValuable<bool> connected) {
+  // serverIP = '192.168.1.15';
+  final ping = Ping(ip, count: 3); // Thay đổi số lần ping tùy ý
+
+  ping.stream.listen((event) {
+    print('Ping to $ip: ${event.response?.time} ms');
     if (event.response?.time != null) {
       connected.setValue(true);
       ping.stop();
-    } else if (event.error != null){
-      connected.setValue(false);
+    } else {
+      Socket.connect(ip, 9).then((socket) {}, onError: (error) {
+        connected.setValue(false);
+        print('Error');
+      });
+    }
+  });
+  ping.command;
+}
+
+void checkConnectionProjector(Projector projector) {
+  // serverIP = '192.168.1.15';
+  final ping = Ping(projector.ip, count: 3); // Thay đổi số lần ping tùy ý
+
+  ping.stream.listen((event) {
+    print('Ping to ${projector.ip}: ${event.response?.time} ms');
+    if (event.response?.time != null) {
+      projector.connected.setValue(true);
+      ping.stop();
+    } else {
+      Socket.connect(projector.ip, 9).then((socket) {}, onError: (error) {
+        projector.connected.setValue(false);
+        projector.power_status.setValue(false);
+        projector.power_status_button.setValue(false);
+        projector.shutter_status.setValue(false);
+        projector.shutter_status_button.setValue(false);
+      });
     }
   });
   ping.command;
 }
 
 void checkAllConnection(Room room) {
-  if (!room.servers.isEmpty) for (Server server in room.servers) {
-    // serverIP = '192.168.1.15';
-    final ping = Ping(server.ip, count: 3); // Thay đổi số lần ping tùy ý
+  if (!room.servers.isEmpty)
+    for (Server server in room.servers) {
+      // serverIP = '192.168.1.15';
+      final ping = Ping(server.ip, count: 3); // Thay đổi số lần ping tùy ý
 
-    ping.stream.listen((event) {
-      print('Ping to ${server.ip}: ${event.response?.time} ms');
-      if (event.response?.time != null) {
-        server.connected.setValue(true);
-        ping.stop();
-      } else if (event.error != null){
-        server.connected.setValue(false);
-      }
-    });
-    ping.command;
-  }
-  if (!room.sensors.isEmpty){
+      ping.stream.listen((event) {
+        print('Ping to ${server.ip}: ${event.response?.time} ms');
+        if (event.response?.time != null) {
+          server.connected.setValue(true);
+          server.power_status.setValue(true);
+          ping.stop();
+        } else if (event.error != null) {
+          server.connected.setValue(false);
+          server.power_status.setValue(false);
+        }
+      });
+      ping.command;
+    }
+  if (!room.sensors.isEmpty) {
     for (Sensor sensor in room.sensors) {
       // serverIP = '192.168.1.15';
       final ping = Ping(sensor.ip, count: 3); // Thay đổi số lần ping tùy ý
@@ -52,14 +102,14 @@ void checkAllConnection(Room room) {
         if (event.response?.time != null) {
           sensor.connected.setValue(true);
           ping.stop();
-        } else if (event.error != null){
+        } else if (event.error != null) {
           sensor.connected.setValue(false);
         }
       });
       ping.command;
     }
   }
-  if (!room.projectors.isEmpty){
+  if (!room.projectors.isEmpty) {
     for (Projector projector in room.projectors) {
       // serverIP = '192.168.1.15';
       final ping = Ping(projector.ip, count: 3); // Thay đổi số lần ping tùy ý
@@ -69,16 +119,14 @@ void checkAllConnection(Room room) {
         if (event.response?.time != null) {
           projector.connected.setValue(true);
           ping.stop();
-        } else if (event.error != null){
+        } else if (event.error != null) {
           projector.connected.setValue(false);
         }
       });
       ping.command;
     }
   }
-
 }
-
 
 // void CheckConnectStatus(String ip) async {
 //   try{

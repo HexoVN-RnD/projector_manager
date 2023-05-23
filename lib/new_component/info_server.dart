@@ -30,7 +30,7 @@ class _InfoServer extends State<InfoServer> {
 
   @override
   Widget build(BuildContext context) {
-    Server server =widget.server;
+    Server server = widget.server;
     return Container(
       constraints: BoxConstraints(
           minWidth: Responsive.isDesktop(context)
@@ -117,7 +117,7 @@ class _InfoServer extends State<InfoServer> {
               GestureDetector(
                 onTap: (){
                   setState(() {
-                    checkConnection(server.ip, server.connected);
+                    checkConnectionServer(server.ip, server.connected, server.power_status );
                   });
                 },
                 child: PrimaryText(

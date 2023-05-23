@@ -17,7 +17,12 @@ const String heroZoom = 'popup-zoom';
 /// {@endtemplate}
 class PopupZoom extends StatefulWidget {
   /// {@macro add_todo_popup_card}
-  const PopupZoom({Key? key}) : super(key: key);
+  Room room;
+  int page;
+  PopupZoom({
+    required this.room,
+    required this.page,
+  });
 
   @override
   State<PopupZoom> createState() => _PopupZoomState();
@@ -26,8 +31,8 @@ class PopupZoom extends StatefulWidget {
 class _PopupZoomState extends State<PopupZoom> {
   @override
   Widget build(BuildContext context) {
-    Room room =
-        rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
+    Room room = widget.room;
+    int page = widget.page;
     final width = Responsive.isDesktop(context)
         ? SizeConfig.screenWidth - 200
         : SizeConfig.screenWidth - 60;
@@ -79,7 +84,7 @@ class _PopupZoomState extends State<PopupZoom> {
                   ),
                 ),
               ),
-              if (current_page.getValue() == 2)
+              if (page == 2)
                 Stack(
                   children: List.generate(
                     room.projectors.length,
@@ -90,15 +95,15 @@ class _PopupZoomState extends State<PopupZoom> {
                       height: width * 0.0095,
                       child: Container(
                         color: room.projectors[index].connected.getValue()
-                          ? (room.projectors[index].power_status.getValue()
-                              ? AppColors.navy_blue
-                              : AppColors.red)
-                          : AppColors.gray,
+                            ? (room.projectors[index].power_status.getValue()
+                                ? AppColors.navy_blue
+                                : AppColors.red)
+                            : AppColors.gray,
                       ),
                     ),
                   ),
                 )
-              else if (current_page.getValue() == 3)
+              else if (page == 3)
                 Stack(
                   children: List.generate(
                     room.projectors.length,
@@ -109,15 +114,15 @@ class _PopupZoomState extends State<PopupZoom> {
                       height: width * 0.018,
                       child: Container(
                         color: room.projectors[index].connected.getValue()
-                          ? (room.projectors[index].power_status.getValue()
-                              ? AppColors.navy_blue
-                              : AppColors.red)
-                          : AppColors.gray,
+                            ? (room.projectors[index].power_status.getValue()
+                                ? AppColors.navy_blue
+                                : AppColors.red)
+                            : AppColors.gray,
                       ),
                     ),
                   ),
                 )
-              else if (current_page.getValue() == 4)
+              else if (page == 4)
                 Stack(
                   children: List.generate(
                     room.projectors.length,
@@ -128,15 +133,15 @@ class _PopupZoomState extends State<PopupZoom> {
                       height: width * 0.012,
                       child: Container(
                         color: room.projectors[index].connected.getValue()
-                          ? (room.projectors[index].power_status.getValue()
-                              ? AppColors.navy_blue
-                              : AppColors.red)
-                          : AppColors.gray,
+                            ? (room.projectors[index].power_status.getValue()
+                                ? AppColors.navy_blue
+                                : AppColors.red)
+                            : AppColors.gray,
                       ),
                     ),
                   ),
                 )
-              else if (current_page.getValue() == 1)
+              else if (page == 1)
                 Stack(
                   children: List.generate(
                     room.servers.length,
@@ -147,10 +152,8 @@ class _PopupZoomState extends State<PopupZoom> {
                       height: height * 0.09,
                       child: Container(
                         color: room.servers[index].connected.getValue()
-                          ? (room.servers[index].power_status.getValue()
-                              ? AppColors.navy_blue
-                              : AppColors.red)
-                          : AppColors.gray,
+                            ? AppColors.navy_blue
+                            : AppColors.red,
                       ),
                     ),
                   ),

@@ -19,6 +19,7 @@ class ProjectorConnection extends StatefulWidget {
 class _ProjectorConnectionState extends State<ProjectorConnection> {
   @override
   Widget build(BuildContext context) {
+    Projector projector= widget.projector;
     return ListTile(
       contentPadding: EdgeInsets.only(left: 0, right: 20),
       visualDensity: VisualDensity.standard,
@@ -30,21 +31,25 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Icon(
-            widget.projector.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
-            color: widget.projector.connected.getValue() ? AppColors.navy_blue: AppColors.red,
-            // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
+            projector.connected.getValue()
+                ? Icons.settings_ethernet
+                : Icons.code_off,
+            color: projector.connected.getValue()
+                ? AppColors.navy_blue
+                : AppColors.red,
+            // projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
       title: Row(
         children: [
           Expanded(
             child: PrimaryText(
-                text: widget.projector.name, size: 15, fontWeight: FontWeight.w700),
-
+                text: projector.name,
+                size: 15,
+                fontWeight: FontWeight.w700),
           ),
-
           PrimaryText(
-            text: widget.projector.ip,
+            text: projector.ip,
             size: 13,
             fontWeight: FontWeight.w400,
             color: AppColors.secondary,
@@ -54,13 +59,15 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: PrimaryText(
-            text: widget.projector.connected.getValue()? 'Connected': 'Disconnected',
+            text: projector.connected.getValue()
+                ? 'Connected'
+                : 'Disconnected',
             size: 13,
             fontWeight: FontWeight.w600),
       ),
       onTap: () {
         setState(() {
-          checkConnection(widget.projector.ip, widget.projector.connected);
+          checkConnectionProjector(projector);
         });
         // startAutoReload();
       },

@@ -4,6 +4,7 @@ import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/openingScene.dart';
 import 'package:responsive_dashboard/style/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
@@ -27,6 +28,7 @@ Future<void> main() async {
   });
   runApp(MyApp());
   OpeningCheck();
+  // SharedPreferences prefs = await SharedPreferences.getInstance();
 }
 
 class MyApp extends StatelessWidget {

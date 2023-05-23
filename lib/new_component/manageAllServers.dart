@@ -24,7 +24,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Responsive.isDesktop(context)? 350:null,
+      height: Responsive.isDesktop(context)? 180:null,
       constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth-40,
                                   maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth/2-150 :SizeConfig.screenWidth-40),
         padding: EdgeInsets.only(
@@ -145,22 +145,22 @@ class _ManageAllServersState extends State<ManageAllServers> {
                 ],
               ),
             ),
-            PrimaryText(
-                text: 'Phòng 2 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
-            PrimaryText(
-                text: 'Phòng 4 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
-            PrimaryText(
-                text: 'Phòng 5 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
-            PrimaryText(
-                text: 'Phòng 6 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
-                color: AppColors.iconDeepGray,
-                size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 2 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 4 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 5 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
+            // PrimaryText(
+            //     text: 'Phòng 6 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
+            //     color: AppColors.iconDeepGray,
+            //     size: 16),
             // Container(
             //   height: 50,
             //   child: Row(

@@ -16,6 +16,7 @@ AllRoom allRoom = AllRoom(
   num_servers_connected: StatefulValuable<int>(0),
   num_projectors_connected: StatefulValuable<int>(0),
   num_servers: StatefulValuable<int>(0),
+  num_sensors: StatefulValuable<int>(0),
   num_projectors: StatefulValuable<int>(0),
   presets: [
     Preset(
@@ -69,11 +70,6 @@ List<Room> rooms = [
           name: 'Nội dung 4',
           image: 'assets/watching-a-movie_black.png',
           osc_message: 'column 4',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Nội dung 5',
-          image: 'assets/watching-a-movie_black.png',
-          osc_message: 'column 5',
           transport: StatefulValuable<double>(0)),
     ],
     projectors: [],
@@ -674,6 +670,7 @@ List<Room> rooms = [
     map: 'assets/Map/P5.png',
     general: 'Khu vực tương tác',
     resolume: true,
+    current_preset: StatefulValuable<int>(10),
     sensors: [
       Sensor(
           ip: '192.168.1.1',
@@ -691,7 +688,6 @@ List<Room> rooms = [
           port: 9999,
           connected: StatefulValuable<bool>(false)),
     ],
-    current_preset: StatefulValuable<int>(10),
     presets: [
       Preset(
           name: 'Nội dung 1',

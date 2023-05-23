@@ -21,6 +21,7 @@ class SensorConnection extends StatefulWidget {
 class _SensorConnectionState extends State<SensorConnection> {
   @override
   Widget build(BuildContext context) {
+    Sensor sensor=widget.sensor;
     return ListTile(
       contentPadding: EdgeInsets.only(left: 0, right: 20),
       visualDensity: VisualDensity.standard,
@@ -32,20 +33,20 @@ class _SensorConnectionState extends State<SensorConnection> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Icon(
-            widget.sensor.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
-            color: widget.sensor.connected.getValue() ? AppColors.navy_blue: AppColors.red,
-            // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
+            sensor.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
+            color: sensor.connected.getValue() ? AppColors.navy_blue: AppColors.red,
+            // projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
       title: Row(
         children: [
           Expanded(
             child: PrimaryText(
-                text: widget.sensor.name, size: 15, fontWeight: FontWeight.w700),
+                text: sensor.name, size: 15, fontWeight: FontWeight.w700),
           ),
 
           PrimaryText(
-            text: widget.sensor.ip,
+            text: sensor.ip,
             size: 13,
             fontWeight: FontWeight.w400,
             color: AppColors.secondary,
@@ -55,13 +56,13 @@ class _SensorConnectionState extends State<SensorConnection> {
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: PrimaryText(
-            text: widget.sensor.connected.getValue()? 'Connected': 'Disconnected',
+            text: sensor.connected.getValue()? 'Connected': 'Disconnected',
             size: 13,
             fontWeight: FontWeight.w600),
       ),
       onTap: () {
         setState(() {
-          checkConnection(widget.sensor.ip, widget.sensor.connected);
+          checkConnectionSensor(sensor.ip, sensor.connected);
         });
         // startAutoReload();
       },

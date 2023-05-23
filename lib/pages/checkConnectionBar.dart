@@ -71,7 +71,7 @@ class _CheckConnectionBarState extends State<CheckConnectionBar> {
           )
         ],
       ),
-      MiniMap(),
+      MiniMap(room: rooms[(current_page.getValue()>0)? current_page.getValue()-1:1], page: current_page.getValue(),),
       PrimaryText(
         text: room.resolume? 'Kiểm tra tín hiệu server': 'Kiểm tra tín hiệu Bright Sign',
         size: 16,
