@@ -2,10 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
-import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
-import 'package:responsive_dashboard/PopUp/PopupZoom.dart';
-import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/new_component/sensorConnection.dart';
 import 'package:responsive_dashboard/new_component/serverConnection.dart';
@@ -13,20 +10,23 @@ import 'package:responsive_dashboard/new_component/projectorConnection.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
-import 'package:responsive_dashboard/pages/roomManager.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
 class CheckConnectionBar extends StatefulWidget {
+  Room room;
+
+  CheckConnectionBar({required this.room});
+
   @override
-  State<CheckConnectionBar> createState() => _CheckConnectionBarState();
+  State<CheckConnectionBar> createState() => CheckConnectionBarState();
 }
 
-class _CheckConnectionBarState extends State<CheckConnectionBar> {
+class CheckConnectionBarState extends State<CheckConnectionBar> {
+
   @override
   Widget build(BuildContext context) {
-    Room room =
-        rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 1];
+    Room room = widget.room;
     double width = Responsive.isDesktop(context)
         ? (MediaQuery.of(context).size.width-200) / 3
         : MediaQuery.of(context).size.width - 40;

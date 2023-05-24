@@ -21,7 +21,8 @@ class OpeningScene extends StatefulWidget {
   State<OpeningScene> createState() => _OpeningSceneState();
 }
 
-class _OpeningSceneState extends State<OpeningScene> with TickerProviderStateMixin{
+class _OpeningSceneState extends State<OpeningScene>
+    with TickerProviderStateMixin {
   late RiveAnimationController _btnAnimationController;
 
   bool isShowSignInDialog = false;
@@ -35,13 +36,17 @@ class _OpeningSceneState extends State<OpeningScene> with TickerProviderStateMix
     );
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(seconds: 10),
+      duration: Duration(seconds: 15),
       vsync: this,
     )..addListener(() {
-      setState(() {
-        progressValue = _animationController.value;
+        setState(() {
+          progressValue = _animationController.value;
+          if (progressValue == 1) {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => Dashboard()));
+          }
+        });
       });
-    });
     _animationController.forward();
   }
 
@@ -132,7 +137,9 @@ class _OpeningSceneState extends State<OpeningScene> with TickerProviderStateMix
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(vertical: 24),
-                      child: PrimaryText(text: 'Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates.'),
+                      child: PrimaryText(
+                          text:
+                              'Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates.'),
                     )
                   ],
                 ),
@@ -143,7 +150,7 @@ class _OpeningSceneState extends State<OpeningScene> with TickerProviderStateMix
             left: MediaQuery.of(context).size.width * 0.3,
             bottom: MediaQuery.of(context).size.height * 0.15,
             width: MediaQuery.of(context).size.width * 0.4,
-            height: MediaQuery.of(context).size.height*0.025,
+            height: MediaQuery.of(context).size.height * 0.025,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: LinearProgressIndicator(

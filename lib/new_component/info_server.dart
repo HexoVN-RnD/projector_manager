@@ -27,7 +27,6 @@ class InfoServer extends StatefulWidget {
 //   bool value = true;
 
 class _InfoServer extends State<InfoServer> {
-
   @override
   Widget build(BuildContext context) {
     Server server = widget.server;
@@ -106,7 +105,13 @@ class _InfoServer extends State<InfoServer> {
           Row(
             children: [
               PrimaryText(
-                  text: server.connected.getValue()? 'Đã bật': 'Đã tắt',
+                  text: server.connected.getValue()
+                      ? (server.power_status.getValue()
+                          ? 'Đã bật server'
+                          : 'Đang tắt server ...')
+                      : (server.power_status.getValue()
+                          ? 'Đang bật server ...'
+                          : 'Đã tắt server'),
                   color: AppColors.secondary,
                   size: 14),
               Expanded(
@@ -115,9 +120,10 @@ class _InfoServer extends State<InfoServer> {
                 ),
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   setState(() {
-                    checkConnectionServer(server.ip, server.connected, server.power_status );
+                    checkConnectionServer(
+                        server.ip, server.connected, server.power_status);
                   });
                 },
                 child: PrimaryText(

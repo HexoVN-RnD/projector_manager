@@ -4,6 +4,7 @@ import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
+import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 import 'package:auto_reload/auto_reload.dart';
@@ -31,8 +32,12 @@ class _ServerConnection extends State<ServerConnection> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Icon(
-            server.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
-            color: server.connected.getValue() ? AppColors.navy_blue: AppColors.red,
+            server.connected.getValue()
+                ? Icons.settings_ethernet
+                : Icons.code_off,
+            color: server.connected.getValue()
+                ? AppColors.navy_blue
+                : AppColors.red,
             // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
@@ -42,7 +47,6 @@ class _ServerConnection extends State<ServerConnection> {
             child: PrimaryText(
                 text: server.name, size: 15, fontWeight: FontWeight.w700),
           ),
-
           PrimaryText(
             text: server.ip,
             size: 13,
@@ -54,14 +58,15 @@ class _ServerConnection extends State<ServerConnection> {
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: PrimaryText(
-            text: server.connected.getValue()? 'Connected': 'Disconnected',
+            text: server.connected.getValue() ? 'Đã kết nối' : 'Đã mất kết nối',
             size: 13,
             fontWeight: FontWeight.w600),
       ),
       onTap: () {
         setState(() {
           // check_connection(widget.server.ip, widget.server.connected);
-          checkConnectionServer(server.ip, server.connected, server.power_status);
+          checkConnectionServer(
+              server.ip, server.connected, server.power_status);
         });
         // startAutoReload();
       },

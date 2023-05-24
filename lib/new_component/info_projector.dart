@@ -115,7 +115,13 @@ class _InfoProjector extends State<InfoProjector> {
           Row(
             children: [
               PrimaryText(
-                  text: projector.power_status.getValue() ? 'Đã bật máy chiếu' : 'Đã tắt máy chiếu',
+                  text: projector.power_status.getValue()
+                      ? (projector.power_status_button.getValue()
+                      ? 'Đã bật máy chiếu'
+                      : 'Đang tắt máy chiếu ...')
+                      : (projector.power_status_button.getValue()
+                      ? 'Đang bật máy chiếu ...'
+                      : 'Đã tắt máy chiếu'),
                   color: AppColors.secondary,
                   size: 14),
               Expanded(
@@ -174,7 +180,13 @@ class _InfoProjector extends State<InfoProjector> {
           Row(
             children: [
               PrimaryText(
-                  text: projector.shutter_status.getValue()? 'Đã bật màn chập' : 'Đã tắt màn chập',
+                  text: projector.shutter_status.getValue()
+                      ? (projector.shutter_status_button.getValue()
+                      ? 'Đã bật màn chập'
+                      : 'Đang tắt màn chập ...')
+                      : (projector.shutter_status_button.getValue()
+                      ? 'Đang bật màn chập ...'
+                      : 'Đã tắt màn chập'),
                   color: AppColors.secondary,
                   size: 14),
               Expanded(

@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 import 'package:auto_reload/auto_reload.dart';
@@ -60,17 +61,27 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
         padding: const EdgeInsets.only(top: 8.0),
         child: PrimaryText(
             text: projector.connected.getValue()
-                ? 'Connected'
-                : 'Disconnected',
+                ? 'Đã kết nối'
+                : 'Đã mất kết nối',
             size: 13,
             fontWeight: FontWeight.w600),
       ),
       onTap: () {
         setState(() {
+          // projector.connected.setValue(!projector.connected.getValue());
           checkConnectionProjector(projector);
+          // final CheckConnectionScene =
+          // context.findAncestorStateOfType<CheckConnectionBarState>();
+          // if (CheckConnectionScene != null) {
+          //   CheckConnectionScene.setState(() {
+          //     // Cập nhật trạng thái của widget 1
+          //   });
+          // }
+
         });
         // startAutoReload();
       },
+      splashColor: AppColors.navy_blue,
       selected: true,
     );
   }

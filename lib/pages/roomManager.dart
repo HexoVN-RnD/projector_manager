@@ -306,7 +306,7 @@ class _RoomManagerState extends State<RoomManager> {
               ],
             ),
 
-            if (!Responsive.isDesktop(context)) CheckConnectionBar(),
+            if (!Responsive.isDesktop(context)) CheckConnectionBar(room: room),
           ],
         ),
       ),

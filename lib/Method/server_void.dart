@@ -1,9 +1,10 @@
 import 'dart:io';
+import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/data/data.dart';
 
-void PowerOnAllServer() {
+Future<void> PowerOnAllServer() async {
   allRoom.power_all_servers.setValue(true);
   for (Room room in rooms){
     for (Server server in room.servers){
@@ -24,7 +25,7 @@ void ShutdownAllServer() {
   print('Shutdown All Server');
 }
 
-void PowerModeServer(Server server) {
+Future<void> PowerModeServer(Server server) async {
   server.power_status.setValue(!server.power_status.getValue());
   if (server.power_status.getValue()) {
     WakeonLan(server);
@@ -32,9 +33,15 @@ void PowerModeServer(Server server) {
     ShutdownServer(server);
   }
   print(server.mac_address);
+
+  print("Starting...");
+  await Future.delayed(Duration(seconds: 30));
+  print("30 seconds have passed!");
+  checkConnectionServer(server.ip, server.connected, server.power_status);
+
 }
 
-void ShutdownServer(Server server){
+Future<void> ShutdownServer(Server server) async {
   final message = 'shutdown' ;
 
   RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((socket) {
@@ -42,6 +49,10 @@ void ShutdownServer(Server server){
     socket.close();
   });
   print(message);
+  print("Starting...");
+  await Future.delayed(Duration(seconds: 30));
+  print("30 seconds have passed!");
+  checkConnectionServer(server.ip, server.connected, server.power_status);
 }
 
 void WakeonLan(Server server, {int port = 9}) async {

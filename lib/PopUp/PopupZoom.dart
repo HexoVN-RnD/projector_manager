@@ -7,7 +7,10 @@ import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 
-const String heroZoom = 'popup-zoom';
+const String heroZoom1 = 'popup-zoom1';
+const String heroZoom2 = 'popup-zoom2';
+const String heroZoom3 = 'popup-zoom3';
+const String heroZoom4 = 'popup-zoom4';
 
 /// {@template add_todo_popup_card}
 /// Popup card to add a new [Todo]. Should be used in conjuction with
@@ -39,7 +42,13 @@ class _PopupZoomState extends State<PopupZoom> {
     final height = width * 1050 / 1920;
     return Center(
       child: Hero(
-        tag: heroZoom,
+        tag: (page == 1)
+            ? heroZoom1
+            : ((page == 2)
+                ? heroZoom2
+                : (page == 3)
+                    ? heroZoom3
+                    : heroZoom4),
         createRectTween: (begin, end) {
           return CustomRectTween(begin: begin, end: end);
         },

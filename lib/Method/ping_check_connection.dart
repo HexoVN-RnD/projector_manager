@@ -69,8 +69,10 @@ void checkConnectionProjector(Projector projector) {
         projector.shutter_status_button.setValue(false);
       });
     }
+
   });
   ping.command;
+
 }
 
 void checkAllConnection(Room room) {
@@ -85,9 +87,12 @@ void checkAllConnection(Room room) {
           server.connected.setValue(true);
           server.power_status.setValue(true);
           ping.stop();
-        } else if (event.error != null) {
-          server.connected.setValue(false);
-          server.power_status.setValue(false);
+        } else {
+          Socket.connect(server.ip, 9).then((socket) {}, onError: (error) {
+            server.connected.setValue(false);
+            server.power_status.setValue(false);
+            print('Error');
+          });
         }
       });
       ping.command;
@@ -102,8 +107,11 @@ void checkAllConnection(Room room) {
         if (event.response?.time != null) {
           sensor.connected.setValue(true);
           ping.stop();
-        } else if (event.error != null) {
-          sensor.connected.setValue(false);
+        } else {
+          Socket.connect(sensor.ip, 9).then((socket) {}, onError: (error) {
+            sensor.connected.setValue(false);
+            print('Error');
+          });
         }
       });
       ping.command;
@@ -119,9 +127,16 @@ void checkAllConnection(Room room) {
         if (event.response?.time != null) {
           projector.connected.setValue(true);
           ping.stop();
-        } else if (event.error != null) {
-          projector.connected.setValue(false);
+        } else {
+          Socket.connect(projector.ip, 9).then((socket) {}, onError: (error) {
+            projector.connected.setValue(false);
+            projector.power_status.setValue(false);
+            projector.power_status_button.setValue(false);
+            projector.shutter_status.setValue(false);
+            projector.shutter_status_button.setValue(false);
+          });
         }
+
       });
       ping.command;
     }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/pages/appBarActionItems.dart';
 import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
 import 'package:responsive_dashboard/component/rive_utils.dart';
@@ -11,6 +13,7 @@ import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:rive/rive.dart';
 import 'package:valuable/valuable.dart';
+
 
 final StatefulValuable<int> current_page = StatefulValuable<int>(0);
 
@@ -34,6 +37,9 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    Room room =
+    rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 0];
+
     return Scaffold(
       key: _drawerKey,
       drawer: SizedBox(
@@ -118,80 +124,77 @@ class _DashboardState extends State<Dashboard> {
               preferredSize: Size.zero,
               child: SizedBox(),
             ),
-      body: SafeArea(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (Responsive.isDesktop(context))
-              Container(
-                width: 200,
-                decoration: BoxDecoration(
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (Responsive.isDesktop(context))
+            Container(
+              width: 200,
+              decoration: BoxDecoration(
                   color: AppColors.barBg,
-                  borderRadius: BorderRadius.horizontal(right: Radius.circular(30))
-                ),
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.fromLTRB(30,0,30,0),
-                        alignment: Alignment.centerLeft,
-                        height: 84,
-                        child: Image.asset(
-                          'assets/small_logo.png',
-                          // filterQuality: FilterQuality.high,
-                          fit: BoxFit.fitHeight,
-                        )),
-                    Column(
-                      children: List.generate(
-                        sidebarMenus.length,
-                        (index) => SideMenu(
-                          menu: sidebarMenus[index],
-                          selectedMenu: selectedSideMenu,
-                          press: () {
-                            RiveUtils.changeSMIBoolState(
-                                sidebarMenus[index].rive.status!);
-                            setState(() {
-                              changePage(index);
-                            });
-                          },
-                          riveOnInit: (artboard) {
-                            sidebarMenus[index].rive.status =
-                                RiveUtils.getRiveInput(artboard,
-                                    stateMachineName:
-                                        sidebarMenus[index].rive.stateMachineName);
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            Expanded(flex: 10, child: SelectPage()),
-            if (Responsive.isDesktop(context) && current_page.getValue() != 0)
-              Expanded(
-                flex: 5,
-                child: SafeArea(
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: AppColors.barBg,
-                        borderRadius: BorderRadius.horizontal(left: Radius.circular(30))
-                    ),
-                    width: double.infinity,
-                    height: SizeConfig.screenHeight,
-                    child: SingleChildScrollView(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                      child: Column(
-                        children: [
-                          AppBarActionItems(),
-                          CheckConnectionBar(),
-                        ],
+                  borderRadius:
+                      BorderRadius.horizontal(right: Radius.circular(30))),
+              child: Column(
+                children: [
+                  Container(
+                      padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                      alignment: Alignment.centerLeft,
+                      height: 84,
+                      child: Image.asset(
+                        'assets/small_logo.png',
+                        // filterQuality: FilterQuality.high,
+                        fit: BoxFit.fitHeight,
+                      )),
+                  Column(
+                    children: List.generate(
+                      sidebarMenus.length,
+                      (index) => SideMenu(
+                        menu: sidebarMenus[index],
+                        selectedMenu: selectedSideMenu,
+                        press: () {
+                          RiveUtils.changeSMIBoolState(
+                              sidebarMenus[index].rive.status!);
+                          setState(() {
+                            changePage(index);
+                          });
+                        },
+                        riveOnInit: (artboard) {
+                          sidebarMenus[index].rive.status =
+                              RiveUtils.getRiveInput(artboard,
+                                  stateMachineName: sidebarMenus[index]
+                                      .rive
+                                      .stateMachineName);
+                        },
                       ),
                     ),
                   ),
+                ],
+              ),
+            ),
+          Expanded(flex: 10, child: SelectPage()),
+          if (Responsive.isDesktop(context) && current_page.getValue() != 0)
+            Expanded(
+              flex: 5,
+              // child: SingleChildScrollView(child: CheckConnectionBar(room: room,)),
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppColors.barBg,
+                    borderRadius:
+                        BorderRadius.horizontal(left: Radius.circular(30))),
+                width: double.infinity,
+                height: SizeConfig.screenHeight,
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                  child: Column(
+                    children: [
+                      AppBarActionItems(),
+                      CheckConnectionBar(room: room,),
+                    ],
+                  ),
                 ),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }
