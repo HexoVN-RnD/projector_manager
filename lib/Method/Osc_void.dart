@@ -26,7 +26,7 @@ void SendOscMessage(
     // Đóng kết nối UDP
     udp.close();
   } catch (e) {
-    print(e);
+    print('Error cant send OSC message');
   }
 }
 
