@@ -11,8 +11,11 @@ import 'package:auto_reload/auto_reload.dart';
 
 class ServerConnection extends StatefulWidget {
   Server server;
-  final VoidCallback onUpdateState;
-  ServerConnection({required this.server,required this.onUpdateState,});
+  // final VoidCallback onUpdateState;
+  ServerConnection({
+    required this.server,
+    // required this.onUpdateState,
+  });
 
   @override
   State<ServerConnection> createState() => _ServerConnection();
@@ -68,7 +71,7 @@ class _ServerConnection extends State<ServerConnection> {
           // check_connection(widget.server.ip, widget.server.connected);
           checkConnectionServer(
               server.ip, server.connected, server.power_status);
-          widget.onUpdateState?.call();
+          // widget.onUpdateState?.call();
         });
         // startAutoReload();
       },

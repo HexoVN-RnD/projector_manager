@@ -89,64 +89,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
       Column(
         children: List.generate(
           room.servers.length,
-              (index) =>  ServerConnection(server: room.servers[index], onUpdateState: () {  },),
-        ),
-      ),
-      Column(
-        children: List.generate(
-          room.servers.length,
-          (index) =>  ListTile(
-            contentPadding: EdgeInsets.only(left: 0, right: 20),
-            visualDensity: VisualDensity.standard,
-            leading: Container(
-              width: 50,
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Icon(
-                  room.servers[index].connected.getValue()
-                      ? Icons.settings_ethernet
-                      : Icons.code_off,
-                  color: room.servers[index].connected.getValue()
-                      ? AppColors.navy_blue
-                      : AppColors.red,
-                  // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
-                  size: 20),
-            ),
-            title: Row(
-              children: [
-                Expanded(
-                  child: PrimaryText(
-                      text: room.servers[index].name, size: 15, fontWeight: FontWeight.w700),
-                ),
-                PrimaryText(
-                  text: room.servers[index].ip,
-                  size: 13,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.secondary,
-                ),
-              ],
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: PrimaryText(
-                  text: room.servers[index].connected.getValue() ? 'Đã kết nối' : 'Đã mất kết nối',
-                  size: 13,
-                  fontWeight: FontWeight.w600),
-            ),
-            onTap: () {
-              setState(() {
-                // check_connection(widget.server.ip, widget.server.connected);
-                checkConnectionServer(
-                    room.servers[index].ip, room.servers[index].connected, room.servers[index].power_status);
-                widget.onUpdateState?.call();
-              });
-              // startAutoReload();
-            },
-            selected: true,
-          ),
+              (index) =>  ServerConnection(server: room.servers[index],),
         ),
       ),
       SizedBox(
