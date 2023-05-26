@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/data/data.dart';
+import 'package:responsive_dashboard/new_component/projectorConnection.dart';
+import 'package:responsive_dashboard/new_component/sensorConnection.dart';
+import 'package:responsive_dashboard/new_component/serverConnection.dart';
 import 'package:responsive_dashboard/pages/appBarActionItems.dart';
 import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
 import 'package:responsive_dashboard/component/rive_utils.dart';
@@ -11,6 +16,7 @@ import 'package:responsive_dashboard/pages/select_page.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/style/colors.dart';
+import 'package:responsive_dashboard/style/style.dart';
 import 'package:rive/rive.dart';
 import 'package:valuable/valuable.dart';
 
@@ -18,6 +24,11 @@ import 'package:valuable/valuable.dart';
 final StatefulValuable<int> current_page = StatefulValuable<int>(0);
 
 class Dashboard extends StatefulWidget {
+  final VoidCallback? onUpdateState;
+  Dashboard({
+    Key? key,
+    this.onUpdateState,
+  }) : super(key: key);
   @override
   State<Dashboard> createState() => _DashboardState();
 }
@@ -171,29 +182,7 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
             ),
-          Expanded(flex: 10, child: SelectPage()),
-          if (Responsive.isDesktop(context) && current_page.getValue() != 0)
-            Expanded(
-              flex: 5,
-              // child: SingleChildScrollView(child: CheckConnectionBar(room: room,)),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: AppColors.barBg,
-                    borderRadius:
-                        BorderRadius.horizontal(left: Radius.circular(30))),
-                width: double.infinity,
-                height: SizeConfig.screenHeight,
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                  child: Column(
-                    children: [
-                      AppBarActionItems(),
-                      CheckConnectionBar(room: room,),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+          Expanded(child: SelectPage()),
         ],
       ),
     );
