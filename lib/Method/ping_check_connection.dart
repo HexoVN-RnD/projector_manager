@@ -42,7 +42,7 @@ void checkConnectionSensor(String ip, StatefulValuable<bool> connected) {
       connected.setValue(true);
       ping.stop();
     } else {
-      Socket.connect(ip, 9).then((socket) {}, onError: (error) {
+      Socket.connect(ip, 9999).then((socket) {}, onError: (error) {
         connected.setValue(false);
         print('Error');
       });
@@ -61,7 +61,7 @@ void checkConnectionProjector(Projector projector) {
       projector.connected.setValue(true);
       ping.stop();
     } else {
-      Socket.connect(projector.ip, 9).then((socket) {}, onError: (error) {
+      Socket.connect(projector.ip, 3002).then((socket) {}, onError: (error) {
         projector.connected.setValue(false);
         projector.power_status.setValue(false);
         projector.power_status_button.setValue(false);
@@ -75,7 +75,7 @@ void checkConnectionProjector(Projector projector) {
 
 }
 
-void checkAllConnection(Room room) {
+void checkRoomConnection(Room room) {
   if (!room.servers.isEmpty)
     for (Server server in room.servers) {
       // serverIP = '192.168.1.15';
@@ -86,6 +86,7 @@ void checkAllConnection(Room room) {
         if (event.response?.time != null) {
           server.connected.setValue(true);
           server.power_status.setValue(true);
+          print('Connected');
           ping.stop();
         } else {
           Socket.connect(server.ip, 9).then((socket) {}, onError: (error) {
@@ -99,16 +100,17 @@ void checkAllConnection(Room room) {
     }
   if (!room.sensors.isEmpty) {
     for (Sensor sensor in room.sensors) {
-      // serverIP = '192.168.1.15';
+      // serverIP = '102.168.1.15';
       final ping = Ping(sensor.ip, count: 3); // Thay đổi số lần ping tùy ý
 
       ping.stream.listen((event) {
         print('Ping to ${sensor.ip}: ${event.response?.time} ms');
         if (event.response?.time != null) {
           sensor.connected.setValue(true);
+          print('Connected');
           ping.stop();
         } else {
-          Socket.connect(sensor.ip, 9).then((socket) {}, onError: (error) {
+          Socket.connect(sensor.ip, 9999).then((socket) {}, onError: (error) {
             sensor.connected.setValue(false);
             print('Error');
           });
@@ -126,9 +128,10 @@ void checkAllConnection(Room room) {
         print('Ping to ${projector.ip}: ${event.response?.time} ms');
         if (event.response?.time != null) {
           projector.connected.setValue(true);
+          print('Connected');
           ping.stop();
         } else {
-          Socket.connect(projector.ip, 9).then((socket) {}, onError: (error) {
+          Socket.connect(projector.ip, 3002).then((socket) {}, onError: (error) {
             projector.connected.setValue(false);
             projector.power_status.setValue(false);
             projector.power_status_button.setValue(false);
@@ -149,7 +152,7 @@ void checkAllConnection(Room room) {
 //     socket.broadcastEnabled = true;
 //
 //     // Gửi dữ liệu qua socket UDP đến server
-//     socket.send('ping'.codeUnits, InternetAddress('192.168.3.108'), 9);
+//     socket.send('ping'.codeUnits, InternetAddress('192.168.3.108'), 0);
 //
 //     // Đặt thười gian chờ để nhận phản hồi từ server
 //     socket.timeout(Duration(seconds: 5));

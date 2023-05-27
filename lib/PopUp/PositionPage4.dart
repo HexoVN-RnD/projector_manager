@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/style/colors.dart';
@@ -29,11 +30,26 @@ class _PositionPage4State extends State<PositionPage4> {
       width: width * 0.0095,
       height: width * 0.0095,
       child: Container(
-        color: projector.connected.getValue()
-            ? (projector.power_status.getValue()
-            ? AppColors.navy_blue
-            : AppColors.red)
-            : AppColors.gray,
+        decoration: BoxDecoration(
+            color: projector.connected.getValue()
+                ? (projector.power_status.getValue()
+                ? AppColors.navy_blue
+                : AppColors.red)
+                : AppColors.gray,
+            border: projector.isOnHover.getValue()
+                ? Border.all(
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color:  projector.connected.getValue()
+                  ? (projector.power_status.getValue()
+                  ? AppColors.navy_blue
+                  : AppColors.red)
+                  : AppColors.gray,
+              width: 4.0,
+            )
+                : Border.all(
+              color: Colors.transparent,
+              width: 0.0,
+            )),
       ),
     );
   }

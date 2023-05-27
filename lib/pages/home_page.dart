@@ -1,12 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
+import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
+import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/new_component/manageAllProjectors.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/new_component/manageAllServers.dart';
+import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
@@ -16,10 +20,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(milliseconds: 50), (timer) {
+      setState(() {});
+    });
+  }
+
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
@@ -28,7 +45,11 @@ class _HomePage extends State<HomePage> {
           children: [
             Row(
               children: [
-                Icon(Icons.tune, size: 30,color: AppColors.gray,),
+                Icon(
+                  Icons.tune,
+                  size: 30,
+                  color: AppColors.gray,
+                ),
                 SizedBox(
                   width: SizeConfig.blockSizeVertical,
                 ),
@@ -55,7 +76,7 @@ class _HomePage extends State<HomePage> {
                 color: AppColors.gray,
                 borderRadius: BorderRadius.circular(30),
               ),
-              child:  Column(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
@@ -64,7 +85,11 @@ class _HomePage extends State<HomePage> {
                     height: SizeConfig.blockSizeVertical * 4,
                     child: Row(
                       children: [
-                        Icon(Icons.movie_filter, size: 30,color: AppColors.white,),
+                        Icon(
+                          Icons.movie_filter,
+                          size: 30,
+                          color: AppColors.white,
+                        ),
                         SizedBox(
                           width: SizeConfig.blockSizeHorizontal,
                         ),
@@ -81,81 +106,81 @@ class _HomePage extends State<HomePage> {
                     // controller: controller,
                     scrollDirection: Axis.horizontal,
                     child:
-                    // ListView.builder(
-                    //   controller: controller,
-                    //   itemCount:  allRoom.presets.length,
-                    //   itemBuilder: (context, index) {
-                    //   bool isSelected =
-                    //       allRoom.current_preset.getValue() == index;
-                    //   return GestureDetector(
-                    //     onTap: () {
-                    //       setState(() {
-                    //         select_preset(index);
-                    //       });
-                    //     },
-                    //     child: Column(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         AnimatedContainer(
-                    //           duration: Duration(milliseconds: 500),
-                    //           curve: Curves.easeInOut,
-                    //           width: isSelected ? 250.0 : 150.0,
-                    //           height: isSelected ? 250.0 : 150.0,
-                    //           margin: EdgeInsets.all(20.0),
-                    //           decoration: BoxDecoration(
-                    //             color: isSelected
-                    //                 ? AppColors.navy_blue2
-                    //                 : AppColors.white,
-                    //             borderRadius: BorderRadius.circular(
-                    //                 isSelected ? 20.0 : 15),
-                    //           ),
-                    //           child: Padding(
-                    //             padding: EdgeInsets.all(5),
-                    //             child: ClipRRect(
-                    //               borderRadius: BorderRadius.circular(
-                    //                   isSelected ? 15.0 : 10),
-                    //               child: Image.asset(
-                    //                 allRoom.presets[index].image,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ),
-                    //         Row(
-                    //           mainAxisAlignment: MainAxisAlignment.center,
-                    //           children: [
-                    //             Icon(
-                    //               Icons.account_balance,
-                    //               size: isSelected ? 26 : 15,
-                    //               color: AppColors.white,
-                    //             ),
-                    //             SizedBox(
-                    //                 width: SizeConfig.blockSizeHorizontal *
-                    //                     (isSelected ? 1.5 : 0.75)),
-                    //             AnimatedDefaultTextStyle(
-                    //               style: isSelected
-                    //                   ? TextStyle(
-                    //                   fontFamily: 'Poppins',
-                    //                   fontSize: 17.0,
-                    //                   fontWeight: FontWeight.w600)
-                    //                   : TextStyle(
-                    //                   fontFamily: 'Poppins',
-                    //                   fontSize: 12.0,
-                    //                   fontWeight: FontWeight.w600),
-                    //               duration: const Duration(milliseconds: 200),
-                    //               child: Text(allRoom.presets[index].name),
-                    //             ),
-                    //             // PrimaryText(
-                    //             //     text: allRoom.presets[index].name,
-                    //             //     size: isSelected ? 17 : 12,
-                    //             //     color: AppColors.white,
-                    //             //     fontWeight: FontWeight.w600),
-                    //           ],
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   );
-                    // }),
-                    Row(
+                        // ListView.builder(
+                        //   controller: controller,
+                        //   itemCount:  allRoom.presets.length,
+                        //   itemBuilder: (context, index) {
+                        //   bool isSelected =
+                        //       allRoom.current_preset.getValue() == index;
+                        //   return GestureDetector(
+                        //     onTap: () {
+                        //       setState(() {
+                        //         select_preset(index);
+                        //       });
+                        //     },
+                        //     child: Column(
+                        //       mainAxisAlignment: MainAxisAlignment.center,
+                        //       children: [
+                        //         AnimatedContainer(
+                        //           duration: Duration(milliseconds: 500),
+                        //           curve: Curves.easeInOut,
+                        //           width: isSelected ? 250.0 : 150.0,
+                        //           height: isSelected ? 250.0 : 150.0,
+                        //           margin: EdgeInsets.all(20.0),
+                        //           decoration: BoxDecoration(
+                        //             color: isSelected
+                        //                 ? AppColors.navy_blue2
+                        //                 : AppColors.white,
+                        //             borderRadius: BorderRadius.circular(
+                        //                 isSelected ? 20.0 : 15),
+                        //           ),
+                        //           child: Padding(
+                        //             padding: EdgeInsets.all(5),
+                        //             child: ClipRRect(
+                        //               borderRadius: BorderRadius.circular(
+                        //                   isSelected ? 15.0 : 10),
+                        //               child: Image.asset(
+                        //                 allRoom.presets[index].image,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         Row(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Icon(
+                        //               Icons.account_balance,
+                        //               size: isSelected ? 26 : 15,
+                        //               color: AppColors.white,
+                        //             ),
+                        //             SizedBox(
+                        //                 width: SizeConfig.blockSizeHorizontal *
+                        //                     (isSelected ? 1.5 : 0.75)),
+                        //             AnimatedDefaultTextStyle(
+                        //               style: isSelected
+                        //                   ? TextStyle(
+                        //                   fontFamily: 'Poppins',
+                        //                   fontSize: 17.0,
+                        //                   fontWeight: FontWeight.w600)
+                        //                   : TextStyle(
+                        //                   fontFamily: 'Poppins',
+                        //                   fontSize: 12.0,
+                        //                   fontWeight: FontWeight.w600),
+                        //               duration: const Duration(milliseconds: 200),
+                        //               child: Text(allRoom.presets[index].name),
+                        //             ),
+                        //             // PrimaryText(
+                        //             //     text: allRoom.presets[index].name,
+                        //             //     size: isSelected ? 17 : 12,
+                        //             //     color: AppColors.white,
+                        //             //     fontWeight: FontWeight.w600),
+                        //           ],
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   );
+                        // }),
+                        Row(
                       children: List.generate(allRoom.presets.length, (index) {
                         bool isSelected =
                             allRoom.current_preset.getValue() == index;
@@ -284,32 +309,95 @@ class _HomePage extends State<HomePage> {
               ),
             ),
 
-            Container(
-              child: Wrap(
-                spacing: 40,
-                runSpacing: 40,
-                alignment: WrapAlignment.spaceBetween,
-                children: [
-                  ManageAllServers(),
-                  ManageAllProjectors(),
-                ],
-              ),
-            ), //p
-            Container(
-              child: Wrap(
-                spacing: 40,
-                alignment: WrapAlignment.spaceBetween,
-                children: [
-                  MiniMap(room: rooms[0],page: 1,),
-                  MiniMap(room: rooms[1],page: 2,),
-                  MiniMap(room: rooms[2],page: 3,),
-                  MiniMap(room: rooms[3],page: 4,),
-                ],
-              ),
-            ), //power_all: PowerAllProjectors, shutter_all: ShutterAllProjectors),
-            SizedBox(
-              height: SizeConfig.blockSizeVertical ,
+            Wrap(
+              spacing: 40,
+              runSpacing: 40,
+              alignment: WrapAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        print('object');
+                      });
+                    },
+                    child: ManageAllServers()),
+                ManageAllProjectors(),
+              ],
             ),
+            // MiniMap(room: rooms[(current_page.getValue()>0)? current_page.getValue()-1:0], page: current_page.getValue()+1,),
+            Wrap(
+              spacing: 40,
+              alignment: WrapAlignment.spaceBetween,
+              children: [
+                MiniMap(
+                  room: rooms[0],
+                  page: 1,
+                ),
+                MiniMap(
+                  room: rooms[1],
+                  page: 2,
+                ),
+                MiniMap(
+                  room: rooms[2],
+                  page: 3,
+                ),
+                MiniMap(
+                  room: rooms[3],
+                  page: 4,
+                ),
+              ],
+            ), //power_all: PowerAllProjectors, shutter_all: ShutterAllProjectors),
+            Row(
+              children: [
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.navy_blue,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(width: SizeConfig.blockSizeHorizontal,),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(text: 'Máy chiếu đang bật'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
+                ),
+                SizedBox(width: SizeConfig.blockSizeHorizontal*6,),
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.red,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(width: SizeConfig.blockSizeHorizontal,),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(text: 'Máy chiếu đang tắt'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
+                ),
+                SizedBox(width: SizeConfig.blockSizeHorizontal*6,),
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.gray,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(width: SizeConfig.blockSizeHorizontal,),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(text: 'Mất kết nối'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
+                ),
+              ],
+            ),
+            // SizedBox(
+            //   height: SizeConfig.blockSizeVertical,
+            // ),
           ],
         ),
       ),

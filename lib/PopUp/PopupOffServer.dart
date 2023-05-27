@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
+import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/server_void.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/dashboard.dart';
@@ -17,7 +17,11 @@ const String heroOffServer = 'add-off-server';
 /// {@endtemplate}
 class PopupOffServer extends StatefulWidget {
   /// {@macro add_todo_popup_card}
-  const PopupOffServer({Key? key}) : super(key: key);
+  final VoidCallback? onUpdateState;
+  const PopupOffServer({
+    Key? key,
+    this.onUpdateState,
+  }) : super(key: key);
 
   @override
   State<PopupOffServer> createState() => _PopupOffServerState();
@@ -96,8 +100,9 @@ class _PopupOffServerState extends State<PopupOffServer> {
                             onPressed: () {
                               setState(() {
                                 ShutdownAllServer();
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
-                                // Navigator.of(context).pop();
+                                // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+                                Navigator.of(context).pop();
+                                widget.onUpdateState?.call();
                               });
                             },
                             child: PrimaryText(

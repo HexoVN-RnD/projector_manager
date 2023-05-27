@@ -1,13 +1,7 @@
-// import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/pages/roomManager.dart';
 import 'package:responsive_dashboard/pages/home_page.dart';
-import 'package:responsive_dashboard/component/page_2.dart';
-import 'package:responsive_dashboard/component/page_3.dart';
-import 'package:responsive_dashboard/component/squareMenu.dart';
-
 class SelectPage extends StatefulWidget {
   // final int current_page;
 

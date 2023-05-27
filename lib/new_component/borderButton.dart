@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
+import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 

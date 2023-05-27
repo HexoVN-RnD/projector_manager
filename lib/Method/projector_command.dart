@@ -51,6 +51,11 @@ String sendTCPIPCommand(Projector projector, String command) {
       print('Connection closed');
     });
   }, onError: (error) {
+    projector.connected.setValue(false);
+    projector.power_status_button.setValue(false);
+    projector.power_status.setValue(false);
+    projector.shutter_status_button.setValue(false);
+    projector.shutter_status.setValue(false);
     print('Error: Refused connection');
   });
   return response;

@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
+import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/server_void.dart';
+import 'package:responsive_dashboard/Object/allRoom.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
@@ -12,196 +13,219 @@ import 'package:responsive_dashboard/PopUp/PopupOffServer.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
-
 class ManageAllServers extends StatefulWidget {
-
   @override
   _ManageAllServersState createState() => _ManageAllServersState();
 }
 
 class _ManageAllServersState extends State<ManageAllServers> {
-
   @override
   Widget build(BuildContext context) {
+    AllRoom allRooms = allRoom;
     return Container(
-      height: Responsive.isDesktop(context)? 180:null,
-      constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth-40,
-                                  maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth/2-150 :SizeConfig.screenWidth-40),
-        padding: EdgeInsets.only(
-            top: 20, bottom: 20, left: 20, right: Responsive.isMobile(context) ? 20 : 40),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: AppColors.barBg,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Icon(Icons.airplay, size: 30,color: AppColors.gray,),
-                SizedBox(
+      height: Responsive.isDesktop(context) ? 180 : null,
+      constraints: BoxConstraints(
+          minWidth:
+              Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
+          maxWidth: Responsive.isDesktop(context)
+              ? SizeConfig.screenWidth / 2 - 150
+              : SizeConfig.screenWidth - 40),
+      padding: EdgeInsets.only(
+          top: 20,
+          bottom: 20,
+          left: 20,
+          right: Responsive.isMobile(context) ? 20 : 40),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: AppColors.barBg,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.airplay,
+                size: 30,
+                color: AppColors.gray,
+              ),
+              SizedBox(
+                width: SizeConfig.blockSizeHorizontal,
+              ),
+              PrimaryText(
+                text: 'Quản lý servers',
+                color: AppColors.gray,
+                size: 20,
+                fontWeight: FontWeight.w600,
+              ),
+              Expanded(
+                child: SizedBox(
                   width: SizeConfig.blockSizeHorizontal,
                 ),
+              ),
+              PrimaryText(
+                  text: 'server', //projectors.length.toString(),
+                  color: AppColors.iconDeepGray,
+                  size: 16)
+            ],
+          ),
+          Container(
+            height: 50,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
                 PrimaryText(
-                  text: 'Quản lý servers',
+                  text: "Bật/tắt toàn bộ servers",
                   color: AppColors.gray,
-                  size: 20,
-                  fontWeight: FontWeight.w600,
+                  size: 18,
+                  fontWeight: FontWeight.w500,
                 ),
                 Expanded(
                   child: SizedBox(
                     width: SizeConfig.blockSizeHorizontal,
                   ),
                 ),
-                PrimaryText(
-                text: 'server',//projectors.length.toString(),
-                color: AppColors.iconDeepGray,
-                size: 16
-                )
+                Container(
+                  height: 40,
+                  width: 60,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: allRooms.power_all_servers.getValue()
+                          ? AppColors.navy_blue
+                          : AppColors.gray,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        PowerOnAllServer();
+                      });
+                    },
+                    child: PrimaryText(
+                      text: 'On',
+                      size: 14,
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(35, 0, 15, 0),
+                  child: Container(
+                    height: 40,
+                    width: 60,
+                    child: Hero(
+                      tag: heroOffServer,
+                      createRectTween: (begin, end) {
+                        return CustomRectTween(begin: begin, end: end);
+                      },
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              !allRooms.power_all_servers.getValue()
+                                  ? AppColors.red
+                                  : AppColors.gray,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            Navigator.of(context)
+                                .push(HeroDialogRoute(builder: (context) {
+                              return PopupOffServer(
+                                onUpdateState: () {
+                                  setState(() {});
+                                },
+                              );
+                            }));
+                            // PowerAllServers(false);
+                          });
+                        },
+                        child: PrimaryText(
+                          text: 'Off',
+                          size: 14,
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // Transform.scale(
+                //   scale: 1,
+                //   child: CupertinoSwitch(
+                //     value: allRooms.power_all_servers.getValue(),
+                //     activeColor: AppColors.navy_blue,
+                //     onChanged: (value) {
+                //       setState(() {
+                //         PowerAllServers(true);
+                //       });
+                //     },
+                //   ),
+                // ),
               ],
             ),
-            Container(
-              height: 50,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  PrimaryText(
-                    text: "Bật/tắt toàn bộ servers",
-                    color: AppColors.gray,
-                    size: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  Expanded(
-                    child: SizedBox(
-                      width: SizeConfig.blockSizeHorizontal,
-                    ),
-                  ),
-                  Container(
-                      height: 40,
-                      width: 60,
-                    child: ElevatedButton(
-                      style:ElevatedButton.styleFrom(
-                        backgroundColor: allRoom.power_all_servers.getValue()? AppColors.navy_blue: AppColors.gray,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          PowerOnAllServer();
-                        });
-                      },
-                      child: PrimaryText(text: 'On',
-                        size: 14,
-                        color: AppColors.white,
-                        fontWeight: FontWeight.w500,),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(35,0,15,0),
-                    child: Container(
-                      height: 40,
-                      width: 60,
-                      child: Hero(
-                        tag: heroOffServer,
-                        createRectTween: (begin, end) {
-                          return CustomRectTween(begin: begin, end: end);
-                        },
-                        child: ElevatedButton(
-                          style:ElevatedButton.styleFrom(
-                            backgroundColor: !allRoom.power_all_servers.getValue()? AppColors.red: AppColors.gray,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                                return const PopupOffServer();
-                              }));
-                              // PowerAllServers(false);
-                            });
-                          },
-                          child: PrimaryText(text: 'Off',
-                            size: 14,
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500,),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // Transform.scale(
-                  //   scale: 1,
-                  //   child: CupertinoSwitch(
-                  //     value: allRoom.power_all_servers.getValue(),
-                  //     activeColor: AppColors.navy_blue,
-                  //     onChanged: (value) {
-                  //       setState(() {
-                  //         PowerAllServers(true);
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
-                ],
-              ),
-            ),
-            // PrimaryText(
-            //     text: 'Phòng 2 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
-            //     color: AppColors.iconDeepGray,
-            //     size: 16),
-            // PrimaryText(
-            //     text: 'Phòng 4 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
-            //     color: AppColors.iconDeepGray,
-            //     size: 16),
-            // PrimaryText(
-            //     text: 'Phòng 5 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
-            //     color: AppColors.iconDeepGray,
-            //     size: 16),
-            // PrimaryText(
-            //     text: 'Phòng 6 đã bật '+ allRoom.num_servers_connected.getValue().toString() +'/' + allRoom.num_servers.getValue().toString(),
-            //     color: AppColors.iconDeepGray,
-            //     size: 16),
-            // Container(
-            //   height: 50,
-            //   child: Row(
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       PrimaryText(
-            //         text: "Điều chỉnh âm thanh",
-            //         color: AppColors.gray,
-            //         size: 18,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //       Expanded(
-            //         child: SizedBox(
-            //           width: SizeConfig.blockSizeHorizontal,
-            //         ),
-            //       ),
-            //       PrimaryText(
-            //           text:allRoom.volume_all.getValue().toStringAsFixed(2),
-            //           color: AppColors.iconDeepGray,
-            //           size: 16),
-            //       SizedBox(
-            //         width: SizeConfig.blockSizeHorizontal,
-            //       ),
-            //       Transform.scale(
-            //         scale: 1,
-            //         child: Slider(
-            //           activeColor: AppColors.navy_blue,
-            //           inactiveColor: AppColors.light_navy_blue,
-            //           value: allRoom.volume_all.getValue(),
-            //           onChanged: (index) {
-            //             setState(() => ChangeAllVolume(index));
-            //           },
-            //           min: 0,
-            //           max: 1,
-            //           // divisions: 5,
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
-          ],
-        ),);
+          ),
+          // PrimaryText(
+          //     text: 'Phòng 2 đã bật '+ allRooms.num_servers_connected.getValue().toString() +'/' + allRooms.num_servers.getValue().toString(),
+          //     color: AppColors.iconDeepGray,
+          //     size: 16),
+          // PrimaryText(
+          //     text: 'Phòng 4 đã bật '+ allRooms.num_servers_connected.getValue().toString() +'/' + allRooms.num_servers.getValue().toString(),
+          //     color: AppColors.iconDeepGray,
+          //     size: 16),
+          // PrimaryText(
+          //     text: 'Phòng 5 đã bật '+ allRooms.num_servers_connected.getValue().toString() +'/' + allRooms.num_servers.getValue().toString(),
+          //     color: AppColors.iconDeepGray,
+          //     size: 16),
+          // PrimaryText(
+          //     text: 'Phòng 6 đã bật '+ allRooms.num_servers_connected.getValue().toString() +'/' + allRooms.num_servers.getValue().toString(),
+          //     color: AppColors.iconDeepGray,
+          //     size: 16),
+          // Container(
+          //   height: 50,
+          //   child: Row(
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       PrimaryText(
+          //         text: "Điều chỉnh âm thanh",
+          //         color: AppColors.gray,
+          //         size: 18,
+          //         fontWeight: FontWeight.w500,
+          //       ),
+          //       Expanded(
+          //         child: SizedBox(
+          //           width: SizeConfig.blockSizeHorizontal,
+          //         ),
+          //       ),
+          //       PrimaryText(
+          //           text:allRooms.volume_all.getValue().toStringAsFixed(2),
+          //           color: AppColors.iconDeepGray,
+          //           size: 16),
+          //       SizedBox(
+          //         width: SizeConfig.blockSizeHorizontal,
+          //       ),
+          //       Transform.scale(
+          //         scale: 1,
+          //         child: Slider(
+          //           activeColor: AppColors.navy_blue,
+          //           inactiveColor: AppColors.light_navy_blue,
+          //           value: allRooms.volume_all.getValue(),
+          //           onChanged: (index) {
+          //             setState(() => ChangeAllVolume(index));
+          //           },
+          //           min: 0,
+          //           max: 1,
+          //           // divisions: 5,
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+        ],
+      ),
+    );
   }
 }

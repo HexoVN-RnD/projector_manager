@@ -15,9 +15,11 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
 class MiniMap extends StatefulWidget {
+  // final ValueNotifier<Room> roomNotifier;
   Room room;
   int page;
   MiniMap({
+  // required this.roomNotifier,
     required this.room,
     required this.page,
   });
@@ -27,6 +29,26 @@ class MiniMap extends StatefulWidget {
 }
 
 class _MiniMapState extends State<MiniMap> {
+  // Room get room => widget.roomNotifier.value;
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   widget.roomNotifier.addListener(_handleRoomChange);
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   widget.roomNotifier.removeListener(_handleRoomChange);
+  //   super.dispose();
+  // }
+  //
+  // void _handleRoomChange() {
+  //   setState(() {
+  //     // Đây là nơi bạn có thể thực hiện các tác vụ cần thiết khi giá trị của room thay đổi
+  //     // Ví dụ: Kiểm tra các giá trị mới và thực hiện cập nhật UI tương ứng
+  //   });
+  // }
   @override
   Widget build(BuildContext context) {
     Room room = widget.room;

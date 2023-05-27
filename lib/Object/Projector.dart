@@ -15,6 +15,8 @@ class Projector {
     StatefulValuable<double> lamp_hours;
     Offset position;
     StatefulValuable<bool> color_state;
+    StatefulValuable<bool> isOnHover;
+
 
     // Constructor
     Projector({
@@ -32,5 +34,6 @@ class Projector {
         required this.position,
         // this.lamp_hours = StatefulValuable<double>(0),
         required this.color_state,
+        required this.isOnHover,
     });
 }

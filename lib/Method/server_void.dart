@@ -66,6 +66,10 @@ void WakeonLan(Server server, {int port = 9}) async {
     socket.send(magicPacket, boardcastIP, port);
     socket.close();
   });
+  print("Starting...");
+  await Future.delayed(Duration(seconds: 30));
+  print("30 seconds have passed!");
+  checkConnectionServer(server.ip, server.connected, server.power_status);
 }
 
 List<int> _parseMacAddress(String macAddress) {

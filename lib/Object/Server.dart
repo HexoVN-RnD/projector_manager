@@ -12,6 +12,7 @@ class Server {
     Offset position;
     StatefulValuable<double> volume;
     StatefulValuable<bool> connected;
+    StatefulValuable<bool> isOnHover;
 
     // Constructor
     Server({
@@ -25,5 +26,6 @@ class Server {
         required this.power_status,
         required this.volume,
         required this.connected,
+        required this.isOnHover,
     });
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
+import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/style/colors.dart';
@@ -15,7 +15,9 @@ const String heroOffProjector = 'add-off-projector';
 /// {@endtemplate}
 class PopupOffProjector extends StatefulWidget {
   /// {@macro add_todo_popup_card}
-  const PopupOffProjector({Key? key}) : super(key: key);
+  final VoidCallback? onUpdateState;
+  const PopupOffProjector({Key? key,
+    this.onUpdateState,}) : super(key: key);
 
   @override
   State<PopupOffProjector> createState() => _PopupOffProjectorState();
@@ -96,7 +98,9 @@ class _PopupOffProjectorState extends State<PopupOffProjector> {
                               onPressed: () {
                                 setState(() {
                                   PowerAllProjectors(false);
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
+                                  Navigator.of(context).pop();
+                                  widget.onUpdateState?.call();
+                                  // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
                                 });
                               },
                               child: PrimaryText(

@@ -162,7 +162,7 @@ class _PopupZoomState extends State<PopupZoom> {
                       child: Container(
                         color: room.servers[index].connected.getValue()
                             ? AppColors.navy_blue
-                            : AppColors.red,
+                            : AppColors.gray,
                       ),
                     ),
                   ),

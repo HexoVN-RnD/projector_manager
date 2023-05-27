@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:responsive_dashboard/Method/Control_all_room_void.dart';
+import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffProjector.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffShutter.dart';
@@ -116,7 +116,9 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                         onPressed: () {
                           setState(() {
                             Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                              return const PopupOffProjector();
+                              return PopupOffProjector( onUpdateState: () {
+                                setState(() {});
+                              },);
                             }));
                             // PowerAllProjectors(false);
                           });
@@ -217,7 +219,9 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                         onPressed: () {
                           setState(() {
                             Navigator.of(context).push(HeroDialogRoute(builder: (context) {
-                              return const PopupOffShutter();
+                              return PopupOffShutter( onUpdateState: () {
+                                setState(() {});
+                              },);
                             }));
                             // ShutterAllProjectors(false);
                           });
