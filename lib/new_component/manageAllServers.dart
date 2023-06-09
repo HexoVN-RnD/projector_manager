@@ -23,13 +23,15 @@ class _ManageAllServersState extends State<ManageAllServers> {
   Widget build(BuildContext context) {
     AllRoom allRooms = allRoom;
     return Container(
-      height: Responsive.isDesktop(context) ? 180 : null,
+      // height: Responsive.isDesktop(context) ? 180 : null,
       constraints: BoxConstraints(
-          minWidth:
-              Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
-          maxWidth: Responsive.isDesktop(context)
-              ? SizeConfig.screenWidth / 2 - 150
-              : SizeConfig.screenWidth - 40),
+          // minWidth:
+          //     Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
+          maxWidth:
+          // Responsive.isDesktop(context)
+          //     ? SizeConfig.screenWidth / 2 - 150
+          //     :
+          SizeConfig.screenWidth - 40),
       padding: EdgeInsets.only(
           top: 20,
           bottom: 20,

@@ -43,7 +43,7 @@ void SendPresetOSC(String ip, int port, int column) async {
 }
 
 void SelectAllPreset(index) {
-  allRoom.current_preset.setValue(index);
+  allRoom.current_test_pattern.setValue(index);
   for (Room room in rooms) {
     room.current_preset.setValue(index);
     if (room.resolume) {

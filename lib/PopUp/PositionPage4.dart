@@ -38,7 +38,7 @@ class _PositionPage4State extends State<PositionPage4> {
                 : AppColors.gray,
             border: projector.isOnHover.getValue()
                 ? Border.all(
-              strokeAlign: BorderSide.strokeAlignCenter,
+              strokeAlign: StrokeAlign.center,
               color:  projector.connected.getValue()
                   ? (projector.power_status.getValue()
                   ? AppColors.navy_blue

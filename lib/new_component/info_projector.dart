@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_dashboard/Method/Control_all_projector_void.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/PopUp/ControlProjector.dart';
+import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/style/colors.dart';
@@ -59,25 +62,38 @@ class _InfoProjector extends State<InfoProjector> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              SvgPicture.asset('assets/credit-card.svg', width: 35),
-              SizedBox(
-                width: SizeConfig.blockSizeHorizontal,
-              ),
-              PrimaryText(
-                text: projector.name,
-                size: 18,
-                fontWeight: FontWeight.w700,
-              ),
-              Expanded(
-                child: SizedBox(
+          GestureDetector(
+            onTap: (){
+              setState(() {
+                Navigator.of(context)
+                    .push(HeroDialogRoute(builder: (context) {
+                  return ControlProjector(
+                    projector: projector,
+                  );
+                }));
+                print("object");
+              });
+            },
+            child: Row(
+              children: [
+                SvgPicture.asset('assets/credit-card.svg', width: 35),
+                SizedBox(
                   width: SizeConfig.blockSizeHorizontal,
                 ),
-              ),
-              PrimaryText(
-                  text: projector.ip, color: AppColors.secondary, size: 14)
-            ],
+                PrimaryText(
+                  text: projector.name,
+                  size: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+                Expanded(
+                  child: SizedBox(
+                    width: SizeConfig.blockSizeHorizontal,
+                  ),
+                ),
+                PrimaryText(
+                    text: projector.ip, color: AppColors.secondary, size: 14)
+              ],
+            ),
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,

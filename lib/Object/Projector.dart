@@ -5,8 +5,8 @@ class Projector {
     String ip;
     String name;
     int port;
-    String username;
-    String password;
+    String type;
+    String UsernameAndPassword;
     StatefulValuable<bool> power_status_button;
     StatefulValuable<bool> shutter_status_button;
     StatefulValuable<bool> connected;
@@ -23,8 +23,8 @@ class Projector {
         required this.ip,
         required this.name,
         required this.port,
-        required this.username,
-        required this.password,
+        required this.type,
+        required this.UsernameAndPassword,
         required this.power_status_button,
         required this.shutter_status_button,
         required this.power_status,

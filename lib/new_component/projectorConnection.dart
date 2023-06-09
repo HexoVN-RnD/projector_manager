@@ -92,7 +92,7 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
           });
           // startAutoReload();
         },
-        splashColor: AppColors.navy_blue,
+        // splashColor: AppColors.navy_blue,
         selected: true,
       ),
     );
