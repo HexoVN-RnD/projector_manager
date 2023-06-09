@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
@@ -21,6 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> {
   Timer? _timer;
+  ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -68,6 +70,34 @@ class _HomePage extends State<HomePage> {
             SizedBox(
               height: SizeConfig.blockSizeVertical,
             ),
+
+            // Container(
+            //   width: 600,
+            //   height: 200,
+            //   child: ListView.builder(
+            //     controller: scrollController,
+            //     scrollDirection: Axis.horizontal,
+            //     physics: const ClampingScrollPhysics(),
+            //     shrinkWrap: true,
+            //     itemCount: 20,
+            //     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            //     itemBuilder: (BuildContext context, int index) {
+            //       return GestureDetector(
+            //         onTap: (){
+            //           setState(() {
+            //             print(index);
+            //           });
+            //         },
+            //         child: Container(
+            //           margin: EdgeInsets.all(10),
+            //           color: Colors.red,
+            //           width: 50,
+            //           height: 50,
+            //         ),
+            //       );
+            //     },
+            //   ),
+            // ),
             Container(
               // height: 600,
               padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
@@ -101,86 +131,12 @@ class _HomePage extends State<HomePage> {
                       ],
                     ),
                   ),
+
                   SingleChildScrollView(
                     // padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
                     // controller: controller,
                     scrollDirection: Axis.horizontal,
-                    child:
-                        // ListView.builder(
-                        //   controller: controller,
-                        //   itemCount:  allRoom.presets.length,
-                        //   itemBuilder: (context, index) {
-                        //   bool isSelected =
-                        //       allRoom.current_preset.getValue() == index;
-                        //   return GestureDetector(
-                        //     onTap: () {
-                        //       setState(() {
-                        //         select_preset(index);
-                        //       });
-                        //     },
-                        //     child: Column(
-                        //       mainAxisAlignment: MainAxisAlignment.center,
-                        //       children: [
-                        //         AnimatedContainer(
-                        //           duration: Duration(milliseconds: 500),
-                        //           curve: Curves.easeInOut,
-                        //           width: isSelected ? 250.0 : 150.0,
-                        //           height: isSelected ? 250.0 : 150.0,
-                        //           margin: EdgeInsets.all(20.0),
-                        //           decoration: BoxDecoration(
-                        //             color: isSelected
-                        //                 ? AppColors.navy_blue2
-                        //                 : AppColors.white,
-                        //             borderRadius: BorderRadius.circular(
-                        //                 isSelected ? 20.0 : 15),
-                        //           ),
-                        //           child: Padding(
-                        //             padding: EdgeInsets.all(5),
-                        //             child: ClipRRect(
-                        //               borderRadius: BorderRadius.circular(
-                        //                   isSelected ? 15.0 : 10),
-                        //               child: Image.asset(
-                        //                 allRoom.presets[index].image,
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //         Row(
-                        //           mainAxisAlignment: MainAxisAlignment.center,
-                        //           children: [
-                        //             Icon(
-                        //               Icons.account_balance,
-                        //               size: isSelected ? 26 : 15,
-                        //               color: AppColors.white,
-                        //             ),
-                        //             SizedBox(
-                        //                 width: SizeConfig.blockSizeHorizontal *
-                        //                     (isSelected ? 1.5 : 0.75)),
-                        //             AnimatedDefaultTextStyle(
-                        //               style: isSelected
-                        //                   ? TextStyle(
-                        //                   fontFamily: 'Poppins',
-                        //                   fontSize: 17.0,
-                        //                   fontWeight: FontWeight.w600)
-                        //                   : TextStyle(
-                        //                   fontFamily: 'Poppins',
-                        //                   fontSize: 12.0,
-                        //                   fontWeight: FontWeight.w600),
-                        //               duration: const Duration(milliseconds: 200),
-                        //               child: Text(allRoom.presets[index].name),
-                        //             ),
-                        //             // PrimaryText(
-                        //             //     text: allRoom.presets[index].name,
-                        //             //     size: isSelected ? 17 : 12,
-                        //             //     color: AppColors.white,
-                        //             //     fontWeight: FontWeight.w600),
-                        //           ],
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   );
-                        // }),
-                        Row(
+                    child: Row(
                       children: List.generate(allRoom.presets.length, (index) {
                         bool isSelected =
                             allRoom.current_preset.getValue() == index;
@@ -314,13 +270,7 @@ class _HomePage extends State<HomePage> {
               runSpacing: 40,
               alignment: WrapAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        print('object');
-                      });
-                    },
-                    child: ManageAllServers()),
+                ManageAllServers(),
                 ManageAllProjectors(),
               ],
             ),
@@ -358,12 +308,20 @@ class _HomePage extends State<HomePage> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                SizedBox(width: SizeConfig.blockSizeHorizontal,),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: PrimaryText(text: 'Máy chiếu đang bật'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
+                  child: PrimaryText(
+                    text: 'Máy chiếu đang bật'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                SizedBox(width: SizeConfig.blockSizeHorizontal*6,),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal * 6,
+                ),
                 Container(
                   height: 15,
                   width: 15,
@@ -373,12 +331,20 @@ class _HomePage extends State<HomePage> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                SizedBox(width: SizeConfig.blockSizeHorizontal,),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: PrimaryText(text: 'Máy chiếu đang tắt'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
+                  child: PrimaryText(
+                    text: 'Máy chiếu đang tắt'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                SizedBox(width: SizeConfig.blockSizeHorizontal*6,),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal * 6,
+                ),
                 Container(
                   height: 15,
                   width: 15,
@@ -388,10 +354,16 @@ class _HomePage extends State<HomePage> {
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-                SizedBox(width: SizeConfig.blockSizeHorizontal,),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: PrimaryText(text: 'Mất kết nối'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
+                  child: PrimaryText(
+                    text: 'Mất kết nối'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ],
             ),
