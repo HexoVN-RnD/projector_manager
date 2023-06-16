@@ -260,7 +260,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                           height: 135,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.navy_blue,
+                              backgroundColor: AppColors.green,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(40),
                               ),
@@ -347,7 +347,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                           height: 135,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.navy_blue,
+                              backgroundColor: AppColors.green,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(40),
                               ),
@@ -467,7 +467,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                                       text: 'All Lamp On',
                                       size: 14,
                                       color: AppColors.gray,
-                                      fontWeight: FontWeight.w700,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ],
                                 ),
@@ -791,71 +791,70 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                   children: [
                     Container(
                       width: 250,
-                      height: 100,
+                      height: 110,
+                      alignment: Alignment.topCenter,
+                      margin: EdgeInsets.fromLTRB(0,0,0, 50),
                       child: Row(
                         children: [
                           Expanded(
                             child: SizedBox(),
                           ),
-                          PrimaryText(
-                            text: "Electronic",
-                            size: 16,
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          SizedBox(
-                            width: SizeConfig.blockSizeHorizontal * 2,
-                          ),
-                          Transform.scale(
-                            scale: 1.5,
-                            child: CupertinoSwitch(
-                              value: allRoom.electronic_mode.getValue(),
-                              activeColor: AppColors.green,
-                              onChanged: (value) {
+                          // PrimaryText(
+                          //   text: "Auto Setup",
+                          //   size: 16,
+                          //   color: AppColors.white,
+                          //   fontWeight: FontWeight.w500,
+                          // ),
+                          // SizedBox(
+                          //   width: SizeConfig.blockSizeHorizontal * 2,
+                          // ),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.green,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                              ),
+                              onPressed: () {
                                 setState(() {
-                                  ElectronicMode(value);
+                                  ASUMode();
                                 });
                               },
-                            ),
-                          ),
+                              child: Container(
+                                width: 120,
+                                height: 120,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.auto_fix_high, size:30, color: AppColors.gray,),
+                                    SizedBox(height: 10,),
+                                    PrimaryText(
+                                      text: "Auto Setup",
+                                      size: 16,
+                                      color: AppColors.gray,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ],
+                                ),
+                              )),
+                          // Transform.scale(
+                          //   scale: 1.5,
+                          //   child: CupertinoSwitch(
+                          //     value: allRoom.ASU_mode.getValue(),
+                          //     activeColor: AppColors.green,
+                          //     onChanged: (value) {
+                          //       setState(() {
+                          //         ASUMode(value);
+                          //       });
+                          //     },
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
                     Container(
                       width: 250,
-                      height: 100,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: SizedBox(),
-                          ),
-                          PrimaryText(
-                            text: "ASU",
-                            size: 16,
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          SizedBox(
-                            width: SizeConfig.blockSizeHorizontal * 2,
-                          ),
-                          Transform.scale(
-                            scale: 1.5,
-                            child: CupertinoSwitch(
-                              value: allRoom.ASU_mode.getValue(),
-                              activeColor: AppColors.green,
-                              onChanged: (value) {
-                                setState(() {
-                                  ASUMode(value);
-                                });
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 250,
-                      height: 100,
+                      height: 70,
                       child: Row(
                         children: [
                           Expanded(
@@ -882,12 +881,50 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                               },
                             ),
                           ),
+                          SizedBox(
+                            width: 5,
+                          ),
                         ],
                       ),
                     ),
                     Container(
                       width: 250,
-                      height: 100,
+                      height: 70,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: SizedBox(),
+                          ),
+                          PrimaryText(
+                            text: "Electronic",
+                            size: 16,
+                            color: AppColors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          SizedBox(
+                            width: SizeConfig.blockSizeHorizontal * 2,
+                          ),
+                          Transform.scale(
+                            scale: 1.5,
+                            child: CupertinoSwitch(
+                              value: allRoom.electronic_mode.getValue(),
+                              activeColor: AppColors.green,
+                              onChanged: (value) {
+                                setState(() {
+                                  ElectronicMode(value);
+                                });
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 250,
+                      height: 70,
                       child: Row(
                         children: [
                           Expanded(
@@ -914,9 +951,13 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                               },
                             ),
                           ),
+                          SizedBox(
+                            width: 5,
+                          ),
                         ],
                       ),
                     ),
+                    SizedBox(height: 10,)
                   ],
                 ),
               ],

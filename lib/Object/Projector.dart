@@ -16,6 +16,7 @@ class Projector {
     Offset position;
     StatefulValuable<bool> color_state;
     StatefulValuable<bool> isOnHover;
+    StatefulValuable<String> log = StatefulValuable<String>('0 error 0 warning');
 
 
     // Constructor

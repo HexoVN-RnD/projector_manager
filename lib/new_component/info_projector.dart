@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_projector_void.dart';
+import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
@@ -27,8 +28,6 @@ class InfoProjector extends StatefulWidget {
 //   bool value = true;
 
 class _InfoProjector extends State<InfoProjector> {
-
-
   // void MuteVideoProjector() {
   //   projector.mute_video.setValue(!projector.mute_video.getValue());
   //   print(projector.ip + " " +projector.port.toString() +" MUTE_Video " +projector.shutter_status.getValue().toString());
@@ -63,10 +62,9 @@ class _InfoProjector extends State<InfoProjector> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GestureDetector(
-            onTap: (){
+            onTap: () {
               setState(() {
-                Navigator.of(context)
-                    .push(HeroDialogRoute(builder: (context) {
+                Navigator.of(context).push(HeroDialogRoute(builder: (context) {
                   return ControlProjector(
                     projector: projector,
                   );
@@ -133,11 +131,11 @@ class _InfoProjector extends State<InfoProjector> {
               PrimaryText(
                   text: projector.power_status.getValue()
                       ? (projector.power_status_button.getValue()
-                      ? 'Đã bật máy chiếu'
-                      : 'Đang tắt máy chiếu ...')
+                          ? 'Đã bật máy chiếu'
+                          : 'Đang tắt máy chiếu ...')
                       : (projector.power_status_button.getValue()
-                      ? 'Đang bật máy chiếu ...'
-                      : 'Đã tắt máy chiếu'),
+                          ? 'Đang bật máy chiếu ...'
+                          : 'Đã tắt máy chiếu'),
                   color: AppColors.secondary,
                   size: 14),
               Expanded(
@@ -146,15 +144,15 @@ class _InfoProjector extends State<InfoProjector> {
                 ),
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   setState(() {
                     PowerStatus(projector);
                   });
                 },
                 child: PrimaryText(
-                    text: 'Kiểm tra',
-                    color: AppColors.navy_blue2,
-                    size: 14,
+                  text: 'Kiểm tra',
+                  color: AppColors.navy_blue2,
+                  size: 14,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -198,11 +196,11 @@ class _InfoProjector extends State<InfoProjector> {
               PrimaryText(
                   text: projector.shutter_status.getValue()
                       ? (projector.shutter_status_button.getValue()
-                      ? 'Đã bật màn chập'
-                      : 'Đang tắt màn chập ...')
+                          ? 'Đã bật màn chập'
+                          : 'Đang tắt màn chập ...')
                       : (projector.shutter_status_button.getValue()
-                      ? 'Đang bật màn chập ...'
-                      : 'Đã tắt màn chập'),
+                          ? 'Đang bật màn chập ...'
+                          : 'Đã tắt màn chập'),
                   color: AppColors.secondary,
                   size: 14),
               Expanded(
@@ -211,7 +209,7 @@ class _InfoProjector extends State<InfoProjector> {
                 ),
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   setState(() {
                     ShutterStatus(projector);
                   });
@@ -225,7 +223,33 @@ class _InfoProjector extends State<InfoProjector> {
               ),
             ],
           ),
-          SizedBox(height: SizeConfig.blockSizeVertical,),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical*2,
+          ),
+          GestureDetector(
+              onTap: () {
+                setState(() {
+                  CheckLog(projector);
+                });
+              },
+              child: PrimaryText(
+                text: 'Kiểm tra Log',
+                fontWeight: FontWeight.w500,
+                size: 16,
+                color: AppColors.navy_blue,
+              )),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical,
+          ),
+          PrimaryText(
+            text: projector.log.getValue(),
+            fontWeight: FontWeight.w400,
+            size: 14,
+            color: AppColors.yellow4,
+          ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical*1.5,
+          ),
           // Row(
           //   children: [
           //     PrimaryText(

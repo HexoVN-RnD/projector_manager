@@ -837,7 +837,7 @@ class _ControlProjectorState extends State<ControlProjector> {
                                 activeColor: AppColors.green,
                                 onChanged: (value) {
                                   setState(() {
-                                    ASUMode(value);
+                                    ASUMode();
                                   });
                                 },
                               ),

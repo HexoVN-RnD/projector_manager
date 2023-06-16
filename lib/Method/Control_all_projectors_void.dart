@@ -1,5 +1,6 @@
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:valuable/valuable.dart';
@@ -229,8 +230,8 @@ void ElectronicMode(bool mode) {
   }
 }
 
-void ASUMode(bool mode) {
-  allRoom.ASU_mode.setValue(mode);
+void ASUMode() {
+  allRoom.ASU_mode.setValue(true);
   for (var room in rooms) {
     for (var projector in room.projectors) {
       print(projector.ip.toString() + '(ASU)');
@@ -271,6 +272,20 @@ void WhiteOrGreenMode(bool mode) {
         sendTCPIPCommand(projector, '(CLE 0)');
       }
     }
+  }
+}
+
+void CheckLog(Projector projector) {
+      print(projector.ip.toString() + '(LOG?)');
+      String response = sendTCPIPCommand(projector, '(LOG?)');
+      projector.log.setValue(response);
+}
+
+void CheckLogRoom(Room room) {
+  for (var projector in room.projectors) {
+    print(projector.ip.toString() + '(LOG?)');
+    String response = sendTCPIPCommand(projector, '(LOG?)');
+    projector.log.setValue(response);
   }
 }
 
