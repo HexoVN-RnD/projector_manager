@@ -89,15 +89,6 @@ String sendPJLinkCommand(Projector projector, String command) {
       socket.listen((data) {
         response = utf8.decode(data);
         print('Response: $response');
-        if (response.contains('PWR!1')) {
-          projector.power_status.setValue(true);
-        } else if (response.contains('PWR!0')) {
-          projector.power_status.setValue(false);
-        } else if (response.contains('SHU!01')) {
-          projector.shutter_status.setValue(true);
-        } else if (response.contains('SHU!00')) {
-          projector.shutter_status.setValue(false);
-        }
         socket.close();
       }, onDone: () {
         print('Connection closed');
