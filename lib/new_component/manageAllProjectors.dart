@@ -452,7 +452,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    LampMode(0);
+                                    LampModeAll(0);
                                     // PowerOnAllServer();
                                   });
                                 },
@@ -485,7 +485,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    LampMode(1);
+                                    LampModeAll(1);
                                   });
                                 },
                                 child: Column(
@@ -517,7 +517,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    LampMode(2);
+                                    LampModeAll(2);
                                     // PowerOnAllServer();
                                   });
                                 },
@@ -688,7 +688,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    LampMode(3);
+                                    LampModeAll(3);
                                     // PowerOnAllServer();
                                   });
                                 },
@@ -721,7 +721,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    LampMode(4);
+                                    LampModeAll(4);
                                     // PowerOnAllServer();
                                   });
                                 },
@@ -754,7 +754,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    LampMode(5);
+                                    LampModeAll(5);
                                     // PowerOnAllServer();
                                   });
                                 },
@@ -817,7 +817,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  ASUMode();
+                                  ASUModeAll();
                                 });
                               },
                               child: Container(
@@ -876,7 +876,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                               activeColor: AppColors.green,
                               onChanged: (value) {
                                 setState(() {
-                                  OSDMode((value));
+                                  OSDModeAll((value));
                                 });
                               },
                             ),
@@ -911,7 +911,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                               activeColor: AppColors.green,
                               onChanged: (value) {
                                 setState(() {
-                                  ElectronicMode(value);
+                                  ElectronicModeAll(value);
                                 });
                               },
                             ),
@@ -946,7 +946,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                               activeColor: AppColors.green,
                               onChanged: (value) {
                                 setState(() {
-                                  WhiteOrGreenMode(value);
+                                  WhiteOrGreenModeAll(value);
                                 });
                               },
                             ),

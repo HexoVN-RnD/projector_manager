@@ -19,7 +19,7 @@ Future<void> main() async {
   WindowOptions windowOptions = const WindowOptions(
     title: 'Projector Manager',
     size: Size(1920, 1050),
-    fullScreen: true,
+    // fullScreen: true,
     minimumSize: Size(800, 650),
     center: true,
     backgroundColor: Colors.transparent,

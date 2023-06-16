@@ -21,13 +21,18 @@ void checkConnectionServer(String ip, StatefulValuable<bool> connected,
       connected.setValue(true);
       button.setValue(true);
       ping.stop();
-    } else {
-      Socket.connect(ip, 80).then((socket) {}, onError: (error) {
-        connected.setValue(false);
-        button.setValue(false);
-        print('Error');
-      });
+    } else if (event.response?.ip != null) {
+      connected.setValue(false);
+      button.setValue(false);
+      print('Error ${event.response?.ip}');
     }
+    // else {
+    //   Socket.connect(ip, 80).then((socket) {}, onError: (error) {
+    //     connected.setValue(false);
+    //     button.setValue(false);
+    //     print('Error 80');
+    //   });
+    // }
   });
   ping.command;
 }
@@ -79,10 +84,8 @@ void checkConnectionProjector(Projector projector) {
         });
       }
     }
-
   });
   ping.command;
-
 }
 
 void checkRoomConnection(Room room) {
@@ -98,13 +101,18 @@ void checkRoomConnection(Room room) {
           server.power_status.setValue(true);
           print('Connected');
           ping.stop();
-        } else {
-          Socket.connect(server.ip, 80).then((socket) {}, onError: (error) {
-            server.connected.setValue(false);
-            server.power_status.setValue(false);
-            print('Error');
-          });
+        } else if (event.response?.ip != null) {
+          server.connected.setValue(false);
+          server.power_status.setValue(false);
+          print('Error ${event.response?.ip}');
         }
+        // else {
+        //   Socket.connect(server.ip, 22).then((socket) {}, onError: (error) {
+        //     server.connected.setValue(false);
+        //     server.power_status.setValue(false);
+        //     print('Error');
+        //   });
+        // }
       });
       ping.command;
     }
@@ -141,7 +149,8 @@ void checkRoomConnection(Room room) {
           print('Connected');
           ping.stop();
         } else {
-          Socket.connect(projector.ip, 3002).then((socket) {}, onError: (error) {
+          Socket.connect(projector.ip, 3002).then((socket) {},
+              onError: (error) {
             projector.connected.setValue(false);
             projector.power_status.setValue(false);
             projector.power_status_button.setValue(false);
@@ -149,7 +158,6 @@ void checkRoomConnection(Room room) {
             projector.shutter_status_button.setValue(false);
           });
         }
-
       });
       ping.command;
     }
@@ -208,7 +216,7 @@ void checkRoomConnection(Room room) {
 //   // NetworkAnalyzer.discover2 pings all PORT:IP addresses at once.
 //   final stream = NetworkAnalyzer.discover2(
 //     ip,
-//     80,
+//     22,
 //     timeout: Duration(milliseconds: 5000),
 //   );
 //   print('Check Connecting...');
@@ -225,7 +233,7 @@ void checkRoomConnection(Room room) {
 //   // NetworkAnalyzer.discover pings PORT:IP one by one according to timeout.
 //   // NetworkAnalyzer.discover2 pings all PORT:IP addresses at once.
 //
-//   const port = 80;
+//   const port = 22;
 //   final stream = NetworkAnalyzer.discover_all(
 //     subnet,
 //     port,

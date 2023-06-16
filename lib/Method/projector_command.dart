@@ -27,7 +27,7 @@ Future<void> sendPJLinkAuth(String username, String password) async {
 // Hàm gửi lệnh bật/tắt máy chiếu
 String sendTCPIPCommand(Projector projector, String command) {
   String response = '';
-  Socket.connect(projector.ip, projector.port).then((socket) {
+  Socket.connect(projector.ip, 3002).then((socket) {
     print('Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
     socket.write(command);
     socket.listen((data) {
@@ -81,33 +81,24 @@ String sendTCPIPCommand2(String ip, int port, String command) {
 
 String sendPJLinkCommand(Projector projector, String command) {
   String response = '';
-  try {
-    Socket.connect(projector.ip, 4352).then((socket) {
-      print(
-          'Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
-      socket.write(command);
-      socket.listen((data) {
-        response = utf8.decode(data);
-        print('Response: $response');
-        if (response.contains('PWR!1')) {
-          projector.power_status.setValue(true);
-        } else if (response.contains('PWR!0')) {
-          projector.power_status.setValue(false);
-        } else if (response.contains('SHU!01')) {
-          projector.shutter_status.setValue(true);
-        } else if (response.contains('SHU!00')) {
-          projector.shutter_status.setValue(false);
-        }
-        socket.close();
-      }, onDone: () {
-        print('Connection closed');
-      });
-    }, onError: (error) {
-      print('Error: $error');
+  Socket.connect(projector.ip, 4352).then((socket) {
+    print('Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
+    socket.write(command);
+    socket.listen((data) {
+      response = utf8.decode(data);
+      print('Response: $response');
+      socket.close();
+    }, onDone: () {
+      print('Connection closed');
     });
-  } catch (e) {
-    print('Error: $e');
-  }
+  }, onError: (error) {
+    projector.connected.setValue(false);
+    projector.power_status_button.setValue(false);
+    projector.power_status.setValue(false);
+    projector.shutter_status_button.setValue(false);
+    projector.shutter_status.setValue(false);
+    print('Error: Refused connection');
+  });
   return response;
 }
 

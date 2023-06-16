@@ -15,9 +15,9 @@ void ShutterStatus(Projector projector) {
   print(response);
 }
 
-void TestPatternSelect(Projector projector, StatefulValuable<int> num ) {
+void TestPatternSelect(Projector projector, int num ) {
   checkConnectionProjector(projector);
-  String response = sendTCPIPCommand(projector, '(ITP ${num.getValue()})');
+  String response = sendTCPIPCommand(projector, '(ITP ${num})');
   print(response);
 }
 

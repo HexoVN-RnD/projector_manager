@@ -16,6 +16,18 @@ class Projector {
     Offset position;
     StatefulValuable<bool> color_state;
     StatefulValuable<bool> isOnHover;
+    StatefulValuable<int> current_test_pattern = StatefulValuable<int>(0);
+    StatefulValuable<int> lamp_mode = StatefulValuable<int>(0);
+    StatefulValuable<bool> electronic_mode = StatefulValuable<bool>(false);
+    StatefulValuable<bool> ASU_mode = StatefulValuable<bool>(false);
+    StatefulValuable<bool> OSD_mode = StatefulValuable<bool>(false);
+    StatefulValuable<bool> whiteOrGreen = StatefulValuable<bool>(false);
+    StatefulValuable<bool> A1 = StatefulValuable<bool>(true);
+    StatefulValuable<bool> A2 = StatefulValuable<bool>(true);
+    StatefulValuable<bool> A3 = StatefulValuable<bool>(true);
+    StatefulValuable<bool> B1 = StatefulValuable<bool>(true);
+    StatefulValuable<bool> B2 = StatefulValuable<bool>(true);
+    StatefulValuable<bool> B3 = StatefulValuable<bool>(true);
     StatefulValuable<String> log = StatefulValuable<String>('0 error 0 warning');
 
 
