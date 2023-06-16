@@ -22,7 +22,7 @@ void checkConnectionServer(String ip, StatefulValuable<bool> connected,
       button.setValue(true);
       ping.stop();
     } else {
-      Socket.connect(ip, 9).then((socket) {}, onError: (error) {
+      Socket.connect(ip, 80).then((socket) {}, onError: (error) {
         connected.setValue(false);
         button.setValue(false);
         print('Error');
@@ -99,7 +99,7 @@ void checkRoomConnection(Room room) {
           print('Connected');
           ping.stop();
         } else {
-          Socket.connect(server.ip, 9).then((socket) {}, onError: (error) {
+          Socket.connect(server.ip, 80).then((socket) {}, onError: (error) {
             server.connected.setValue(false);
             server.power_status.setValue(false);
             print('Error');

@@ -243,7 +243,7 @@ List<Room> rooms = [
         color_state: StatefulValuable<bool>(false),
       ),
       Projector(
-        ip: '192.168.1.195',
+        ip: '192.168.1.196',
         name: 'P1.1-2',
         port: 3002,
         position: Offset(0.545, 0.14),
@@ -601,7 +601,7 @@ List<Room> rooms = [
         color_state: StatefulValuable<bool>(false),
       ),
       Projector(
-        ip: '192.168.1.163',
+        ip: '192.168.1.162',
         name: 'P2.1-2',
         port: 3002,
         position: Offset(0.545, 0.14),
