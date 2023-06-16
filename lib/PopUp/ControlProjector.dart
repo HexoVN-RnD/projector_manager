@@ -833,11 +833,11 @@ class _ControlProjectorState extends State<ControlProjector> {
                             Transform.scale(
                               scale: 1.5,
                               child: CupertinoSwitch(
-                                value: allRoom.ASD_mode.getValue(),
+                                value: allRoom.ASU_mode.getValue(),
                                 activeColor: AppColors.green,
                                 onChanged: (value) {
                                   setState(() {
-                                    ADSMode(value);
+                                    ASUMode(value);
                                   });
                                 },
                               ),

@@ -13,7 +13,7 @@ AllRoom allRoom = AllRoom(
   power_all_servers: StatefulValuable<bool>(false),
   shutter_all_projectors: StatefulValuable<bool>(false),
   electronic_mode: StatefulValuable<bool>(false),
-  ASD_mode: StatefulValuable<bool>(false),
+  ASU_mode: StatefulValuable<bool>(false),
   OSD_mode: StatefulValuable<bool>(false),
   whiteOrGreen: StatefulValuable<bool>(false),
   A1: StatefulValuable<bool>(true),
@@ -32,27 +32,27 @@ AllRoom allRoom = AllRoom(
   presets: [
     Preset(
         name: 'Test Pattern Off',
-        image: 'assets/watching-a-movie_black.png',
+        image: 'assets/TestPattern/noPattern.png',
         osc_message: 'column 1',
         transport: StatefulValuable<double>(0)),
     Preset(
         name: 'Test Pattern Grid',
-        image: 'assets/watching-a-movie_black.png',
+        image: 'assets/TestPattern/grid.png',
         osc_message: 'column 2',
         transport: StatefulValuable<double>(0)),
     Preset(
         name: 'Test Pattern White',
-        image: 'assets/watching-a-movie_black.png',
+        image: 'assets/TestPattern/white.png',
         osc_message: 'column 3',
         transport: StatefulValuable<double>(0)),
     Preset(
         name: 'Test Pattern Black',
-        image: 'assets/watching-a-movie_black.png',
+        image: 'assets/TestPattern/black.png',
         osc_message: 'column 4',
         transport: StatefulValuable<double>(0)),
     Preset(
         name: 'Test Pattern Color',
-        image: 'assets/watching-a-movie_black.png',
+        image: 'assets/TestPattern/colorbars.png',
         osc_message: 'column 5',
         transport: StatefulValuable<double>(0)),
   ],

@@ -830,7 +830,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                             child: SizedBox(),
                           ),
                           PrimaryText(
-                            text: "ADS",
+                            text: "ASU",
                             size: 16,
                             color: AppColors.white,
                             fontWeight: FontWeight.w500,
@@ -841,11 +841,11 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                           Transform.scale(
                             scale: 1.5,
                             child: CupertinoSwitch(
-                              value: allRoom.ASD_mode.getValue(),
+                              value: allRoom.ASU_mode.getValue(),
                               activeColor: AppColors.green,
                               onChanged: (value) {
                                 setState(() {
-                                  ADSMode(value);
+                                  ASUMode(value);
                                 });
                               },
                             ),

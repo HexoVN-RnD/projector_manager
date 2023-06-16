@@ -171,6 +171,8 @@ class _HomePage extends State<HomePage> {
                                         isSelected ? 15.0 : 10),
                                     child: Image.asset(
                                       allRoom.presets[index].image,
+                                      height: isSelected ? 250.0 : 150.0,
+                                      fit: BoxFit.fitHeight,
                                     ),
                                   ),
                                 ),

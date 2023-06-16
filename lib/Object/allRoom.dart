@@ -12,7 +12,7 @@ class AllRoom {
     StatefulValuable<double> volume_all;
     StatefulValuable<int> current_test_pattern;
     StatefulValuable<bool> electronic_mode;
-    StatefulValuable<bool> ASD_mode;
+    StatefulValuable<bool> ASU_mode;
     StatefulValuable<bool> OSD_mode;
     StatefulValuable<bool> whiteOrGreen;
     StatefulValuable<bool> A1;
@@ -38,7 +38,7 @@ class AllRoom {
         required this.power_all_servers,
         required this.volume_all,
         required this.current_test_pattern,
-        required this.ASD_mode,
+        required this.ASU_mode,
         required this.OSD_mode,
         required this.A1,
         required this.A2,

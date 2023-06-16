@@ -61,13 +61,23 @@ void checkConnectionProjector(Projector projector) {
       projector.connected.setValue(true);
       ping.stop();
     } else {
-      Socket.connect(projector.ip, 3002).then((socket) {}, onError: (error) {
-        projector.connected.setValue(false);
-        projector.power_status.setValue(false);
-        projector.power_status_button.setValue(false);
-        projector.shutter_status.setValue(false);
-        projector.shutter_status_button.setValue(false);
-      });
+      if (projector.type == 'Christie') {
+        Socket.connect(projector.ip, 3002).then((socket) {}, onError: (error) {
+          projector.connected.setValue(false);
+          projector.power_status.setValue(false);
+          projector.power_status_button.setValue(false);
+          projector.shutter_status.setValue(false);
+          projector.shutter_status_button.setValue(false);
+        });
+      } else {
+        Socket.connect(projector.ip, 4352).then((socket) {}, onError: (error) {
+          projector.connected.setValue(false);
+          projector.power_status.setValue(false);
+          projector.power_status_button.setValue(false);
+          projector.shutter_status.setValue(false);
+          projector.shutter_status_button.setValue(false);
+        });
+      }
     }
 
   });
