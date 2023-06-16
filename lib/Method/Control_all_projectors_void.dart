@@ -18,7 +18,7 @@ void PowerAllProjectors(bool mode) {
       if (projector.power_status_button.getValue() !=
           allRoom.power_all_projectors.getValue()) {
         if (allRoom.power_all_projectors.getValue()) {
-          if(projector.type == 'Christie') {
+          if (projector.type == 'Christie') {
             print(projector.ip.toString() + '(PWR 1)');
             // checkConnectionProjector(projector);
             sendTCPIPCommand(projector, '(PWR 1)');
@@ -28,7 +28,7 @@ void PowerAllProjectors(bool mode) {
             sendPJLinkCommand(projector, '(%1POWR 1)');
           }
         } else {
-          if(projector.type == 'Christie') {
+          if (projector.type == 'Christie') {
             print(projector.ip.toString() + '(PWR 0)');
             // checkConnectionProjector(projector);
             sendTCPIPCommand(projector, '(PWR 0)');
@@ -52,7 +52,7 @@ void ShutterAllProjectors(bool mode) {
       if (projector.shutter_status_button.getValue() !=
           allRoom.shutter_all_projectors.getValue()) {
         if (allRoom.shutter_all_projectors.getValue()) {
-          if(projector.type == 'Christie') {
+          if (projector.type == 'Christie') {
             print(projector.ip.toString() + '(SHU 1)');
             // checkConnectionProjector(projector);
             sendTCPIPCommand(projector, '(SHU 1)');
@@ -62,7 +62,7 @@ void ShutterAllProjectors(bool mode) {
             sendPJLinkCommand(projector, '(%SHUT 1)');
           }
         } else {
-          if(projector.type == 'Christie') {
+          if (projector.type == 'Christie') {
             print(projector.ip.toString() + '(SHU 0)');
             // checkConnectionProjector(projector);
             sendTCPIPCommand(projector, '(SHU 0)');
@@ -79,27 +79,27 @@ void ShutterAllProjectors(bool mode) {
   }
 }
 
-void TestPatternSelectAll(int num ) {
+void TestPatternSelectAll(int num) {
   allRoom.current_test_pattern.setValue(num);
   for (var room in rooms) {
     for (var projector in room.projectors) {
-        // checkConnectionProjector(projector);
-        if (num == 0) {
-          print(projector.ip.toString() + '(ITP 0)');
-          sendTCPIPCommand(projector, '(ITP 0)');
-        } else if (num==1) {
-          print(projector.ip.toString() + '(ITP 1)');
-          sendTCPIPCommand(projector, '(ITP 1)');
-        } else if (num==2) {
-          print(projector.ip.toString() + '(ITP 3)');
-          sendTCPIPCommand(projector, '(ITP 3)');
-        } else if (num==3) {
-          print(projector.ip.toString() + '(ITP 5)');
-          sendTCPIPCommand(projector, '(ITP 5)');
-        } else if (num==4) {
-          print(projector.ip.toString() + '(ITP 9)');
-          sendTCPIPCommand(projector, '(ITP 9)');
-        }
+      // checkConnectionProjector(projector);
+      if (num == 0) {
+        print(projector.ip.toString() + '(ITP 0)');
+        sendTCPIPCommand(projector, '(ITP 0)');
+      } else if (num == 1) {
+        print(projector.ip.toString() + '(ITP 1)');
+        sendTCPIPCommand(projector, '(ITP 1)');
+      } else if (num == 2) {
+        print(projector.ip.toString() + '(ITP 3)');
+        sendTCPIPCommand(projector, '(ITP 3)');
+      } else if (num == 3) {
+        print(projector.ip.toString() + '(ITP 5)');
+        sendTCPIPCommand(projector, '(ITP 5)');
+      } else if (num == 4) {
+        print(projector.ip.toString() + '(ITP 9)');
+        sendTCPIPCommand(projector, '(ITP 9)');
+      }
     }
   }
 }
@@ -114,13 +114,13 @@ void LampMode(int num) {
     allRoom.B2.setValue(true);
     allRoom.B3.setValue(true);
     for (var room in rooms) {
-        for (var projector in room.projectors) {
-          print(projector.ip.toString() + '(LOP )');
-          // checkConnectionProjector(projector);
-          sendTCPIPCommand(projector, '(LOP )');
-        }
+      for (var projector in room.projectors) {
+        print(projector.ip.toString() + '(LOP+MULT 63)');
+        // checkConnectionProjector(projector);
+        sendTCPIPCommand(projector, '(LOP+MULT 63))');
       }
-  } else if (num == 1){
+    }
+  } else if (num == 1) {
     allRoom.A1.setValue(true);
     allRoom.A2.setValue(true);
     allRoom.A3.setValue(true);
@@ -134,7 +134,7 @@ void LampMode(int num) {
         sendTCPIPCommand(projector, '(LOP+MULT 7)');
       }
     }
-  } else if (num == 2){
+  } else if (num == 2) {
     allRoom.A1.setValue(false);
     allRoom.A2.setValue(false);
     allRoom.A3.setValue(false);
@@ -143,12 +143,12 @@ void LampMode(int num) {
     allRoom.B3.setValue(true);
     for (var room in rooms) {
       for (var projector in room.projectors) {
-        print(projector.ip.toString() + '(LOP+MULT 7)');
+        print(projector.ip.toString() + '(LOP+MULT 56)');
         // checkConnectionProjector(projector);
-        sendTCPIPCommand(projector, '(LOP+MULT 7)');
+        sendTCPIPCommand(projector, '(LOP+MULT 56)');
       }
     }
-  } else if (num == 3){
+  } else if (num == 3) {
     allRoom.A1.setValue(true);
     allRoom.A2.setValue(false);
     allRoom.A3.setValue(false);
@@ -157,12 +157,12 @@ void LampMode(int num) {
     allRoom.B3.setValue(false);
     for (var room in rooms) {
       for (var projector in room.projectors) {
-        print(projector.ip.toString() + '(LOP+MULT 7)');
+        print(projector.ip.toString() + '(LOP+MULT 9)');
         // checkConnectionProjector(projector);
-        sendTCPIPCommand(projector, '(LOP+MULT 7)');
+        sendTCPIPCommand(projector, '(LOP+MULT 9)');
       }
     }
-  } else if (num == 4){
+  } else if (num == 4) {
     allRoom.A1.setValue(false);
     allRoom.A2.setValue(true);
     allRoom.A3.setValue(false);
@@ -171,12 +171,12 @@ void LampMode(int num) {
     allRoom.B3.setValue(false);
     for (var room in rooms) {
       for (var projector in room.projectors) {
-        print(projector.ip.toString() + '(LOP+MULT 7)');
+        print(projector.ip.toString() + '(LOP+MULT 18)');
         // checkConnectionProjector(projector);
-        sendTCPIPCommand(projector, '(LOP+MULT 7)');
+        sendTCPIPCommand(projector, '(LOP+MULT 18)');
       }
     }
-  } else if (num == 5){
+  } else if (num == 5) {
     allRoom.A1.setValue(false);
     allRoom.A2.setValue(false);
     allRoom.A3.setValue(true);
@@ -185,9 +185,9 @@ void LampMode(int num) {
     allRoom.B3.setValue(true);
     for (var room in rooms) {
       for (var projector in room.projectors) {
-        print(projector.ip.toString() + '(LOP+MULT 7)');
+        print(projector.ip.toString() + '(LOP+MULT 36)');
         // checkConnectionProjector(projector);
-        sendTCPIPCommand(projector, '(LOP+MULT 7)');
+        sendTCPIPCommand(projector, '(LOP+MULT 36)');
       }
     }
   }
@@ -205,33 +205,29 @@ void ElectronicMode(bool mode) {
   for (var room in rooms) {
     for (var projector in room.projectors) {
       if (allRoom.electronic_mode.getValue()) {
-        print(projector.ip.toString() + '(ELT 1)');
+        print(projector.ip.toString() + '(PWR+ELEC 1)');
         // checkConnectionProjector(projector);
-        sendTCPIPCommand(projector, '(ELT 1)');
+        sendTCPIPCommand(projector, '(PWR+ELEC 1)');
       } else {
-        print(projector.ip.toString() + '(SHU 0)');
+        print(projector.ip.toString() + '(PWR+ELEC 0)');
         // checkConnectionProjector(projector);
-        sendTCPIPCommand(projector, '(ELT 0)');
+        sendTCPIPCommand(projector, '(PWR+ELEC 0)');
       }
     }
   }
 }
+
 void ASUMode(bool mode) {
   allRoom.ASU_mode.setValue(mode);
   for (var room in rooms) {
     for (var projector in room.projectors) {
-      if (allRoom.ASU_mode.getValue()) {
-        print(projector.ip.toString() + '(ASU 1)');
-        // checkConnectionProjector(projector);
-        sendTCPIPCommand(projector, '(ASU 1)');
-      } else {
-        print(projector.ip.toString() + '(ASU 0)');
-        // checkConnectionProjector(projector);
-        sendTCPIPCommand(projector, '(ASU 0)');
-      }
+      print(projector.ip.toString() + '(ASU)');
+      // checkConnectionProjector(projector);
+      sendTCPIPCommand(projector, '(ASU)');
     }
   }
 }
+
 void OSDMode(bool mode) {
   allRoom.OSD_mode.setValue(mode);
   for (var room in rooms) {
@@ -248,18 +244,19 @@ void OSDMode(bool mode) {
     }
   }
 }
+
 void WhiteOrGreenMode(bool mode) {
   allRoom.whiteOrGreen.setValue(mode);
   for (var room in rooms) {
     for (var projector in room.projectors) {
       if (allRoom.whiteOrGreen.getValue()) {
-        print(projector.ip.toString() + '(WOG 1)');
+        print(projector.ip.toString() + '(CLE 2)');
         // checkConnectionProjector(projector);
-        sendTCPIPCommand(projector, '(WOG 1)');
+        sendTCPIPCommand(projector, '(CLE 2)');
       } else {
-        print(projector.ip.toString() + '(WOG 0)');
+        print(projector.ip.toString() + '(CLE 0)');
         // checkConnectionProjector(projector);
-        sendTCPIPCommand(projector, '(WOG 0)');
+        sendTCPIPCommand(projector, '(CLE 0)');
       }
     }
   }
