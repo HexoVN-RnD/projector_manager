@@ -2,7 +2,7 @@ import socket
 import os
 
 # Cấu hình địa chỉ IP và cổng lắng nghe
-ip_address = '192.168.3.104' #ip server na'y
+ip_address = '192.168.3.104' #ip server duoc dieu khien
 port = 1234
 
 # Tạo socket UDP
