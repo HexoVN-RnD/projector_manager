@@ -38,7 +38,7 @@ class _PositionPage5State extends State<PositionPage5> {
                 : AppColors.gray,
             border: projector.isOnHover.getValue()
                 ? Border.all(
-              strokeAlign: StrokeAlign.center,
+              // strokeAlign: StrokeAlign.center,
               color:  projector.connected.getValue()
                   ? (projector.power_status.getValue()
                   ? AppColors.navy_blue
@@ -47,7 +47,7 @@ class _PositionPage5State extends State<PositionPage5> {
               width: 4.0,
             )
                 : Border.all(
-              color: Colors.transparent,
+              color:  Colors.transparent,
               width: 0.0,
             )),
       ),
