@@ -77,64 +77,67 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
           )
         ],
       ),
-      MiniMap(room: rooms[(current_page.getValue()>0)? current_page.getValue()-1:1], page: current_page.getValue(),),
-      Row(
-        children: [
-          Container(
-            height: 15,
-            width: 15,
-            margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            decoration: BoxDecoration(
-              color: AppColors.navy_blue,
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
-          SizedBox(width: SizeConfig.blockSizeHorizontal,),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: PrimaryText(text: 'Máy chiếu đang bật'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
-          )
-        ],
-      ),
-      Row(
-        children: [
-          Container(
-            height: 15,
-            width: 15,
-            margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            decoration: BoxDecoration(
-              color: AppColors.red,
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
-          SizedBox(width: SizeConfig.blockSizeHorizontal,),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: PrimaryText(text: 'Máy chiếu đang tắt'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
-          )
-        ],
-      ),
-      Row(
-        children: [
-          Container(
-            height: 15,
-            width: 15,
-            margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            decoration: BoxDecoration(
-              color: AppColors.gray,
-              borderRadius: BorderRadius.circular(5),
-            ),
-          ),
-          SizedBox(width: SizeConfig.blockSizeHorizontal,),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: PrimaryText(text: 'Mất kết nối'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
-          )
-        ],
-      ),
       SizedBox(
         height: SizeConfig.blockSizeVertical * 3,
       ),
+      // MiniMap(room: rooms[(current_page.getValue()>0)? current_page.getValue()-1:1], page: current_page.getValue(),),
+      // Row(
+      //   children: [
+      //     Container(
+      //       height: 15,
+      //       width: 15,
+      //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+      //       decoration: BoxDecoration(
+      //         color: AppColors.navy_blue,
+      //         borderRadius: BorderRadius.circular(5),
+      //       ),
+      //     ),
+      //     SizedBox(width: SizeConfig.blockSizeHorizontal,),
+      //     Padding(
+      //       padding: const EdgeInsets.only(top: 8.0),
+      //       child: PrimaryText(text: 'Máy chiếu đang bật'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
+      //     )
+      //   ],
+      // ),
+      // Row(
+      //   children: [
+      //     Container(
+      //       height: 15,
+      //       width: 15,
+      //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+      //       decoration: BoxDecoration(
+      //         color: AppColors.red,
+      //         borderRadius: BorderRadius.circular(5),
+      //       ),
+      //     ),
+      //     SizedBox(width: SizeConfig.blockSizeHorizontal,),
+      //     Padding(
+      //       padding: const EdgeInsets.only(top: 8.0),
+      //       child: PrimaryText(text: 'Máy chiếu đang tắt'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
+      //     )
+      //   ],
+      // ),
+      // Row(
+      //   children: [
+      //     Container(
+      //       height: 15,
+      //       width: 15,
+      //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+      //       decoration: BoxDecoration(
+      //         color: AppColors.gray,
+      //         borderRadius: BorderRadius.circular(5),
+      //       ),
+      //     ),
+      //     SizedBox(width: SizeConfig.blockSizeHorizontal,),
+      //     Padding(
+      //       padding: const EdgeInsets.only(top: 8.0),
+      //       child: PrimaryText(text: 'Mất kết nối'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
+      //     )
+      //   ],
+      // ),
+      // SizedBox(
+      //   height: SizeConfig.blockSizeVertical * 3,
+      // ),
       PrimaryText(
         text: room.resolume? 'Kiểm tra tín hiệu server'.toUpperCase(): 'Kiểm tra tín hiệu Bright Sign'.toUpperCase(),
         size: 16,

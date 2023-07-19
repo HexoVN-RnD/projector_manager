@@ -259,6 +259,89 @@ class _RoomManagerState extends State<RoomManager> {
                         ],
                       ),
                     ),
+                    Column(
+                      children: [
+                        MiniMap(
+                          room: rooms[(current_page.getValue() > 0)
+                              ? current_page.getValue() - 1
+                              : 1],
+                          page: current_page.getValue(),
+                        ),
+                        Row(
+                          children: [
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                              decoration: BoxDecoration(
+                                color: AppColors.navy_blue,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: PrimaryText(
+                                text: 'Máy chiếu đang bật'.toUpperCase(),
+                                size: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal * 6,
+                            ),
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                              decoration: BoxDecoration(
+                                color: AppColors.red,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: PrimaryText(
+                                text: 'Máy chiếu đang tắt'.toUpperCase(),
+                                size: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal * 6,
+                            ),
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                              decoration: BoxDecoration(
+                                color: AppColors.gray,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: PrimaryText(
+                                text: 'Mất kết nối'.toUpperCase(),
+                                size: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 3,
+                        ),
+                      ],
+                    ),
                     //List server
                     if (room.resolume)
                       Column(
@@ -351,88 +434,88 @@ class _RoomManagerState extends State<RoomManager> {
 
                     if (!Responsive.isDesktop(context))
                       CheckConnectionBar(room: room)
-                    else
-                      Column(
-                        children: [
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            child: PrimaryText(
-                              text: room.resolume
-                                  ? 'Kiểm tra tín hiệu server'.toUpperCase()
-                                  : 'Kiểm tra tín hiệu Bright Sign'
-                                      .toUpperCase(),
-                              size: 16,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.iconDeepGray,
-                            ),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 2,
-                          ),
-                          Wrap(
-                            children: List.generate(
-                              room.servers.length,
-                              (index) => ServerConnection(
-                                server: room.servers[index],
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 2,
-                          ),
-                          if (room.sensors.length != 0)
-                            Column(
-                              children: [
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: PrimaryText(
-                                    text: 'Kiểm tra tín hiệu cảm biến'
-                                        .toUpperCase(),
-                                    size: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.iconDeepGray,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: SizeConfig.blockSizeVertical * 2,
-                                ),
-                                Column(
-                                  children: List.generate(
-                                    room.sensors.length,
-                                    (index) => SensorConnection(
-                                      sensor: room.sensors[index],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: SizeConfig.blockSizeVertical * 2,
-                                ),
-                              ],
-                            ),
-                          if (room.resolume)
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              child: PrimaryText(
-                                text:
-                                    'Kiểm tra tín hiệu máy chiếu'.toUpperCase(),
-                                size: 16,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.iconDeepGray,
-                              ),
-                            ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 2,
-                          ),
-                          Wrap(
-                            children: List.generate(
-                              room.projectors.length,
-                              (index) => ProjectorConnection(
-                                projector: room.projectors[index],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    // else
+                    //   Column(
+                    //     children: [
+                    //       Container(
+                    //         alignment: Alignment.centerLeft,
+                    //         child: PrimaryText(
+                    //           text: room.resolume
+                    //               ? 'Kiểm tra tín hiệu server'.toUpperCase()
+                    //               : 'Kiểm tra tín hiệu Bright Sign'
+                    //                   .toUpperCase(),
+                    //           size: 16,
+                    //           fontWeight: FontWeight.w500,
+                    //           color: AppColors.iconDeepGray,
+                    //         ),
+                    //       ),
+                    //       SizedBox(
+                    //         height: SizeConfig.blockSizeVertical * 2,
+                    //       ),
+                    //       Wrap(
+                    //         children: List.generate(
+                    //           room.servers.length,
+                    //           (index) => ServerConnection(
+                    //             server: room.servers[index],
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       SizedBox(
+                    //         height: SizeConfig.blockSizeVertical * 2,
+                    //       ),
+                    //       if (room.sensors.length != 0)
+                    //         Column(
+                    //           children: [
+                    //             Container(
+                    //               alignment: Alignment.centerLeft,
+                    //               child: PrimaryText(
+                    //                 text: 'Kiểm tra tín hiệu cảm biến'
+                    //                     .toUpperCase(),
+                    //                 size: 16,
+                    //                 fontWeight: FontWeight.w500,
+                    //                 color: AppColors.iconDeepGray,
+                    //               ),
+                    //             ),
+                    //             SizedBox(
+                    //               height: SizeConfig.blockSizeVertical * 2,
+                    //             ),
+                    //             Column(
+                    //               children: List.generate(
+                    //                 room.sensors.length,
+                    //                 (index) => SensorConnection(
+                    //                   sensor: room.sensors[index],
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //             SizedBox(
+                    //               height: SizeConfig.blockSizeVertical * 2,
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       if (room.resolume)
+                    //         Container(
+                    //           alignment: Alignment.centerLeft,
+                    //           child: PrimaryText(
+                    //             text:
+                    //                 'Kiểm tra tín hiệu máy chiếu'.toUpperCase(),
+                    //             size: 16,
+                    //             fontWeight: FontWeight.w500,
+                    //             color: AppColors.iconDeepGray,
+                    //           ),
+                    //         ),
+                    //       SizedBox(
+                    //         height: SizeConfig.blockSizeVertical * 2,
+                    //       ),
+                    //       Wrap(
+                    //         children: List.generate(
+                    //           room.projectors.length,
+                    //           (index) => ProjectorConnection(
+                    //             projector: room.projectors[index],
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
                   ],
                 ),
               ),
