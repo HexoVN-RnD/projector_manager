@@ -75,6 +75,7 @@ void EditAllAudio(index) {
       }
     } else {
       for (Server server in room.servers) {
+        server.volume.setValue(index);
         SendUDPVolumeMessage(server, index);
       }
     }
