@@ -75,6 +75,7 @@ List<Room> rooms = [
     projectors: [],
     servers: [
       Server(
+        id: 1,
         ip: '127.0.0.1',
         name: 'Bright Sign 1',
         preset_port: 5000,
@@ -88,6 +89,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        id: 2,
         ip: '192.168.1.130',
         name: 'Bright Sign 2',
         preset_port: 5000,
@@ -101,6 +103,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        id: 3,
         ip: '192.168.1.130',
         name: 'Bright Sign 3',
         preset_port: 5000,
@@ -114,6 +117,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        id: 4,
         ip: '192.168.1.130',
         name: 'Bright Sign 4',
         preset_port: 5000,
@@ -127,6 +131,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        id: 5,
         ip: '192.168.1.130',
         name: 'Bright Sign 5',
         preset_port: 5000,
@@ -140,6 +145,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        id: 6,
         ip: '192.168.1.130',
         name: 'Bright Sign 6',
         preset_port: 5000,
@@ -153,6 +159,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        id: 7,
         ip: '192.168.1.130',
         name: 'Bright Sign 7',
         preset_port: 5000,
@@ -166,6 +173,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        id: 8,
         ip: '192.168.1.130',
         name: 'Bright Sign 8',
         preset_port: 5000,
@@ -677,6 +685,7 @@ List<Room> rooms = [
     ],
     servers: [
       Server(
+        id: 9,
         ip: '127.0.0.1',
         name: 'Server 1',
         preset_port: 7000,
@@ -690,6 +699,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        id: 10,
         ip: '192.168.3.104',
         name: 'Server 2',
         preset_port: 7000,
@@ -849,6 +859,7 @@ List<Room> rooms = [
     ],
     servers: [
       Server(
+        id: 11,
         ip: '127.0.0.1',
         name: 'Server 1',
         preset_port: 7000,
@@ -862,6 +873,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        id: 12,
         ip: '192.168.2.5',
         name: 'Server 2',
         preset_port: 7000,
@@ -880,7 +892,7 @@ List<Room> rooms = [
     name: 'PHÒNG 6',
     map: 'assets/Map/P6.png',
     general: 'Khu vực hội thảo event',
-    resolume: true,
+    resolume: false,
     sensors: [],
     current_preset: StatefulValuable<int>(10),
     presets: [
@@ -973,8 +985,9 @@ List<Room> rooms = [
     ],
     servers: [
       Server(
+        id: 13,
         ip: '127.0.0.1',
-        name: 'Server 1',
+        name: 'Bright Sign 1',
         preset_port: 7000,
         power_port: 1234,
         position: Offset(0,0),
@@ -986,8 +999,9 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        id: 14,
         ip: '192.168.2.5',
-        name: 'Server 2',
+        name: 'Bright Sign 2',
         preset_port: 7000,
         power_port: 1234,
         position: Offset(0,0),

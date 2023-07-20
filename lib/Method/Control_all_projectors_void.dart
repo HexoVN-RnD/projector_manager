@@ -17,17 +17,15 @@ void PowerAllProjectors(bool mode) {
       if (projector.power_status_button.getValue() !=
           allRoom.power_all_projectors.getValue()) {
         if (allRoom.power_all_projectors.getValue()) {
-          Future.delayed(Duration(seconds: 15), () {
-            print(projector.ip.toString() + '(PWR 1)');
-            checkConnectionProjector(projector);
-            sendTCPIPCommand(projector, '(PWR 1)');
-          });
+          print(projector.ip.toString() + '(PWR 1)');
+          checkConnectionProjector(projector);
+          sendTCPIPCommand(projector, '(PWR 1)');
+          Future.delayed(Duration(seconds: 15), () {});
         } else {
-          Future.delayed(Duration(seconds: 15), () {
-            print(projector.ip.toString() + '(PWR 0)');
-            checkConnectionProjector(projector);
-            sendTCPIPCommand(projector, '(PWR 0)');
-          });
+          print(projector.ip.toString() + '(PWR 0)');
+          checkConnectionProjector(projector);
+          sendTCPIPCommand(projector, '(PWR 0)');
+          Future.delayed(Duration(seconds: 15), () {});
         }
       }
       projector.power_status_button

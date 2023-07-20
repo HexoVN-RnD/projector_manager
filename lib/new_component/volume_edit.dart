@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
+import 'package:responsive_dashboard/Method/audio_void.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
@@ -32,9 +33,9 @@ class _VolumeEditState extends State<VolumeEdit> {
 
   void ChangeVolume(Room room, Server server,double index) {
     if (room.resolume) {
-      SendAudioOSC(server.ip, server.preset_port, [index]);
+      SendAudioOSC(server, index);
     } else {
-      SendUDPVolumeMessage(server, index);
+      SendUDPAudioMessage(server, index);
     }
     // sendUDPMessage();
     // sendTCPIPCommand2('192.168.2.75', 7000, 'hiiiii');

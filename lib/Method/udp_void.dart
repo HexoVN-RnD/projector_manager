@@ -18,14 +18,4 @@ void SendUDPMessage(Server server, String message) async {
   }
 }
 
-void SendUDPVolumeMessage(Server server, double index) async {
-  try {
-    final message = 'volume:' + ((index * 100).toInt()).toString();
-    final socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 5000);
-    socket.send(message.codeUnits, InternetAddress(server.ip), 5000);
-    print(message);
-    socket.close();
-  } catch (e) {
-    print(e);
-  }
-}
+
