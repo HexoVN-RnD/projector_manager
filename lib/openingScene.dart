@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
@@ -15,6 +16,7 @@ import 'package:valuable/valuable.dart';
 // StatefulValuable<double> opening_per = StatefulValuable<double>(0);
 
 double progressValue = 0.0;
+int half_length = (rooms[1].projectors.length/2).toInt()+1;
 
 class OpeningScene extends StatefulWidget {
   const OpeningScene({key});
@@ -38,17 +40,17 @@ class _OpeningSceneState extends State<OpeningScene>
     );
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(seconds: 30),
+      duration: Duration(seconds: 3000),
       vsync: this,
     )..addListener(() {
-        setState(() {
-          progressValue = _animationController.value;
-          if (progressValue == 1) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => Dashboard()));
-          }
-        });
+      setState(() {
+        progressValue = _animationController.value;
+        if (progressValue == 1) {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => Dashboard()));
+        }
       });
+    });
     _animationController.forward();
   }
 
@@ -132,7 +134,7 @@ class _OpeningSceneState extends State<OpeningScene>
 
                         Future.delayed(
                           const Duration(milliseconds: 800),
-                          () {
+                              () {
                             setState(() {
                               isShowSignInDialog = true;
                             });
@@ -169,18 +171,18 @@ class _OpeningSceneState extends State<OpeningScene>
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
-                    children: List.generate(rooms[0].projectors.length,
+                    children: List.generate(rooms[0].servers.length,
                             (index) {
-                          Projector projector = rooms[0].projectors[index];
+                          Server server = rooms[0].servers[index];
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
-                                  width: 60,
+                                  width: 120,
                                   child: PrimaryText(
-                                    text: '${projector.name}',
+                                    text: '${server.name}',
                                     size: 14,
                                   ),
                                 ),
@@ -190,7 +192,7 @@ class _OpeningSceneState extends State<OpeningScene>
                                 Container(
                                   width: 100,
                                   child: PrimaryText(
-                                    text: '(${projector.ip})',
+                                    text: '(${server.ip})',
                                     size: 14,
                                   ),
                                 ),
@@ -198,10 +200,10 @@ class _OpeningSceneState extends State<OpeningScene>
                                   width: 10,
                                 ),
                                 PrimaryText(
-                                  text: projector.connected.getValue()
+                                  text: server.connected.getValue()
                                       ? 'Connected'
                                       : 'Disconnect',
-                                  color: projector.connected.getValue()
+                                  color: server.connected.getValue()
                                       ? AppColors.green
                                       : AppColors.red,
                                   size: 14,
@@ -214,9 +216,57 @@ class _OpeningSceneState extends State<OpeningScene>
                   Expanded(
                     child: Column(
                       children: List.generate(
-                          rooms[1].projectors.length, (index) {
+                          half_length, (index) {
                         Projector projector =
                         rooms[1].projectors[index];
+                        return Padding(
+                          padding:
+                          const EdgeInsets.only(bottom: 10.0),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 60,
+                                child: PrimaryText(
+                                  text: '${projector.name}',
+                                  size: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                width: 100,
+                                child: PrimaryText(
+                                  text: '(${projector.ip})',
+                                  size: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              PrimaryText(
+                                text: projector.connected.getValue()
+                                    ? 'Connected'
+                                    : 'Disconnect',
+                                color: projector.connected.getValue()
+                                    ? AppColors.green
+                                    : AppColors.red,
+                                size: 14,
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: List.generate(
+                          rooms[1].projectors.length-half_length, (index) {
+                        Projector projector =
+                        rooms[1].projectors[index+half_length];
                         return Padding(
                           padding:
                           const EdgeInsets.only(bottom: 10.0),

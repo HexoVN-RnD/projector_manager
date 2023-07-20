@@ -10,18 +10,7 @@ class AllRoom {
     StatefulValuable<bool> shutter_all_projectors;
     StatefulValuable<bool> power_all_servers;
     StatefulValuable<double> volume_all;
-    StatefulValuable<int> current_test_pattern;
-    StatefulValuable<bool> electronic_mode;
-    StatefulValuable<bool> ASU_mode;
-    StatefulValuable<bool> OSD_mode;
-    StatefulValuable<bool> whiteOrGreen;
-    StatefulValuable<bool> A1;
-    StatefulValuable<bool> A2;
-    StatefulValuable<bool> A3;
-    StatefulValuable<bool> B1;
-    StatefulValuable<bool> B2;
-    StatefulValuable<bool> B3;
-    StatefulValuable<int> lamp_mode;
+    StatefulValuable<int> current_preset;
     StatefulValuable<int> num_servers_connected;
     StatefulValuable<int> num_projectors_connected;
     StatefulValuable<int> num_servers;
@@ -37,19 +26,8 @@ class AllRoom {
         required this.shutter_all_projectors,
         required this.power_all_servers,
         required this.volume_all,
-        required this.current_test_pattern,
-        required this.ASU_mode,
-        required this.OSD_mode,
-        required this.A1,
-        required this.A2,
-        required this.A3,
-        required this.B1,
-        required this.B2,
-        required this.B3,
-        required this.whiteOrGreen,
-        required this.electronic_mode,
+        required this.current_preset,
         required this.presets,
-        required this.lamp_mode,
         required this.num_servers_connected,
         required this.num_projectors_connected,
         required this.num_servers,

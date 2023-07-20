@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
+import 'package:responsive_dashboard/Method/audio_void.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
@@ -98,8 +99,6 @@ class _HomePage extends State<HomePage> {
             //     },
             //   ),
             // ),
-            ManageAllProjectors(),
-
             Container(
               // height: 600,
               padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
@@ -127,7 +126,7 @@ class _HomePage extends State<HomePage> {
                         ),
                         PrimaryText(
                             color: AppColors.white,
-                            text: 'Test parttern',
+                            text: 'Nội dung',
                             size: 20,
                             fontWeight: FontWeight.w500),
                       ],
@@ -141,11 +140,11 @@ class _HomePage extends State<HomePage> {
                     child: Row(
                       children: List.generate(allRoom.presets.length, (index) {
                         bool isSelected =
-                            allRoom.current_test_pattern.getValue() == index;
+                            allRoom.current_preset.getValue() == index;
                         return GestureDetector(
                           onTap: () {
                             setState(() {
-                              TestPatternSelectAll(index);
+                              SelectAllPreset(index);
                             });
                           },
                           child: Column(
@@ -171,8 +170,6 @@ class _HomePage extends State<HomePage> {
                                         isSelected ? 15.0 : 10),
                                     child: Image.asset(
                                       allRoom.presets[index].image,
-                                      height: isSelected ? 250.0 : 150.0,
-                                      fit: BoxFit.fitHeight,
                                     ),
                                   ),
                                 ),
@@ -191,13 +188,13 @@ class _HomePage extends State<HomePage> {
                                   AnimatedDefaultTextStyle(
                                     style: isSelected
                                         ? TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 17.0,
-                                        fontWeight: FontWeight.w600)
+                                            fontFamily: 'Poppins',
+                                            fontSize: 17.0,
+                                            fontWeight: FontWeight.w600)
                                         : TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.w600),
+                                            fontFamily: 'Poppins',
+                                            fontSize: 12.0,
+                                            fontWeight: FontWeight.w600),
                                     duration: const Duration(milliseconds: 200),
                                     child: Text(allRoom.presets[index].name),
                                   ),
@@ -268,108 +265,109 @@ class _HomePage extends State<HomePage> {
                 ],
               ),
             ),
-            // Wrap(
-            //   spacing: 40,
-            //   runSpacing: 40,
-            //   alignment: WrapAlignment.spaceBetween,
-            //   children: [
-            //     ManageAllServers(),
-            //     ManageAllProjectors(),
-            //   ],
-            // ),
+
+            Wrap(
+              spacing: 40,
+              runSpacing: 40,
+              alignment: WrapAlignment.spaceBetween,
+              children: [
+                ManageAllServers(),
+                ManageAllProjectors(),
+              ],
+            ),
             // MiniMap(room: rooms[(current_page.getValue()>0)? current_page.getValue()-1:0], page: current_page.getValue()+1,),
-            // Wrap(
-            //   spacing: 40,
-            //   alignment: WrapAlignment.spaceBetween,
-            //   children: [
-            //     MiniMap(
-            //       room: rooms[0],
-            //       page: 1,
-            //     ),
-            //     MiniMap(
-            //       room: rooms[1],
-            //       page: 2,
-            //     ),
-            //     MiniMap(
-            //       room: rooms[2],
-            //       page: 3,
-            //     ),
-            //     MiniMap(
-            //       room: rooms[3],
-            //       page: 4,
-            //     ),
-            //   ],
-            // ), //power_all: PowerAllProjectors, shutter_all: ShutterAllProjectors),
-            // Row(
-            //   children: [
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.navy_blue,
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Máy chiếu đang bật'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal * 6,
-            //     ),
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.red,
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Máy chiếu đang tắt'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal * 6,
-            //     ),
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.gray,
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Mất kết nối'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //   ],
-            // ),
+            Wrap(
+              spacing: 40,
+              alignment: WrapAlignment.spaceBetween,
+              children: [
+                MiniMap(
+                  room: rooms[0],
+                  page: 1,
+                ),
+                MiniMap(
+                  room: rooms[1],
+                  page: 2,
+                ),
+                MiniMap(
+                  room: rooms[2],
+                  page: 3,
+                ),
+                MiniMap(
+                  room: rooms[3],
+                  page: 4,
+                ),
+              ],
+            ), //power_all: PowerAllProjectors, shutter_all: ShutterAllProjectors),
+            Row(
+              children: [
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.navy_blue,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(
+                    text: 'Máy chiếu đang bật'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal * 6,
+                ),
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.red,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(
+                    text: 'Máy chiếu đang tắt'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal * 6,
+                ),
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.gray,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(
+                    text: 'Mất kết nối'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
             // SizedBox(
             //   height: SizeConfig.blockSizeVertical,
             // ),

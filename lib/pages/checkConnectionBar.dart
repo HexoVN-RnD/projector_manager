@@ -77,6 +77,9 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
           )
         ],
       ),
+      SizedBox(
+        height: SizeConfig.blockSizeVertical * 3,
+      ),
       // MiniMap(room: rooms[(current_page.getValue()>0)? current_page.getValue()-1:1], page: current_page.getValue(),),
       // Row(
       //   children: [
@@ -132,9 +135,9 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
       //     )
       //   ],
       // ),
-      SizedBox(
-        height: SizeConfig.blockSizeVertical * 3,
-      ),
+      // SizedBox(
+      //   height: SizeConfig.blockSizeVertical * 3,
+      // ),
       PrimaryText(
         text: room.resolume? 'Kiểm tra tín hiệu server'.toUpperCase(): 'Kiểm tra tín hiệu Bright Sign'.toUpperCase(),
         size: 16,

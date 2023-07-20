@@ -35,7 +35,7 @@ class _PositionPage2State extends State<PositionPage2> {
           color: server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
             border: server.isOnHover.getValue()
                 ? Border.all(
-              // strokeAlign: StrokeAlign.center,
+              strokeAlign: BorderSide.strokeAlignCenter,
                     color:  server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
                     width: 4.0,
                   )

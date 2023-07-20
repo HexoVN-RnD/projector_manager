@@ -5,8 +5,8 @@ class Projector {
     String ip;
     String name;
     int port;
-    String type;
-    String UsernameAndPassword;
+    String username;
+    String password;
     StatefulValuable<bool> power_status_button;
     StatefulValuable<bool> shutter_status_button;
     StatefulValuable<bool> connected;
@@ -16,19 +16,6 @@ class Projector {
     Offset position;
     StatefulValuable<bool> color_state;
     StatefulValuable<bool> isOnHover;
-    StatefulValuable<int> current_test_pattern = StatefulValuable<int>(0);
-    StatefulValuable<int> lamp_mode = StatefulValuable<int>(0);
-    StatefulValuable<bool> electronic_mode = StatefulValuable<bool>(false);
-    StatefulValuable<bool> ASU_mode = StatefulValuable<bool>(false);
-    StatefulValuable<bool> OSD_mode = StatefulValuable<bool>(false);
-    StatefulValuable<bool> whiteOrGreen = StatefulValuable<bool>(false);
-    StatefulValuable<bool> A1 = StatefulValuable<bool>(true);
-    StatefulValuable<bool> A2 = StatefulValuable<bool>(true);
-    StatefulValuable<bool> A3 = StatefulValuable<bool>(true);
-    StatefulValuable<bool> B1 = StatefulValuable<bool>(true);
-    StatefulValuable<bool> B2 = StatefulValuable<bool>(true);
-    StatefulValuable<bool> B3 = StatefulValuable<bool>(true);
-    StatefulValuable<String> log = StatefulValuable<String>('0 error 0 warning');
 
 
     // Constructor
@@ -36,8 +23,8 @@ class Projector {
         required this.ip,
         required this.name,
         required this.port,
-        required this.type,
-        required this.UsernameAndPassword,
+        required this.username,
+        required this.password,
         required this.power_status_button,
         required this.shutter_status_button,
         required this.power_status,

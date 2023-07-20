@@ -55,7 +55,7 @@ class _MiniMapState extends State<MiniMap> {
     int page = widget.page;
     double width = Responsive.isDesktop(context)
         ? ((current_page.getValue() != 0)
-            ? (SizeConfig.screenWidth - 200) / 3 - 60
+            ? (SizeConfig.screenWidth - 200) / 3*2 - 60
             : SizeConfig.screenWidth / 2 - 150)
         : SizeConfig.screenWidth - 60;
     double height = width * 1050 / 1920;

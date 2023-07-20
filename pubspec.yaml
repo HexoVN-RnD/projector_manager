@@ -41,6 +41,7 @@ dependencies:
   udp: ^5.0.3
   dart_ping: ^8.0.1
   shared_preferences: ^2.1.1
+  excel: ^2.1.0
 #  fluent_ui: ^4.6.1
 #  firedart: any
 #  cloud_firestore: ^4.7.1
@@ -64,6 +65,7 @@ flutter:
   assets:
     - assets/
     - assets/Map/
+    - assets/excel/
     - assets/Icon/
     - assets/Backgrounds/
     - assets/RiveAssets/

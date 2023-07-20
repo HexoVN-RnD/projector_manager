@@ -30,20 +30,13 @@ void SendOscMessage(
   }
 }
 
-void SendAudioOSC(String ip, int port, List<Object> oscParameters) async {
-  SendOscMessage(ip, port, '/composition/layers/1/audio/volume', oscParameters);
-  SendOscMessage(ip, port, '/composition/layers/2/audio/volume', oscParameters);
-  SendOscMessage(ip, port, '/composition/layers/3/audio/volume', oscParameters);
-  // await prefs.setDouble('volume', volume);
-}
-
 void SendPresetOSC(String ip, int port, int column) async {
   column += 1;
   SendOscMessage(ip, port, '/composition/columns/$column/connect', [1]);
 }
 
 void SelectAllPreset(index) {
-  allRoom.current_test_pattern.setValue(index);
+  allRoom.current_preset.setValue(index);
   for (Room room in rooms) {
     room.current_preset.setValue(index);
     if (room.resolume) {
@@ -60,26 +53,6 @@ void SelectAllPreset(index) {
   }
 }
 
-void EditAllAudio(index) {
-  allRoom.volume_all.setValue(index);
-  for (Room room in rooms) {
-    if (room.resolume) {
-      for (Server server in room.servers) {
-        server.volume.setValue(index);
-        SendOscMessage(server.ip, server.preset_port,
-            '/composition/layers/1/audio/volume', [index]);
-        SendOscMessage(server.ip, server.preset_port,
-            '/composition/layers/2/audio/volume', [index]);
-        SendOscMessage(server.ip, server.preset_port,
-            '/composition/layers/3/audio/volume', [index]);
-      }
-    } else {
-      for (Server server in room.servers) {
-        SendUDPVolumeMessage(server, index);
-      }
-    }
-  }
-}
 
 void OSCReceive(Room room, Server server) async {
   try {
