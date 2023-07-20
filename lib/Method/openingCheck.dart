@@ -28,10 +28,10 @@ void OpeningCheck() {
         .setValue(allRoom.num_sensors.getValue() + room.sensors.length);
     allRoom.num_projectors
         .setValue(allRoom.num_projectors.getValue() + room.projectors.length);
-    // allRoom.volume_all.setValue(readCellValue(1,1));
+    allRoom.volume_all.setValue(readCellValue(1,1));
     for (Server server in room.servers) {
       checkConnectionServer(server.ip, server.connected, server.power_status);
-      // server.volume.setValue(readCellValue(server.id,1));
+      server.volume.setValue(readCellValue(server.id,1));
       if (server.connected.getValue()) {
         allRoom.num_servers_connected
             .setValue(allRoom.num_servers_connected.getValue() + 1);
