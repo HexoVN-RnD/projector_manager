@@ -1,19 +1,23 @@
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:excel/excel.dart';
+import 'package:flutter/services.dart' show ByteData, rootBundle;
 
-double readCellValue(int row, int column) {
-  var file = 'assets/excel/volume.xlsx';
-  var bytes = File(file).readAsBytesSync();
+Future<double> readCellValue(int row, int column) async {
+  ByteData data = await rootBundle.load('assets/excel/volume.xlsx');
+  var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
   var excel = Excel.decodeBytes(bytes);
-
-  // Tên của bảng trong file Excel
-  var tableName = excel.tables.keys.first;
-
-  // Lấy giá trị của ô B1
-  var cellValue = double.parse(excel.tables[tableName]!.rows[row][column]?.value);
-
-  return cellValue ?? 0.0 ; // Trả về giá trị của ô B1, nếu không có giá trị trả về chuỗi rỗng
+  SharedString a;
+  var table = excel.tables.keys.first;
+  // print(table); //sheet Name
+  // print(excel.tables[table]?.maxCols);
+  // print(excel.tables[table]?.maxRows);
+  var row_value = excel.tables[table]!.rows[row];
+  print(row_value[column]?.value);
+  var value = await row_value[column]?.value;
+  double last_value = double.parse(value.toString());
+  return last_value ?? 0.0;
+  // Trả về giá trị của ô B1, nếu không có giá trị trả về chuỗi rỗng
 }
 
 void writeCellValue(String value, int row, int column) async {
@@ -23,7 +27,8 @@ void writeCellValue(String value, int row, int column) async {
   Excel excel = Excel.decodeBytes(bytes);
 
   Sheet sheet = excel['Sheet1'];
-  sheet.updateCell(CellIndex.indexByColumnRow(columnIndex: column, rowIndex: row), value);
+  sheet.updateCell(
+      CellIndex.indexByColumnRow(columnIndex: column, rowIndex: row), value);
 
   // Lưu file Excel
   //stopwatch.reset();
@@ -36,4 +41,3 @@ void writeCellValue(String value, int row, int column) async {
       ..writeAsBytesSync(fileBytes);
   }
 }
-
