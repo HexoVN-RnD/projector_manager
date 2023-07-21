@@ -1,5 +1,6 @@
 /assets/excel/volume.xlsx
-
+build
+windows
 # Miscellaneous
 *.class
 *.log
