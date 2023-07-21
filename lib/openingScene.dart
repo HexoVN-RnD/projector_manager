@@ -40,7 +40,7 @@ class _OpeningSceneState extends State<OpeningScene>
     );
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(seconds: 3000),
+      duration: Duration(seconds: 30),
       vsync: this,
     )..addListener(() {
       setState(() {
