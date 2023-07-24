@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/audio_void.dart';
+import 'package:responsive_dashboard/Method/excel.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
@@ -32,11 +33,12 @@ class VolumeEdit extends StatefulWidget {
 class _VolumeEditState extends State<VolumeEdit> {
 
   void ChangeVolume(Room room, Server server,double index) {
-    // if (room.resolume) {
-    //   SendAudioOSC(server, index);
-    // } else {
-    //   SendUDPAudioMessage(server, index);
-    // }
+    writeCellValue(index.toStringAsFixed(2), server.id, 1);
+    if (room.resolume) {
+      SendAudioOSC(server, index);
+    } else {
+      SendUDPAudioMessage(server, index);
+    }
     server.volume.setValue(index);
   }
 
@@ -77,6 +79,9 @@ class _VolumeEditState extends State<VolumeEdit> {
                 inactiveColor: AppColors.light_navy_blue,
                 value: server.volume.getValue(),
                 onChanged: (index) {
+                  server.volume.setValue(index);
+                },
+                onChangeEnd: (index){
                   setState(() => ChangeVolume(room, server, index));
                 },
                 min: 0,

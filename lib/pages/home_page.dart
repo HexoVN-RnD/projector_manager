@@ -247,6 +247,9 @@ class _HomePage extends State<HomePage> {
                                 onChanged: (index) {
                                   setState(() => EditAllAudio(index));
                                 },
+                                onChangeEnd: (index) {
+                                  setState(() => EditAllAudioAndSave(index));
+                                },
                                 min: 0,
                                 max: 1,
                                 // divisions: 5,
