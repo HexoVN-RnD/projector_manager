@@ -10,7 +10,7 @@ import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/openingScene.dart';
 
 void OpeningCheck() async {
-  allRoom.volume_all.setValue(await readCellValue(1,1));
+  // allRoom.volume_all.setValue(await readCellValue(1,1));
   for (Room room in rooms) {
     allRoom.num_servers
         .setValue(allRoom.num_servers.getValue() + room.servers.length);
@@ -21,7 +21,7 @@ void OpeningCheck() async {
 
     for (Server server in room.servers) {
       checkConnectionServer(server.ip, server.connected, server.power_status);
-      server.volume.setValue(await readCellValue(server.id,1));
+      // server.volume.setValue(await readCellValue(server.id,1));
       Future.delayed(Duration(seconds: 1), () {
         if (server.connected.getValue()) {
           allRoom.num_servers_connected

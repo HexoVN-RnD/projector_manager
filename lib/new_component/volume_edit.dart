@@ -32,13 +32,11 @@ class VolumeEdit extends StatefulWidget {
 class _VolumeEditState extends State<VolumeEdit> {
 
   void ChangeVolume(Room room, Server server,double index) {
-    if (room.resolume) {
-      SendAudioOSC(server, index);
-    } else {
-      SendUDPAudioMessage(server, index);
-    }
-    // sendUDPMessage();
-    // sendTCPIPCommand2('192.168.2.75', 7000, 'hiiiii');
+    // if (room.resolume) {
+    //   SendAudioOSC(server, index);
+    // } else {
+    //   SendUDPAudioMessage(server, index);
+    // }
     server.volume.setValue(index);
   }
 
