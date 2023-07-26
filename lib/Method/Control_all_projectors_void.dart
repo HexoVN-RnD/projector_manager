@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
@@ -10,7 +12,7 @@ import 'package:responsive_dashboard/data/data.dart';
 //   }
 // }
 
-void PowerAllProjectors(bool mode) {
+void PowerAllProjectors(bool mode) async {
   allRoom.power_all_projectors.setValue(mode);
   for (var room in rooms) {
     for (var projector in room.projectors) {
@@ -20,12 +22,12 @@ void PowerAllProjectors(bool mode) {
           print(projector.ip.toString() + '(PWR 1)');
           checkConnectionProjector(projector);
           sendTCPIPCommand(projector, '(PWR 1)');
-          Future.delayed(Duration(seconds: 15), () {});
+          await Future.delayed(Duration(seconds: 15));
         } else {
           print(projector.ip.toString() + '(PWR 0)');
           checkConnectionProjector(projector);
           sendTCPIPCommand(projector, '(PWR 0)');
-          Future.delayed(Duration(seconds: 15), () {});
+          await Future.delayed(Duration(seconds: 15));
         }
       }
       projector.power_status_button
