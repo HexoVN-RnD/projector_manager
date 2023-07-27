@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
@@ -110,6 +112,17 @@ class _DashboardState extends State<Dashboard> {
                           // onInit: riveOnInit,
                         ),
                         onPressed: () => changePage(4)),
+                    Expanded(
+                      child: IconButton(
+                          iconSize: 30,
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          icon: RiveAnimation.asset(
+                            "assets/RiveAssets/icons.riv",
+                            artboard: "ROOM",
+                            // onInit: riveOnInit,
+                          ),
+                          onPressed: () => changePage(4)),
+                    ),
                   ],
                 ),
               ),
@@ -176,6 +189,31 @@ class _DashboardState extends State<Dashboard> {
                                       .rive
                                       .stateMachineName);
                         },
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: (){
+                        exit(0);
+                      },
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: AppColors.navy_blue,
+                              borderRadius:
+                              BorderRadius.only(topRight: Radius.circular(15), bottomRight: Radius.circular(30))),
+                          // padding: const EdgeInsets.only(bottom: 7.0),
+                          child: PrimaryText(
+                            text: 'Exit',
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w500,
+                            size: 17,
+                          ),
+                        ),
                       ),
                     ),
                   ),
