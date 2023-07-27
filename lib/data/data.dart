@@ -2070,7 +2070,7 @@ List<Room> rooms = [
     servers: [
       Server(
         id: 11,
-        ip: '192.168.1.1',
+        ip: '192.168.1.244',
         name: 'Server tương tác phòng 5',
         preset_port: 7000,
         power_port: 1234,
@@ -2084,7 +2084,7 @@ List<Room> rooms = [
       ),
       Server(
         id: 12,
-        ip: '192.168.1.5',
+        ip: '192.168.1.245',
         name: 'Server mapping phòng 5',
         preset_port: 7000,
         power_port: 1234,
