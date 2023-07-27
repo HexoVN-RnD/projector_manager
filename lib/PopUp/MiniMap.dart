@@ -19,7 +19,7 @@ class MiniMap extends StatefulWidget {
   Room room;
   int page;
   MiniMap({
-  // required this.roomNotifier,
+    // required this.roomNotifier,
     required this.room,
     required this.page,
   });
@@ -55,23 +55,23 @@ class _MiniMapState extends State<MiniMap> {
     int page = widget.page;
     double width = Responsive.isDesktop(context)
         ? ((current_page.getValue() != 0)
-            ? (SizeConfig.screenWidth - 200) / 3 - 60
-            : SizeConfig.screenWidth / 2 - 150)
+        ? (SizeConfig.screenWidth - 200) / 3*2 - 60
+        : SizeConfig.screenWidth / 2 - 150)
         : SizeConfig.screenWidth - 60;
     double height = width * 1050 / 1920;
     return Hero(
       tag: (page == 1)
           ? heroZoom1
           : ((page == 2)
-              ? heroZoom2
-              : (page == 3)
-                  ? heroZoom3
-                  : heroZoom4),
+          ? heroZoom2
+          : (page == 3)
+          ? heroZoom3
+          : heroZoom4),
       createRectTween: (begin, end) {
         return CustomRectTween(begin: begin, end: end);
       },
       child: Container(
-          // constraints: BoxConstraints.expand(),
+        // constraints: BoxConstraints.expand(),
           margin: EdgeInsets.fromLTRB(0, 30, 0, 20),
           height: height,
           width: width,
@@ -130,7 +130,7 @@ class _MiniMapState extends State<MiniMap> {
               Stack(
                 children: List.generate(
                   room.projectors.length,
-                  (index) => PositionPage4(
+                      (index) => PositionPage4(
                       projector: room.projectors[index],
                       width: width,
                       height: height),
@@ -140,31 +140,31 @@ class _MiniMapState extends State<MiniMap> {
               Stack(
                 children: List.generate(
                   room.projectors.length,
-                  (index) => PositionPage5(
+                      (index) => PositionPage5(
                       projector: room.projectors[index],
                       width: width,
                       height: height),
                 ),
               )
             else if (page == 4)
-              Stack(
-                children: List.generate(
-                  room.projectors.length,
-                  (index) => PositionPage6(
-                      projector: room.projectors[index],
-                      width: width,
-                      height: height),
-                ),
-              )
-            else if (page == 1)
-              Stack(
-                children: List.generate(
-                    room.servers.length,
-                    (index) => PositionPage2(
-                        server: room.servers[index],
+                Stack(
+                  children: List.generate(
+                    room.projectors.length,
+                        (index) => PositionPage6(
+                        projector: room.projectors[index],
                         width: width,
-                        height: height)),
-              ),
+                        height: height),
+                  ),
+                )
+              else if (page == 1)
+                  Stack(
+                    children: List.generate(
+                        room.servers.length,
+                            (index) => PositionPage2(
+                            server: room.servers[index],
+                            width: width,
+                            height: height)),
+                  ),
           ])),
     );
   }

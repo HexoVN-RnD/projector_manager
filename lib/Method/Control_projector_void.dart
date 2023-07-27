@@ -70,7 +70,84 @@ Future<void> ShutterModeProjector(Projector projector) async {
   ShutterStatus(projector);
 }
 
-void TestPatternSelectAll(Projector projector, int num) {
+Future<void> PowerOnProjector(Projector projector) async {
+  if (projector.type == 'Christie') {
+    print(projector.ip.toString() + '(PWR 0)');
+    // checkConnectionProjector(projector);
+    sendTCPIPCommand(projector, '(PWR 0)');
+  } else {
+    print(projector.ip.toString() + '%1POWR 0[CR]');
+    // checkConnectionProjector(projector);
+    sendPJLinkCommand(projector, '%1POWR 0[CR]');
+
+    // }
+  }
+  projector.power_status_button
+      .setValue(!projector.power_status_button.getValue());
+
+  print("Starting...");
+  await Future.delayed(Duration(seconds: 30));
+  print("30 seconds have passed!");
+  PowerStatus(projector);
+}
+
+Future<void> PowerOffProjector(Projector projector) async {
+  if (projector.type == 'Christie') {
+    print(projector.ip.toString() + '(PWR 1)');
+    // checkConnectionProjector(projector);
+    sendTCPIPCommand(projector, '(PWR 1)');
+  } else {
+    print(projector.ip.toString() + '%1POWR 1[CR]');
+    // checkConnectionProjector(projector);
+    sendPJLinkCommand(projector, '%1POWR 1[CR]');
+  }
+  projector.power_status_button
+      .setValue(!projector.power_status_button.getValue());
+
+  print("Starting...");
+  await Future.delayed(Duration(seconds: 30));
+  print("30 seconds have passed!");
+  PowerStatus(projector);
+}
+
+Future<void> ShutterOnProjector(Projector projector) async {
+  if (projector.type == 'Christie') {
+    print(projector.ip.toString() + '(SHU 0)');
+    // checkConnectionProjector(projector);
+    sendTCPIPCommand(projector, '(SHU 0)');
+  } else {
+    print(projector.ip.toString() + '%1AVMT 30[CR]');
+    // checkConnectionProjector(projector);
+    sendPJLinkCommand(projector, '%1AVMT 30[CR]');
+  }
+
+  projector.shutter_status_button
+      .setValue(!projector.shutter_status_button.getValue());
+  print("Starting...");
+  await Future.delayed(Duration(seconds: 10));
+  print("30 seconds have passed!");
+  ShutterStatus(projector);
+}
+
+Future<void> ShutterOffProjector(Projector projector) async {
+  if (projector.type == 'Christie') {
+    print(projector.ip.toString() + '(SHU 1)');
+    // checkConnectionProjector(projector);
+    sendTCPIPCommand(projector, '(SHU 1)');
+  } else {
+    print(projector.ip.toString() + '%1AVMT 31[CR]');
+    // checkConnectionProjector(projector);
+    sendPJLinkCommand(projector, '%1AVMT 31[CR]');
+  }
+  projector.shutter_status_button
+      .setValue(!projector.shutter_status_button.getValue());
+  print("Starting...");
+  await Future.delayed(Duration(seconds: 10));
+  print("30 seconds have passed!");
+  ShutterStatus(projector);
+}
+
+void TestPatternSelect(Projector projector, int num) {
   projector.current_test_pattern.setValue(num);
   // checkConnectionProjector(projector);
   if (num == 0) {

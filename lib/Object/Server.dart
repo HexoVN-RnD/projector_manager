@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:valuable/valuable.dart';
 
 class Server {
+    int id;
     String ip;
     String name;
     int preset_port;
@@ -16,6 +17,7 @@ class Server {
 
     // Constructor
     Server({
+        required this.id,
         required this.ip,
         required this.name,
         required this.preset_port,

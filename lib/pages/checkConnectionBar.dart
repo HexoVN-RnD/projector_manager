@@ -45,8 +45,8 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
           Expanded(
             child: PrimaryText(
                 text: rooms[(current_page.getValue() > 0)
-                        ? current_page.getValue() - 1
-                        : 1]
+                    ? current_page.getValue() - 1
+                    : 1]
                     .name,
                 size: 18,
                 fontWeight: FontWeight.w600),
@@ -76,6 +76,9 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
           )
         ],
+      ),
+      SizedBox(
+        height: SizeConfig.blockSizeVertical * 3,
       ),
       // MiniMap(room: rooms[(current_page.getValue()>0)? current_page.getValue()-1:1], page: current_page.getValue(),),
       // Row(
@@ -132,9 +135,9 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
       //     )
       //   ],
       // ),
-      SizedBox(
-        height: SizeConfig.blockSizeVertical * 3,
-      ),
+      // SizedBox(
+      //   height: SizeConfig.blockSizeVertical * 3,
+      // ),
       PrimaryText(
         text: room.resolume? 'Kiểm tra tín hiệu server'.toUpperCase(): 'Kiểm tra tín hiệu Bright Sign'.toUpperCase(),
         size: 16,
@@ -171,7 +174,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             Column(
               children: List.generate(
                 room.sensors.length,
-                (index) => SensorConnection(
+                    (index) => SensorConnection(
                   sensor: room.sensors[index],
                 ),
               ),
@@ -198,7 +201,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
       Column(
         children: List.generate(
           room.projectors.length,
-          (index) => ProjectorConnection(
+              (index) => ProjectorConnection(
             projector: room.projectors[index],
           ),
         ),

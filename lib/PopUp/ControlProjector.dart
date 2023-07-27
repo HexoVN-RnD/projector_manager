@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Method/Control_projector_void.dart';
+import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
@@ -8,6 +10,7 @@ import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/new_component/manageAllProjectors.dart';
+import 'package:responsive_dashboard/new_component/manageProjector.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
@@ -35,7 +38,7 @@ class _ControlProjectorState extends State<ControlProjector> {
   Widget build(BuildContext context) {
     Projector projector = widget.projector;
     final width = Responsive.isDesktop(context)
-        ? SizeConfig.screenWidth - 400
+        ? SizeConfig.screenWidth - 200
         : SizeConfig.screenWidth - 60;
     final height = width * 1050 / 1920;
     return Center(
@@ -44,18 +47,18 @@ class _ControlProjectorState extends State<ControlProjector> {
         createRectTween: (begin, end) {
           return CustomRectTween(begin: begin, end: end);
         },
-        child: SingleChildScrollView(
+        child: Material(
+          color: Colors.transparent,
           child: Container(
             width: width,
             height: height,
             decoration: BoxDecoration(
-                color: AppColors.gray,
-                borderRadius: BorderRadius.circular(30)),
+                color: AppColors.gray, borderRadius: BorderRadius.circular(30)),
             child: Stack(alignment: Alignment.topRight, children: [
               Padding(
                 // padding: EdgeInsets.only(left: width-10,bottom: height-10),
                 padding:
-                EdgeInsets.only(left: width - 100, bottom: height - 100),
+                    EdgeInsets.only(left: width - 100, bottom: height - 100),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.white_trans,
@@ -82,31 +85,31 @@ class _ControlProjectorState extends State<ControlProjector> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.tune,
-                        size: 30,
-                        color: AppColors.gray,
-                      ),
-                      SizedBox(
-                        width: SizeConfig.blockSizeVertical,
-                      ),
-                      PrimaryText(
-                          text: 'Trung tâm điều khiển'.toUpperCase(),
-                          size: 28,
-                          fontWeight: FontWeight.w600),
-                    ],
-                  ),
-                  PrimaryText(
-                    text: 'Điểu khiển toàn bộ các phòng',
-                    size: 16,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.secondary,
-                  ),
-                  SizedBox(
-                    height: SizeConfig.blockSizeVertical,
-                  ),
+                  // Row(
+                  //   children: [
+                  //     Icon(
+                  //       Icons.tune,
+                  //       size: 30,
+                  //       color: AppColors.gray,
+                  //     ),
+                  //     SizedBox(
+                  //       width: SizeConfig.blockSizeVertical,
+                  //     ),
+                  //     PrimaryText(
+                  //         text: 'Trung tâm điều khiển'.toUpperCase(),
+                  //         size: 28,
+                  //         fontWeight: FontWeight.w600),
+                  //   ],
+                  // ),
+                  // PrimaryText(
+                  //   text: 'Điểu khiển toàn bộ các phòng',
+                  //   size: 16,
+                  //   fontWeight: FontWeight.w400,
+                  //   color: AppColors.secondary,
+                  // ),
+                  // SizedBox(
+                  //   height: SizeConfig.blockSizeVertical,
+                  // ),
 
                   // Container(
                   //   width: 600,
@@ -135,7 +138,9 @@ class _ControlProjectorState extends State<ControlProjector> {
                   //     },
                   //   ),
                   // ),
-                  ManageAllProjectors(),
+                  ManageProjector(
+                    projector: projector,
+                  ),
 
                   Container(
                     // height: 600,
@@ -170,15 +175,16 @@ class _ControlProjectorState extends State<ControlProjector> {
                             ],
                           ),
                         ),
-
                         SingleChildScrollView(
                           // padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
                           // controller: controller,
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: List.generate(allRoom.presets.length, (index) {
+                            children:
+                                List.generate(allRoom.test_patterns.length, (index) {
                               bool isSelected =
-                                  allRoom.current_test_pattern.getValue() == index;
+                                  projector.current_test_pattern.getValue() ==
+                                      index;
                               return GestureDetector(
                                 onTap: () {
                                   setState(() {
@@ -207,7 +213,7 @@ class _ControlProjectorState extends State<ControlProjector> {
                                           borderRadius: BorderRadius.circular(
                                               isSelected ? 15.0 : 10),
                                           child: Image.asset(
-                                            allRoom.presets[index].image,
+                                            allRoom.test_patterns[index].image,
                                             height: isSelected ? 250.0 : 150.0,
                                             fit: BoxFit.fitHeight,
                                           ),
@@ -215,7 +221,8 @@ class _ControlProjectorState extends State<ControlProjector> {
                                       ),
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Icon(
                                           Icons.account_balance,
@@ -223,20 +230,23 @@ class _ControlProjectorState extends State<ControlProjector> {
                                           color: AppColors.white,
                                         ),
                                         SizedBox(
-                                            width: SizeConfig.blockSizeHorizontal *
-                                                (isSelected ? 1.5 : 0.75)),
+                                            width:
+                                                SizeConfig.blockSizeHorizontal *
+                                                    (isSelected ? 1.5 : 0.75)),
                                         AnimatedDefaultTextStyle(
                                           style: isSelected
                                               ? TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 17.0,
-                                              fontWeight: FontWeight.w600)
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 17.0,
+                                                  fontWeight: FontWeight.w600)
                                               : TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.w600),
-                                          duration: const Duration(milliseconds: 200),
-                                          child: Text(allRoom.presets[index].name),
+                                                  fontFamily: 'Poppins',
+                                                  fontSize: 12.0,
+                                                  fontWeight: FontWeight.w600),
+                                          duration:
+                                              const Duration(milliseconds: 200),
+                                          child:
+                                              Text(allRoom.test_patterns[index].name),
                                         ),
                                         // PrimaryText(
                                         //     text: allRoom.presets[index].name,

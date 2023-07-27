@@ -12,7 +12,7 @@ import 'package:valuable/valuable.dart';
 //   }
 // }
 
-void PowerAllProjectors(bool mode) {
+void PowerAllProjectors(bool mode) async {
   // allRoom.power_all_projectors.setValue(mode);
   for (var room in rooms) {
     for (var projector in room.projectors) {
@@ -23,20 +23,24 @@ void PowerAllProjectors(bool mode) {
           print(projector.ip.toString() + '(PWR 1)');
           // checkConnectionProjector(projector);
           sendTCPIPCommand(projector, '(PWR 1)');
+          await Future.delayed(Duration(seconds: 15));
         } else {
           print(projector.ip.toString() + '%1POWR 1[CR]');
           // checkConnectionProjector(projector);
           sendPJLinkCommand(projector, '%1POWR 1[CR]');
+          await Future.delayed(Duration(seconds: 15));
         }
       } else {
         if (projector.type == 'Christie') {
           print(projector.ip.toString() + '(PWR 0)');
           // checkConnectionProjector(projector);
           sendTCPIPCommand(projector, '(PWR 0)');
+          await Future.delayed(Duration(seconds: 15));
         } else {
           print(projector.ip.toString() + '%1POWR 0[CR]');
           // checkConnectionProjector(projector);
           sendPJLinkCommand(projector, '%1POWR 0[CR]');
+          await Future.delayed(Duration(seconds: 15));
 
           // }
         }
@@ -83,6 +87,7 @@ void TestPatternSelectAll(int num) {
   for (var room in rooms) {
     for (var projector in room.projectors) {
       // checkConnectionProjector(projector);
+      projector.current_test_pattern.setValue(num);
       if (num == 0) {
         print(projector.ip.toString() + '(ITP 0)');
         sendTCPIPCommand(projector, '(ITP 0)');

@@ -32,13 +32,13 @@ class _PositionPage2State extends State<PositionPage2> {
         // color:
         //     server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
         decoration: BoxDecoration(
-          color: server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
+            color: server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
             border: server.isOnHover.getValue()
                 ? Border.all(
-              // strokeAlign: StrokeAlign.center,
-                    color:  server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
-                    width: 4.0,
-                  )
+              strokeAlign: BorderSide.strokeAlignCenter,
+              color:  server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
+              width: 4.0,
+            )
                 : Border.all(
               color: Colors.transparent,
               width: 0.0,

@@ -3,6 +3,7 @@ import 'package:responsive_dashboard/Object/Preset.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
+import 'package:responsive_dashboard/Object/Test_Pattern.dart';
 import 'package:valuable/valuable.dart';
 
 class AllRoom {
@@ -11,6 +12,7 @@ class AllRoom {
     StatefulValuable<bool> power_all_servers;
     StatefulValuable<double> volume_all;
     StatefulValuable<int> current_test_pattern;
+    StatefulValuable<int> current_preset;
     StatefulValuable<bool> electronic_mode;
     StatefulValuable<bool> ASU_mode;
     StatefulValuable<bool> OSD_mode;
@@ -28,6 +30,7 @@ class AllRoom {
     StatefulValuable<int> num_sensors;
     StatefulValuable<int> num_projectors;
     List<Preset> presets; // : 1,2,3
+    List<TestPattern> test_patterns; // : 1,2,3
     // List<Projector> projectors;
     // List<Server> servers;
 
@@ -38,6 +41,7 @@ class AllRoom {
         required this.power_all_servers,
         required this.volume_all,
         required this.current_test_pattern,
+        required this.current_preset,
         required this.ASU_mode,
         required this.OSD_mode,
         required this.A1,
@@ -49,6 +53,7 @@ class AllRoom {
         required this.whiteOrGreen,
         required this.electronic_mode,
         required this.presets,
+        required this.test_patterns,
         required this.lamp_mode,
         required this.num_servers_connected,
         required this.num_projectors_connected,

@@ -15,11 +15,11 @@ void ShutterStatus(Projector projector) {
   print(response);
 }
 
-void TestPatternSelect(Projector projector, int num ) {
-  checkConnectionProjector(projector);
-  String response = sendTCPIPCommand(projector, '(ITP ${num})');
-  print(response);
-}
+// void TestPatternSelect(Projector projector, int num ) {
+//   checkConnectionProjector(projector);
+//   String response = sendTCPIPCommand(projector, '(ITP ${num})');
+//   print(response);
+// }
 
 //
 // void LampStatus(Projector projector) {
