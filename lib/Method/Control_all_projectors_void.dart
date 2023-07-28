@@ -16,35 +16,48 @@ void PowerAllProjectors(bool mode) async {
   // allRoom.power_all_projectors.setValue(mode);
   for (var room in rooms) {
     for (var projector in room.projectors) {
+      checkConnectionProjector(projector);
+    }
+  }
+  await Future.delayed(Duration(seconds: 2));
+  for (var room in rooms) {
+    for (var projector in room.projectors) {
       // if (projector.power_status_button.getValue() !=
       //     allRoom.power_all_projectors.getValue()) {
-      if (mode) {
-        if (projector.type == 'Christie') {
-          print(projector.ip.toString() + '(PWR 1)');
-          // checkConnectionProjector(projector);
-          sendTCPIPCommand(projector, '(PWR 1)');
-          await Future.delayed(Duration(seconds: 15));
+      checkConnectionProjector(projector);
+      if (projector.power_status.getValue()) {
+        if (mode) {
+          if (projector.type == 'Christie') {
+            print(projector.ip.toString() + '(PWR 1)');
+            // checkConnectionProjector(projector);
+            sendTCPIPCommand(projector, '(PWR 1)');
+            await Future.delayed(Duration(seconds: 14));
+          } else {
+            print(projector.ip.toString() + '%1POWR 1[CR]');
+            // checkConnectionProjector(projector);
+            sendPJLinkCommand(projector, '%1POWR 1[CR]');
+            await Future.delayed(Duration(seconds: 14));
+          }
         } else {
-          print(projector.ip.toString() + '%1POWR 1[CR]');
-          // checkConnectionProjector(projector);
-          sendPJLinkCommand(projector, '%1POWR 1[CR]');
-          await Future.delayed(Duration(seconds: 15));
-        }
-      } else {
-        if (projector.type == 'Christie') {
-          print(projector.ip.toString() + '(PWR 0)');
-          // checkConnectionProjector(projector);
-          sendTCPIPCommand(projector, '(PWR 0)');
-          await Future.delayed(Duration(seconds: 15));
-        } else {
-          print(projector.ip.toString() + '%1POWR 0[CR]');
-          // checkConnectionProjector(projector);
-          sendPJLinkCommand(projector, '%1POWR 0[CR]');
-          await Future.delayed(Duration(seconds: 15));
+          if (projector.type == 'Christie') {
+            print(projector.ip.toString() + '(PWR 0)');
+            // checkConnectionProjector(projector);
+            sendTCPIPCommand(projector, '(PWR 0)');
+            await Future.delayed(Duration(seconds: 14));
+          } else {
+            print(projector.ip.toString() + '%1POWR 0[CR]');
+            // checkConnectionProjector(projector);
+            sendPJLinkCommand(projector, '%1POWR 0[CR]');
+            await Future.delayed(Duration(seconds: 14));
 
-          // }
+            // }
+          }
         }
+
+      } else {
+        print('Disconnect');
       }
+
       projector.power_status_button
           .setValue(allRoom.power_all_projectors.getValue());
     }
