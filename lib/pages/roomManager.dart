@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
+import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
@@ -76,11 +77,13 @@ class _RoomManagerState extends State<RoomManager> {
       (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
       if (room.projectors.length > 0) {
         for (Projector projector in room.projectors){
-          PowerStatus(projector);
+          String response = sendTCPIPCommandOnly(projector, '(PWR?)');
+          print(response);
         }
         await Future.delayed(Duration(milliseconds: 500));
         for (Projector projector in room.projectors){
-          ShutterStatus(projector);
+          String response = sendTCPIPCommandOnly(projector, '(SHU?)');
+          print(response);
         }
       }
     });
