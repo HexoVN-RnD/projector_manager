@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
+import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
@@ -34,6 +35,7 @@ class RoomManager extends StatefulWidget {
 
 class _RoomManagerState extends State<RoomManager> {
   Timer? _timer;
+  Timer? _timer2;
 
   void select_preset(Room room, int index) async {
     setState(() {
@@ -67,6 +69,20 @@ class _RoomManagerState extends State<RoomManager> {
           }
         }
       });
+    });
+    _timer2 = Timer.periodic(Duration(milliseconds: 1000), (timer)
+    async {
+      Room room = rooms[
+      (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
+      if (room.projectors.length > 0) {
+        for (Projector projector in room.projectors){
+          PowerStatus(projector);
+        }
+        await Future.delayed(Duration(milliseconds: 500));
+        for (Projector projector in room.projectors){
+          ShutterStatus(projector);
+        }
+      }
     });
   }
 
@@ -384,9 +400,16 @@ class _RoomManagerState extends State<RoomManager> {
                             //     size: 20,
                             //   ),
                           ),
+
                           SizedBox(
                             height: SizeConfig.blockSizeVertical * 4,
                           ),
+                          ]
+                      ),
+                    if (current_page != 1)
+                      Column(
+                        children: [
+
                           SizedBox(
                             height: SizeConfig.blockSizeVertical * 8,
                             child: Row(
