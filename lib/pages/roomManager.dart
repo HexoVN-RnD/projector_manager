@@ -70,7 +70,7 @@ class _RoomManagerState extends State<RoomManager> {
         }
       });
     });
-    _timer2 = Timer.periodic(Duration(milliseconds: 1000), (timer)
+    _timer2 = Timer.periodic(Duration(milliseconds: 5000), (timer)
     async {
       Room room = rooms[
       (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];

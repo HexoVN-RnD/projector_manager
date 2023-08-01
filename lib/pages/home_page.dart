@@ -437,6 +437,7 @@ class _HomePage extends State<HomePage> {
                 ],
               ),
             ),
+            ManageAllServers(),
             Wrap(
               spacing: 40,
               alignment: WrapAlignment.spaceBetween,

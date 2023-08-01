@@ -32,10 +32,10 @@ Future<void> PowerModeProjector(Projector projector) async {
   projector.power_status_button
       .setValue(!projector.power_status_button.getValue());
 
-  print("Starting...");
-  await Future.delayed(Duration(seconds: 30));
-  print("30 seconds have passed!");
-  PowerStatus(projector);
+  // print("Starting...");
+  // await Future.delayed(Duration(seconds: 30));
+  // print("30 seconds have passed!");
+  // PowerStatus(projector);
 }
 
 Future<void> ShutterModeProjector(Projector projector) async {
@@ -85,10 +85,10 @@ Future<void> PowerOnProjector(Projector projector) async {
   projector.power_status_button
       .setValue(!projector.power_status_button.getValue());
 
-  print("Starting...");
-  await Future.delayed(Duration(seconds: 30));
-  print("30 seconds have passed!");
-  PowerStatus(projector);
+  // print("Starting...");
+  // await Future.delayed(Duration(seconds: 30));
+  // print("30 seconds have passed!");
+  // PowerStatus(projector);
 }
 
 Future<void> PowerOffProjector(Projector projector) async {
@@ -104,10 +104,10 @@ Future<void> PowerOffProjector(Projector projector) async {
   projector.power_status_button
       .setValue(!projector.power_status_button.getValue());
 
-  print("Starting...");
-  await Future.delayed(Duration(seconds: 30));
-  print("30 seconds have passed!");
-  PowerStatus(projector);
+  // print("Starting...");
+  // await Future.delayed(Duration(seconds: 30));
+  // print("30 seconds have passed!");
+  // PowerStatus(projector);
 }
 
 Future<void> ShutterOnProjector(Projector projector) async {
