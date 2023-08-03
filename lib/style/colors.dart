@@ -56,7 +56,7 @@ class AppColors {
   ];
   static List<Color> ShutterOffButtonColor = [
     Color.fromRGBO(0, 0, 0, 1.0),
-    Color.fromRGBO(0, 0, 0, 1.0),
+    Color.fromRGBO(246, 75, 75, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(246, 75, 75, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
