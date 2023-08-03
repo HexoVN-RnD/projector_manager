@@ -148,45 +148,105 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
 
 void sendTCPIPCommandNoResponse(Projector projector, String command) {
   try {
-  Socket.connect(projector.ip, projector.port).then((socket) {
-    socket.write(command);
-    print('Sent to ${socket.remoteAddress.address}:${socket.remotePort}');
-  });
+    Socket.connect(projector.ip, projector.port).then((socket) {
+      socket.write(command);
+      print('Sent to ${socket.remoteAddress.address}:${socket.remotePort}');
+    });
   }
   catch (e) {
     print('Error');
   };
 }
 
-String sendPJLinkCommand(Projector projector, String command) {
+String sendPJLinkCommandStatus(Projector projector, String command) {
   String response = '';
-  try {
-    Socket.connect(projector.ip, 4352).then((socket) {
-      print(
-          'Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
-      socket.write(command);
-      socket.listen((data) {
-        response = utf8.decode(data);
-        print('Response: $response');
-        if (response.contains('PWR!1')) {
-          projector.power_status.setValue(true);
-        } else if (response.contains('PWR!0')) {
-          projector.power_status.setValue(false);
-        } else if (response.contains('SHU!01')) {
-          projector.shutter_status.setValue(true);
-        } else if (response.contains('SHU!00')) {
-          projector.shutter_status.setValue(false);
+  Socket.connect(projector.ip, 4352).then((socket) {
+    print(
+        'Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
+    socket.write(command);
+    socket.listen((data) async {
+      response = utf8.decode(data);
+      print('Response: ${projector.ip} $response');
+      if (response.contains('%1POWR=0')) {
+        projector.power_status.setValue(false);
+        if (projector.shutter_status.getValue()){
+          if (projector.power_status.getValue()){
+            projector.status.setValue(3);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          } else {
+            projector.status.setValue(1);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          }
         }
-        socket.close();
-      }, onDone: () {
-        print('Connection closed');
-      });
-    }, onError: (error) {
-      print('Error: $error');
+        // else {
+        //   if (projector.power_status.getValue()){
+        //     projector.status.setValue(4);
+        //     print('${projector.ip} status: ${projector.status.getValue()}');
+        //   } else {
+        //     projector.status.setValue(6);
+        //     print('${projector.ip} status: ${projector.status.getValue()}');
+        //   }
+        // }
+      } else if (response.contains('%1POWR=1')) {
+        projector.power_status.setValue(true);
+        if (projector.shutter_status.getValue()){
+          if (projector.power_status.getValue()){
+            projector.status.setValue(3);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          } else {
+            projector.status.setValue(4);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          }
+        } else {
+          if (projector.power_status.getValue()){
+            projector.status.setValue(2);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          } else {
+            projector.status.setValue(0);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          }
+        }
+      } else if (response.contains('%1POWR=3')) {
+        if (projector.shutter_status.getValue()){
+          if (projector.power_status.getValue()){
+            projector.status.setValue(5);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          } else {
+            projector.status.setValue(6);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          }
+        }
+        // else {
+        //   if (projector.power_status.getValue()){
+        //     projector.status.setValue(4);
+        //     print('${projector.ip} status: ${projector.status.getValue()}');
+        //   } else {
+        //     projector.status.setValue(4);
+        //     print('${projector.ip} status: ${projector.status.getValue()}');
+        //   }
+        // }
+      } else if (response.contains('%1AVMT=31')) {
+        projector.shutter_status.setValue(true);
+        // if (projector.power_status.getValue()){
+        //   projector.status.setValue(5);
+        //   print('${projector.ip} status: ${projector.status.getValue()}');
+        // } else {
+        //   projector.status.setValue(6);
+        //   print('${projector.ip} status: ${projector.status.getValue()}');
+        // }
+      } else if (response.contains('%1AVMT=30')) {
+        projector.shutter_status.setValue(false);
+      }
+      socket.close();
+    }, onDone: () {
+      // print('Connection closed');
     });
-  } catch (e) {
-    print('Error: $e');
-  }
+  }, onError: (error) {
+    projector.status.setValue(0);
+    projector.connected.setValue(false);
+    projector.power_status.setValue(false);
+    projector.shutter_status.setValue(false);
+  });
   return response;
 }
 

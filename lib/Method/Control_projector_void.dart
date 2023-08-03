@@ -5,16 +5,24 @@ import 'package:responsive_dashboard/Object/Projector.dart';
 
 void PowerStatus(Projector projector) {
   checkConnectionProjector(projector);
-  String response = sendTCPIPCommandStatus(projector, '(PWR ?)');
-  sendPJLinkCommand(projector, '%1POWR ?[CR]');
-  print(response);
+  if (projector.type == 'Christie') {
+    String response = sendTCPIPCommandStatus(projector, '(PWR?)');
+    print(response);
+  } else {
+    String response = sendPJLinkCommandStatus(projector, '%1POWR ?[CR]');
+    print(response);
+  }
 }
 
 void ShutterStatus(Projector projector) {
   checkConnectionProjector(projector);
-  String response = sendTCPIPCommandStatus(projector, '(SHU?)');
-  sendPJLinkCommand(projector, '%1AVMT ?[CR]');
-  print(response);
+  if (projector.type == 'Christie') {
+    String response = sendTCPIPCommandStatus(projector, '(SHU?)');
+    print(response);
+  } else {
+    String response = sendPJLinkCommandStatus(projector, '%1AVMT ?[CR]');
+    print(response);
+  }
 }
 
 Future<void> PowerModeProjector(Projector projector, bool mode) async {
