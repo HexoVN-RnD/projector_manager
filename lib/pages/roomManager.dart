@@ -71,26 +71,27 @@ class _RoomManagerState extends State<RoomManager> {
         }
       });
     });
-    _timer2 = Timer.periodic(Duration(milliseconds: 2000), (timer)
+    _timer2 = Timer.periodic(Duration(milliseconds: 4000), (timer)
     async {
-      Room room = rooms[
-      (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
-      if (room.projectors.length > 0) {
-        for (Projector projector in room.projectors){
-          String response = sendTCPIPCommandStatus(projector, '(PWR?)');
-          print(response);
-        }
-        await Future.delayed(Duration(milliseconds: 1000));
-        for (Projector projector in room.projectors){
-          String response = sendTCPIPCommandStatus(projector, '(SHU?)');
-          print(response);
-        }
-      }
+      // Room room = rooms[
+      // (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
+      // if (room.projectors.length > 0) {
+      //   for (Projector projector in room.projectors){
+      //     String response = sendTCPIPCommandStatus(projector, '(PWR?)');
+      //     print(response);
+      //   }
+      //   await Future.delayed(Duration(milliseconds: 2000));
+      //   for (Projector projector in room.projectors){
+      //     String response = sendTCPIPCommandStatus(projector, '(SHU?)');
+      //     print(response);
+      //   }
+      // }
     });
   }
 
   void dispose() {
     _timer?.cancel();
+    _timer2?.cancel();
     super.dispose();
   }
 

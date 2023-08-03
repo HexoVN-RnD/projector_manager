@@ -5,20 +5,22 @@ import 'package:responsive_dashboard/Object/Projector.dart';
 
 void PowerStatus(Projector projector) {
   checkConnectionProjector(projector);
-  String response = sendTCPIPCommandStatus(projector, '(PWR?)');
+  String response = sendTCPIPCommandStatus(projector, '(PWR ?)');
+  sendPJLinkCommand(projector, '%1POWR ?[CR]');
   print(response);
 }
 
 void ShutterStatus(Projector projector) {
   checkConnectionProjector(projector);
   String response = sendTCPIPCommandStatus(projector, '(SHU?)');
+  sendPJLinkCommand(projector, '%1AVMT ?[CR]');
   print(response);
 }
 
 Future<void> PowerModeProjector(Projector projector, bool mode) async {
   // projector.power_status_button
   //     .setValue(!projector.power_status_button.getValue());
-  if (projector.power_status.getValue() != mode) {
+  // if (projector.power_status.getValue() != mode) {
     projector.power_status.setValue(mode);
     if (mode) {
       if (projector.type == 'Christie') {
@@ -43,7 +45,7 @@ Future<void> PowerModeProjector(Projector projector, bool mode) async {
         // }
       }
     }
-  }
+  // }
 
   // print("Starting...");
   // await Future.delayed(Duration(seconds: 50));
@@ -57,7 +59,7 @@ Future<void> PowerModeProjector(Projector projector, bool mode) async {
 Future<void> ShutterModeProjector(Projector projector, bool mode) async {
   // projector.shutter_status_button
   //     .setValue(!projector.shutter_status_button.getValue());
-  if(projector.shutter_status.getValue() != mode) {
+  // if(projector.shutter_status.getValue() != mode) {
     projector.shutter_status.setValue(mode);
     if (mode) {
       if (projector.type == 'Christie') {
@@ -80,7 +82,7 @@ Future<void> ShutterModeProjector(Projector projector, bool mode) async {
         sendPJLinkCommand(projector, '%1AVMT 30[CR]');
       }
     }
-  }
+  // }
   // print("Starting...");
   // await Future.delayed(Duration(seconds: 10));
   // print("30 seconds have passed!");

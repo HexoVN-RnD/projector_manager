@@ -26,20 +26,28 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> {
   Timer? _timer;
+  Timer? _timer2;
   ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 2000), (timer)
-    async {
-      for(Room room in rooms) {
+    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) async {
+      setState(() {});
+    });
+    _timer2 = Timer.periodic(Duration(milliseconds: 4000), (timer) async {
+      print('check');
+      for (Room room in rooms) {
         if (room.projectors.length > 0) {
           for (Projector projector in room.projectors) {
             String response = sendTCPIPCommandStatus(projector, '(PWR?)');
             print(response);
           }
-          await Future.delayed(Duration(milliseconds: 1000));
+        }
+      }
+      await Future.delayed(Duration(milliseconds: 2000));
+      for (Room room in rooms) {
+        if (room.projectors.length > 0) {
           for (Projector projector in room.projectors) {
             String response = sendTCPIPCommandStatus(projector, '(SHU?)');
             print(response);
@@ -51,6 +59,7 @@ class _HomePage extends State<HomePage> {
 
   void dispose() {
     _timer?.cancel();
+    _timer2?.cancel();
     super.dispose();
   }
 
@@ -148,7 +157,6 @@ class _HomePage extends State<HomePage> {
                       ],
                     ),
                   ),
-
                   SingleChildScrollView(
                     // padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
                     // controller: controller,
@@ -411,7 +419,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  width: SizeConfig.blockSizeHorizontal ,
+                  width: SizeConfig.blockSizeHorizontal,
                 ),
                 Container(
                   height: 15,
@@ -434,7 +442,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  width: SizeConfig.blockSizeHorizontal ,
+                  width: SizeConfig.blockSizeHorizontal,
                 ),
                 Container(
                   height: 15,
@@ -457,7 +465,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  width: SizeConfig.blockSizeHorizontal ,
+                  width: SizeConfig.blockSizeHorizontal,
                 ),
                 Container(
                   height: 15,
@@ -480,7 +488,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  width: SizeConfig.blockSizeHorizontal ,
+                  width: SizeConfig.blockSizeHorizontal,
                 ),
                 Container(
                   height: 15,

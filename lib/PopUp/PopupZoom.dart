@@ -103,11 +103,7 @@ class _PopupZoomState extends State<PopupZoom> {
                       width: width * 0.0095,
                       height: width * 0.0095,
                       child: Container(
-                        color: room.projectors[index].connected.getValue()
-                            ? (room.projectors[index].power_status.getValue()
-                                ? AppColors.navy_blue
-                                : AppColors.red)
-                            : AppColors.gray,
+                        color: AppColors.StatusColor[room.projectors[index].status.getValue()],
                       ),
                     ),
                   ),
@@ -122,11 +118,7 @@ class _PopupZoomState extends State<PopupZoom> {
                       width: width * 0.018,
                       height: width * 0.018,
                       child: Container(
-                        color: room.projectors[index].connected.getValue()
-                            ? (room.projectors[index].power_status.getValue()
-                                ? AppColors.navy_blue
-                                : AppColors.red)
-                            : AppColors.gray,
+                        color:  AppColors.StatusColor[room.projectors[index].status.getValue()],
                       ),
                     ),
                   ),
@@ -141,11 +133,7 @@ class _PopupZoomState extends State<PopupZoom> {
                       width: width * 0.012,
                       height: width * 0.012,
                       child: Container(
-                        color: room.projectors[index].connected.getValue()
-                            ? (room.projectors[index].power_status.getValue()
-                                ? AppColors.navy_blue
-                                : AppColors.red)
-                            : AppColors.gray,
+                        color: AppColors.StatusColor[room.projectors[index].status.getValue()],
                       ),
                     ),
                   ),

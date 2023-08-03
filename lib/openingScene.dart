@@ -75,6 +75,7 @@ class _OpeningSceneState extends State<OpeningScene>
 
   @override
   void dispose() {
+    _timer?.cancel();
     _animationController.dispose();
     super.dispose();
   }

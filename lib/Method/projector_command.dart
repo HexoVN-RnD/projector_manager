@@ -47,7 +47,7 @@ String sendTCPIPCommandOnly(Projector projector, String command) {
       }
       socket.close();
     }, onDone: () {
-      print('Connection closed');
+      // print('Connection closed');
     });
   }, onError: (error) {
   });
@@ -72,16 +72,17 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
             projector.status.setValue(1);
             print('${projector.ip} status: ${projector.status.getValue()}');
           }
-        } else {
-          if (projector.power_status.getValue()){
-            projector.status.setValue(4);
-            print('${projector.ip} status: ${projector.status.getValue()}');
-          } else {
-            projector.status.setValue(6);
-            print('${projector.ip} status: ${projector.status.getValue()}');
-          }
         }
-      } else if (response.contains('PWR!03')) {
+        // else {
+        //   if (projector.power_status.getValue()){
+        //     projector.status.setValue(4);
+        //     print('${projector.ip} status: ${projector.status.getValue()}');
+        //   } else {
+        //     projector.status.setValue(6);
+        //     print('${projector.ip} status: ${projector.status.getValue()}');
+        //   }
+        // }
+      } else if (response.contains('PWR!03') || response.contains('PWR!00')) {
         projector.power_status.setValue(true);
         if (projector.shutter_status.getValue()){
           if (projector.power_status.getValue()){
@@ -109,15 +110,16 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
             projector.status.setValue(6);
             print('${projector.ip} status: ${projector.status.getValue()}');
           }
-        } else {
-          if (projector.power_status.getValue()){
-            projector.status.setValue(4);
-            print('${projector.ip} status: ${projector.status.getValue()}');
-          } else {
-            projector.status.setValue(4);
-            print('${projector.ip} status: ${projector.status.getValue()}');
-          }
         }
+        // else {
+        //   if (projector.power_status.getValue()){
+        //     projector.status.setValue(4);
+        //     print('${projector.ip} status: ${projector.status.getValue()}');
+        //   } else {
+        //     projector.status.setValue(4);
+        //     print('${projector.ip} status: ${projector.status.getValue()}');
+        //   }
+        // }
       } else if (response.contains('SHU!01')) {
         projector.shutter_status.setValue(true);
         // if (projector.power_status.getValue()){
@@ -132,14 +134,14 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
       }
       socket.close();
     }, onDone: () {
-      print('Connection closed');
+      // print('Connection closed');
     });
   }, onError: (error) {
     projector.status.setValue(0);
     projector.connected.setValue(false);
     projector.power_status.setValue(false);
     projector.shutter_status.setValue(false);
-    print('Error: Refused connection');
+    // print('Error: Refused connection');
   });
   return response;
 }
