@@ -293,7 +293,7 @@ class _RoomManagerState extends State<RoomManager> {
                               width: 15,
                               margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
                               decoration: BoxDecoration(
-                                color: AppColors.navy_blue,
+                                color: AppColors.StatusColor[2],
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
@@ -303,20 +303,43 @@ class _RoomManagerState extends State<RoomManager> {
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: PrimaryText(
-                                text: 'Máy chiếu đang bật'.toUpperCase(),
+                                text: 'Máy chiếu đã bật'.toUpperCase(),
                                 size: 14,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                             SizedBox(
-                              width: SizeConfig.blockSizeHorizontal * 6,
+                              width: SizeConfig.blockSizeHorizontal ,
                             ),
                             Container(
                               height: 15,
                               width: 15,
                               margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
                               decoration: BoxDecoration(
-                                color: AppColors.red,
+                                color: AppColors.StatusColor[3],
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: PrimaryText(
+                                text: 'Màn chập đã bật'.toUpperCase(),
+                                size: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal ,
+                            ),
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                              decoration: BoxDecoration(
+                                color: AppColors.StatusColor[6],
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
@@ -332,14 +355,37 @@ class _RoomManagerState extends State<RoomManager> {
                               ),
                             ),
                             SizedBox(
-                              width: SizeConfig.blockSizeHorizontal * 6,
+                              width: SizeConfig.blockSizeHorizontal ,
                             ),
                             Container(
                               height: 15,
                               width: 15,
                               margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
                               decoration: BoxDecoration(
-                                color: AppColors.gray,
+                                color: AppColors.StatusColor[1],
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: PrimaryText(
+                                text: 'Máy chiếu đã tắt'.toUpperCase(),
+                                size: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeHorizontal ,
+                            ),
+                            Container(
+                              height: 15,
+                              width: 15,
+                              margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                              decoration: BoxDecoration(
+                                color: AppColors.StatusColor[0],
                                 borderRadius: BorderRadius.circular(5),
                               ),
                             ),
