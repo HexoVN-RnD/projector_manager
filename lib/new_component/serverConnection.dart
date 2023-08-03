@@ -81,7 +81,7 @@ class _ServerConnection extends State<ServerConnection> {
           setState(() {
             // check_connection(widget.server.ip, widget.server.connected);
             checkConnectionServer(
-                server.ip, server.connected, server.power_status);
+                server);
             // widget.onUpdateState?.call();
           });
           // startAutoReload();

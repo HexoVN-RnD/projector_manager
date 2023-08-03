@@ -184,7 +184,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
           ],
         ),
-      if (room.resolume) Column(
+      if (room.resolume || current_page.getValue()==4) Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PrimaryText(

@@ -62,7 +62,7 @@ class _SensorConnectionState extends State<SensorConnection> {
       ),
       onTap: () {
         setState(() {
-          checkConnectionSensor(sensor.ip, sensor.connected);
+          checkConnectionSensor(sensor);
         });
         // startAutoReload();
       },

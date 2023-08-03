@@ -25,19 +25,19 @@ void ShutdownAllServer() {
   print('Shutdown All Server');
 }
 
-Future<void> PowerModeServer(Server server) async {
-  server.power_status.setValue(!server.power_status.getValue());
-  if (server.power_status.getValue()) {
+Future<void> PowerModeServer(Server server, bool mode) async {
+  server.power_status.setValue(mode);
+  if (mode) {
     WakeonLan(server);
   } else {
     ShutdownServer(server);
   }
   print(server.mac_address);
 
-  print("Starting...");
-  await Future.delayed(Duration(seconds: 30));
-  print("30 seconds have passed!");
-  checkConnectionServer(server.ip, server.connected, server.power_status);
+  // print("Starting...");
+  // await Future.delayed(Duration(seconds: 30));
+  // print("30 seconds have passed!");
+  // checkConnectionServer(server.ip, server.connected, server.power_status);
 
 }
 
@@ -48,11 +48,11 @@ Future<void> ShutdownServer(Server server) async {
     socket.send(message.codeUnits, InternetAddress(server.ip), server.power_port);
     socket.close();
   });
-  print(message);
-  print("Starting...");
-  await Future.delayed(Duration(seconds: 30));
-  print("30 seconds have passed!");
-  checkConnectionServer(server.ip, server.connected, server.power_status);
+  // print(message);
+  // print("Starting...");
+  // await Future.delayed(Duration(seconds: 30));
+  // print("30 seconds have passed!");
+  // checkConnectionServer(server.ip, server.connected, server.power_status);
 }
 
 void WakeonLan(Server server, {int port = 9}) async {
@@ -66,10 +66,10 @@ void WakeonLan(Server server, {int port = 9}) async {
     socket.send(magicPacket, boardcastIP, port);
     socket.close();
   });
-  print("Starting...");
-  await Future.delayed(Duration(seconds: 30));
-  print("30 seconds have passed!");
-  checkConnectionServer(server.ip, server.connected, server.power_status);
+  // print("Starting...");
+  // await Future.delayed(Duration(seconds: 30));
+  // print("30 seconds have passed!");
+  // checkConnectionServer(server.ip, server.connected, server.power_status);
 }
 
 List<int> _parseMacAddress(String macAddress) {

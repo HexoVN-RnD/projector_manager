@@ -58,15 +58,15 @@ class _ManageAllServersState extends State<ManageAllServers> {
                 size: 20,
                 fontWeight: FontWeight.w600,
               ),
-              Expanded(
-                child: SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-              ),
-              PrimaryText(
-                  text: 'server', //projectors.length.toString(),
-                  color: AppColors.iconDeepGray,
-                  size: 16)
+              // Expanded(
+              //   child: SizedBox(
+              //     width: SizeConfig.blockSizeHorizontal,
+              //   ),
+              // ),
+              // PrimaryText(
+              //     text: 'server', //projectors.length.toString(),
+              //     color: AppColors.iconDeepGray,
+              //     size: 16)
             ],
           ),
           Container(

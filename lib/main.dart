@@ -19,7 +19,7 @@ Future<void> main() async {
     title: 'Projector Manager',
     size: Size(1920, 1050),
     // fullScreen: true,
-    minimumSize: Size(800, 650),
+    minimumSize: Size(1920 , 1050),
     center: true,
     backgroundColor: Colors.transparent,
     skipTaskbar: false,

@@ -793,17 +793,17 @@ List<Room> rooms = [
       Sensor(
           ip: '192.168.1.11',
           name: 'Cảm biến 01',
-          port: 54067,
+          port: 10940,
           connected: StatefulValuable<bool>(false)),
       Sensor(
           ip: '192.168.1.12',
           name: 'Cảm biến 02',
-          port: 9999,
+          port: 10940,
           connected: StatefulValuable<bool>(false)),
       Sensor(
           ip: '192.168.1.13',
           name: 'Cảm biến 03',
-          port: 9999,
+          port: 10940,
           connected: StatefulValuable<bool>(false)),
     ],
     presets: [

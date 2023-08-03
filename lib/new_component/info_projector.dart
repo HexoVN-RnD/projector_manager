@@ -154,24 +154,24 @@ class _InfoProjector extends State<InfoProjector> {
                   text: Power_Status[projector.status.getValue()],
                   color: AppColors.secondary,
                   size: 14),
-              Expanded(
-                child: SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-              ),
-              GestureDetector(
-                onTap: (){
-                  setState(() {
-                    PowerStatus(projector);
-                  });
-                },
-                child: PrimaryText(
-                    text: 'Kiểm tra',
-                    color: AppColors.navy_blue2,
-                    size: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              // Expanded(
+              //   child: SizedBox(
+              //     width: SizeConfig.blockSizeHorizontal,
+              //   ),
+              // ),
+              // GestureDetector(
+              //   onTap: (){
+              //     setState(() {
+              //       PowerStatus(projector);
+              //     });
+              //   },
+              //   child: PrimaryText(
+              //       text: 'Kiểm tra',
+              //       color: AppColors.navy_blue2,
+              //       size: 14,
+              //     fontWeight: FontWeight.w500,
+              //   ),
+              // ),
             ],
           ),
           SizedBox(
@@ -249,24 +249,24 @@ class _InfoProjector extends State<InfoProjector> {
                   text: Shutter_Status[projector.status.getValue()],
                   color: AppColors.secondary,
                   size: 14),
-              Expanded(
-                child: SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-              ),
-              GestureDetector(
-                onTap: (){
-                  setState(() {
-                    ShutterStatus(projector);
-                  });
-                },
-                child: PrimaryText(
-                  text: 'Kiểm tra',
-                  color: AppColors.navy_blue2,
-                  size: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              // Expanded(
+              //   child: SizedBox(
+              //     width: SizeConfig.blockSizeHorizontal,
+              //   ),
+              // ),
+              // GestureDetector(
+              //   onTap: (){
+              //     setState(() {
+              //       ShutterStatus(projector);
+              //     });
+              //   },
+              //   child: PrimaryText(
+              //     text: 'Kiểm tra',
+              //     color: AppColors.navy_blue2,
+              //     size: 14,
+              //     fontWeight: FontWeight.w500,
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: SizeConfig.blockSizeVertical,),

@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
+import 'package:responsive_dashboard/Method/Control_projector_void.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/audio_void.dart';
+import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/Sensor.dart';
+import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
@@ -35,34 +39,25 @@ class _HomePage extends State<HomePage> {
     _timer = Timer.periodic(Duration(milliseconds: 500), (timer) async {
       setState(() {});
     });
-    _timer2 = Timer.periodic(Duration(milliseconds: 4000), (timer) async {
+    _timer2 = Timer.periodic(Duration(seconds: 4), (timer) async {
       print('check');
       for (Room room in rooms) {
-        if (room.projectors.length > 0) {
-          for (Projector projector in room.projectors) {
-            if (projector.type == 'Christie') {
-              String response = sendTCPIPCommandStatus(projector, '(PWR?)');
-              print(response);
-            } else {
-              String response = sendPJLinkCommandStatus(projector, '%1POWR ?[CR]');
-              print(response);
-            }
+        if (!room.servers.isEmpty)
+          for (Server server in room.servers) {
+            checkConnectionServer(server);
           }
+        if (!room.sensors.isEmpty) {
+          for (Sensor sensor in room.sensors) {
+            checkConnectionSensor(sensor);
+          }
+        }
+        if (room.projectors.length > 0) {
+          RoomPowerStatus(room);
         }
       }
-      await Future.delayed(Duration(milliseconds: 2000));
+      await Future.delayed(Duration(seconds: 2));
       for (Room room in rooms) {
-        if (room.projectors.length > 0) {
-          for (Projector projector in room.projectors) {
-            if (projector.type == 'Christie') {
-              String response = sendTCPIPCommandStatus(projector, '(SHU?)');
-              print(response);
-            } else {
-              String response = sendPJLinkCommandStatus(projector, '%1AVMT ?[CR]');
-              print(response);
-            }
-          }
-        }
+        RoomShutterStatus(room);
       }
     });
   }
@@ -334,7 +329,6 @@ class _HomePage extends State<HomePage> {
                   page: 4,
                 ),
               ],
-
             ),
 
             Row(
@@ -360,7 +354,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  width: SizeConfig.blockSizeHorizontal ,
+                  width: SizeConfig.blockSizeHorizontal,
                 ),
                 Container(
                   height: 15,
@@ -383,7 +377,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  width: SizeConfig.blockSizeHorizontal ,
+                  width: SizeConfig.blockSizeHorizontal,
                 ),
                 Container(
                   height: 15,
@@ -406,7 +400,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  width: SizeConfig.blockSizeHorizontal ,
+                  width: SizeConfig.blockSizeHorizontal,
                 ),
                 Container(
                   height: 15,
@@ -429,7 +423,7 @@ class _HomePage extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  width: SizeConfig.blockSizeHorizontal ,
+                  width: SizeConfig.blockSizeHorizontal,
                 ),
                 Container(
                   height: 15,

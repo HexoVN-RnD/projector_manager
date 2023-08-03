@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
@@ -19,6 +21,22 @@ class PositionPage4 extends StatefulWidget {
 }
 
 class _PositionPage4State extends State<PositionPage4> {
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Projector projector = widget.projector;
@@ -35,7 +53,7 @@ class _PositionPage4State extends State<PositionPage4> {
             border: projector.isOnHover.getValue()
                 ? Border.all(
                     strokeAlign: BorderSide.strokeAlignCenter,
-                    color:  AppColors.StatusColor[projector.status.getValue()],
+                    color: AppColors.StatusColor[projector.status.getValue()],
                     width: 4.0,
                   )
                 : Border.all(

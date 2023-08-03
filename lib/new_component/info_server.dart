@@ -85,18 +85,71 @@ class _InfoServer extends State<InfoServer> {
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal,
               ),
-              Transform.scale(
-                scale: 1,
-                child: CupertinoSwitch(
-                  value: server.power_status.getValue(),
-                  activeColor: AppColors.navy_blue,
-                  onChanged: (value) {
+              Container(
+                height: 40,
+                width: 60,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: server.power_status.getValue()
+                        ? AppColors.navy_blue
+                        : AppColors.gray,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: () {
                     setState(() {
-                      PowerModeServer(server);
+                      PowerModeServer(server, true);
                     });
                   },
+                  child: PrimaryText(
+                    text: 'On',
+                    size: 14,
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                child: Container(
+                  height: 40,
+                  width: 60,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: server.power_status.getValue()
+                          ? AppColors.gray
+                          : AppColors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        PowerModeServer(server, false);
+                      });
+                    },
+                    child: PrimaryText(
+                      text: 'Off',
+                      size: 14,
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+              // Transform.scale(
+              //   scale: 1,
+              //   child: CupertinoSwitch(
+              //     value: server.power_status.getValue(),
+              //     activeColor: AppColors.navy_blue,
+              //     onChanged: (value) {
+              //       setState(() {
+              //         PowerModeServer(server);
+              //       });
+              //     },
+              //   ),
+              // ),
             ],
           ),
           SizedBox(
@@ -114,25 +167,24 @@ class _InfoServer extends State<InfoServer> {
                           : 'Đã tắt server'),
                   color: AppColors.secondary,
                   size: 14),
-              Expanded(
-                child: SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    checkConnectionServer(
-                        server.ip, server.connected, server.power_status);
-                  });
-                },
-                child: PrimaryText(
-                  text: 'Kiểm tra',
-                  color: AppColors.navy_blue2,
-                  size: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
+              // Expanded(
+              //   child: SizedBox(
+              //     width: SizeConfig.blockSizeHorizontal,
+              //   ),
+              // ),
+              // GestureDetector(
+              //   onTap: () {
+              //     setState(() {
+              //       checkConnectionServer(server);
+              //     });
+              //   },
+              //   child: PrimaryText(
+              //     text: 'Kiểm tra',
+              //     color: AppColors.navy_blue2,
+              //     size: 14,
+              //     fontWeight: FontWeight.w500,
+              //   ),
+              // ),
             ],
           ),
           // Row(

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
@@ -18,6 +20,22 @@ class PositionPage2 extends StatefulWidget {
 }
 
 class _PositionPage2State extends State<PositionPage2> {
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Server server = widget.server;
@@ -32,17 +50,21 @@ class _PositionPage2State extends State<PositionPage2> {
         // color:
         //     server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
         decoration: BoxDecoration(
-          color: server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
+            color: server.connected.getValue()
+                ? AppColors.navy_blue
+                : AppColors.red,
             border: server.isOnHover.getValue()
                 ? Border.all(
-              strokeAlign: BorderSide.strokeAlignCenter,
-                    color:  server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
+                    strokeAlign: BorderSide.strokeAlignCenter,
+                    color: server.connected.getValue()
+                        ? AppColors.navy_blue
+                        : AppColors.red,
                     width: 4.0,
                   )
                 : Border.all(
-              color: Colors.transparent,
-              width: 0.0,
-            )),
+                    color: Colors.transparent,
+                    width: 0.0,
+                  )),
       ),
     );
   }
