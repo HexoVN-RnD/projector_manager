@@ -56,7 +56,7 @@ class _SensorConnectionState extends State<SensorConnection> {
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: PrimaryText(
-            text: sensor.connected.getValue()? 'Connected': 'Disconnected',
+            text: sensor.connected.getValue()? 'Đã kết nối' : 'Đã mất kết nối',
             size: 13,
             fontWeight: FontWeight.w600),
       ),

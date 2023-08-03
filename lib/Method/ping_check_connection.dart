@@ -50,7 +50,7 @@ void checkConnectionSensor(String ip, StatefulValuable<bool> connected) {
       connected.setValue(true);
       ping.stop();
     } else {
-      Socket.connect(ip, 9999).then((socket) {}, onError: (error) {
+      Socket.connect(ip, 10940).then((socket) {}, onError: (error) {
         connected.setValue(false);
         print('Error');
       });

@@ -43,12 +43,10 @@ void PowerAllProjectors(bool mode) async {
             print(projector.ip.toString() + '(PWR 0)');
             // checkConnectionProjector(projector);
             sendTCPIPCommandNoResponse(projector, '(PWR 0)');
-            await Future.delayed(Duration(seconds: 14));
           } else {
             print(projector.ip.toString() + '%1POWR 0[CR]');
             // checkConnectionProjector(projector);
             sendPJLinkCommandNoResponse(projector, '%1POWR 0[CR]');
-            await Future.delayed(Duration(seconds: 14));
             // }
           }
         }
@@ -69,16 +67,6 @@ void ShutterAllProjectors(bool mode) {
     for (var projector in room.projectors) {
       if (mode) {
         if (projector.type == 'Christie') {
-          print(projector.ip.toString() + '(SHU 0)');
-          // checkConnectionProjector(projector);
-          sendTCPIPCommandNoResponse(projector, '(SHU 0)');
-        } else {
-          print(projector.ip.toString() + '%1AVMT 30[CR]');
-          // checkConnectionProjector(projector);
-          sendPJLinkCommandNoResponse(projector, '%1AVMT 30[CR]');
-        }
-      } else {
-        if (projector.type == 'Christie') {
           print(projector.ip.toString() + '(SHU 1)');
           // checkConnectionProjector(projector);
           sendTCPIPCommandNoResponse(projector, '(SHU 1)');
@@ -86,6 +74,16 @@ void ShutterAllProjectors(bool mode) {
           print(projector.ip.toString() + '%1AVMT 31[CR]');
           // checkConnectionProjector(projector);
           sendPJLinkCommandNoResponse(projector, '%1AVMT 31[CR]');
+        }
+      } else {
+        if (projector.type == 'Christie') {
+          print(projector.ip.toString() + '(SHU 0)');
+          // checkConnectionProjector(projector);
+          sendTCPIPCommandNoResponse(projector, '(SHU 0)');
+        } else {
+          print(projector.ip.toString() + '%1AVMT 30[CR]');
+          // checkConnectionProjector(projector);
+          sendPJLinkCommandNoResponse(projector, '%1AVMT 30[CR]');
         }
       }
       projector.shutter_status

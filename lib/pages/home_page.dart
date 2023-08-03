@@ -334,7 +334,126 @@ class _HomePage extends State<HomePage> {
                   page: 4,
                 ),
               ],
-            ), //power_all: PowerAllProjectors, shutter_all: ShutterAllProjectors),
+
+            ),
+
+            Row(
+              children: [
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.StatusColor[5],
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(
+                    text: 'Máy chiếu đang bật'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal ,
+                ),
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.StatusColor[2],
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(
+                    text: 'Máy chiếu đã bật'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal ,
+                ),
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.StatusColor[3],
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(
+                    text: 'Màn chập đã bật'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal ,
+                ),
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.StatusColor[1],
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(
+                    text: 'Máy chiếu đã tắt'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal ,
+                ),
+                Container(
+                  height: 15,
+                  width: 15,
+                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  decoration: BoxDecoration(
+                    color: AppColors.StatusColor[0],
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.blockSizeHorizontal,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: PrimaryText(
+                    text: 'Mất kết nối'.toUpperCase(),
+                    size: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+            //power_all: PowerAllProjectors, shutter_all: ShutterAllProjectors),
             // Row(
             //   children: [
             //     Container(
@@ -406,122 +525,122 @@ class _HomePage extends State<HomePage> {
             //   ],
             // ),
 
-            Row(
-              children: [
-                Container(
-                  height: 15,
-                  width: 15,
-                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                  decoration: BoxDecoration(
-                    color: AppColors.StatusColor[2],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: PrimaryText(
-                    text: 'Máy chiếu đã bật'.toUpperCase(),
-                    size: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Container(
-                  height: 15,
-                  width: 15,
-                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                  decoration: BoxDecoration(
-                    color: AppColors.StatusColor[3],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: PrimaryText(
-                    text: 'Màn chập đã bật'.toUpperCase(),
-                    size: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Container(
-                  height: 15,
-                  width: 15,
-                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                  decoration: BoxDecoration(
-                    color: AppColors.StatusColor[6],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: PrimaryText(
-                    text: 'Máy chiếu đang tắt'.toUpperCase(),
-                    size: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Container(
-                  height: 15,
-                  width: 15,
-                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                  decoration: BoxDecoration(
-                    color: AppColors.StatusColor[1],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: PrimaryText(
-                    text: 'Máy chiếu đã tắt'.toUpperCase(),
-                    size: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Container(
-                  height: 15,
-                  width: 15,
-                  margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                  decoration: BoxDecoration(
-                    color: AppColors.StatusColor[0],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                SizedBox(
-                  width: SizeConfig.blockSizeHorizontal,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: PrimaryText(
-                    text: 'Mất kết nối'.toUpperCase(),
-                    size: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   children: [
+            //     Container(
+            //       height: 15,
+            //       width: 15,
+            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+            //       decoration: BoxDecoration(
+            //         color: AppColors.StatusColor[2],
+            //         borderRadius: BorderRadius.circular(5),
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: SizeConfig.blockSizeHorizontal,
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.only(top: 8.0),
+            //       child: PrimaryText(
+            //         text: 'Máy chiếu đã bật'.toUpperCase(),
+            //         size: 14,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: SizeConfig.blockSizeHorizontal,
+            //     ),
+            //     Container(
+            //       height: 15,
+            //       width: 15,
+            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+            //       decoration: BoxDecoration(
+            //         color: AppColors.StatusColor[3],
+            //         borderRadius: BorderRadius.circular(5),
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: SizeConfig.blockSizeHorizontal,
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.only(top: 8.0),
+            //       child: PrimaryText(
+            //         text: 'Màn chập đã bật'.toUpperCase(),
+            //         size: 14,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: SizeConfig.blockSizeHorizontal,
+            //     ),
+            //     Container(
+            //       height: 15,
+            //       width: 15,
+            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+            //       decoration: BoxDecoration(
+            //         color: AppColors.StatusColor[6],
+            //         borderRadius: BorderRadius.circular(5),
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: SizeConfig.blockSizeHorizontal,
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.only(top: 8.0),
+            //       child: PrimaryText(
+            //         text: 'Máy chiếu đang tắt'.toUpperCase(),
+            //         size: 14,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: SizeConfig.blockSizeHorizontal,
+            //     ),
+            //     Container(
+            //       height: 15,
+            //       width: 15,
+            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+            //       decoration: BoxDecoration(
+            //         color: AppColors.StatusColor[1],
+            //         borderRadius: BorderRadius.circular(5),
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: SizeConfig.blockSizeHorizontal,
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.only(top: 8.0),
+            //       child: PrimaryText(
+            //         text: 'Máy chiếu đã tắt'.toUpperCase(),
+            //         size: 14,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: SizeConfig.blockSizeHorizontal,
+            //     ),
+            //     Container(
+            //       height: 15,
+            //       width: 15,
+            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
+            //       decoration: BoxDecoration(
+            //         color: AppColors.StatusColor[0],
+            //         borderRadius: BorderRadius.circular(5),
+            //       ),
+            //     ),
+            //     SizedBox(
+            //       width: SizeConfig.blockSizeHorizontal,
+            //     ),
+            //     Padding(
+            //       padding: const EdgeInsets.only(top: 8.0),
+            //       child: PrimaryText(
+            //         text: 'Mất kết nối'.toUpperCase(),
+            //         size: 14,
+            //         fontWeight: FontWeight.w500,
+            //       ),
+            //     ),
+            //   ],
+            // ),
             // SizedBox(
             //   height: SizeConfig.blockSizeVertical,
             // ),

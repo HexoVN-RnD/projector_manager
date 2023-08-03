@@ -60,7 +60,7 @@ class _VolumeEditState extends State<VolumeEdit> {
           width: SizeConfig.blockSizeHorizontal,
         ),
         Container(
-          width: widget.room.resolume? 200:230,
+          width: widget.room.resolume? 380:230,
           child: PrimaryText(
             text: "Âm thanh " + server.name,
             color: AppColors.white,
