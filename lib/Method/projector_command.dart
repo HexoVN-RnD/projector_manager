@@ -65,12 +65,12 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
       if (response.contains('PWR!01')) {
         projector.status.setValue(3);
         projector.power_status.setValue(false);
-        projector.power_status_button.setValue(false);
-      } else if (response.contains('PWR!03')) {
+        // projector.power_status_button.setValue(false);
+      } else if (response.contains('PWR!04')) {
         projector.status.setValue(1);
         projector.power_status.setValue(true);
-        projector.power_status_button.setValue(true);
-      } else if (response.contains('PWR!04')) {
+        // projector.power_status_button.setValue(true);
+      } else if (response.contains('PWR!03')) {
         if (projector.power_status.getValue()){
           projector.status.setValue(4);
         } else {
