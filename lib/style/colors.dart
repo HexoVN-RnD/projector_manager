@@ -73,3 +73,25 @@ class AppColors {
     Color.fromRGBO(0, 0, 0, 1.0),
   ];
 }
+
+List<String> Power_Status = [
+  'Đã tắt máy chiếu',
+  'Đã tắt máy chiếu',
+  'Đã bật máy chiếu',
+  'Đã bật máy chiếu',
+  'Đã tắt máy chiếu',
+  'Đang bật máy chiếu ...',
+  'Đang tắt máy chiếu ...',
+  'Đã tắt máy chiếu',
+];
+
+List<String> Shutter_Status = [
+  'Đã tắt màn chập',
+  'Đã bật màn chập',
+  'Đã tắt màn chập',
+  'Đã bật màn chập',
+  'Đã tắt màn chập',
+  'Đã tắt màn chập',
+  'Đang bật màn chập...',
+  'Đã tắt màn chập',
+];
