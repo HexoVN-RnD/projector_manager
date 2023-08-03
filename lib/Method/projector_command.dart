@@ -66,7 +66,7 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
         projector.power_status.setValue(false);
         if (projector.shutter_status.getValue()){
           if (projector.power_status.getValue()){
-            projector.status.setValue(5);
+            projector.status.setValue(3);
             print('${projector.ip} status: ${projector.status.getValue()}');
           } else {
             projector.status.setValue(1);
@@ -77,7 +77,7 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
             projector.status.setValue(4);
             print('${projector.ip} status: ${projector.status.getValue()}');
           } else {
-            projector.status.setValue(0);
+            projector.status.setValue(6);
             print('${projector.ip} status: ${projector.status.getValue()}');
           }
         }
@@ -88,7 +88,7 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
             projector.status.setValue(3);
             print('${projector.ip} status: ${projector.status.getValue()}');
           } else {
-            projector.status.setValue(7);
+            projector.status.setValue(4);
             print('${projector.ip} status: ${projector.status.getValue()}');
           }
         } else {
@@ -96,7 +96,25 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
             projector.status.setValue(2);
             print('${projector.ip} status: ${projector.status.getValue()}');
           } else {
+            projector.status.setValue(0);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          }
+        }
+      } else if (response.contains('PWR!04')) {
+        if (projector.shutter_status.getValue()){
+          if (projector.power_status.getValue()){
+            projector.status.setValue(5);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          } else {
             projector.status.setValue(6);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          }
+        } else {
+          if (projector.power_status.getValue()){
+            projector.status.setValue(4);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          } else {
+            projector.status.setValue(4);
             print('${projector.ip} status: ${projector.status.getValue()}');
           }
         }
