@@ -31,25 +31,17 @@ class _PositionPage4State extends State<PositionPage4> {
       height: width * 0.0095,
       child: Container(
         decoration: BoxDecoration(
-            color: projector.connected.getValue()
-                ? (projector.power_status.getValue()
-                ? AppColors.navy_blue
-                : AppColors.red)
-                : AppColors.gray,
+            color: AppColors.StatusColor[projector.status.getValue()],
             border: projector.isOnHover.getValue()
                 ? Border.all(
-              strokeAlign: BorderSide.strokeAlignCenter,
-              color:  projector.connected.getValue()
-                  ? (projector.power_status.getValue()
-                  ? AppColors.navy_blue
-                  : AppColors.red)
-                  : AppColors.gray,
-              width: 4.0,
-            )
+                    strokeAlign: BorderSide.strokeAlignCenter,
+                    color:  AppColors.StatusColor[projector.status.getValue()],
+                    width: 4.0,
+                  )
                 : Border.all(
-              color: Colors.transparent,
-              width: 0.0,
-            )),
+                    color: Colors.transparent,
+                    width: 0.0,
+                  )),
       ),
     );
   }

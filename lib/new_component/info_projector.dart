@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_dashboard/Method/Control_projector_void.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
@@ -79,6 +80,7 @@ class _InfoProjector extends State<InfoProjector> {
                   text: projector.ip, color: AppColors.secondary, size: 14)
             ],
           ),
+
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -95,16 +97,50 @@ class _InfoProjector extends State<InfoProjector> {
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal,
               ),
-              Transform.scale(
-                scale: 1,
-                child: CupertinoSwitch(
-                  value: projector.power_status_button.getValue(),
-                  activeColor: AppColors.navy_blue,
-                  onChanged: (value) {
+
+              Container(
+                height: 40,
+                width: 60,
+                child: ElevatedButton(
+                  style:ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.PowerOnButtonColor[projector.status.getValue()],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: () {
                     setState(() {
-                      PowerModeProjector(projector);
+                      PowerModeProjector(projector, true);
                     });
                   },
+                  child: PrimaryText(text: 'On',
+                    size: 14,
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w500,),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15,0,0,0),
+                child: Container(
+                  height: 40,
+                  width: 60,
+                  child: ElevatedButton(
+                    style:ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.PowerOffButtonColor[projector.status.getValue()],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        PowerModeProjector(projector, false);
+                      });
+                    },
+                    child: PrimaryText(text: 'Off',
+                      size: 14,
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w500,),
+                  ),
                 ),
               ),
             ],
@@ -144,6 +180,9 @@ class _InfoProjector extends State<InfoProjector> {
               ),
             ],
           ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical,
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -160,16 +199,49 @@ class _InfoProjector extends State<InfoProjector> {
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal,
               ),
-              Transform.scale(
-                scale: 1,
-                child: CupertinoSwitch(
-                  value: projector.shutter_status_button.getValue(),
-                  activeColor: AppColors.navy_blue,
-                  onChanged: (value) {
+              Container(
+                height: 40,
+                width: 60,
+                child: ElevatedButton(
+                  style:ElevatedButton.styleFrom(
+                    backgroundColor:AppColors.ShutterOnButtonColor[projector.status.getValue()],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                  ),
+                  onPressed: () {
                     setState(() {
-                      ShutterModeProjector(projector);
+                      ShutterModeProjector(projector, true);
                     });
                   },
+                  child: PrimaryText(text: 'On',
+                    size: 14,
+                    color: AppColors.white,
+                    fontWeight: FontWeight.w500,),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15,0,0,0),
+                child: Container(
+                  height: 40,
+                  width: 60,
+                  child: ElevatedButton(
+                    style:ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.ShutterOffButtonColor[projector.status.getValue()],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        ShutterModeProjector(projector, false);
+                      });
+                    },
+                    child: PrimaryText(text: 'Off',
+                      size: 14,
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w500,),
+                  ),
                 ),
               ),
             ],
