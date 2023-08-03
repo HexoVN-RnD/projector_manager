@@ -64,21 +64,33 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
       print('Response: ${projector.ip} $response');
       if (response.contains('PWR!01')) {
         projector.status.setValue(3);
+        print('${projector.ip} status: ${projector.status.getValue()}');
         projector.power_status.setValue(false);
       } else if (response.contains('PWR!03')) {
-        projector.status.setValue(1);
+        if (projector.shutter_status.getValue()){
+          projector.status.setValue(5);
+          print('${projector.ip} status: ${projector.status.getValue()}');
+        } else {
+          projector.status.setValue(1);
+          print('${projector.ip} status: ${projector.status.getValue()}');
+        }
+        print('${projector.ip} status: ${projector.status.getValue()}');
         projector.power_status.setValue(true);
       } else if (response.contains('PWR!04')) {
         if (projector.power_status.getValue()){
           projector.status.setValue(4);
+          print('${projector.ip} status: ${projector.status.getValue()}');
         } else {
           projector.status.setValue(2);
+          print('${projector.ip} status: ${projector.status.getValue()}');
         }
       } else if (response.contains('SHU!01')) {
         if (projector.power_status.getValue()){
           projector.status.setValue(5);
+          print('${projector.ip} status: ${projector.status.getValue()}');
         } else {
           projector.status.setValue(6);
+          print('${projector.ip} status: ${projector.status.getValue()}');
         }
         projector.shutter_status.setValue(true);
       } else if (response.contains('SHU!00')) {

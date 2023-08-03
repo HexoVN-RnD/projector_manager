@@ -29,7 +29,7 @@ class AppColors {
     Color.fromRGBO(246, 75, 75, 1.0),
     Color.fromRGBO(7, 136, 192, 1.0),
     Color.fromRGBO(158, 7, 192, 1.0),
-    Color.fromRGBO(158, 7, 192, 1.0),
+    Color.fromRGBO(0, 0, 0, 1.0),
   ];
   static List<Color> PowerOnButtonColor = [
     Color.fromRGBO(0, 0, 0, 1.0),
@@ -53,18 +53,18 @@ class AppColors {
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
-    Color.fromRGBO(0, 0, 0, 1.0),
-    Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(158, 7, 192, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
+    Color.fromRGBO(158, 7, 192, 1.0),
+    Color.fromRGBO(158, 7, 192, 1.0),
   ];
   static List<Color> ShutterOffButtonColor = [
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(246, 75, 75, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
-    Color.fromRGBO(246, 75, 75, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
-    Color.fromRGBO(246, 75, 75, 1.0),
+    Color.fromRGBO(0, 0, 0, 1.0),
+    Color.fromRGBO(0, 0, 0, 1.0),
   ];
 }
