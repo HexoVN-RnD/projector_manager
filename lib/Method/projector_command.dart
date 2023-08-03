@@ -32,19 +32,19 @@ String sendTCPIPCommandOnly(Projector projector, String command) {
     socket.write(command);
     socket.listen((data) {
       response = utf8.decode(data);
-      print('Response: $response');
-      if (response.contains('PWR!1')) {
+      print('Response: ${projector.ip} $response');
+      if (response.contains('PWR!03')) {
         projector.power_status.setValue(true);
-        projector.power_status_button.setValue(true);
-      } else if (response.contains('PWR!0')) {
+        // projector.power_status_button.setValue(true);
+      } else if (response.contains('PWR!01')) {
         projector.power_status.setValue(false);
-        projector.power_status_button.setValue(false);
+        // projector.power_status_button.setValue(false);
       } else if (response.contains('SHU!01')) {
         projector.shutter_status.setValue(true);
-        projector.shutter_status_button.setValue(true);
+        // projector.shutter_status_button.setValue(true);
       } else if (response.contains('SHU!00')) {
         projector.shutter_status.setValue(false);
-        projector.shutter_status_button.setValue(false);
+        // projector.shutter_status_button.setValue(false);
       }
       socket.close();
     }, onDone: () {
@@ -61,13 +61,14 @@ String sendTCPIPCommand(Projector projector, String command) {
   Socket.connect(projector.ip, 3002).then((socket) {
     print('Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
     socket.write(command);
-    socket.listen((data) {
+    socket.listen((data) async {
       response = utf8.decode(data);
-      print('Response: $response');
-      if (response.contains('PWR!1')) {
+      await Future.delayed(Duration(seconds: 5));
+      print('Response: ${projector.ip} $response');
+      if (response.contains('PWR!03')) {
         projector.power_status.setValue(true);
         projector.power_status_button.setValue(true);
-      } else if (response.contains('PWR!0')) {
+      } else if (response.contains('PWR!01')) {
         projector.power_status.setValue(false);
         projector.power_status_button.setValue(false);
       } else if (response.contains('SHU!01')) {

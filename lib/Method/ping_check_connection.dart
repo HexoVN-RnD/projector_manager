@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:dart_ping/dart_ping.dart';
 import 'package:responsive_dashboard/Method/networkAddress.dart';
+import 'package:responsive_dashboard/Method/projector_command.dart';
+import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Sensor.dart';
@@ -88,7 +90,7 @@ void checkConnectionProjector(Projector projector) {
   ping.command;
 }
 
-void checkRoomConnection(Room room) {
+Future<void> checkRoomConnection(Room room) async {
   if (!room.servers.isEmpty)
     for (Server server in room.servers) {
       // serverIP = '192.168.1.15';
@@ -138,28 +140,36 @@ void checkRoomConnection(Room room) {
     }
   }
   if (!room.projectors.isEmpty) {
+    // for (Projector projector in room.projectors) {
+    //   // serverIP = '192.168.1.15';
+    //   final ping = Ping(projector.ip, count: 3); // Thay đổi số lần ping tùy ý
+    //   ping.stream.listen((event) {
+    //     print('Ping to ${projector.ip}: ${event.response?.time} ms');
+    //     if (event.response?.time != null) {
+    //       projector.connected.setValue(true);
+    //       print('Connected');
+    //       ping.stop();
+    //     } else {
+    //       Socket.connect(projector.ip, 3002).then((socket) {},
+    //           onError: (error) {
+    //         projector.connected.setValue(false);
+    //         projector.power_status.setValue(false);
+    //         projector.power_status_button.setValue(false);
+    //         projector.shutter_status.setValue(false);
+    //         projector.shutter_status_button.setValue(false);
+    //       });
+    //     }
+    //   });
+    //   ping.command;
+    // }
     for (Projector projector in room.projectors) {
-      // serverIP = '192.168.1.15';
-      final ping = Ping(projector.ip, count: 3); // Thay đổi số lần ping tùy ý
-
-      ping.stream.listen((event) {
-        print('Ping to ${projector.ip}: ${event.response?.time} ms');
-        if (event.response?.time != null) {
-          projector.connected.setValue(true);
-          print('Connected');
-          ping.stop();
-        } else {
-          Socket.connect(projector.ip, 3002).then((socket) {},
-              onError: (error) {
-            projector.connected.setValue(false);
-            projector.power_status.setValue(false);
-            projector.power_status_button.setValue(false);
-            projector.shutter_status.setValue(false);
-            projector.shutter_status_button.setValue(false);
-          });
-        }
-      });
-      ping.command;
+      PowerStatus(projector);
+      print('pro');
+    }
+    await Future.delayed(Duration(seconds: 10));
+    for (Projector projector in room.projectors) {
+      sendTCPIPCommand(projector, '(SHU?)');
+      print('shu');
     }
   }
 }

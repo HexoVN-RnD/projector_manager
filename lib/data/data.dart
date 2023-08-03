@@ -2197,7 +2197,7 @@ List<Room> rooms = [
       Server(
         id: 13,
         ip: '192.168.1.59',
-        name: 'Brightsign 01',
+        name: 'Brightsign 09',
         preset_port: 5000,
         power_port: 1234,
         position: Offset(0,0),
@@ -2211,7 +2211,7 @@ List<Room> rooms = [
       Server(
         id: 14,
         ip: '192.168.1.60',
-        name: 'Brightsign 02',
+        name: 'Brightsign 10',
         preset_port: 5000,
         power_port: 1234,
         position: Offset(0,0),

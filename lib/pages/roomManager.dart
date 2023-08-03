@@ -75,17 +75,17 @@ class _RoomManagerState extends State<RoomManager> {
     async {
       Room room = rooms[
       (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
-      if (room.projectors.length > 0) {
-        for (Projector projector in room.projectors){
-          String response = sendTCPIPCommandOnly(projector, '(PWR?)');
-          print(response);
-        }
-        await Future.delayed(Duration(milliseconds: 500));
-        for (Projector projector in room.projectors){
-          String response = sendTCPIPCommandOnly(projector, '(SHU?)');
-          print(response);
-        }
-      }
+      // if (room.projectors.length > 0) {
+      //   for (Projector projector in room.projectors){
+      //     String response = sendTCPIPCommandOnly(projector, '(PWR?)');
+      //     print(response);
+      //   }
+      //   await Future.delayed(Duration(milliseconds: 500));
+      //   for (Projector projector in room.projectors){
+      //     String response = sendTCPIPCommandOnly(projector, '(SHU?)');
+      //     print(response);
+      //   }
+      // }
     });
   }
 

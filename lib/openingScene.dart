@@ -40,7 +40,7 @@ class _OpeningSceneState extends State<OpeningScene>
     );
     super.initState();
     _animationController = AnimationController(
-      duration: Duration(seconds: 30),
+      duration: Duration(seconds: 60),
       vsync: this,
     )..addListener(() {
       setState(() {
@@ -171,47 +171,97 @@ class _OpeningSceneState extends State<OpeningScene>
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
-                    children: List.generate(rooms[0].servers.length,
-                            (index) {
-                          Server server = rooms[0].servers[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 120,
-                                  child: PrimaryText(
-                                    text: '${server.name}',
-                                    size: 14,
-                                  ),
+                    children: [
+                      Column(
+                        children:
+                        List.generate(rooms[0].servers.length,
+                                (index) {
+                              Server server = rooms[0].servers[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 120,
+                                      child: PrimaryText(
+                                        text: '${server.name}',
+                                        size: 14,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                      width: 100,
+                                      child: PrimaryText(
+                                        text: '(${server.ip})',
+                                        size: 14,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    PrimaryText(
+                                      text: server.connected.getValue()
+                                          ? 'Connected'
+                                          : 'Disconnect',
+                                      color: server.connected.getValue()
+                                          ? AppColors.green
+                                          : AppColors.red,
+                                      size: 14,
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 10,
+                              );
+                            }),
+                      ),
+                      SizedBox(height: 50,),
+                      Column(
+                        children:
+                        List.generate(rooms[3].servers.length,
+                                (index) {
+                              Server server = rooms[0].servers[index];
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 120,
+                                      child: PrimaryText(
+                                        text: '${server.name}',
+                                        size: 14,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Container(
+                                      width: 100,
+                                      child: PrimaryText(
+                                        text: '(${server.ip})',
+                                        size: 14,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    PrimaryText(
+                                      text: server.connected.getValue()
+                                          ? 'Connected'
+                                          : 'Disconnect',
+                                      color: server.connected.getValue()
+                                          ? AppColors.green
+                                          : AppColors.red,
+                                      size: 14,
+                                    ),
+                                  ],
                                 ),
-                                Container(
-                                  width: 100,
-                                  child: PrimaryText(
-                                    text: '(${server.ip})',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                PrimaryText(
-                                  text: server.connected.getValue()
-                                      ? 'Connected'
-                                      : 'Disconnect',
-                                  color: server.connected.getValue()
-                                      ? AppColors.green
-                                      : AppColors.red,
-                                  size: 14,
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
+                              );
+                            }),
+                      ),
+                    ],
                   ),
                   Expanded(
                     child: Column(

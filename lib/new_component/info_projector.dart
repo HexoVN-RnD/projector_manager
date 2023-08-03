@@ -147,6 +147,7 @@ class _InfoProjector extends State<InfoProjector> {
                 onTap: () {
                   setState(() {
                     PowerStatus(projector);
+                    // PowerOnProjector(projector);
                   });
                 },
                 child: PrimaryText(
@@ -162,7 +163,7 @@ class _InfoProjector extends State<InfoProjector> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               PrimaryText(
-                text: "Bật/Tắt màn chập",
+                text: "Mở/Đóng màn chập",
                 size: 17,
                 fontWeight: FontWeight.w500,
               ),
@@ -196,11 +197,11 @@ class _InfoProjector extends State<InfoProjector> {
               PrimaryText(
                   text: projector.shutter_status.getValue()
                       ? (projector.shutter_status_button.getValue()
-                          ? 'Đã bật màn chập'
-                          : 'Đang tắt màn chập ...')
+                          ? 'Đã mở màn chập'
+                          : 'Đang đóng màn chập ...')
                       : (projector.shutter_status_button.getValue()
-                          ? 'Đang bật màn chập ...'
-                          : 'Đã tắt màn chập'),
+                          ? 'Đang mở màn chập ...'
+                          : 'Đã đóng màn chập'),
                   color: AppColors.secondary,
                   size: 14),
               Expanded(
