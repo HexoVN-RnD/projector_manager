@@ -65,24 +65,24 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
       if (response.contains('PWR!01')) {
         projector.status.setValue(3);
         projector.power_status.setValue(false);
-        // projector.power_status_button.setValue(false);
-      } else if (response.contains('PWR!04')) {
+      } else if (response.contains('PWR!03')) {
         projector.status.setValue(1);
         projector.power_status.setValue(true);
-        // projector.power_status_button.setValue(true);
-      } else if (response.contains('PWR!03')) {
+      } else if (response.contains('PWR!04')) {
         if (projector.power_status.getValue()){
           projector.status.setValue(4);
         } else {
           projector.status.setValue(2);
         }
       } else if (response.contains('SHU!01')) {
-        projector.status.setValue(5);
+        if (projector.power_status.getValue()){
+          projector.status.setValue(5);
+        } else {
+          projector.status.setValue(6);
+        }
         projector.shutter_status.setValue(true);
-        projector.shutter_status_button.setValue(true);
       } else if (response.contains('SHU!00')) {
         projector.shutter_status.setValue(false);
-        projector.shutter_status_button.setValue(false);
       }
       socket.close();
     }, onDone: () {
@@ -91,9 +91,7 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
   }, onError: (error) {
     projector.status.setValue(0);
     projector.connected.setValue(false);
-    projector.power_status_button.setValue(false);
     projector.power_status.setValue(false);
-    projector.shutter_status_button.setValue(false);
     projector.shutter_status.setValue(false);
     print('Error: Refused connection');
   });
