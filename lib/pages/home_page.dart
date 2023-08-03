@@ -6,6 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/audio_void.dart';
+import 'package:responsive_dashboard/Method/projector_command.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
@@ -28,8 +31,21 @@ class _HomePage extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 50), (timer) {
-      setState(() {});
+    _timer = Timer.periodic(Duration(milliseconds: 2000), (timer)
+    async {
+      for(Room room in rooms) {
+        if (room.projectors.length > 0) {
+          for (Projector projector in room.projectors) {
+            String response = sendTCPIPCommandStatus(projector, '(PWR?)');
+            print(response);
+          }
+          await Future.delayed(Duration(milliseconds: 1000));
+          for (Projector projector in room.projectors) {
+            String response = sendTCPIPCommandStatus(projector, '(SHU?)');
+            print(response);
+          }
+        }
+      }
     });
   }
 

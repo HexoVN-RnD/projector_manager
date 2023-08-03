@@ -41,14 +41,13 @@ Future<void> OpeningCheck() async {
       // opening_per.setValue(opening_per.getValue()+1/num_devices*0.99);
     }
     for (Projector projector in room.projectors) {
-      PowerStatus(projector);
-      print('pro');
+      checkConnectionProjector(projector);
     }
-    await Future.delayed(Duration(seconds: 10));
-    for (Projector projector in room.projectors) {
-      sendTCPIPCommandStatus(projector, '(SHU?)');
-      print('shu');
-    }
+    // await Future.delayed(Duration(seconds: 10));
+    // for (Projector projector in room.projectors) {
+    //   sendTCPIPCommandStatus(projector, '(SHU?)');
+    //   print('shu');
+    // }
     // for (Projector projector in room.projectors) {
     //   checkConnectionProjector(projector);
     //   // count += 1;

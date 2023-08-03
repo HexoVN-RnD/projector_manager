@@ -1,8 +1,11 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
@@ -28,7 +31,7 @@ class OpeningScene extends StatefulWidget {
 class _OpeningSceneState extends State<OpeningScene>
     with TickerProviderStateMixin {
   late RiveAnimationController _btnAnimationController;
-
+  Timer? _timer;
   bool isShowSignInDialog = false;
   late AnimationController _animationController;
 
@@ -39,8 +42,24 @@ class _OpeningSceneState extends State<OpeningScene>
       autoplay: false,
     );
     super.initState();
+    _timer = Timer.periodic(Duration(milliseconds: 2000), (timer)
+    async {
+      for(Room room in rooms) {
+        if (room.projectors.length > 0) {
+          for (Projector projector in room.projectors) {
+            String response = sendTCPIPCommandStatus(projector, '(PWR?)');
+            print(response);
+          }
+          await Future.delayed(Duration(milliseconds: 1000));
+          for (Projector projector in room.projectors) {
+            String response = sendTCPIPCommandStatus(projector, '(SHU?)');
+            print(response);
+          }
+        }
+      }
+    });
     _animationController = AnimationController(
-      duration: Duration(seconds: 60),
+      duration: Duration(seconds: 30),
       vsync: this,
     )..addListener(() {
       setState(() {
