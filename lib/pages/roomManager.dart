@@ -73,19 +73,30 @@ class _RoomManagerState extends State<RoomManager> {
     });
     _timer2 = Timer.periodic(Duration(milliseconds: 4000), (timer)
     async {
-      // Room room = rooms[
-      // (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
-      // if (room.projectors.length > 0) {
-      //   for (Projector projector in room.projectors){
-      //     String response = sendTCPIPCommandStatus(projector, '(PWR?)');
-      //     print(response);
-      //   }
-      //   await Future.delayed(Duration(milliseconds: 2000));
-      //   for (Projector projector in room.projectors){
-      //     String response = sendTCPIPCommandStatus(projector, '(SHU?)');
-      //     print(response);
-      //   }
-      // }
+      Room room = rooms[
+      (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
+      if (room.projectors.length > 0) {
+        for (Projector projector in room.projectors) {
+          if (projector.type == 'Christie') {
+            String response = sendTCPIPCommandStatus(projector, '(PWR?)');
+            print(response);
+          } else {
+            String response = sendPJLinkCommandStatus(
+                projector, '%1POWR ?[CR]');
+            print(response);
+          }
+        }
+        await Future.delayed(Duration(milliseconds: 2000));
+        for (Projector projector in room.projectors){
+          if (projector.type == 'Christie') {
+            String response = sendTCPIPCommandStatus(projector, '(SHU?)');
+            print(response);
+          } else {
+            String response = sendPJLinkCommandStatus(projector, '%1AVMT ?[CR]');
+            print(response);
+          }
+        }
+      }
     });
   }
 

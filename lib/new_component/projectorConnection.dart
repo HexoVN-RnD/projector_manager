@@ -46,9 +46,7 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
               projector.connected.getValue()
                   ? Icons.settings_ethernet
                   : Icons.code_off,
-              color: projector.connected.getValue()
-                  ? AppColors.navy_blue
-                  : AppColors.red,
+              color: AppColors.StatusColor[projector.status.getValue()],
               // projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
               size: 20),
         ),

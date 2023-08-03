@@ -40,8 +40,13 @@ class _HomePage extends State<HomePage> {
       for (Room room in rooms) {
         if (room.projectors.length > 0) {
           for (Projector projector in room.projectors) {
-            String response = sendTCPIPCommandStatus(projector, '(PWR?)');
-            print(response);
+            if (projector.type == 'Christie') {
+              String response = sendTCPIPCommandStatus(projector, '(PWR?)');
+              print(response);
+            } else {
+              String response = sendPJLinkCommandStatus(projector, '%1POWR ?[CR]');
+              print(response);
+            }
           }
         }
       }
@@ -49,8 +54,13 @@ class _HomePage extends State<HomePage> {
       for (Room room in rooms) {
         if (room.projectors.length > 0) {
           for (Projector projector in room.projectors) {
-            String response = sendTCPIPCommandStatus(projector, '(SHU?)');
-            print(response);
+            if (projector.type == 'Christie') {
+              String response = sendTCPIPCommandStatus(projector, '(SHU?)');
+              print(response);
+            } else {
+              String response = sendPJLinkCommandStatus(projector, '%1AVMT ?[CR]');
+              print(response);
+            }
           }
         }
       }

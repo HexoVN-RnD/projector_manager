@@ -16,6 +16,7 @@ void PowerStatus(Projector projector) {
 
 void ShutterStatus(Projector projector) {
   checkConnectionProjector(projector);
+  print(projector.type);
   if (projector.type == 'Christie') {
     String response = sendTCPIPCommandStatus(projector, '(SHU?)');
     print(response);
@@ -38,7 +39,7 @@ Future<void> PowerModeProjector(Projector projector, bool mode) async {
       } else {
         print(projector.ip.toString() + '%1POWR 1[CR]');
         // checkConnectionProjector(projector);
-        sendPJLinkCommand(projector, '%1POWR 1[CR]');
+        sendPJLinkCommandNoResponse(projector, '%1POWR 1[CR]');
       }
     } else {
       if (projector.type == 'Christie') {
@@ -48,7 +49,7 @@ Future<void> PowerModeProjector(Projector projector, bool mode) async {
       } else {
         print(projector.ip.toString() + '%1POWR 0[CR]');
         // checkConnectionProjector(projector);
-        sendPJLinkCommand(projector, '%1POWR 0[CR]');
+        sendPJLinkCommandNoResponse(projector, '%1POWR 0[CR]');
 
         // }
       }
@@ -77,7 +78,7 @@ Future<void> ShutterModeProjector(Projector projector, bool mode) async {
       } else {
         print(projector.ip.toString() + '%1AVMT 31[CR]');
         // checkConnectionProjector(projector);
-        sendPJLinkCommand(projector, '%1AVMT 31[CR]');
+        sendPJLinkCommandNoResponse(projector, '%1AVMT 31[CR]');
       }
     } else {
       if (projector.type == 'Christie') {
@@ -87,7 +88,7 @@ Future<void> ShutterModeProjector(Projector projector, bool mode) async {
       } else {
         print(projector.ip.toString() + '%1AVMT 30[CR]');
         // checkConnectionProjector(projector);
-        sendPJLinkCommand(projector, '%1AVMT 30[CR]');
+        sendPJLinkCommandNoResponse(projector, '%1AVMT 30[CR]');
       }
     }
   // }
