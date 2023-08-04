@@ -134,6 +134,7 @@ String sendTCPIPCommandStatus(Projector projector, String command) {
       }
       socket.close();
     }, onDone: () {
+      // projector.connected.setValue(true);
       // print('Connection closed');
     });
   }, onError: (error) {

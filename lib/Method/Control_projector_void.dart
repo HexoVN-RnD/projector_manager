@@ -29,6 +29,7 @@ void ShutterStatus(Projector projector) {
 
 void RoomPowerStatus(Room room) {
   for (Projector projector in room.projectors) {
+    checkConnectionProjector(projector);
     if (projector.type == 'Christie') {
       String response = sendTCPIPCommandStatus(projector, '(PWR?)');
       print(response);

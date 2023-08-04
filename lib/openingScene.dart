@@ -3,9 +3,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:responsive_dashboard/Method/Control_projector_void.dart';
+import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
@@ -44,29 +47,23 @@ class _OpeningSceneState extends State<OpeningScene>
     super.initState();
     _timer = Timer.periodic(Duration(milliseconds: 2000), (timer)
     async {
-      for(Room room in rooms) {
-        if (room.projectors.length > 0) {
-          for (Projector projector in room.projectors) {
-            if (projector.type == 'Christie') {
-              String response = sendTCPIPCommandStatus(projector, '(PWR?)');
-              print(response);
-            } else {
-              String response = sendPJLinkCommandStatus(
-                  projector, '%1POWR ?[CR]');
-              print(response);
-            }
+      for (Room room in rooms) {
+        if (!room.servers.isEmpty)
+          for (Server server in room.servers) {
+            checkConnectionServer(server);
           }
-          await Future.delayed(Duration(milliseconds: 1000));
-          for (Projector projector in room.projectors) {
-            if (projector.type == 'Christie') {
-              String response = sendTCPIPCommandStatus(projector, '(SHU?)');
-              print(response);
-            } else {
-              String response = sendPJLinkCommandStatus(projector, '%1AVMT ?[CR]');
-              print(response);
-            }
+        if (!room.sensors.isEmpty) {
+          for (Sensor sensor in room.sensors) {
+            checkConnectionSensor(sensor);
           }
         }
+        if (room.projectors.length > 0) {
+          RoomPowerStatus(room);
+        }
+      }
+      await Future.delayed(Duration(seconds: 2));
+      for (Room room in rooms) {
+        RoomShutterStatus(room);
       }
     });
     _animationController = AnimationController(
