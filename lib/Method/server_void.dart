@@ -8,21 +8,40 @@ Future<void> PowerOnAllServer() async {
   allRoom.power_all_servers.setValue(true);
   for (Room room in rooms){
     for (Server server in room.servers){
-      server.power_status.setValue(true);
-      WakeonLan(server);
+      if(!server.power_status.getValue() && room.resolume){
+        server.power_status.setValue(true);
+        WakeonLan(server);
+        // await Future.delayed(Duration(seconds: 15));
+      }
     }
   }
   print('Power On All Server');
+  await Future.delayed(Duration(seconds: 90));
+  print("90 seconds have passed!");
+  for (Room room in rooms){
+    for (Server server in room.servers){
+      checkConnectionServerResponse(server);
+    }
+  }
 }
-void ShutdownAllServer() {
+Future<void> ShutdownAllServer() async {
   allRoom.power_all_servers.setValue(false);
   for (Room room in rooms){
     for (Server server in room.servers){
-      server.power_status.setValue(false);
-      ShutdownServer(server);
+      if(server.power_status.getValue() && room.resolume) {
+        server.power_status.setValue(false);
+        ShutdownServer(server);
+      }
     }
   }
   print('Shutdown All Server');
+  await Future.delayed(Duration(seconds: 30));
+  print("30 seconds have passed!");
+  for (Room room in rooms){
+    for (Server server in room.servers){
+      checkConnectionServerResponse(server);
+    }
+  }
 }
 
 Future<void> PowerModeServer(Server server, bool mode) async {
@@ -34,10 +53,10 @@ Future<void> PowerModeServer(Server server, bool mode) async {
   }
   print(server.mac_address);
 
-  // print("Starting...");
-  // await Future.delayed(Duration(seconds: 30));
-  // print("30 seconds have passed!");
-  // checkConnectionServer(server.ip, server.connected, server.power_status);
+  print("Starting...");
+  await Future.delayed(Duration(seconds: 90));
+  print("90 seconds have passed!");
+  checkConnectionServerResponse(server);
 
 }
 
@@ -48,11 +67,11 @@ Future<void> ShutdownServer(Server server) async {
     socket.send(message.codeUnits, InternetAddress(server.ip), server.power_port);
     socket.close();
   });
-  // print(message);
-  // print("Starting...");
-  // await Future.delayed(Duration(seconds: 30));
-  // print("30 seconds have passed!");
-  // checkConnectionServer(server.ip, server.connected, server.power_status);
+  print(message);
+  print("Starting...");
+  await Future.delayed(Duration(seconds: 30));
+  print("30 seconds have passed!");
+  checkConnectionServerResponse(server);
 }
 
 void WakeonLan(Server server, {int port = 9}) async {
@@ -66,7 +85,7 @@ void WakeonLan(Server server, {int port = 9}) async {
     socket.send(magicPacket, boardcastIP, port);
     socket.close();
   });
-  // print("Starting...");
+  print("Starting wake server...");
   // await Future.delayed(Duration(seconds: 30));
   // print("30 seconds have passed!");
   // checkConnectionServer(server.ip, server.connected, server.power_status);

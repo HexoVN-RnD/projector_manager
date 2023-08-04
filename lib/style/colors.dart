@@ -30,7 +30,8 @@ class AppColors {
     Color.fromRGBO(158, 7, 192, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(245, 202, 100, 1.0),
-    Color.fromRGBO(7, 136, 192, 1.0),
+    Color.fromRGBO(245, 202, 100, 1.0),
+    // Color.fromRGBO(7, 136, 192, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
   ];
   static List<Color> PowerOnButtonColor = [
@@ -121,7 +122,7 @@ List<String> Power_Status = [
   'Đã bật máy chiếu',
   'Đã bật máy chiếu',
   'Đã tắt máy chiếu',
-  'Đang tắt máy chiếu ...',
+  'Đang bật máy chiếu ...',
   'Đang bật máy chiếu ...',
   'Đã tắt máy chiếu',
 ];
@@ -132,7 +133,7 @@ List<String> Shutter_Status = [
   'Đã tắt màn chập',
   'Đã bật màn chập',
   'Đã tắt màn chập',
-  'Đang bật màn chập',
+  'Đang tắt màn chập',
   'Đang tắt màn chập...',
   'Đã tắt màn chập',
 ];

@@ -80,7 +80,7 @@ class _ServerConnection extends State<ServerConnection> {
         onTap: () {
           setState(() {
             // check_connection(widget.server.ip, widget.server.connected);
-            checkConnectionServer(
+            checkConnectionServerResponse(
                 server);
             // widget.onUpdateState?.call();
           });

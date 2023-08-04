@@ -47,11 +47,11 @@ AllRoom allRoom = AllRoom(
         image:  'assets/watching-a-movie_black.png',
         osc_message: 'column 3',
         transport: StatefulValuable<double>(0)),
-    Preset(
-        name: 'Preset 4',
-        image:  'assets/watching-a-movie_black.png',
-        osc_message: 'column 4',
-        transport: StatefulValuable<double>(0)),
+    // Preset(
+    //     name: 'Preset 4',
+    //     image:  'assets/watching-a-movie_black.png',
+    //     osc_message: 'column 4',
+    //     transport: StatefulValuable<double>(0)),
   ],
   // test_patterns: [
   //   TestPattern(
@@ -96,21 +96,21 @@ List<Room> rooms = [
           image: 'assets/watching-a-movie_black.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Nội dung 2',
-          image: 'assets/watching-a-movie_black.png',
-          osc_message: 'column 2',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Nội dung 3',
-          image: 'assets/watching-a-movie_black.png',
-          osc_message: 'column 3',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Nội dung 4',
-          image: 'assets/watching-a-movie_black.png',
-          osc_message: 'column 4',
-          transport: StatefulValuable<double>(0)),
+      // Preset(
+      //     name: 'Nội dung 2',
+      //     image: 'assets/watching-a-movie_black.png',
+      //     osc_message: 'column 2',
+      //     transport: StatefulValuable<double>(0)),
+      // Preset(
+      //     name: 'Nội dung 3',
+      //     image: 'assets/watching-a-movie_black.png',
+      //     osc_message: 'column 3',
+      //     transport: StatefulValuable<double>(0)),
+      // Preset(
+      //     name: 'Nội dung 4',
+      //     image: 'assets/watching-a-movie_black.png',
+      //     osc_message: 'column 4',
+      //     transport: StatefulValuable<double>(0)),
     ],
     projectors: [],
     servers: [
@@ -251,11 +251,11 @@ List<Room> rooms = [
           image: 'assets/watching-a-movie_black.png',
           osc_message: 'column 3',
           transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Nội dung 4',
-          image: 'assets/watching-a-movie_black.png',
-          osc_message: 'column 4',
-          transport: StatefulValuable<double>(0)),
+      // Preset(
+      //     name: 'Nội dung 4',
+      //     image: 'assets/watching-a-movie_black.png',
+      //     osc_message: 'column 4',
+      //     transport: StatefulValuable<double>(0)),
     ],
     projectors: [
       Projector(
@@ -812,21 +812,21 @@ List<Room> rooms = [
           image: 'assets/watching-a-movie_black.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Nội dung 2',
-          image: 'assets/watching-a-movie_black.png',
-          osc_message: 'column 2',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Nội dung 3',
-          image: 'assets/watching-a-movie_black.png',
-          osc_message: 'column 3',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Nội dung 4',
-          image: 'assets/watching-a-movie_black.png',
-          osc_message: 'column 4',
-          transport: StatefulValuable<double>(0)),
+      // Preset(
+      //     name: 'Nội dung 2',
+      //     image: 'assets/watching-a-movie_black.png',
+      //     osc_message: 'column 2',
+      //     transport: StatefulValuable<double>(0)),
+      // Preset(
+      //     name: 'Nội dung 3',
+      //     image: 'assets/watching-a-movie_black.png',
+      //     osc_message: 'column 3',
+      //     transport: StatefulValuable<double>(0)),
+      // Preset(
+      //     name: 'Nội dung 4',
+      //     image: 'assets/watching-a-movie_black.png',
+      //     osc_message: 'column 4',
+      //     transport: StatefulValuable<double>(0)),
     ],
     projectors: [
       Projector(
@@ -940,7 +940,7 @@ List<Room> rooms = [
         preset_port: 7000,
         power_port: 1234,
         position: Offset(0,0),
-        mac_address: 'd4:5d:64:d0:54:c7',
+        mac_address: 'e0:73:e7:0D:fb:fa',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
         volume: StatefulValuable<double>(1),
@@ -954,7 +954,7 @@ List<Room> rooms = [
         preset_port: 7000,
         power_port: 1234,
         position: Offset(0,0),
-        mac_address: 'd4:5d:64:d0:54:c7',
+        mac_address: 'e0:73:e7:0b:6a:8a',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
         volume: StatefulValuable<double>(1),
@@ -981,16 +981,16 @@ List<Room> rooms = [
           image: 'assets/watching-a-movie_black.png',
           osc_message: 'column 2',
           transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Nội dung 3',
-          image: 'assets/watching-a-movie_black.png',
-          osc_message: 'column 3',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Nội dung 4',
-          image: 'assets/watching-a-movie_black.png',
-          osc_message: 'column 4',
-          transport: StatefulValuable<double>(0)),
+      // Preset(
+      //     name: 'Nội dung 3',
+      //     image: 'assets/watching-a-movie_black.png',
+      //     osc_message: 'column 3',
+      //     transport: StatefulValuable<double>(0)),
+      // Preset(
+      //     name: 'Nội dung 4',
+      //     image: 'assets/watching-a-movie_black.png',
+      //     osc_message: 'column 4',
+      //     transport: StatefulValuable<double>(0)),
     ],
     projectors: [
       Projector(

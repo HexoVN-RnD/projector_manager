@@ -56,6 +56,7 @@ void SelectAllPreset(index) {
 
 void OSCReceive(Room room, Server server) async {
   try {
+    // final socket =OSCSocket( serverAddress: InternetAddress(server.ip), serverPort: 7001)
     final socket =
         await RawDatagramSocket.bind(InternetAddress(server.ip), 7001);
     // Đặt cổng lắng nghe OSC (ví dụ: 7001)

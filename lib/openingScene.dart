@@ -249,7 +249,7 @@ class _OpeningSceneState extends State<OpeningScene>
                         children:
                         List.generate(rooms[3].servers.length,
                                 (index) {
-                              Server server = rooms[0].servers[index];
+                              Server server = rooms[3].servers[index];
                               return Padding(
                                 padding: const EdgeInsets.only(bottom: 10.0),
                                 child: Row(

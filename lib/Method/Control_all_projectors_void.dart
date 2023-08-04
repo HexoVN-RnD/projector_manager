@@ -2,6 +2,7 @@ import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:valuable/valuable.dart';
 
@@ -11,6 +12,35 @@ import 'package:valuable/valuable.dart';
 //     room.current_preset.setValue(index);
 //   }
 // }
+void SetButtonControlAllSystem(){
+  int numProjectorPowerOn = 0;
+  int numProjectorShutterOn = 0;
+  int numServerPowerOn = 0;
+  for (Room room in rooms){
+    for(Server server in room.servers){
+      if(server.connected.getValue()){
+        numServerPowerOn++;
+      }
+    }
+    for (Projector projector in room.projectors) {
+      if (projector.power_status.getValue()) {
+        numProjectorPowerOn++;
+      }
+      if (projector.shutter_status.getValue()){
+        numProjectorShutterOn++;
+      }
+    }
+  }
+  if(allRoom.num_projectors.getValue() == numProjectorPowerOn){
+    allRoom.power_all_projectors.setValue(true);
+  }
+  if(allRoom.num_projectors.getValue() == numProjectorShutterOn){
+    allRoom.shutter_all_projectors.setValue(true);
+  }
+  if(allRoom.num_servers.getValue() == numServerPowerOn){
+    allRoom.power_all_projectors.setValue(true);
+  }
+}
 
 void PowerAllProjectors(bool mode) async {
   allRoom.power_all_projectors.setValue(mode);
@@ -29,7 +59,7 @@ void PowerAllProjectors(bool mode) async {
         projector.power_status
             .setValue(allRoom.power_all_projectors.getValue());
         if (mode) {
-          if (projector.type == 'Christie') {
+          if (projector.type != 'Christie') {
             print(projector.ip.toString() + '(PWR 1)');
             // checkConnectionProjector(projector);
             sendTCPIPCommandNoResponse(projector, '(PWR 1)');

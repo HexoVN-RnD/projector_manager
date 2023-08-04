@@ -21,7 +21,7 @@ Future<void> OpeningCheck() async {
   for (Room room in rooms) {
     if (!room.servers.isEmpty)
       for (Server server in room.servers) {
-        checkConnectionServer(server);
+        checkConnectionServerResponse(server);
       }
     if (!room.sensors.isEmpty) {
       for (Sensor sensor in room.sensors) {

@@ -33,7 +33,7 @@ class VolumeEdit extends StatefulWidget {
 class _VolumeEditState extends State<VolumeEdit> {
 
   void ChangeVolume(Room room, Server server,double index) {
-    writeCellValue(index.toStringAsFixed(2), server.id, 1);
+    // writeCellValue(index.toStringAsFixed(2), server.id, 1);
     if (room.resolume) {
       SendAudioOSC(server, index);
     } else {

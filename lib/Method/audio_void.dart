@@ -32,7 +32,7 @@ void EditAllAudio(index) {
 }
 void EditAllAudioAndSave(index) {
   allRoom.volume_all.setValue(index);
-  writeTableValue(index.toStringAsFixed(2));
+  // writeTableValue(index.toStringAsFixed(2));
   // writeCellValue(index.toStringAsFixed(2), 0, 1);
   for (Room room in rooms) {
     if (room.resolume) {
@@ -67,7 +67,7 @@ void SendAudioOSC(Server server, double index) async {
 void SendUDPAudioMessage(Server server, double index) async {
   try {
     final message = 'volume:' + ((index * 100).toInt()).toString();
-    writeCellValue(index.toStringAsFixed(2), server.id, 1);
+    // writeCellValue(index.toStringAsFixed(2), server.id, 1);
     final socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 5000);
     socket.send(message.codeUnits, InternetAddress(server.ip), 5000);
     print(message);
