@@ -59,7 +59,7 @@ void PowerAllProjectors(bool mode) async {
         projector.power_status
             .setValue(allRoom.power_all_projectors.getValue());
         if (mode) {
-          if (projector.type != 'Christie') {
+          if (projector.type == 'Christie') {
             print(projector.ip.toString() + '(PWR 1)');
             // checkConnectionProjector(projector);
             sendTCPIPCommandNoResponse(projector, '(PWR 1)');

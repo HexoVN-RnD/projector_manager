@@ -40,24 +40,24 @@ class _HomePage extends State<HomePage> {
       setState(() {
       });
     });
-    _timer2 = Timer.periodic(Duration(seconds: 4), (timer) async {
+    _timer2 = Timer.periodic(Duration(seconds: 6), (timer) async {
       print('check');
       SetButtonControlAllSystem();
       for (Room room in rooms) {
-        if (!room.servers.isEmpty)
-          for (Server server in room.servers) {
-            checkConnectionServer(server);
-          }
-        if (!room.sensors.isEmpty) {
-          for (Sensor sensor in room.sensors) {
-            checkConnectionSensor(sensor);
-          }
-        }
+        // if (!room.servers.isEmpty)
+        //   for (Server server in room.servers) {
+        //     checkConnectionServer(server);
+        //   }
+        // if (!room.sensors.isEmpty) {
+        //   for (Sensor sensor in room.sensors) {
+        //     checkConnectionSensor(sensor);
+        //   }
+        // }
         if (room.projectors.length > 0) {
           RoomPowerStatus(room);
         }
       }
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(Duration(seconds: 3));
       for (Room room in rooms) {
         RoomShutterStatus(room);
       }

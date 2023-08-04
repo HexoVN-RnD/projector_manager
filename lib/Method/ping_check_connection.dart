@@ -106,18 +106,18 @@ void checkConnectionProjector(Projector projector) {
 }
 
 Future<void> checkRoomConnection(Room room) async {
-  if (!room.servers.isEmpty)
-    for (Server server in room.servers) {
-      checkConnectionServer(server);
-    }
-  if (!room.sensors.isEmpty) {
-    for (Sensor sensor in room.sensors) {
-      checkConnectionSensor(sensor);
-    }
-  }
+  // if (!room.servers.isEmpty)
+  //   for (Server server in room.servers) {
+  //     checkConnectionServer(server);
+  //   }
+  // if (!room.sensors.isEmpty) {
+  //   for (Sensor sensor in room.sensors) {
+  //     checkConnectionSensor(sensor);
+  //   }
+  // }
   if (!room.projectors.isEmpty) {
     RoomPowerStatus(room);
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 2));
     RoomShutterStatus(room);
   }
 }
