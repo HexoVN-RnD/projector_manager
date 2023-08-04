@@ -27,8 +27,9 @@ import 'package:responsive_dashboard/Object/Room.dart';
 //   }
 // }
 
-void RoomStatus(Room room) {
+Future<void> RoomStatus(Room room, int time) async {
   for (Projector projector in room.projectors) {
+    await Future.delayed(Duration(milliseconds: (time/room.projectors.length).toInt()));
     checkConnectionProjector(projector);
     if (projector.type == 'Christie') {
       String response = sendTCPIPCommandStatus(projector);

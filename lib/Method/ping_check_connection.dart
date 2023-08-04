@@ -92,7 +92,7 @@ void checkConnectionProjector(Projector projector) {
   ping.command;
 }
 
-Future<void> checkRoomConnection(Room room) async {
+Future<void> checkRoomConnection(Room room, int time) async {
   // if (!room.servers.isEmpty)
   //   for (Server server in room.servers) {
   //     checkConnectionServer(server);
@@ -103,7 +103,7 @@ Future<void> checkRoomConnection(Room room) async {
   //   }
   // }
   if (!room.projectors.isEmpty) {
-    RoomStatus(room);
+    RoomStatus(room, time);
   }
 }
 

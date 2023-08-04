@@ -58,7 +58,7 @@ class _OpeningSceneState extends State<OpeningScene>
           }
         }
         if (!room.projectors.isEmpty) {
-          RoomStatus(room);
+          RoomStatus(room,2000);
         }
       }
     });

@@ -59,7 +59,7 @@ class _RoomManagerState extends State<RoomManager> {
     // Đặt một Timer để cập nhật widget sau mỗi giây
     _timer = Timer.periodic(Duration(milliseconds: 50), (timer) {
       Room room = rooms[
-      (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
+          (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
       setState(() {
         // if (room.resolume) {
         //   for (Server server in room.servers) {
@@ -71,11 +71,10 @@ class _RoomManagerState extends State<RoomManager> {
         // }
       });
     });
-    _timer2 = Timer.periodic(Duration(seconds: 4), (timer)
-    async {
+    _timer2 = Timer.periodic(Duration(seconds: 3), (timer) async {
       Room room = rooms[
-      (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
-      checkRoomConnection(room);
+          (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
+      checkRoomConnection(room, 3000);
     });
   }
 
@@ -88,7 +87,7 @@ class _RoomManagerState extends State<RoomManager> {
   @override
   Widget build(BuildContext context) {
     Room room =
-    rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 0];
+        rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 0];
     return SafeArea(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -144,7 +143,7 @@ class _RoomManagerState extends State<RoomManager> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                               children:
-                              List.generate(room.presets.length, (index) {
+                                  List.generate(room.presets.length, (index) {
                                 bool isSelected =
                                     room.current_preset.getValue() == index;
                                 return GestureDetector(
@@ -180,7 +179,7 @@ class _RoomManagerState extends State<RoomManager> {
                                       ),
                                       Column(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                         children: [
                                           // if (isSelected && room.resolume)
                                           //   SizedBox(
@@ -210,7 +209,7 @@ class _RoomManagerState extends State<RoomManager> {
                                                     .blockSizeVertical),
                                           Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: [
                                               Icon(
                                                 Icons.account_balance,
@@ -219,22 +218,22 @@ class _RoomManagerState extends State<RoomManager> {
                                               ),
                                               SizedBox(
                                                   width: SizeConfig
-                                                      .blockSizeHorizontal *
+                                                          .blockSizeHorizontal *
                                                       (isSelected
                                                           ? 1.5
                                                           : 0.75)),
                                               AnimatedDefaultTextStyle(
                                                 style: isSelected
                                                     ? TextStyle(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: 17.0,
-                                                    fontWeight:
-                                                    FontWeight.w600)
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: 17.0,
+                                                        fontWeight:
+                                                            FontWeight.w600)
                                                     : TextStyle(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: 12.0,
-                                                    fontWeight:
-                                                    FontWeight.w600),
+                                                        fontFamily: 'Poppins',
+                                                        fontSize: 12.0,
+                                                        fontWeight:
+                                                            FontWeight.w600),
                                                 duration: const Duration(
                                                     milliseconds: 200),
                                                 child: Text(
@@ -261,7 +260,7 @@ class _RoomManagerState extends State<RoomManager> {
                             child: Column(
                               children: List.generate(
                                 room.servers.length,
-                                    (index) => VolumeEdit(
+                                (index) => VolumeEdit(
                                     room: room, server: room.servers[index]),
                               ),
                             ),
@@ -300,7 +299,7 @@ class _RoomManagerState extends State<RoomManager> {
                               ),
                             ),
                             SizedBox(
-                              width: SizeConfig.blockSizeHorizontal ,
+                              width: SizeConfig.blockSizeHorizontal,
                             ),
                             Container(
                               height: 15,
@@ -323,7 +322,7 @@ class _RoomManagerState extends State<RoomManager> {
                               ),
                             ),
                             SizedBox(
-                              width: SizeConfig.blockSizeHorizontal ,
+                              width: SizeConfig.blockSizeHorizontal,
                             ),
                             Container(
                               height: 15,
@@ -346,7 +345,7 @@ class _RoomManagerState extends State<RoomManager> {
                               ),
                             ),
                             SizedBox(
-                              width: SizeConfig.blockSizeHorizontal ,
+                              width: SizeConfig.blockSizeHorizontal,
                             ),
                             Container(
                               height: 15,
@@ -369,7 +368,7 @@ class _RoomManagerState extends State<RoomManager> {
                               ),
                             ),
                             SizedBox(
-                              width: SizeConfig.blockSizeHorizontal ,
+                              width: SizeConfig.blockSizeHorizontal,
                             ),
                             Container(
                               height: 15,
@@ -400,53 +399,52 @@ class _RoomManagerState extends State<RoomManager> {
                     ),
                     //List server
                     if (room.resolume)
-                      Column(
-                          children: [
-                            SizedBox(
-                              height: SizeConfig.blockSizeVertical * 8,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.airplay,
-                                    size: 25,
-                                    color: AppColors.gray,
-                                  ),
-                                  SizedBox(
-                                    width: SizeConfig.blockSizeVertical,
-                                  ),
-                                  PrimaryText(
-                                      text: 'Quản lý server'.toUpperCase(),
-                                      color: AppColors.gray,
-                                      size: 20,
-                                      fontWeight: FontWeight.w500),
-                                ],
+                      Column(children: [
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 8,
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.airplay,
+                                size: 25,
+                                color: AppColors.gray,
                               ),
+                              SizedBox(
+                                width: SizeConfig.blockSizeVertical,
+                              ),
+                              PrimaryText(
+                                  text: 'Quản lý server'.toUpperCase(),
+                                  color: AppColors.gray,
+                                  size: 20,
+                                  fontWeight: FontWeight.w500),
+                            ],
+                          ),
+                        ),
+
+                        // List Projector
+                        SizedBox(
+                            width: SizeConfig.screenWidth,
+                            child: Wrap(
+                                spacing: 20,
+                                runSpacing: 20,
+                                alignment: WrapAlignment.spaceBetween,
+                                children: List.generate(
+                                  room.servers.length,
+                                  (index) =>
+                                      InfoServer(server: room.servers[index]),
+                                ))
+                            // : SpinKitThreeBounce(
+                            //     color: AppColors.navy_blue,
+                            //     size: 20,
+                            //   ),
                             ),
 
-                            // List Projector
-                            SizedBox(
-                                width: SizeConfig.screenWidth,
-                                child: Wrap(
-                                    spacing: 20,
-                                    runSpacing: 20,
-                                    alignment: WrapAlignment.spaceBetween,
-                                    children: List.generate(
-                                      room.servers.length,
-                                          (index) =>
-                                          InfoServer(server: room.servers[index]),
-                                    ))
-                              // : SpinKitThreeBounce(
-                              //     color: AppColors.navy_blue,
-                              //     size: 20,
-                              //   ),
-                            ),
-
-                            SizedBox(
-                              height: SizeConfig.blockSizeVertical * 4,
-                            ),
-                          ]
-                      ),
-                    if (current_page.getValue() != 0 && current_page.getValue() != 1)
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 4,
+                        ),
+                      ]),
+                    if (current_page.getValue() != 0 &&
+                        current_page.getValue() != 1)
                       Column(
                         children: [
                           SizedBox(
@@ -476,18 +474,17 @@ class _RoomManagerState extends State<RoomManager> {
                                   alignment: WrapAlignment.spaceBetween,
                                   children: List.generate(
                                     room.projectors.length,
-                                        (index) => InfoProjector(
+                                    (index) => InfoProjector(
                                         projector: room.projectors[index]),
                                   ))
-                            // : SpinKitThreeBounce(
-                            //     color: AppColors.navy_blue,
-                            //     size: 20,
-                            //   ),
-                          ),
+                              // : SpinKitThreeBounce(
+                              //     color: AppColors.navy_blue,
+                              //     size: 20,
+                              //   ),
+                              ),
                           SizedBox(
                             height: SizeConfig.blockSizeVertical * 4,
                           ),
-
                           SizedBox(
                             height: SizeConfig.blockSizeVertical * 4,
                           ),
@@ -591,7 +588,7 @@ class _RoomManagerState extends State<RoomManager> {
                 decoration: BoxDecoration(
                     color: AppColors.barBg,
                     borderRadius:
-                    BorderRadius.horizontal(left: Radius.circular(30))),
+                        BorderRadius.horizontal(left: Radius.circular(30))),
                 width: double.infinity,
                 height: SizeConfig.screenHeight,
                 child: SingleChildScrollView(

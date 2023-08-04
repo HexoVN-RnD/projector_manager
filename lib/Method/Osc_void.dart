@@ -38,18 +38,30 @@ void SendPresetOSC(String ip, int port, int column) async {
 void SelectAllPreset(index) {
   allRoom.current_preset.setValue(index);
   for (Room room in rooms) {
-    room.current_preset.setValue(index);
-    if (room.resolume) {
+    if (index<room.presets.length) {
+      room.current_preset.setValue(index);
       for (Server server in room.servers) {
-        final column = index + 1;
-        SendOscMessage(server.ip, server.preset_port,
-            '/composition/columns/$column/connect', [1]);
+        if (room.resolume) {
+          SendPresetOSC(
+              server.ip, server.preset_port, room.current_preset.getValue());
+        } else {
+          SendUDPMessage(
+              server, 'Preset' + room.current_preset.getValue().toString());
+        }
       }
     } else {
+      room.current_preset.setValue(room.presets.length-1);
       for (Server server in room.servers) {
-        SendUDPMessage(server, 'Preset' + index.toString());
+        if (room.resolume) {
+          SendPresetOSC(
+              server.ip, server.preset_port, room.current_preset.getValue());
+        } else {
+          SendUDPMessage(
+              server, 'Preset' + room.current_preset.getValue().toString());
+        }
       }
     }
+
   }
 }
 

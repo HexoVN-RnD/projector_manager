@@ -6,9 +6,9 @@ import 'package:responsive_dashboard/data/data.dart';
 
 Future<void> PowerOnAllServer() async {
   allRoom.power_all_servers.setValue(true);
-  for (Room room in rooms){
-    for (Server server in room.servers){
-      if(!server.power_status.getValue() && room.resolume){
+  for (Room room in rooms) {
+    for (Server server in room.servers) {
+      if (!server.power_status.getValue() && room.resolume) {
         server.power_status.setValue(true);
         WakeonLan(server);
         // await Future.delayed(Duration(seconds: 15));
@@ -24,11 +24,12 @@ Future<void> PowerOnAllServer() async {
   //   }
   // }
 }
+
 Future<void> ShutdownAllServer() async {
   allRoom.power_all_servers.setValue(false);
-  for (Room room in rooms){
-    for (Server server in room.servers){
-      if(server.power_status.getValue() && room.resolume) {
+  for (Room room in rooms) {
+    for (Server server in room.servers) {
+      if (server.power_status.getValue() && room.resolume) {
         server.power_status.setValue(false);
         ShutdownServer(server);
       }
@@ -60,10 +61,11 @@ Future<void> ShutdownAllServer() async {
 // }
 
 Future<void> ShutdownServer(Server server) async {
-  final message = 'shutdown' ;
-
+  final message = 'shutdown';
+  server.power_status.setValue(false);
   RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((socket) {
-    socket.send(message.codeUnits, InternetAddress(server.ip), server.power_port);
+    socket.send(
+        message.codeUnits, InternetAddress(server.ip), server.power_port);
     socket.close();
   });
   print(message);
@@ -74,13 +76,16 @@ Future<void> ShutdownServer(Server server) async {
 }
 
 void WakeonLan(Server server, {int port = 9}) async {
+  server.power_status.setValue(true);
+
   final boardcastIP = InternetAddress('255.255.255.255');
   final macBytes = _parseMacAddress(server.mac_address);
 
-  final magicPacket = List<int>.generate(102, (index) => index < 6? 0xFF: macBytes[index %6]);
+  final magicPacket = List<int>.generate(
+      102, (index) => index < 6 ? 0xFF : macBytes[index % 6]);
 
   RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((socket) {
-    socket.broadcastEnabled =true;
+    socket.broadcastEnabled = true;
     socket.send(magicPacket, boardcastIP, port);
     socket.close();
   });
@@ -92,7 +97,8 @@ void WakeonLan(Server server, {int port = 9}) async {
 
 List<int> _parseMacAddress(String macAddress) {
   final parts = macAddress.split(':');
-  return List<int>.generate(6, (index) => int.parse(parts[index], radix: 16),);
+  return List<int>.generate(
+    6,
+    (index) => int.parse(parts[index], radix: 16),
+  );
 }
-
-

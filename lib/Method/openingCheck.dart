@@ -29,7 +29,7 @@ Future<void> OpeningCheck() async {
       }
     }
     if (room.projectors.length > 0) {
-      RoomStatus(room);
+      RoomStatus(room, 8000);
     }
   }
 }
