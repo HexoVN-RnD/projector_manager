@@ -24,8 +24,10 @@ void PowerAllProjectors(bool mode) async {
     for (var projector in room.projectors) {
       // if (projector.power_status_button.getValue() !=
       //     allRoom.power_all_projectors.getValue()) {
-      checkConnectionProjector(projector);
-      if (projector.power_status.getValue()) {
+      // checkConnectionProjector(projector);
+      if (projector.power_status.getValue() != mode) {
+        projector.power_status
+            .setValue(allRoom.power_all_projectors.getValue());
         if (mode) {
           if (projector.type == 'Christie') {
             print(projector.ip.toString() + '(PWR 1)');
@@ -50,13 +52,9 @@ void PowerAllProjectors(bool mode) async {
             // }
           }
         }
-
       } else {
         print('Disconnect');
       }
-
-      projector.power_status
-          .setValue(allRoom.power_all_projectors.getValue());
     }
   }
 }

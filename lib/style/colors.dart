@@ -24,7 +24,8 @@ class AppColors {
   static const yellow4 = Color.fromRGBO(224, 162, 19, 1.0);
   static List<Color> StatusColor = [
     Color.fromRGBO(246, 75, 75, 1.0),
-    Color.fromRGBO(0, 0, 0, 1.0),
+    // Color.fromRGBO(0, 0, 0, 1.0),
+    Color.fromRGBO(7, 136, 192, 1.0),
     Color.fromRGBO(60, 229, 77, 1.0),
     Color.fromRGBO(158, 7, 192, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
@@ -44,12 +45,12 @@ class AppColors {
   ];
   static List<Color> PowerOffButtonColor = [
     Color.fromRGBO(0, 0, 0, 1.0),
-    Color.fromRGBO(46, 204, 196, 1.0),
+    Color.fromRGBO(246, 75, 75, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
-    Color.fromRGBO(46, 204, 196, 1.0),
+    Color.fromRGBO(246, 75, 75, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
   ];
   static List<Color> ShutterOnButtonColor = [
@@ -65,10 +66,10 @@ class AppColors {
   static List<Color> ShutterOffButtonColor = [
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
-    Color.fromRGBO(46, 204, 196, 1.0),
+    Color.fromRGBO(246, 75, 75, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
-    Color.fromRGBO(46, 204, 196, 1.0),
+    Color.fromRGBO(246, 75, 75, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
     Color.fromRGBO(0, 0, 0, 1.0),
   ];
@@ -115,23 +116,23 @@ class AppColors {
 }
 
 List<String> Power_Status = [
-  'Đã tắt máy chiếu',
+  'Đã mất kết nối',
   'Đã tắt máy chiếu',
   'Đã bật máy chiếu',
   'Đã bật máy chiếu',
   'Đã tắt máy chiếu',
-  'Đang bật máy chiếu ...',
   'Đang tắt máy chiếu ...',
+  'Đang bật máy chiếu ...',
   'Đã tắt máy chiếu',
 ];
 
 List<String> Shutter_Status = [
-  'Đã tắt màn chập',
+  'Đã mất kết nối',
   'Đã bật màn chập',
   'Đã tắt màn chập',
   'Đã bật màn chập',
   'Đã tắt màn chập',
-  'Đã tắt màn chập',
-  'Đang bật màn chập...',
+  'Đang bật màn chập',
+  'Đang tắt màn chập...',
   'Đã tắt màn chập',
 ];
