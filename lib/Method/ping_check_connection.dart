@@ -32,21 +32,21 @@ void checkConnectionServer(Server server) {
 }
 
 void checkConnectionSensor(Sensor sensor) {
-  final ping = Ping(sensor.ip, count: 3); // Thay đổi số lần ping tùy ý
-
+  int count = 0;
+  final ping = Ping(sensor.ip, count: 1); // Thay đổi số lần ping tùy ý
   ping.stream.listen((event) {
+    print('ping response ${event.response?.time} ${count++}');
     print('Ping to ${sensor.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       sensor.connected.setValue(true);
-      ping.stop();
+    } else {
+      if (count == 1) {
+        sensor.connected.setValue(false);
+        print('Error');
+      }
     }
-    // else {
-    //   Socket.connect(sensor.ip, sensor.port).then((socket) {}, onError: (error) {
-    //     sensor.connected.setValue(false);
-    //     print('Error');
-    //   });
-    // }
-  }, onError: (error){
+    // ping.stop();
+  }, onError: (error) {
     print(error);
   });
   ping.command;
