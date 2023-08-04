@@ -4,54 +4,54 @@ import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 
-void PowerStatus(Projector projector) {
-  // checkConnectionProjector(projector);
-  if (projector.type == 'Christie') {
-    String response = sendTCPIPCommandStatus(projector, '(PWR?)');
-    print(response);
-  } else {
-    String response = sendPJLinkCommandStatus(projector, '%1POWR ?[CR]');
-    print(response);
-  }
-}
+// void PowerStatus(Projector projector) {
+//   // checkConnectionProjector(projector);
+//   if (projector.type == 'Christie') {
+//     String response = sendTCPIPCommandStatus(projector, '(PWR?)');
+//     print(response);
+//   } else {
+//     String response = sendPJLinkCommandStatus(projector, '%1POWR ?[CR]');
+//     print(response);
+//   }
+// }
 
-void ShutterStatus(Projector projector) {
-  // checkConnectionProjector(projector);
-  // print(projector.type);
-  if (projector.type == 'Christie') {
-    String response = sendTCPIPCommandStatus(projector, '(SHU?)');
-    print(response);
-  } else {
-    String response = sendPJLinkCommandStatus(projector, '%1AVMT ?[CR]');
-    print(response);
-  }
-}
+// void ShutterStatus(Projector projector) {
+//   // checkConnectionProjector(projector);
+//   // print(projector.type);
+//   if (projector.type == 'Christie') {
+//     String response = sendTCPIPCommandStatus(projector, '(SHU?)');
+//     print(response);
+//   } else {
+//     String response = sendPJLinkCommandStatus(projector, '%1AVMT ?[CR]');
+//     print(response);
+//   }
+// }
 
-void RoomPowerStatus(Room room) {
+void RoomStatus(Room room) {
   for (Projector projector in room.projectors) {
     checkConnectionProjector(projector);
     if (projector.type == 'Christie') {
-      String response = sendTCPIPCommandStatus(projector, '(PWR?)');
+      String response = sendTCPIPCommandStatus(projector);
       print(response);
     } else {
       String response = sendPJLinkCommandStatus(
-          projector, '%1POWR ?[CR]');
+          projector);
       print(response);
     }
   }
 }
 
-void RoomShutterStatus(Room room) {
-  for (Projector projector in room.projectors){
-    if (projector.type == 'Christie') {
-      String response = sendTCPIPCommandStatus(projector, '(SHU?)');
-      print(response);
-    } else {
-      String response = sendPJLinkCommandStatus(projector, '%1AVMT ?[CR]');
-      print(response);
-    }
-  }
-}
+// void RoomShutterStatus(Room room) {
+//   for (Projector projector in room.projectors){
+//     if (projector.type == 'Christie') {
+//       String response = sendTCPIPCommandStatus(projector, '(SHU?)');
+//       print(response);
+//     } else {
+//       String response = sendPJLinkCommandStatus(projector, '%1AVMT ?[CR]');
+//       print(response);
+//     }
+//   }
+// }
 
 Future<void> PowerModeProjector(Projector projector, bool mode) async {
   // projector.power_status_button

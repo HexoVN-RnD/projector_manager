@@ -116,9 +116,7 @@ Future<void> checkRoomConnection(Room room) async {
   //   }
   // }
   if (!room.projectors.isEmpty) {
-    RoomPowerStatus(room);
-    await Future.delayed(Duration(seconds: 2));
-    RoomShutterStatus(room);
+    RoomStatus(room);
   }
 }
 

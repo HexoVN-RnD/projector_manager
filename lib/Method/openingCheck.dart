@@ -29,11 +29,7 @@ Future<void> OpeningCheck() async {
       }
     }
     if (room.projectors.length > 0) {
-      RoomPowerStatus(room);
+      RoomStatus(room);
     }
-  }
-  await Future.delayed(Duration(seconds: 2));
-  for (Room room in rooms) {
-    RoomShutterStatus(room);
   }
 }

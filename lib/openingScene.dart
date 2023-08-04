@@ -57,13 +57,9 @@ class _OpeningSceneState extends State<OpeningScene>
             checkConnectionSensor(sensor);
           }
         }
-        if (room.projectors.length > 0) {
-          RoomPowerStatus(room);
+        if (!room.projectors.isEmpty) {
+          RoomStatus(room);
         }
-      }
-      await Future.delayed(Duration(seconds: 2));
-      for (Room room in rooms) {
-        RoomShutterStatus(room);
       }
     });
     _animationController = AnimationController(

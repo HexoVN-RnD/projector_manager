@@ -53,13 +53,9 @@ class _HomePage extends State<HomePage> {
         //     checkConnectionSensor(sensor);
         //   }
         // }
-        if (room.projectors.length > 0) {
-          RoomPowerStatus(room);
+        if (!room.projectors.isEmpty) {
+          RoomStatus(room);
         }
-      }
-      await Future.delayed(Duration(seconds: 3));
-      for (Room room in rooms) {
-        RoomShutterStatus(room);
       }
     });
   }
