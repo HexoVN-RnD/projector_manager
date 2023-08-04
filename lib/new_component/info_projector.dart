@@ -152,8 +152,8 @@ class _InfoProjector extends State<InfoProjector> {
             children: [
               PrimaryText(
                   text: Power_Status[projector.status.getValue()],
-                  color: AppColors.secondary,
-                  size: 14),
+                  color: AppColors.StatusColor[projector.status.getValue()],
+                  size: 16),
               // Expanded(
               //   child: SizedBox(
               //     width: SizeConfig.blockSizeHorizontal,
@@ -247,8 +247,8 @@ class _InfoProjector extends State<InfoProjector> {
             children: [
               PrimaryText(
                   text: Shutter_Status[projector.status.getValue()],
-                  color: AppColors.secondary,
-                  size: 14),
+                  color: AppColors.StatusColor[projector.status.getValue()],
+                  size: 16),
               // Expanded(
               //   child: SizedBox(
               //     width: SizeConfig.blockSizeHorizontal,
