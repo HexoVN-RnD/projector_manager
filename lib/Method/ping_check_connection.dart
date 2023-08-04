@@ -16,7 +16,7 @@ import 'package:valuable/valuable.dart';
 void checkConnectionServer(Server server) {
 
   int count = 0;
-  final ping = Ping(server.ip, count: 3); // Thay đổi số lần ping tùy ý
+  final ping = Ping(server.ip, count: 1); // Thay đổi số lần ping tùy ý
 
   ping.stream.listen((event) {
     print('ping server ${server.ip} response ${event.response?.time} ${count}');
@@ -24,7 +24,7 @@ void checkConnectionServer(Server server) {
     if (event.response?.time != null) {
       server.connected.setValue(true);
       // server.power_status.setValue(true);
-    } else if (event.response?.time == null && count != 3) {
+    } else if (event.response?.time == null && count != 1) {
       server.connected.setValue(false);
       // server.power_status.setValue(false);
       // print('ping server ${event.response?.ip} ${count}');
@@ -36,7 +36,7 @@ void checkConnectionServer(Server server) {
 void checkConnectionServerResponse(Server server) {
 
   int count = 0;
-  final ping = Ping(server.ip, count: 3); // Thay đổi số lần ping tùy ý
+  final ping = Ping(server.ip, count: 1); // Thay đổi số lần ping tùy ý
 
   ping.stream.listen((event) {
     print('ping server ${server.ip} response ${event.response?.time} ${count}');
@@ -44,7 +44,7 @@ void checkConnectionServerResponse(Server server) {
     if (event.response?.time != null) {
       server.connected.setValue(true);
       server.power_status.setValue(true);
-    } else if (event.response?.time == null && count != 3) {
+    } else if (event.response?.time == null && count != 1) {
       server.connected.setValue(false);
       server.power_status.setValue(false);
       // print('ping server ${event.response?.ip} ${count}');
@@ -56,13 +56,13 @@ void checkConnectionServerResponse(Server server) {
 
 void checkConnectionSensor(Sensor sensor) {
   int count = 0;
-  final ping = Ping(sensor.ip, count: 3); // Thay đổi số lần ping tùy ý
+  final ping = Ping(sensor.ip, count: 1); // Thay đổi số lần ping tùy ý
   ping.stream.listen((event) {
     print('ping sensor ${sensor.ip}: response ${event.response?.time} ${count}');
     // print('Ping to ${sensor.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       sensor.connected.setValue(true);
-    } else if (event.response?.ip == null && count != 3) {
+    } else if (event.response?.ip == null && count != 1) {
         sensor.connected.setValue(false);
         // print('Error');
     }
@@ -75,32 +75,19 @@ void checkConnectionSensor(Sensor sensor) {
 }
 
 void checkConnectionProjector(Projector projector) {
-  final ping = Ping(projector.ip, count: 3); // Thay đổi số lần ping tùy ý
+  int count=0;
+  final ping = Ping(projector.ip, count: 1); // Thay đổi số lần ping tùy ý
 
   ping.stream.listen((event) {
     print('Ping to ${projector.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       projector.connected.setValue(true);
       ping.stop();
-    } else {
-      if (projector.type == 'Christie') {
-        Socket.connect(projector.ip, 3002).then((socket) {}, onError: (error) {
-          projector.connected.setValue(false);
-          projector.power_status.setValue(false);
-          projector.power_status_button.setValue(false);
-          projector.shutter_status.setValue(false);
-          projector.shutter_status_button.setValue(false);
-        });
-      } else {
-        Socket.connect(projector.ip, 4352).then((socket) {}, onError: (error) {
-          projector.connected.setValue(false);
-          projector.power_status.setValue(false);
-          projector.power_status_button.setValue(false);
-          projector.shutter_status.setValue(false);
-          projector.shutter_status_button.setValue(false);
-        });
-      }
+    } else if (event.response?.ip == null && count != 1) {
+      projector.connected.setValue(false);
+      // print('Error');
     }
+    count++;
   });
   ping.command;
 }

@@ -16,13 +16,13 @@ Future<void> PowerOnAllServer() async {
     }
   }
   print('Power On All Server');
-  await Future.delayed(Duration(seconds: 90));
-  print("90 seconds have passed!");
-  for (Room room in rooms){
-    for (Server server in room.servers){
-      checkConnectionServerResponse(server);
-    }
-  }
+  // await Future.delayed(Duration(seconds: 90));
+  // print("90 seconds have passed!");
+  // for (Room room in rooms){
+  //   for (Server server in room.servers){
+  //     checkConnectionServerResponse(server);
+  //   }
+  // }
 }
 Future<void> ShutdownAllServer() async {
   allRoom.power_all_servers.setValue(false);
@@ -35,30 +35,29 @@ Future<void> ShutdownAllServer() async {
     }
   }
   print('Shutdown All Server');
-  await Future.delayed(Duration(seconds: 30));
-  print("30 seconds have passed!");
-  for (Room room in rooms){
-    for (Server server in room.servers){
-      checkConnectionServerResponse(server);
-    }
-  }
+  // await Future.delayed(Duration(seconds: 30));
+  // print("30 seconds have passed!");
+  // for (Room room in rooms){
+  //   for (Server server in room.servers){
+  //     checkConnectionServerResponse(server);
+  //   }
+  // }
 }
 
-Future<void> PowerModeServer(Server server, bool mode) async {
-  server.power_status.setValue(mode);
-  if (mode) {
-    WakeonLan(server);
-  } else {
-    ShutdownServer(server);
-  }
-  print(server.mac_address);
-
-  print("Starting...");
-  await Future.delayed(Duration(seconds: 90));
-  print("90 seconds have passed!");
-  checkConnectionServerResponse(server);
-
-}
+// Future<void> PowerModeServer(Server server, bool mode) async {
+//   server.power_status.setValue(mode);
+//   if (mode) {
+//     WakeonLan(server);
+//   } else {
+//     ShutdownServer(server);
+//   }
+//   print(server.mac_address);
+//   print("Starting...");
+//   await Future.delayed(Duration(seconds: 90));
+//   print("90 seconds have passed!");
+//   checkConnectionServerResponse(server);
+//
+// }
 
 Future<void> ShutdownServer(Server server) async {
   final message = 'shutdown' ;
@@ -86,9 +85,9 @@ void WakeonLan(Server server, {int port = 9}) async {
     socket.close();
   });
   print("Starting wake server...");
-  // await Future.delayed(Duration(seconds: 30));
-  // print("30 seconds have passed!");
-  // checkConnectionServer(server.ip, server.connected, server.power_status);
+  await Future.delayed(Duration(seconds: 90));
+  print("90 seconds have passed!");
+  checkConnectionServer(server);
 }
 
 List<int> _parseMacAddress(String macAddress) {

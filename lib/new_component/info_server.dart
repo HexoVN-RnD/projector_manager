@@ -99,7 +99,7 @@ class _InfoServer extends State<InfoServer> {
                   ),
                   onPressed: () {
                     setState(() {
-                      PowerModeServer(server, true);
+                      WakeonLan(server);
                     });
                   },
                   child: PrimaryText(
@@ -126,7 +126,7 @@ class _InfoServer extends State<InfoServer> {
                     ),
                     onPressed: () {
                       setState(() {
-                        PowerModeServer(server, false);
+                        ShutdownServer(server);
                       });
                     },
                     child: PrimaryText(
@@ -166,7 +166,7 @@ class _InfoServer extends State<InfoServer> {
                           ? 'Đang bật server ...'
                           : 'Đã tắt server'),
                   color: AppColors.secondary,
-                  size: 14),
+                  size: 16),
               // Expanded(
               //   child: SizedBox(
               //     width: SizeConfig.blockSizeHorizontal,
