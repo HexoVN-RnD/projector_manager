@@ -39,12 +39,15 @@ void checkConnectionSensor(Sensor sensor) {
     if (event.response?.time != null) {
       sensor.connected.setValue(true);
       ping.stop();
-    } else {
-      Socket.connect(sensor.ip, sensor.port).then((socket) {}, onError: (error) {
-        sensor.connected.setValue(false);
-        print('Error');
-      });
     }
+    // else {
+    //   Socket.connect(sensor.ip, sensor.port).then((socket) {}, onError: (error) {
+    //     sensor.connected.setValue(false);
+    //     print('Error');
+    //   });
+    // }
+  }, onError: (error){
+    print(error);
   });
   ping.command;
 }
