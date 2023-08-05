@@ -33,12 +33,18 @@ void SetButtonControlAllSystem(){
   }
   if(allRoom.num_projectors.getValue() == numProjectorPowerOn){
     allRoom.power_all_projectors.setValue(true);
+  } else if(numProjectorPowerOn==0) {
+    allRoom.power_all_projectors.setValue(false);
   }
   if(allRoom.num_projectors.getValue() == numProjectorShutterOn){
     allRoom.shutter_all_projectors.setValue(true);
+  } else if(numProjectorShutterOn==0){
+    allRoom.shutter_all_projectors.setValue(false);
   }
   if(allRoom.num_servers.getValue() == numServerPowerOn){
     allRoom.power_all_projectors.setValue(true);
+  } else if(numServerPowerOn == 0){
+    allRoom.power_all_projectors.setValue(false);
   }
 }
 

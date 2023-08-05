@@ -22,7 +22,7 @@ import 'package:valuable/valuable.dart';
 // StatefulValuable<double> opening_per = StatefulValuable<double>(0);
 
 double progressValue = 0.0;
-int half_length = (rooms[1].projectors.length/2).toInt()+1;
+int half_length = (rooms[1].projectors.length / 2).toInt() + 1;
 
 class OpeningScene extends StatefulWidget {
   const OpeningScene({key});
@@ -45,35 +45,21 @@ class _OpeningSceneState extends State<OpeningScene>
       autoplay: false,
     );
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 2000), (timer)
-    async {
-      for (Room room in rooms) {
-        if (!room.servers.isEmpty)
-          for (Server server in room.servers) {
-            checkConnectionServer(server);
-          }
-        if (!room.sensors.isEmpty) {
-          for (Sensor sensor in room.sensors) {
-            checkConnectionSensor(sensor);
-          }
-        }
-        if (!room.projectors.isEmpty) {
-          RoomStatus(room,2000);
-        }
-      }
+    _timer = Timer.periodic(Duration(milliseconds: 3000), (timer) async {
+      checkAllRoomConnection(3000);
     });
     _animationController = AnimationController(
       duration: Duration(seconds: 30),
       vsync: this,
     )..addListener(() {
-      setState(() {
-        progressValue = _animationController.value;
-        if (progressValue == 1) {
-          Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => Dashboard()));
-        }
+        setState(() {
+          progressValue = _animationController.value;
+          if (progressValue == 1) {
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => Dashboard()));
+          }
+        });
       });
-    });
     _animationController.forward();
   }
 
@@ -158,7 +144,7 @@ class _OpeningSceneState extends State<OpeningScene>
 
                         Future.delayed(
                           const Duration(milliseconds: 800),
-                              () {
+                          () {
                             setState(() {
                               isShowSignInDialog = true;
                             });
@@ -170,7 +156,9 @@ class _OpeningSceneState extends State<OpeningScene>
                         );
                       },
                     ),
-                    const SizedBox(height: 50,),
+                    const SizedBox(
+                      height: 50,
+                    ),
                     // const Padding(
                     //   padding: EdgeInsets.symmetric(vertical: 24),
                     //   child: PrimaryText(
@@ -186,10 +174,9 @@ class _OpeningSceneState extends State<OpeningScene>
           Positioned(
             left: 30,
             top: MediaQuery.of(context).size.height * 0.11,
-            width: MediaQuery.of(context).size.width-80,
+            width: MediaQuery.of(context).size.width - 80,
             height: MediaQuery.of(context).size.height,
-            child:
-            Padding(
+            child: Padding(
               padding: const EdgeInsets.fromLTRB(15.0, 60, 10, 10),
               child: Row(
                 // mainAxisAlignment: MainAxisAlignment.center,
@@ -198,107 +185,103 @@ class _OpeningSceneState extends State<OpeningScene>
                     children: [
                       Column(
                         children:
-                        List.generate(rooms[0].servers.length,
-                                (index) {
-                              Server server = rooms[0].servers[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: 120,
-                                      child: PrimaryText(
-                                        text: '${server.name}',
-                                        size: 14,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      width: 100,
-                                      child: PrimaryText(
-                                        text: '(${server.ip})',
-                                        size: 14,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    PrimaryText(
-                                      text: server.connected.getValue()
-                                          ? 'Connected'
-                                          : 'Disconnect',
-                                      color: server.connected.getValue()
-                                          ? AppColors.green
-                                          : AppColors.red,
-                                      size: 14,
-                                    ),
-                                  ],
+                            List.generate(rooms[0].servers.length, (index) {
+                          Server server = rooms[0].servers[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 120,
+                                  child: PrimaryText(
+                                    text: '${server.name}',
+                                    size: 14,
+                                  ),
                                 ),
-                              );
-                            }),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  width: 100,
+                                  child: PrimaryText(
+                                    text: '(${server.ip})',
+                                    size: 14,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                PrimaryText(
+                                  text: server.connected.getValue()
+                                      ? 'Connected'
+                                      : 'Disconnect',
+                                  color: server.connected.getValue()
+                                      ? AppColors.green
+                                      : AppColors.red,
+                                  size: 14,
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
                       ),
-                      SizedBox(height: 50,),
+                      SizedBox(
+                        height: 50,
+                      ),
                       Column(
                         children:
-                        List.generate(rooms[3].servers.length,
-                                (index) {
-                              Server server = rooms[3].servers[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 10.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: 120,
-                                      child: PrimaryText(
-                                        text: '${server.name}',
-                                        size: 14,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      width: 100,
-                                      child: PrimaryText(
-                                        text: '(${server.ip})',
-                                        size: 14,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    PrimaryText(
-                                      text: server.connected.getValue()
-                                          ? 'Connected'
-                                          : 'Disconnect',
-                                      color: server.connected.getValue()
-                                          ? AppColors.green
-                                          : AppColors.red,
-                                      size: 14,
-                                    ),
-                                  ],
+                            List.generate(rooms[3].servers.length, (index) {
+                          Server server = rooms[3].servers[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 120,
+                                  child: PrimaryText(
+                                    text: '${server.name}',
+                                    size: 14,
+                                  ),
                                 ),
-                              );
-                            }),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  width: 100,
+                                  child: PrimaryText(
+                                    text: '(${server.ip})',
+                                    size: 14,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                PrimaryText(
+                                  text: server.connected.getValue()
+                                      ? 'Connected'
+                                      : 'Disconnect',
+                                  color: server.connected.getValue()
+                                      ? AppColors.green
+                                      : AppColors.red,
+                                  size: 14,
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
                       ),
                     ],
                   ),
                   Expanded(
                     child: Column(
-                      children: List.generate(
-                          half_length, (index) {
-                        Projector projector =
-                        rooms[1].projectors[index];
+                      children: List.generate(half_length, (index) {
+                        Projector projector = rooms[1].projectors[index];
                         return Padding(
-                          padding:
-                          const EdgeInsets.only(bottom: 10.0),
+                          padding: const EdgeInsets.only(bottom: 10.0),
                           child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 width: 150,
@@ -338,15 +321,13 @@ class _OpeningSceneState extends State<OpeningScene>
                   Expanded(
                     child: Column(
                       children: List.generate(
-                          rooms[1].projectors.length-half_length, (index) {
+                          rooms[1].projectors.length - half_length, (index) {
                         Projector projector =
-                        rooms[1].projectors[index+half_length];
+                            rooms[1].projectors[index + half_length];
                         return Padding(
-                          padding:
-                          const EdgeInsets.only(bottom: 10.0),
+                          padding: const EdgeInsets.only(bottom: 10.0),
                           child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 width: 150,
@@ -383,104 +364,97 @@ class _OpeningSceneState extends State<OpeningScene>
                       }),
                     ),
                   ),
-                  Column(
-                      children: [
-                        Column(
-                          children: List.generate(
-                              rooms[2].projectors.length, (index) {
-                            Projector projector =
-                            rooms[2].projectors[index];
-                            return Padding(
-                              padding:
-                              const EdgeInsets.only(bottom: 10.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 150,
-                                    child: PrimaryText(
-                                      text: '${projector.name}',
-                                      size: 14,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    width: 100,
-                                    child: PrimaryText(
-                                      text: '(${projector.ip})',
-                                      size: 14,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  PrimaryText(
-                                    text: projector.connected.getValue()
-                                        ? 'Connected'
-                                        : 'Disconnect',
-                                    color:
-                                    projector.connected.getValue()
-                                        ? AppColors.green
-                                        : AppColors.red,
-                                    size: 14,
-                                  ),
-                                ],
+                  Column(children: [
+                    Column(
+                      children:
+                          List.generate(rooms[2].projectors.length, (index) {
+                        Projector projector = rooms[2].projectors[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 150,
+                                child: PrimaryText(
+                                  text: '${projector.name}',
+                                  size: 14,
+                                ),
                               ),
-                            );
-                          }),
-                        ),
-                        SizedBox(height: 50,),
-                        Column(
-                          children: List.generate(
-                              rooms[3].projectors.length, (index) {
-                            Projector projector =
-                            rooms[3].projectors[index];
-                            return Padding(
-                              padding:
-                              const EdgeInsets.only(bottom: 10.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 150,
-                                    child: PrimaryText(
-                                      text: '${projector.name}',
-                                      size: 14,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Container(
-                                    width: 100,
-                                    child: PrimaryText(
-                                      text: '(${projector.ip})',
-                                      size: 14,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  PrimaryText(
-                                    text: projector.connected.getValue()
-                                        ? 'Connected'
-                                        : 'Disconnect',
-                                    color:
-                                    projector.connected.getValue()
-                                        ? AppColors.green
-                                        : AppColors.red,
-                                    size: 14,
-                                  ),
-                                ],
+                              SizedBox(
+                                width: 10,
                               ),
-                            );
-                          }),
-                        ),
-                      ]),
+                              Container(
+                                width: 100,
+                                child: PrimaryText(
+                                  text: '(${projector.ip})',
+                                  size: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              PrimaryText(
+                                text: projector.connected.getValue()
+                                    ? 'Connected'
+                                    : 'Disconnect',
+                                color: projector.connected.getValue()
+                                    ? AppColors.green
+                                    : AppColors.red,
+                                size: 14,
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    Column(
+                      children:
+                          List.generate(rooms[3].projectors.length, (index) {
+                        Projector projector = rooms[3].projectors[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 150,
+                                child: PrimaryText(
+                                  text: '${projector.name}',
+                                  size: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                width: 100,
+                                child: PrimaryText(
+                                  text: '(${projector.ip})',
+                                  size: 14,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              PrimaryText(
+                                text: projector.connected.getValue()
+                                    ? 'Connected'
+                                    : 'Disconnect',
+                                color: projector.connected.getValue()
+                                    ? AppColors.green
+                                    : AppColors.red,
+                                size: 14,
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
+                    ),
+                  ]),
                 ],
               ),
             ),

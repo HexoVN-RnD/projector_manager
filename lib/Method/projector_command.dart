@@ -59,10 +59,10 @@ String sendTCPIPCommandStatus(Projector projector) {
   Socket.connect(projector.ip, 3002).then((socket) {
     socket.write('PWR?');
     socket.write('SHU?');
-    print('Sent to ${socket.remoteAddress.address}:${socket.remotePort}');
+    // print('Sent to ${socket.remoteAddress.address}:${socket.remotePort}');
     socket.listen((data) async {
       response = utf8.decode(data);
-      print('Response: ${projector.ip} $response');
+      // print('Response: ${projector.ip} $response');
       if (response.contains('PWR!01')) {
         projector.power_status.setValue(false);
         if (projector.shutter_status.getValue()) {
@@ -142,7 +142,7 @@ String sendTCPIPCommandStatus(Projector projector) {
 void sendTCPIPCommandNoResponse(Projector projector, String command) {
   Socket.connect(projector.ip, projector.port).then((socket) {
     socket.write(command);
-    print('Sent to ${socket.remoteAddress.address}:${socket.remotePort}');
+    // print('Sent to ${socket.remoteAddress.address}:${socket.remotePort}');
   }, onError: (error) {
     print('Error');
   });
@@ -150,7 +150,7 @@ void sendTCPIPCommandNoResponse(Projector projector, String command) {
 
 void sendPJLinkCommandNoResponse(Projector projector, String command) {
   Socket.connect(projector.ip, 4352).then((socket) {
-    print('Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
+    // print('Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
     socket.write(command);
   }, onError: (error) {
     print('Error');
@@ -160,12 +160,12 @@ void sendPJLinkCommandNoResponse(Projector projector, String command) {
 String sendPJLinkCommandStatus(Projector projector) {
   String response = '';
   Socket.connect(projector.ip, 4352).then((socket) {
-    print('Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
+    // print('Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
     socket.write('%1POWR ?[CR]');
     socket.write('%1AVMT ?[CR]');
     socket.listen((data) async {
       response = utf8.decode(data);
-      print('Response: ${projector.ip} $response');
+      // print('Response: ${projector.ip} $response');
       if (response.contains('%1POWR=0')) {
         projector.power_status.setValue(false);
         if (projector.shutter_status.getValue()) {

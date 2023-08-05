@@ -63,7 +63,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
               ),
               onPressed: () {
                 setState(() {
-                  checkRoomConnection(room, 2000);
+                  checkAllRoomConnection(4000);
                   widget.onUpdateState?.call();
                 });
               },

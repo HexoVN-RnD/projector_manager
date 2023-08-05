@@ -18,18 +18,4 @@ Future<void> OpeningCheck() async {
     allRoom.num_projectors
         .setValue(allRoom.num_projectors.getValue() + room.projectors.length);
   }
-  for (Room room in rooms) {
-    if (!room.servers.isEmpty)
-      for (Server server in room.servers) {
-        checkConnectionServerResponse(server);
-      }
-    if (!room.sensors.isEmpty) {
-      for (Sensor sensor in room.sensors) {
-        checkConnectionSensor(sensor);
-      }
-    }
-    if (room.projectors.length > 0) {
-      RoomStatus(room, 8000);
-    }
-  }
 }

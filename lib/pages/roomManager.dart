@@ -74,7 +74,8 @@ class _RoomManagerState extends State<RoomManager> {
     _timer2 = Timer.periodic(Duration(seconds: 3), (timer) async {
       Room room = rooms[
           (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
-      checkRoomConnection(room, 3000);
+      checkRoomSensorConnection(room);
+      checkRoomProjectorConnection(room, 3000);
     });
   }
 
