@@ -51,13 +51,13 @@ class _PositionPage2State extends State<PositionPage2> {
         //     server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
         decoration: BoxDecoration(
             color: server.connected.getValue()
-                ? AppColors.navy_blue
+                ? AppColors.green
                 : AppColors.red,
             border: server.isOnHover.getValue()
                 ? Border.all(
                     strokeAlign: BorderSide.strokeAlignCenter,
                     color: server.connected.getValue()
-                        ? AppColors.navy_blue
+                        ? AppColors.green
                         : AppColors.red,
                     width: 4.0,
                   )

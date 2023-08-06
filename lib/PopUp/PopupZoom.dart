@@ -149,7 +149,7 @@ class _PopupZoomState extends State<PopupZoom> {
                       height: height * 0.09,
                       child: Container(
                         color: room.servers[index].connected.getValue()
-                            ? AppColors.navy_blue
+                            ? AppColors.green
                             : AppColors.red,
                       ),
                     ),
