@@ -11,7 +11,11 @@ import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
+import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
+import 'package:responsive_dashboard/PopUp/PopupOffProjector.dart';
+import 'package:responsive_dashboard/PopUp/PopupOffShutter.dart';
+import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/component/barChart.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
@@ -62,12 +66,12 @@ class _RoomManagerState extends State<RoomManager> {
           (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
       setState(() {
         if (current_page.getValue()==2) {
-          for (Server server in room.servers) {
-            if (server.connected.getValue() &&
+          // for (Server server in room.servers) {
+            if (room.servers[0].connected.getValue() &&
                 room.current_preset.getValue() <= room.presets.length) {
-              OSCReceive(room, server);
+              OSCReceive();
             }
-          }
+          // }
         }
       });
     });
@@ -184,7 +188,7 @@ class _RoomManagerState extends State<RoomManager> {
                                         children: [
                                           if (isSelected && current_page.getValue()==2)
                                             SizedBox(
-                                              height: 10,
+                                              height: 12,
                                               width: 160,
                                               child: Container(
                                                 child: ClipRRect(
@@ -255,6 +259,7 @@ class _RoomManagerState extends State<RoomManager> {
                               }),
                             ),
                           ),
+                          (current_page.getValue() != 1)?
                           Container(
                             margin: EdgeInsets.only(top: 20),
                             padding: const EdgeInsets.all(20),
@@ -265,7 +270,7 @@ class _RoomManagerState extends State<RoomManager> {
                                     room: room, server: room.servers[index]),
                               ),
                             ),
-                          ),
+                          ): Container(),
                         ],
                       ),
                     ),
@@ -467,6 +472,196 @@ class _RoomManagerState extends State<RoomManager> {
                               ],
                             ),
                           ),
+                          // Container(
+                          //   height: Responsive.isDesktop(context)? 180:null,
+                          //   constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
+                          //       maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth/2-150: SizeConfig.screenWidth- 40),
+                          //   padding: EdgeInsets.only(
+                          //       top: 20, bottom: 20, left: 20, right: Responsive.isMobile(context) ? 20 : 40),
+                          //   decoration: BoxDecoration(
+                          //     borderRadius: BorderRadius.circular(20),
+                          //     color: AppColors.barBg,
+                          //   ),
+                          //   child: Column(
+                          //     crossAxisAlignment: CrossAxisAlignment.start,
+                          //     children: [
+                          //       Row(
+                          //         crossAxisAlignment: CrossAxisAlignment.center,
+                          //         children: [
+                          //           PrimaryText(
+                          //             text: "Bật/tắt toàn bộ máy chiếu",
+                          //             color: AppColors.gray,
+                          //             size: 18,
+                          //             fontWeight: FontWeight.w500,
+                          //           ),
+                          //           Expanded(
+                          //             child: SizedBox(
+                          //               width: SizeConfig.blockSizeHorizontal,
+                          //             ),
+                          //           ),
+                          //           Container(
+                          //             height: 40,
+                          //             width: 60,
+                          //             child: ElevatedButton(
+                          //               style:ElevatedButton.styleFrom(
+                          //                 backgroundColor: allRoom.power_all_projectors.getValue()? AppColors.navy_blue: AppColors.gray,
+                          //                 shape: RoundedRectangleBorder(
+                          //                   borderRadius: BorderRadius.circular(20),
+                          //                 ),
+                          //               ),
+                          //               onPressed: () {
+                          //                 setState(() {
+                          //                   // PowerAllProjectors(true);
+                          //                 });
+                          //               },
+                          //               child: PrimaryText(text: 'On',
+                          //                 size: 14,
+                          //                 color: AppColors.white,
+                          //                 fontWeight: FontWeight.w500,),
+                          //             ),
+                          //           ),
+                          //           Padding(
+                          //             padding: const EdgeInsets.fromLTRB(35,0,15,0),
+                          //             child: Container(
+                          //               height: 40,
+                          //               width: 60,
+                          //               child: Hero(
+                          //                 tag: heroOffProjector,
+                          //                 createRectTween: (begin, end) {
+                          //                   return CustomRectTween(begin: begin, end: end);
+                          //                 },
+                          //                 child: ElevatedButton(
+                          //                   style:ElevatedButton.styleFrom(
+                          //                     backgroundColor: !allRoom.power_all_projectors.getValue()? AppColors.red: AppColors.gray,
+                          //                     shape: RoundedRectangleBorder(
+                          //                       borderRadius: BorderRadius.circular(20),
+                          //                     ),
+                          //                   ),
+                          //                   onPressed: () {
+                          //                     setState(() {
+                          //                       Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                          //                         return PopupOffProjector( onUpdateState: () {
+                          //                           setState(() {});
+                          //                         },);
+                          //                       }));
+                          //                       // PowerAllProjectors(false);
+                          //                     });
+                          //                   },
+                          //                   child: PrimaryText(text: 'Off',
+                          //                     size: 14,
+                          //                     color: AppColors.white,
+                          //                     fontWeight: FontWeight.w500,),
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //       SizedBox(
+                          //         height: SizeConfig.blockSizeVertical*2,
+                          //       ),
+                          //       Row(
+                          //         crossAxisAlignment: CrossAxisAlignment.center,
+                          //         children: [
+                          //           PrimaryText(
+                          //             text: "Bật/tắt toàn bộ màn chập",
+                          //             color: AppColors.gray,
+                          //             size: 18,
+                          //             fontWeight: FontWeight.w500,
+                          //           ),
+                          //           Expanded(
+                          //             child: SizedBox(
+                          //               width: SizeConfig.blockSizeHorizontal,
+                          //             ),
+                          //           ),
+                          //           Container(
+                          //             height: 40,
+                          //             width: 60,
+                          //             child: ElevatedButton(
+                          //               style:ElevatedButton.styleFrom(
+                          //                 backgroundColor: allRoom.shutter_all_projectors.getValue()? AppColors.navy_blue: AppColors.gray,
+                          //                 shape: RoundedRectangleBorder(
+                          //                   borderRadius: BorderRadius.circular(20),
+                          //                 ),
+                          //               ),
+                          //               onPressed: () {
+                          //                 setState(() {
+                          //                   // ShutterAllProjectors(true);
+                          //                 });
+                          //               },
+                          //               child: PrimaryText(text: 'On',
+                          //                 size: 14,
+                          //                 color: AppColors.white,
+                          //                 fontWeight: FontWeight.w500,),
+                          //             ),
+                          //           ),
+                          //           Padding(
+                          //             padding: const EdgeInsets.fromLTRB(35,0,15,0),
+                          //             child: Container(
+                          //               height: 40,
+                          //               width: 60,
+                          //               child: Hero(
+                          //                 tag: heroOffShutter,
+                          //                 createRectTween: (begin, end) {
+                          //                   return CustomRectTween(begin: begin, end: end);
+                          //                 },
+                          //                 child: ElevatedButton(
+                          //                   style:ElevatedButton.styleFrom(
+                          //                     backgroundColor: !allRoom.shutter_all_projectors.getValue()? AppColors.red: AppColors.gray,
+                          //                     shape: RoundedRectangleBorder(
+                          //                       borderRadius: BorderRadius.circular(20),
+                          //                     ),
+                          //                   ),
+                          //                   onPressed: () {
+                          //                     setState(() {
+                          //                       Navigator.of(context).push(HeroDialogRoute(builder: (context) {
+                          //                         return PopupOffShutter( onUpdateState: () {
+                          //                           setState(() {});
+                          //                         },);
+                          //                       }));
+                          //                       // ShutterAllProjectors(false);
+                          //                     });
+                          //                   },
+                          //                   child: PrimaryText(text: 'Off',
+                          //                     size: 14,
+                          //                     color: AppColors.white,
+                          //                     fontWeight: FontWeight.w500,),
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //           // Transform.scale(
+                          //           //   scale: 1,
+                          //           //   child: CupertinoSwitch(
+                          //           //   value: allRoom.shutter_all_projectors.getValue(),
+                          //           //   activeColor: AppColors.navy_blue,
+                          //           //   onChanged: (value) {
+                          //           //       setState(() {
+                          //           //         ShutterAllProjectors();
+                          //           //       });
+                          //           //     },
+                          //           //   ),
+                          //           // ),
+                          //         ],
+                          //       ),
+                          //       // PrimaryText(
+                          //       //     text: 'Phòng 2 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+                          //       //     color: AppColors.iconDeepGray,
+                          //       //     size: 16),
+                          //       // PrimaryText(
+                          //       //     text: 'Phòng 4 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+                          //       //     color: AppColors.iconDeepGray,
+                          //       //     size: 16),
+                          //       // PrimaryText(
+                          //       //     text: 'Phòng 5 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+                          //       //     color: AppColors.iconDeepGray,
+                          //       //     size: 16),
+                          //       // PrimaryText(
+                          //       //     text: 'Phòng 6 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+                          //       //     color: AppColors.iconDeepGray,
+                          //       //     size: 16),
+                          //     ],
+                          //   ),),
                           SizedBox(
                               width: SizeConfig.screenWidth,
                               child: Wrap(

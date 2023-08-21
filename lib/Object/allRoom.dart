@@ -11,6 +11,7 @@ class AllRoom {
     StatefulValuable<bool> power_all_servers;
     StatefulValuable<double> volume_all;
     StatefulValuable<int> current_preset;
+    StatefulValuable<double> current_transport;
     StatefulValuable<int> num_servers_connected;
     StatefulValuable<int> num_projectors_connected;
     StatefulValuable<int> num_servers;
@@ -27,6 +28,7 @@ class AllRoom {
         required this.power_all_servers,
         required this.volume_all,
         required this.current_preset,
+        required this.current_transport,
         required this.presets,
         required this.num_servers_connected,
         required this.num_projectors_connected,

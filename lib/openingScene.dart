@@ -36,7 +36,13 @@ class _OpeningSceneState extends State<OpeningScene>
   late RiveAnimationController _btnAnimationController;
   Timer? _timer;
   bool isShowSignInDialog = false;
+  bool isChecked = false;
   late AnimationController _animationController;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  // String password = '';
+  bool isPasswordVisible = true;
+
 
   @override
   void initState() {
@@ -49,17 +55,16 @@ class _OpeningSceneState extends State<OpeningScene>
       checkAllRoomConnection(3000);
     });
     _animationController = AnimationController(
-      duration: Duration(seconds: 30),
+      duration: Duration(seconds: 15),
       vsync: this,
     )..addListener(() {
-        setState(() {
-          progressValue = _animationController.value;
-          if (progressValue == 1) {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => Dashboard()));
-          }
-        });
+      setState(() {
+        progressValue = _animationController.value;
+        if (progressValue == 1) {
+          isChecked = true;
+        }
       });
+    });
     _animationController.forward();
   }
 
@@ -135,8 +140,54 @@ class _OpeningSceneState extends State<OpeningScene>
                         ],
                       ),
                     ),
-                    const Spacer(flex: 4),
-
+                    const Spacer(flex: 5),
+                    Container(
+                      width: 300,
+                      child: TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          hintText: 'Tên đăng nhập...',
+                          labelText: 'Tài khoản',
+                          prefixIcon: Icon(Icons.mail),
+                          // icon: Icon(Icons.mail),
+                          suffixIcon: emailController.text.isEmpty
+                              ? Container(width: 0)
+                              : IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () => emailController.clear(),
+                          ),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.done,
+                        // autofocus: true,
+                      ),
+                    ),
+                    SizedBox(height: 20,),
+                    Container(
+                      width: 300,
+                      child: TextField(
+                        controller: passwordController,
+                        // onChanged: (value) => setState(() => this.password = value),
+                        // onSubmitted: (value) => setState(() => this.password = value),
+                        decoration: InputDecoration(
+                          hintText: 'Mật khẩu...',
+                          labelText: 'Mật khẩu',
+                          // errorText: 'Vui lòng thử lại',
+                          suffixIcon: IconButton(
+                            icon: isPasswordVisible
+                                ? Icon(Icons.visibility_off)
+                                : Icon(Icons.visibility),
+                            onPressed: () =>
+                                setState(() => isPasswordVisible = !isPasswordVisible),
+                          ),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
+                        ),
+                        obscureText: isPasswordVisible,
+                      ),
+                    ),
+                    SizedBox(height: 20,),
+                    isChecked?
                     AnimatedBtn(
                       btnAnimationController: _btnAnimationController,
                       press: () {
@@ -144,10 +195,16 @@ class _OpeningSceneState extends State<OpeningScene>
 
                         Future.delayed(
                           const Duration(milliseconds: 800),
-                          () {
+                              () {
                             setState(() {
                               isShowSignInDialog = true;
                             });
+                            if(emailController.text == email && passwordController == password) {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => Dashboard()),
+                              );
+                            }
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (context) => Dashboard()),
@@ -155,7 +212,8 @@ class _OpeningSceneState extends State<OpeningScene>
                           },
                         );
                       },
-                    ),
+                    )
+                    : Container(height: 64,),
                     const SizedBox(
                       height: 50,
                     ),
@@ -185,7 +243,7 @@ class _OpeningSceneState extends State<OpeningScene>
                     children: [
                       Column(
                         children:
-                            List.generate(rooms[0].servers.length, (index) {
+                        List.generate(rooms[0].servers.length, (index) {
                           Server server = rooms[0].servers[index];
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
@@ -231,7 +289,7 @@ class _OpeningSceneState extends State<OpeningScene>
                       ),
                       Column(
                         children:
-                            List.generate(rooms[3].servers.length, (index) {
+                        List.generate(rooms[3].servers.length, (index) {
                           Server server = rooms[3].servers[index];
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
@@ -323,7 +381,7 @@ class _OpeningSceneState extends State<OpeningScene>
                       children: List.generate(
                           rooms[1].projectors.length - half_length, (index) {
                         Projector projector =
-                            rooms[1].projectors[index + half_length];
+                        rooms[1].projectors[index + half_length];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: Row(
@@ -367,7 +425,7 @@ class _OpeningSceneState extends State<OpeningScene>
                   Column(children: [
                     Column(
                       children:
-                          List.generate(rooms[2].projectors.length, (index) {
+                      List.generate(rooms[2].projectors.length, (index) {
                         Projector projector = rooms[2].projectors[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
@@ -413,7 +471,7 @@ class _OpeningSceneState extends State<OpeningScene>
                     ),
                     Column(
                       children:
-                          List.generate(rooms[3].projectors.length, (index) {
+                      List.generate(rooms[3].projectors.length, (index) {
                         Projector projector = rooms[3].projectors[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),

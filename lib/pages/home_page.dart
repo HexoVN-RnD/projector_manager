@@ -36,8 +36,12 @@ class _HomePage extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) async {
-      setState(() {});
+    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      setState(() {
+          if (rooms[2].servers[0].connected.getValue()) {
+            OSCReceive();
+          }
+      });
     });
     _timer2 = Timer.periodic(Duration(seconds: 3), (timer) async {
       checkAllRoomConnection(3000);
@@ -227,6 +231,27 @@ class _HomePage extends State<HomePage> {
                                   //     fontWeight: FontWeight.w600),
                                 ],
                               ),
+                              SizedBox(height: SizeConfig.blockSizeVertical,),
+                              if (isSelected)
+                                SizedBox(
+                                  height: 35,
+                                  width: 400,
+                                  child: Container(
+                                    child: ClipRRect(
+                                      borderRadius:
+                                      BorderRadius.circular(10),
+                                      child:
+                                      LinearProgressIndicator(
+                                        value: allRoom.presets[allRoom.current_preset.getValue()].transport.getValue(),
+                                        semanticsLabel:
+                                        'Linear progress indicator',
+                                        color: AppColors.navy_blue2,
+                                        backgroundColor:
+                                        AppColors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                             ],
                           ),
                         );
@@ -251,7 +276,7 @@ class _HomePage extends State<HomePage> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.easeInOut,
                                 width: isSelectedPlay ? 250.0 : 150.0,
-                                height: isSelectedPlay ? 250.0 : 150.0,
+                                height: isSelectedPlay ? 100.0 : 70.0,
                                 margin: EdgeInsets.all(20.0),
                                 decoration: BoxDecoration(
                                   color: isSelectedPlay
@@ -298,7 +323,7 @@ class _HomePage extends State<HomePage> {
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.easeInOut,
                                 width: isSelectedPlay ? 250.0 : 150.0,
-                                height: isSelectedPlay ? 250.0 : 150.0,
+                                height: isSelectedPlay ? 100.0 : 70.0,
                                 margin: EdgeInsets.all(20.0),
                                 decoration: BoxDecoration(
                                   color: isSelectedPlay

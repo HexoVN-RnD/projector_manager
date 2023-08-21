@@ -8,6 +8,9 @@ import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/Object/allRoom.dart';
 import 'package:valuable/valuable.dart';
 
+String email = 'Hexogon';
+String password = 'Hexogon';
+
 AllRoom allRoom = AllRoom(
   // current_test_pattern: StatefulValuable<int>(0),
   current_preset: StatefulValuable<int>(10),
@@ -25,7 +28,7 @@ AllRoom allRoom = AllRoom(
   // B2: StatefulValuable<bool>(true),
   // B3: StatefulValuable<bool>(true),
   volume_all: StatefulValuable<double>(1),
-  // lamp_mode: StatefulValuable<int>(0),
+  current_transport: StatefulValuable<double>(0),
   num_servers_connected: StatefulValuable<int>(0),
   num_projectors_connected: StatefulValuable<int>(0),
   num_servers: StatefulValuable<int>(0),
