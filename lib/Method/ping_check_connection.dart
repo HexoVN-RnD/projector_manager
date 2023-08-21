@@ -94,7 +94,8 @@ void checkConnectionProjector(Projector projector) {
 
 Future<void> checkAllRoomConnection(int time) async {
   print('checkAllRoomConnection');
-  int length = allRoom.num_servers.getValue()+allRoom.num_projectors.getValue();
+  int length =
+      allRoom.num_servers.getValue() + allRoom.num_projectors.getValue();
   for (Room room in rooms) {
     if (!room.sensors.isEmpty) {
       for (Sensor sensor in room.sensors) {
@@ -103,8 +104,7 @@ Future<void> checkAllRoomConnection(int time) async {
     }
     if (!room.projectors.isEmpty) {
       for (Projector projector in room.projectors) {
-        await Future.delayed(Duration(
-            milliseconds: (time / length).toInt()));
+        await Future.delayed(Duration(milliseconds: (time / length).toInt()));
         checkConnectionProjector(projector);
         if (projector.type == 'Christie') {
           String response = sendTCPIPCommandStatus(projector);
@@ -117,14 +117,12 @@ Future<void> checkAllRoomConnection(int time) async {
     }
     if (!room.servers.isEmpty) {
       for (Server server in room.servers) {
-        await Future.delayed(
-            Duration(milliseconds: (time / length).toInt()));
+        await Future.delayed(Duration(milliseconds: (time / length).toInt()));
         checkConnectionServerResponse(server);
       }
     }
   }
   SetButtonControlAllSystem();
-
 }
 
 Future<void> checkRoomProjectorConnection(Room room, int time) async {
@@ -164,4 +162,3 @@ Future<void> checkRoomSensorConnection(Room room) async {
     }
   }
 }
-

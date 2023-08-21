@@ -11,7 +11,7 @@ Future<void> PowerOnAllServer() async {
       if (!server.power_status.getValue() && room.resolume) {
         server.power_status.setValue(true);
         WakeonLan(server);
-        // await Future.delayed(Duration(seconds: 15));
+        await Future.delayed(Duration(seconds: 15));
       }
     }
   }

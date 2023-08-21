@@ -61,14 +61,14 @@ class _RoomManagerState extends State<RoomManager> {
       Room room = rooms[
           (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
       setState(() {
-        // if (room.resolume) {
-        //   for (Server server in room.servers) {
-        //     if (server.connected.getValue() &&
-        //         room.current_preset.getValue() <= room.presets.length) {
-        //       OSCReceive(room, server);
-        //     }
-        //   }
-        // }
+        if (current_page.getValue()==2) {
+          for (Server server in room.servers) {
+            if (server.connected.getValue() &&
+                room.current_preset.getValue() <= room.presets.length) {
+              OSCReceive(room, server);
+            }
+          }
+        }
       });
     });
     _timer2 = Timer.periodic(Duration(seconds: 3), (timer) async {
@@ -182,28 +182,28 @@ class _RoomManagerState extends State<RoomManager> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          // if (isSelected && room.resolume)
-                                          //   SizedBox(
-                                          //     height: 10,
-                                          //     width: 160,
-                                          //     child: Container(
-                                          //       child: ClipRRect(
-                                          //         borderRadius:
-                                          //         BorderRadius.circular(10),
-                                          //         child:
-                                          //         LinearProgressIndicator(
-                                          //           value: room.presets[index]
-                                          //               .transport
-                                          //               .getValue(),
-                                          //           semanticsLabel:
-                                          //           'Linear progress indicator',
-                                          //           color: AppColors.navy_blue2,
-                                          //           backgroundColor:
-                                          //           AppColors.white,
-                                          //         ),
-                                          //       ),
-                                          //     ),
-                                          //   ),
+                                          if (isSelected && current_page.getValue()==2)
+                                            SizedBox(
+                                              height: 10,
+                                              width: 160,
+                                              child: Container(
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                  BorderRadius.circular(10),
+                                                  child:
+                                                  LinearProgressIndicator(
+                                                    value: room.presets[index]
+                                                        .transport
+                                                        .getValue(),
+                                                    semanticsLabel:
+                                                    'Linear progress indicator',
+                                                    color: AppColors.navy_blue2,
+                                                    backgroundColor:
+                                                    AppColors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                           if (isSelected)
                                             SizedBox(
                                                 height: SizeConfig

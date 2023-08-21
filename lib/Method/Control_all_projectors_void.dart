@@ -42,9 +42,9 @@ void SetButtonControlAllSystem(){
     allRoom.shutter_all_projectors.setValue(false);
   }
   if(allRoom.num_servers.getValue() == numServerPowerOn){
-    allRoom.power_all_projectors.setValue(true);
+    allRoom.power_all_servers.setValue(true);
   } else if(numServerPowerOn == 0){
-    allRoom.power_all_projectors.setValue(false);
+    allRoom.power_all_servers.setValue(false);
   }
 }
 
@@ -69,12 +69,12 @@ void PowerAllProjectors(bool mode) async {
             print(projector.ip.toString() + '(PWR 1)');
             // checkConnectionProjector(projector);
             sendTCPIPCommandNoResponse(projector, '(PWR 1)');
-            await Future.delayed(Duration(seconds: 14));
+            await Future.delayed(Duration(seconds: 5));
           } else {
             print(projector.ip.toString() + '%1POWR 1[CR]');
             // checkConnectionProjector(projector);
             sendPJLinkCommandNoResponse(projector, '%1POWR 1[CR]');
-            await Future.delayed(Duration(seconds: 14));
+            await Future.delayed(Duration(seconds: 5));
           }
         } else {
           if (projector.type == 'Christie') {

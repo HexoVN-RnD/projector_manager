@@ -37,8 +37,7 @@ class _HomePage extends State<HomePage> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(Duration(milliseconds: 500), (timer) async {
-      setState(() {
-      });
+      setState(() {});
     });
     _timer2 = Timer.periodic(Duration(seconds: 3), (timer) async {
       checkAllRoomConnection(3000);
@@ -63,6 +62,7 @@ class _HomePage extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isSelectedPlay = false;
     return SafeArea(
       child: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
@@ -231,6 +231,108 @@ class _HomePage extends State<HomePage> {
                           ),
                         );
                       }),
+                    ),
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              PlayAllPreset();
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AnimatedContainer(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                                width: isSelectedPlay ? 250.0 : 150.0,
+                                height: isSelectedPlay ? 250.0 : 150.0,
+                                margin: EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                  color: isSelectedPlay
+                                      ? AppColors.navy_blue2
+                                      : AppColors.white,
+                                  borderRadius:
+                                      BorderRadius.circular(isSelectedPlay ? 20.0 : 15),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(5),
+                                  child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.circular(isSelectedPlay ? 15.0 : 10),
+                                    child: Icon(Icons.pause, size: 50,),
+                                  ),
+                                ),
+                              ),
+                              AnimatedDefaultTextStyle(
+                                style: isSelectedPlay
+                                    ? TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w600)
+                                    : TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w600),
+                                duration: const Duration(milliseconds: 200),
+                                child: Text('Play All'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              StopAllPreset();
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AnimatedContainer(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                                width: isSelectedPlay ? 250.0 : 150.0,
+                                height: isSelectedPlay ? 250.0 : 150.0,
+                                margin: EdgeInsets.all(20.0),
+                                decoration: BoxDecoration(
+                                  color: isSelectedPlay
+                                      ? AppColors.navy_blue2
+                                      : AppColors.white,
+                                  borderRadius:
+                                      BorderRadius.circular(isSelectedPlay ? 20.0 : 15),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(5),
+                                  child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.circular(isSelectedPlay ? 15.0 : 10),
+                                    child: Icon(Icons.play_arrow, size: 50,),
+                                  ),
+                                ),
+                              ),
+                              AnimatedDefaultTextStyle(
+                                style: isSelectedPlay
+                                    ? TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 17.0,
+                                        fontWeight: FontWeight.w600)
+                                    : TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 12.0,
+                                        fontWeight: FontWeight.w600),
+                                duration: const Duration(milliseconds: 200),
+                                child: Text('Stop All'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   Container(
