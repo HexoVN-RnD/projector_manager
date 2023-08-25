@@ -110,33 +110,85 @@ class _PopupZoomState extends State<PopupZoom> {
                 )
               else if (page == 3)
                 Stack(
-                  children: List.generate(
-                    room.projectors.length,
-                    (index) => Positioned(
-                      left: width * room.projectors[index].position.dx,
-                      top: height * room.projectors[index].position.dy,
-                      width: width * 0.018,
-                      height: width * 0.018,
-                      child: Container(
-                        color:  AppColors.StatusColor[room.projectors[index].status.getValue()],
+                  children: [
+                    Stack(
+                      children: List.generate(
+                        room.projectors.length,
+                        (index) => Positioned(
+                          left: width * room.projectors[index].position.dx,
+                          top: height * room.projectors[index].position.dy,
+                          width: width * 0.018,
+                          height: width * 0.018,
+                          child: Container(
+                            color:  AppColors.StatusColor[room.projectors[index].status.getValue()],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Stack(
+                      children: List.generate(
+                        room.sensors.length,
+                            (index) => Positioned(
+                          left: width * room.sensors[index].position.dx,
+                          top: height * room.sensors[index].position.dy,
+                          // left: width * 0.555,
+                          // top: height * 0.858,
+                          width: width * 0.016,
+                          height: width * 0.016,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: room.sensors[index].connected.getValue()
+                                  ? AppColors.green
+                                  : AppColors.red,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               else if (page == 4)
                 Stack(
-                  children: List.generate(
-                    room.projectors.length,
-                    (index) => Positioned(
-                      left: width * room.projectors[index].position.dx,
-                      top: height * room.projectors[index].position.dy,
-                      width: width * 0.012,
-                      height: width * 0.012,
-                      child: Container(
-                        color: AppColors.StatusColor[room.projectors[index].status.getValue()],
+                  children: [
+                    Stack(
+                      children: List.generate(
+                        room.projectors.length,
+                        (index) => Positioned(
+                          left: width * room.projectors[index].position.dx,
+                          top: height * room.projectors[index].position.dy,
+                          width: width * 0.012,
+                          height: width * 0.012,
+                          child: Container(
+                            color: AppColors.StatusColor[room.projectors[index].status.getValue()],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Positioned(
+                      left: width * room.servers[0].position.dx,
+                      top: height * room.servers[0].position.dy,
+                      // left: width * 0.448,
+                      // top: height * 0.45,
+                      width: width * 0.1,
+                      height: width * 0.1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: room.servers[0].connected.getValue()? AppColors.green: AppColors.red,
+                            borderRadius: BorderRadius.circular(5),
+                            border: room.servers[0].isOnHover.getValue()
+                                ? Border.all(
+                              strokeAlign: BorderSide.strokeAlignCenter,
+                              color: room.servers[0].connected.getValue()? AppColors.green: AppColors.red,
+                              width: 10.0,
+                            )
+                                : Border.all(
+                              color: Colors.transparent,
+                              width: 10.0,
+                            )),
+                      ),
+                    ),
+                  ],
                 )
               else if (page == 1)
                 Stack(

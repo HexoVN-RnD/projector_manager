@@ -19,7 +19,7 @@ class MiniMap extends StatefulWidget {
   Room room;
   int page;
   MiniMap({
-  // required this.roomNotifier,
+    // required this.roomNotifier,
     required this.room,
     required this.page,
   });
@@ -55,7 +55,7 @@ class _MiniMapState extends State<MiniMap> {
     int page = widget.page;
     double width = Responsive.isDesktop(context)
         ? ((current_page.getValue() != 0)
-            ? (SizeConfig.screenWidth - 200) / 3*2 - 60
+            ? (SizeConfig.screenWidth - 200) / 3 * 2 - 60
             : SizeConfig.screenWidth / 2 - 150)
         : SizeConfig.screenWidth - 60;
     double height = width * 1050 / 1920;
@@ -138,24 +138,78 @@ class _MiniMapState extends State<MiniMap> {
               )
             else if (page == 3)
               Stack(
-                children: List.generate(
-                  room.projectors.length,
-                  (index) => PositionPage5(
-                      projector: room.projectors[index],
-                      width: width,
-                      height: height),
-                ),
+                children: [
+                  Stack(
+                    children: List.generate(
+                      room.projectors.length,
+                      (index) => PositionPage5(
+                          projector: room.projectors[index],
+                          width: width,
+                          height: height),
+                    ),
+                  ),
+                  Stack(
+                    children: List.generate(
+                      room.sensors.length,
+                      (index) => Positioned(
+                        // left: width * room.projectors[index].position.dx,
+                        // top: height * room.projectors[index].position.dy,
+                        left: width * room.sensors[index].position.dx,
+                        top: height * room.sensors[index].position.dy,
+                        width: width * 0.018,
+                        height: width * 0.018,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: room.sensors[index].connected.getValue()
+                                ? AppColors.green
+                                : AppColors.red,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               )
             else if (page == 4)
-              Stack(
-                children: List.generate(
-                  room.projectors.length,
-                  (index) => PositionPage6(
-                      projector: room.projectors[index],
-                      width: width,
-                      height: height),
+              Stack(children: [
+                Stack(
+                  children: List.generate(
+                    room.projectors.length,
+                    (index) => PositionPage6(
+                        projector: room.projectors[index],
+                        width: width,
+                        height: height),
+                  ),
                 ),
-              )
+                Positioned(
+                  left: width * room.servers[0].position.dx,
+                  top: height * room.servers[0].position.dy,
+                  // left: width * 0.448,
+                  // top: height * 0.45,
+                  width: width * 0.1,
+                  height: width * 0.1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: room.servers[0].connected.getValue()
+                            ? AppColors.green
+                            : AppColors.red,
+                          borderRadius: BorderRadius.circular(5),
+                        border: room.servers[0].isOnHover.getValue()
+                            ? Border.all(
+                                strokeAlign: BorderSide.strokeAlignCenter,
+                                color: room.servers[0].connected.getValue()
+                                    ? AppColors.green
+                                    : AppColors.red,
+                                width: 10.0,
+                              )
+                            : Border.all(
+                                color: Colors.transparent,
+                                width: 10.0,
+                              )),
+                  ),
+                ),
+              ])
             else if (page == 1)
               Stack(
                 children: List.generate(

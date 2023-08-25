@@ -92,6 +92,10 @@ List<Room> rooms = [
     general: 'Sảnh đón tiếp',
     resolume: false,
     sensors: [],
+    power_room_projectors: StatefulValuable<bool>(false),
+    shutter_room_projectors: StatefulValuable<bool>(false),
+    isSelectedPlay: StatefulValuable<bool>(false),
+    isSelectedStop: StatefulValuable<bool>(false),
     current_preset: StatefulValuable<int>(10),
     presets: [
       Preset(
@@ -236,6 +240,10 @@ List<Room> rooms = [
     map: 'assets/Map/P4.png',
     general: 'Phòng trải nghiệm không gian đa chiều',
     resolume: true,
+    power_room_projectors: StatefulValuable<bool>(false),
+    shutter_room_projectors: StatefulValuable<bool>(false),
+    isSelectedPlay: StatefulValuable<bool>(false),
+    isSelectedStop: StatefulValuable<bool>(false),
     current_preset: StatefulValuable<int>(10),
     sensors: [],
     presets: [
@@ -796,16 +804,19 @@ List<Room> rooms = [
       Sensor(
           ip: '192.168.1.11',
           name: 'Cảm biến 01',
+          position: Offset(0.888,0.15),
           port: 10940,
           connected: StatefulValuable<bool>(false)),
       Sensor(
           ip: '192.168.1.12',
           name: 'Cảm biến 02',
+          position: Offset(0.888,0.85),
           port: 10940,
           connected: StatefulValuable<bool>(false)),
       Sensor(
           ip: '192.168.1.13',
           name: 'Cảm biến 03',
+          position: Offset(0.555,0.855),
           port: 10940,
           connected: StatefulValuable<bool>(false)),
     ],
@@ -831,6 +842,10 @@ List<Room> rooms = [
       //     osc_message: 'column 4',
       //     transport: StatefulValuable<double>(0)),
     ],
+    power_room_projectors: StatefulValuable<bool>(false),
+    shutter_room_projectors: StatefulValuable<bool>(false),
+    isSelectedPlay: StatefulValuable<bool>(false),
+    isSelectedStop: StatefulValuable<bool>(false),
     projectors: [
       Projector(
         ip: '192.168.1.130',
@@ -971,6 +986,10 @@ List<Room> rooms = [
     map: 'assets/Map/P6.png',
     general: 'Khu vực hội thảo event',
     resolume: false,
+    power_room_projectors: StatefulValuable<bool>(false),
+    shutter_room_projectors: StatefulValuable<bool>(false),
+    isSelectedPlay: StatefulValuable<bool>(false),
+    isSelectedStop: StatefulValuable<bool>(false),
     sensors: [],
     current_preset: StatefulValuable<int>(10),
     presets: [
@@ -1072,7 +1091,7 @@ List<Room> rooms = [
         name: 'Brightsign 09',
         preset_port: 5000,
         power_port: 1234,
-        position: Offset(0,0),
+        position: Offset(0.448,0.45),
         mac_address: 'd4:5d:64:d0:54:c7',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),

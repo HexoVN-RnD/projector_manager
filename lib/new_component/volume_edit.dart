@@ -49,6 +49,90 @@ class _VolumeEditState extends State<VolumeEdit> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              room.isSelectedPlay.setValue(true);
+              room.isSelectedStop.setValue(false);
+              // for (Server server in rooms[0].servers) {
+              //   SendUDPMessage(server, 'Preset0');
+              // }
+            });
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedContainer(
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+                width: 65.0,
+                height: 50.0,
+                margin: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: room.isSelectedPlay.getValue()
+                      ? AppColors.navy_blue2
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Icon(
+                  Icons.pause,
+                  size: 32,
+                  color: AppColors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              room.isSelectedStop.setValue(true);
+              room.isSelectedPlay.setValue(false);
+              // for (Server server in rooms[0].servers) {
+              //   SendUDPMessage(server, 'Preset1');
+              // }
+            });
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedContainer(
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+                width: 65.0,
+                height: 50.0,
+                margin: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: room.isSelectedStop.getValue()
+                      ? AppColors.navy_blue2
+                      : Colors.transparent ,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Icon(
+                  Icons.play_arrow,
+                  size: 32,
+                  color: AppColors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+        // Expanded(child: SizedBox()),
+        SizedBox(
+          width: SizeConfig.blockSizeHorizontal*5,
+        ),
+        // Container(
+        //   width: 90, //widget.room.resolume? 380:230,
+        //   child: PrimaryText(
+        //     text: "Âm thanh ", // + server.name,
+        //     color: AppColors.white,
+        //     size: 18,
+        //     fontWeight: FontWeight.w500,
+        //   ),
+        // ),
+        // SizedBox(
+        //   width: SizeConfig.blockSizeHorizontal,
+        // ),
         Icon(
           (server.volume.getValue() != 0)
               ? Icons.music_note
@@ -56,22 +140,10 @@ class _VolumeEditState extends State<VolumeEdit> {
           size: 25,
           color: AppColors.white,
         ),
-        SizedBox(
-          width: SizeConfig.blockSizeHorizontal,
-        ),
-        Container(
-          width: widget.room.resolume? 380:230,
-          child: PrimaryText(
-            text: "Âm thanh " + server.name,
-            color: AppColors.white,
-            size: 18,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
         Expanded(
           child: Container(
-            margin: EdgeInsets.fromLTRB(30, 0, 20, 0),
-            width: 300,
+            margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+            width: 400,
             child: Transform.scale(
               scale: 1,
               child: Slider(

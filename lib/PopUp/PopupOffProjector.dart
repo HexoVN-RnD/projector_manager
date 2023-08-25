@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/dashboard.dart';
+import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
@@ -97,7 +98,11 @@ class _PopupOffProjectorState extends State<PopupOffProjector> {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  PowerAllProjectors(false);
+                                  if (current_page.getValue() == 0) {
+                                    PowerAllProjectors(false);
+                                  }else{
+                                    PowerRoomProjectors(rooms[current_page.getValue()-1], false);
+                                  }
                                   Navigator.of(context).pop();
                                   widget.onUpdateState?.call();
                                   // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));

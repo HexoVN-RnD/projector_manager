@@ -48,6 +48,29 @@ void SetButtonControlAllSystem(){
   }
 }
 
+void SetButtonControlRoom(Room room){
+  int numProjectorPowerOn = 0;
+  int numProjectorShutterOn = 0;
+    for (Projector projector in room.projectors) {
+      if (projector.power_status.getValue()) {
+        numProjectorPowerOn++;
+      }
+      if (projector.shutter_status.getValue()){
+        numProjectorShutterOn++;
+      }
+    }
+  if(room.projectors.length == numProjectorPowerOn){
+    room.power_room_projectors.setValue(true);
+  } else if(numProjectorPowerOn==0) {
+    room.power_room_projectors.setValue(false);
+  }
+  if(room.projectors.length == numProjectorShutterOn){
+    room.shutter_room_projectors.setValue(true);
+  } else if(numProjectorShutterOn==0){
+    room.shutter_room_projectors.setValue(false);
+  }
+}
+
 void PowerAllProjectors(bool mode) async {
   allRoom.power_all_projectors.setValue(mode);
   for (var room in rooms) {
@@ -95,6 +118,46 @@ void PowerAllProjectors(bool mode) async {
   }
 }
 
+void PowerRoomProjectors(Room room, bool mode) async {
+  room.power_room_projectors.setValue(mode);
+    for (var projector in room.projectors) {
+      checkConnectionProjector(projector);
+    }
+  await Future.delayed(Duration(seconds: 2));
+    for (var projector in room.projectors) {
+      if (projector.power_status.getValue() != mode) {
+        projector.power_status
+            .setValue(allRoom.power_all_projectors.getValue());
+        if (mode) {
+          if (projector.type == 'Christie') {
+            print(projector.ip.toString() + '(PWR 1)');
+            // checkConnectionProjector(projector);
+            sendTCPIPCommandNoResponse(projector, '(PWR 1)');
+            await Future.delayed(Duration(seconds: 5));
+          } else {
+            print(projector.ip.toString() + '%1POWR 1[CR]');
+            // checkConnectionProjector(projector);
+            sendPJLinkCommandNoResponse(projector, '%1POWR 1[CR]');
+            await Future.delayed(Duration(seconds: 5));
+          }
+        } else {
+          if (projector.type == 'Christie') {
+            print(projector.ip.toString() + '(PWR 0)');
+            // checkConnectionProjector(projector);
+            sendTCPIPCommandNoResponse(projector, '(PWR 0)');
+          } else {
+            print(projector.ip.toString() + '%1POWR 0[CR]');
+            // checkConnectionProjector(projector);
+            sendPJLinkCommandNoResponse(projector, '%1POWR 0[CR]');
+            // }
+          }
+        }
+      } else {
+        print('Disconnect');
+      }
+    }
+}
+
 void ShutterAllProjectors(bool mode) {
   allRoom.shutter_all_projectors.setValue(mode);
   for (var room in rooms) {
@@ -124,6 +187,35 @@ void ShutterAllProjectors(bool mode) {
           .setValue(allRoom.shutter_all_projectors.getValue());
     }
   }
+}
+
+void ShutterRoomProjectors(Room room,bool mode) {
+  room.shutter_room_projectors.setValue(mode);
+  for (var projector in room.projectors) {
+      if (mode) {
+        if (projector.type == 'Christie') {
+          print(projector.ip.toString() + '(SHU 1)');
+          // checkConnectionProjector(projector);
+          sendTCPIPCommandNoResponse(projector, '(SHU 1)');
+        } else {
+          print(projector.ip.toString() + '%1AVMT 31[CR]');
+          // checkConnectionProjector(projector);
+          sendPJLinkCommandNoResponse(projector, '%1AVMT 31[CR]');
+        }
+      } else {
+        if (projector.type == 'Christie') {
+          print(projector.ip.toString() + '(SHU 0)');
+          // checkConnectionProjector(projector);
+          sendTCPIPCommandNoResponse(projector, '(SHU 0)');
+        } else {
+          print(projector.ip.toString() + '%1AVMT 30[CR]');
+          // checkConnectionProjector(projector);
+          sendPJLinkCommandNoResponse(projector, '%1AVMT 30[CR]');
+        }
+      }
+      projector.shutter_status
+          .setValue(allRoom.shutter_all_projectors.getValue());
+    }
 }
 
 // void TestPatternSelectAll(int num) {
