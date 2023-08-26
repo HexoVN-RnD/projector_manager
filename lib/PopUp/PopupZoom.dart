@@ -140,7 +140,7 @@ class _PopupZoomState extends State<PopupZoom> {
                               color: room.sensors[index].connected.getValue()
                                   ? AppColors.green
                                   : AppColors.red,
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                           ),
                         ),

@@ -11,6 +11,7 @@ import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
+import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
@@ -54,6 +55,7 @@ class _VolumeEditState extends State<VolumeEdit> {
             setState(() {
               room.isSelectedPlay.setValue(true);
               room.isSelectedStop.setValue(false);
+              PlayPreset(current_page.getValue());
               // for (Server server in rooms[0].servers) {
               //   SendUDPMessage(server, 'Preset0');
               // }
@@ -88,6 +90,7 @@ class _VolumeEditState extends State<VolumeEdit> {
             setState(() {
               room.isSelectedStop.setValue(true);
               room.isSelectedPlay.setValue(false);
+              StopPreset(current_page.getValue());
               // for (Server server in rooms[0].servers) {
               //   SendUDPMessage(server, 'Preset1');
               // }
@@ -119,7 +122,7 @@ class _VolumeEditState extends State<VolumeEdit> {
         ),
         // Expanded(child: SizedBox()),
         SizedBox(
-          width: SizeConfig.blockSizeHorizontal*5,
+          width: SizeConfig.blockSizeHorizontal*1,
         ),
         // Container(
         //   width: 90, //widget.room.resolume? 380:230,
@@ -143,7 +146,7 @@ class _VolumeEditState extends State<VolumeEdit> {
         Expanded(
           child: Container(
             margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-            width: 400,
+            // width: 400,
             child: Transform.scale(
               scale: 1,
               child: Slider(
@@ -151,7 +154,9 @@ class _VolumeEditState extends State<VolumeEdit> {
                 inactiveColor: AppColors.light_navy_blue,
                 value: server.volume.getValue(),
                 onChanged: (index) {
-                  server.volume.setValue(index);
+                  setState(() {
+                    server.volume.setValue(index);
+                  });
                 },
                 onChangeEnd: (index){
                   setState(() => ChangeVolume(room, server, index));
@@ -163,14 +168,11 @@ class _VolumeEditState extends State<VolumeEdit> {
             ),
           ),
         ),
-        Padding(
-          padding: EdgeInsets.only(right: 30),
-          child: PrimaryText(
-              text: (server.volume.getValue() * 100)
-                  .toStringAsFixed(0),
-              color: AppColors.barBg,
-              size: 16),
-        ),
+        PrimaryText(
+            text: (server.volume.getValue() * 100)
+                .toStringAsFixed(0),
+            color: AppColors.barBg,
+            size: 16),
       ],
     );
   }

@@ -10,6 +10,7 @@ import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffServer.dart';
+import 'package:responsive_dashboard/new_component/AllServersStatus.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
@@ -23,7 +24,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
   Widget build(BuildContext context) {
     AllRoom allRooms = allRoom;
     return Container(
-      height: Responsive.isDesktop(context) ? 180 : null,
+      height: Responsive.isDesktop(context) ? 200 : null,
       constraints: BoxConstraints(
           minWidth:
               Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
@@ -168,62 +169,14 @@ class _ManageAllServersState extends State<ManageAllServers> {
               ],
             ),
           ),
-          // PrimaryText(
-          //     text: 'Phòng 2 đã bật '+ allRooms.num_servers_connected.getValue().toString() +'/' + allRooms.num_servers.getValue().toString(),
-          //     color: AppColors.iconDeepGray,
-          //     size: 16),
-          // PrimaryText(
-          //     text: 'Phòng 4 đã bật '+ allRooms.num_servers_connected.getValue().toString() +'/' + allRooms.num_servers.getValue().toString(),
-          //     color: AppColors.iconDeepGray,
-          //     size: 16),
-          // PrimaryText(
-          //     text: 'Phòng 5 đã bật '+ allRooms.num_servers_connected.getValue().toString() +'/' + allRooms.num_servers.getValue().toString(),
-          //     color: AppColors.iconDeepGray,
-          //     size: 16),
-          // PrimaryText(
-          //     text: 'Phòng 6 đã bật '+ allRooms.num_servers_connected.getValue().toString() +'/' + allRooms.num_servers.getValue().toString(),
-          //     color: AppColors.iconDeepGray,
-          //     size: 16),
-          // Container(
-          //   height: 50,
-          //   child: Row(
-          //     crossAxisAlignment: CrossAxisAlignment.center,
-          //     children: [
-          //       PrimaryText(
-          //         text: "Điều chỉnh âm thanh",
-          //         color: AppColors.gray,
-          //         size: 18,
-          //         fontWeight: FontWeight.w500,
-          //       ),
-          //       Expanded(
-          //         child: SizedBox(
-          //           width: SizeConfig.blockSizeHorizontal,
-          //         ),
-          //       ),
-          //       PrimaryText(
-          //           text:allRooms.volume_all.getValue().toStringAsFixed(2),
-          //           color: AppColors.iconDeepGray,
-          //           size: 16),
-          //       SizedBox(
-          //         width: SizeConfig.blockSizeHorizontal,
-          //       ),
-          //       Transform.scale(
-          //         scale: 1,
-          //         child: Slider(
-          //           activeColor: AppColors.navy_blue,
-          //           inactiveColor: AppColors.light_navy_blue,
-          //           value: allRooms.volume_all.getValue(),
-          //           onChanged: (index) {
-          //             setState(() => ChangeAllVolume(index));
-          //           },
-          //           min: 0,
-          //           max: 1,
-          //           // divisions: 5,
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
+          SizedBox(height: SizeConfig.blockSizeVertical,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AllServerStatus(room: rooms[1]),
+              AllServerStatus(room: rooms[2]),
+            ],
+          )
         ],
       ),
     );

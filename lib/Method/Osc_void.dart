@@ -37,12 +37,12 @@ void SendPlayOSC(String ip, int port, int column) async {
   SendOscMessage(
       ip,
       port,
-      '/composition/layers/1/clips/${column+1}/transport/position/behaviour/playdirection',
+      '/composition/layers/1/clips/${column + 1}/transport/position/behaviour/playdirection',
       [2]);
   SendOscMessage(
       ip,
       port,
-      '/composition/layers/2/clips/${column+1}/transport/position/behaviour/playdirection',
+      '/composition/layers/2/clips/${column + 1}/transport/position/behaviour/playdirection',
       [2]);
 }
 
@@ -50,12 +50,12 @@ void SendStopOSC(String ip, int port, int column) async {
   SendOscMessage(
       ip,
       port,
-      '/composition/layers/1/clips/${column+1}/transport/position/behaviour/playdirection',
+      '/composition/layers/1/clips/${column + 1}/transport/position/behaviour/playdirection',
       [1]);
   SendOscMessage(
       ip,
       port,
-      '/composition/layers/2/clips/${column+1}/transport/position/behaviour/playdirection',
+      '/composition/layers/2/clips/${column + 1}/transport/position/behaviour/playdirection',
       [1]);
 }
 
@@ -87,23 +87,57 @@ void SelectAllPreset(index) {
     }
   }
 }
-void PlayPreset() {
-  for (Server server in rooms[0].servers) {
-    SendUDPMessage(server, 'Preset0');
+
+void PlayPreset(int index) {
+  switch (index) {
+    case 1:
+      for (Server server in rooms[0].servers) {
+        SendUDPMessage(server, 'Preset0');
+      }
+      break;
+    case 2:
+      SendPlayOSC(rooms[1].servers[0].ip, rooms[1].servers[0].preset_port,
+          allRoom.current_preset.getValue());
+      SendPlayOSC(rooms[1].servers[1].ip, rooms[1].servers[1].preset_port,
+          allRoom.current_preset.getValue());
+      break;
+    case 3:
+      SendPresetOSC(rooms[2].servers[1].ip, rooms[2].servers[1].preset_port, 0);
+      break;
+    case 4:
+      SendUDPMessage(rooms[3].servers[0], 'Preset0');
+      SendUDPMessage(rooms[3].servers[1], 'Preset0');
   }
-  SendPlayOSC(rooms[1].servers[0].ip, rooms[1].servers[0].preset_port, allRoom.current_preset.getValue());
-  SendPlayOSC(rooms[1].servers[1].ip, rooms[1].servers[1].preset_port, allRoom.current_preset.getValue());
-  SendPresetOSC(rooms[2].servers[1].ip, rooms[2].servers[1].preset_port, 0);
-  SendUDPMessage(rooms[3].servers[0], 'Preset0');
-  SendUDPMessage(rooms[3].servers[1], 'Preset0');
+}void StopPreset(int index) {
+  switch (index) {
+    case 1:
+      for (Server server in rooms[0].servers) {
+        SendUDPMessage(server, 'Preset1');
+      }
+      break;
+    case 2:
+      SendStopOSC(rooms[1].servers[0].ip, rooms[1].servers[0].preset_port,
+          allRoom.current_preset.getValue());
+      SendStopOSC(rooms[1].servers[1].ip, rooms[1].servers[1].preset_port,
+          allRoom.current_preset.getValue());
+      break;
+    case 3:
+      SendPresetOSC(rooms[2].servers[1].ip, rooms[2].servers[1].preset_port, 1);
+      break;
+    case 4:
+      SendUDPMessage(rooms[3].servers[0], 'Preset1');
+      SendUDPMessage(rooms[3].servers[1], 'Preset1');
+  }
 }
 
 void PlayAllPreset() {
   for (Server server in rooms[0].servers) {
     SendUDPMessage(server, 'Preset0');
   }
-  SendPlayOSC(rooms[1].servers[0].ip, rooms[1].servers[0].preset_port, allRoom.current_preset.getValue());
-  SendPlayOSC(rooms[1].servers[1].ip, rooms[1].servers[1].preset_port, allRoom.current_preset.getValue());
+  SendPlayOSC(rooms[1].servers[0].ip, rooms[1].servers[0].preset_port,
+      allRoom.current_preset.getValue());
+  SendPlayOSC(rooms[1].servers[1].ip, rooms[1].servers[1].preset_port,
+      allRoom.current_preset.getValue());
   SendPresetOSC(rooms[2].servers[1].ip, rooms[2].servers[1].preset_port, 0);
   SendUDPMessage(rooms[3].servers[0], 'Preset0');
   SendUDPMessage(rooms[3].servers[1], 'Preset0');
@@ -113,8 +147,10 @@ void StopAllPreset() {
   for (Server server in rooms[0].servers) {
     SendUDPMessage(server, 'Preset1');
   }
-  SendStopOSC(rooms[1].servers[0].ip, rooms[1].servers[0].preset_port, allRoom.current_preset.getValue());
-  SendStopOSC(rooms[1].servers[1].ip, rooms[1].servers[1].preset_port, allRoom.current_preset.getValue());
+  SendStopOSC(rooms[1].servers[0].ip, rooms[1].servers[0].preset_port,
+      allRoom.current_preset.getValue());
+  SendStopOSC(rooms[1].servers[1].ip, rooms[1].servers[1].preset_port,
+      allRoom.current_preset.getValue());
   SendPresetOSC(rooms[2].servers[1].ip, rooms[2].servers[1].preset_port, 1);
   SendUDPMessage(rooms[3].servers[0], 'Preset1');
   SendUDPMessage(rooms[3].servers[1], 'Preset1');
@@ -124,16 +160,14 @@ void OSCReceive() async {
   try {
     // final socket = await OSCSocket( serverAddress: InternetAddress(server.ip), serverPort: 7001);
     final socket =
-      // await RawDatagramSocket.bind(InternetAddress.anyIPv4, 7001);
+        // await RawDatagramSocket.bind(InternetAddress.anyIPv4, 7001);
         await RawDatagramSocket.bind(InternetAddress('192.168.1.241'), 7001);
     // Đặt cổng lắng nghe OSC (ví dụ: 7001)
     OSCMessage oscMessage;
     socket.listen((event) {
       if (event == RawSocketEvent.read) {
         final datagram = socket.receive();
-        if (datagram != null &&
-            allRoom.presets.length >= allRoom.current_preset.getValue()) {
-
+        if (datagram != null) {
           oscMessage = OSCMessage.fromBytes(datagram.data);
 
           double transport =
@@ -141,13 +175,19 @@ void OSCReceive() async {
           // if (allRoom.presets[allRoom.current_preset.getValue()].transport
           //         .getValue() <=
           //     1) {
+          if (allRoom.presets.length > allRoom.current_preset.getValue()) {
             allRoom.presets[allRoom.current_preset.getValue()].transport
                 .setValue(transport);
-            rooms[1].presets[rooms[1].current_preset.getValue()].transport
+          }
+          if (rooms[1].presets.length > rooms[1].current_preset.getValue()) {
+            rooms[1]
+                .presets[rooms[1].current_preset.getValue()]
+                .transport
                 .setValue(transport);
+          }
           // }
-          print('Argument value: ' + rooms[1].presets[rooms[1].current_preset.getValue()].transport
-              .getValue().toString());
+          // print('Argument value: ' + rooms[1].presets[rooms[1].current_preset.getValue()].transport
+          //     .getValue().toString());
         }
       }
     });

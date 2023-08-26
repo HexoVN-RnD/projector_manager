@@ -804,13 +804,13 @@ List<Room> rooms = [
       Sensor(
           ip: '192.168.1.11',
           name: 'Cảm biến 01',
-          position: Offset(0.888,0.15),
+          position: Offset(0.886,0.15),
           port: 10940,
           connected: StatefulValuable<bool>(false)),
       Sensor(
           ip: '192.168.1.12',
           name: 'Cảm biến 02',
-          position: Offset(0.888,0.85),
+          position: Offset(0.886,0.85),
           port: 10940,
           connected: StatefulValuable<bool>(false)),
       Sensor(
@@ -826,21 +826,6 @@ List<Room> rooms = [
           image: 'assets/watching-a-movie_black.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
-      // Preset(
-      //     name: 'Nội dung 2',
-      //     image: 'assets/watching-a-movie_black.png',
-      //     osc_message: 'column 2',
-      //     transport: StatefulValuable<double>(0)),
-      // Preset(
-      //     name: 'Nội dung 3',
-      //     image: 'assets/watching-a-movie_black.png',
-      //     osc_message: 'column 3',
-      //     transport: StatefulValuable<double>(0)),
-      // Preset(
-      //     name: 'Nội dung 4',
-      //     image: 'assets/watching-a-movie_black.png',
-      //     osc_message: 'column 4',
-      //     transport: StatefulValuable<double>(0)),
     ],
     power_room_projectors: StatefulValuable<bool>(false),
     shutter_room_projectors: StatefulValuable<bool>(false),

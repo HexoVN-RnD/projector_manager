@@ -25,7 +25,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Responsive.isDesktop(context)? 180:null,
+      height: Responsive.isDesktop(context)? 200:null,
       constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
                                   maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth/2-150: SizeConfig.screenWidth- 40),
         padding: EdgeInsets.only(
