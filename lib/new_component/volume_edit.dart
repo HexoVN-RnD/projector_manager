@@ -53,9 +53,9 @@ class _VolumeEditState extends State<VolumeEdit> {
         GestureDetector(
           onTap: () {
             setState(() {
-              room.isSelectedPlay.setValue(true);
-              room.isSelectedStop.setValue(false);
-              PlayPreset(current_page.getValue());
+              room.isSelectedStop.setValue(true);
+              room.isSelectedPlay.setValue(false);
+              StopPreset(current_page.getValue());
               // for (Server server in rooms[0].servers) {
               //   SendUDPMessage(server, 'Preset0');
               // }
@@ -71,7 +71,7 @@ class _VolumeEditState extends State<VolumeEdit> {
                 height: 50.0,
                 margin: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                  color: room.isSelectedPlay.getValue()
+                  color: room.isSelectedStop.getValue()
                       ? AppColors.navy_blue2
                       : Colors.transparent,
                   borderRadius: BorderRadius.circular(15),
@@ -88,12 +88,9 @@ class _VolumeEditState extends State<VolumeEdit> {
         GestureDetector(
           onTap: () {
             setState(() {
-              room.isSelectedStop.setValue(true);
-              room.isSelectedPlay.setValue(false);
-              StopPreset(current_page.getValue());
-              // for (Server server in rooms[0].servers) {
-              //   SendUDPMessage(server, 'Preset1');
-              // }
+              room.isSelectedPlay.setValue(true);
+              room.isSelectedStop.setValue(false);
+              PlayPreset(current_page.getValue());
             });
           },
           child: Column(
@@ -106,7 +103,7 @@ class _VolumeEditState extends State<VolumeEdit> {
                 height: 50.0,
                 margin: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
-                  color: room.isSelectedStop.getValue()
+                  color: room.isSelectedPlay.getValue()
                       ? AppColors.navy_blue2
                       : Colors.transparent ,
                   borderRadius: BorderRadius.circular(15),

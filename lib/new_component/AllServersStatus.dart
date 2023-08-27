@@ -48,17 +48,17 @@ class _AllServerStatusState extends State<AllServerStatus> {
       room.servers.length,
       (index) => Container(
         alignment: Alignment.center,
-        width: 120,
+        width: 140,
         height: 45,
-        margin: EdgeInsets.fromLTRB(30 , 10, 30, 0),
+        margin: EdgeInsets.fromLTRB(20 , 10, 20, 0),
         decoration: BoxDecoration(
             color: room.servers[index].connected.getValue()
                 ? AppColors.green
                 : AppColors.red,
             borderRadius: BorderRadius.circular(15)),
         child: PrimaryText(
-          text: 'P${room.name[room.name.length-1]}.${index.toString()}',
-          size: 16,
+          text: room.servers[index].shotname,
+          size: 12,
           fontWeight: FontWeight.w500,
         ),
       ),

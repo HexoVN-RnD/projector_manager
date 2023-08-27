@@ -92,7 +92,7 @@ void PlayPreset(int index) {
   switch (index) {
     case 1:
       for (Server server in rooms[0].servers) {
-        SendUDPMessage(server, 'Preset0');
+        SendUDPMessage(server, 'Preset'+(rooms[index-1].current_preset.getValue()+1).toString());
       }
       break;
     case 2:
@@ -105,14 +105,14 @@ void PlayPreset(int index) {
       SendPresetOSC(rooms[2].servers[1].ip, rooms[2].servers[1].preset_port, 0);
       break;
     case 4:
-      SendUDPMessage(rooms[3].servers[0], 'Preset0');
-      SendUDPMessage(rooms[3].servers[1], 'Preset0');
+      SendUDPMessage(rooms[3].servers[0], 'Preset'+(rooms[index-1].current_preset.getValue()+1).toString());
+      SendUDPMessage(rooms[3].servers[1], 'Preset'+(rooms[index-1].current_preset.getValue()+1).toString());
   }
 }void StopPreset(int index) {
   switch (index) {
     case 1:
       for (Server server in rooms[0].servers) {
-        SendUDPMessage(server, 'Preset1');
+        SendUDPMessage(server, 'Preset0');
       }
       break;
     case 2:
@@ -125,8 +125,8 @@ void PlayPreset(int index) {
       SendPresetOSC(rooms[2].servers[1].ip, rooms[2].servers[1].preset_port, 1);
       break;
     case 4:
-      SendUDPMessage(rooms[3].servers[0], 'Preset1');
-      SendUDPMessage(rooms[3].servers[1], 'Preset1');
+      SendUDPMessage(rooms[3].servers[0], 'Preset0');
+      SendUDPMessage(rooms[3].servers[1], 'Preset0');
   }
 }
 

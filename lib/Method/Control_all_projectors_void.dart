@@ -78,7 +78,7 @@ void PowerAllProjectors(bool mode) async {
       checkConnectionProjector(projector);
     }
   }
-  await Future.delayed(Duration(seconds: 2));
+  await Future.delayed(Duration(seconds: 1));
   for (var room in rooms) {
     for (var projector in room.projectors) {
       // if (projector.power_status_button.getValue() !=
@@ -123,11 +123,11 @@ void PowerRoomProjectors(Room room, bool mode) async {
     for (var projector in room.projectors) {
       checkConnectionProjector(projector);
     }
-  await Future.delayed(Duration(seconds: 2));
+  await Future.delayed(Duration(seconds: 1));
     for (var projector in room.projectors) {
       if (projector.power_status.getValue() != mode) {
         projector.power_status
-            .setValue(allRoom.power_all_projectors.getValue());
+            .setValue(room.power_room_projectors.getValue());
         if (mode) {
           if (projector.type == 'Christie') {
             print(projector.ip.toString() + '(PWR 1)');

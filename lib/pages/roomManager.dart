@@ -54,7 +54,7 @@ class _RoomManagerState extends State<RoomManager> {
               server.ip, server.preset_port, room.current_preset.getValue());
         } else {
           SendUDPMessage(
-              server, 'Preset' + room.current_preset.getValue().toString());
+              server, 'Preset' + (room.current_preset.getValue()+1).toString());
         }
       }
     });
@@ -231,7 +231,7 @@ class _RoomManagerState extends State<RoomManager> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Icon(
-                                                Icons.account_balance,
+                                                Icons.local_movies_outlined,
                                                 size: isSelected ? 26 : 15,
                                                 color: AppColors.white,
                                               ),
@@ -532,7 +532,8 @@ class _RoomManagerState extends State<RoomManager> {
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            // PowerAllProjectors(true);
+                                            PowerRoomProjectors(
+                                                room, true);
                                           });
                                         },
                                         child: PrimaryText(
@@ -578,8 +579,7 @@ class _RoomManagerState extends State<RoomManager> {
                                                     },
                                                   );
                                                 }));
-                                                PowerRoomProjectors(
-                                                    room, false);
+
                                               });
                                             },
                                             child: PrimaryText(

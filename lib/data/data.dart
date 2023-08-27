@@ -36,18 +36,18 @@ AllRoom allRoom = AllRoom(
   num_projectors: StatefulValuable<int>(0),
   presets: [
     Preset(
-        name: 'Preset 1',
-        image:  'assets/watching-a-movie_black.png',
+        name: 'Kịch bản 1',
+        image: 'assets/Preset4.1.png',
         osc_message: 'column 1',
         transport: StatefulValuable<double>(0)),
     Preset(
-        name: 'Preset 2',
-        image:  'assets/watching-a-movie_black.png',
+        name: 'Kịch bản 2',
+        image: 'assets/Preset4.2.png',
         osc_message: 'column 2',
         transport: StatefulValuable<double>(0)),
     Preset(
-        name: 'Preset 3',
-        image:  'assets/watching-a-movie_black.png',
+        name: 'Kịch bản 3',
+        image: 'assets/Preset4.3.png',
         osc_message: 'column 3',
         transport: StatefulValuable<double>(0)),
     // Preset(
@@ -99,8 +99,8 @@ List<Room> rooms = [
     current_preset: StatefulValuable<int>(10),
     presets: [
       Preset(
-          name: 'Nội dung 1',
-          image: 'assets/watching-a-movie_black.png',
+          name: 'Đâm Chồi Nảy Lộc',
+          image: 'assets/Preset2.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
       // Preset(
@@ -122,6 +122,7 @@ List<Room> rooms = [
     projectors: [],
     servers: [
       Server(
+        shotname: '',
         id: 1,
         ip: '192.168.1.51',
         name: 'Brightsign 01',
@@ -136,6 +137,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        shotname: '',
         id: 2,
         ip: '192.168.1.52',
         name: 'Brightsign 02',
@@ -150,6 +152,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        shotname: '',
         id: 3,
         ip: '192.168.1.53',
         name: 'Brightsign 03',
@@ -164,6 +167,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        shotname: '',
         id: 4,
         ip: '192.168.1.54',
         name: 'Brightsign 04',
@@ -178,6 +182,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        shotname: '',
         id: 5,
         ip: '192.168.1.55',
         name: 'Brightsign 05',
@@ -192,6 +197,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        shotname: '',
         id: 6,
         ip: '192.168.1.56',
         name: 'Brightsign 06',
@@ -206,6 +212,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        shotname: '',
         id: 7,
         ip: '192.168.1.57',
         name: 'Brightsign 07',
@@ -220,6 +227,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        shotname: '',
         id: 8,
         ip: '192.168.1.58',
         name: 'Brightsign 08',
@@ -248,18 +256,18 @@ List<Room> rooms = [
     sensors: [],
     presets: [
       Preset(
-          name: 'Nội dung 1',
-          image: 'assets/watching-a-movie_black.png',
+          name: 'Mọi Miền Tiềm Thức',
+          image: 'assets/Preset4.1.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
       Preset(
-          name: 'Nội dung 2',
-          image: 'assets/watching-a-movie_black.png',
+          name: 'Như Một Dòng Chảy',
+          image: 'assets/Preset4.2.png',
           osc_message: 'column 2',
           transport: StatefulValuable<double>(0)),
       Preset(
-          name: 'Nội dung 3',
-          image: 'assets/watching-a-movie_black.png',
+          name: 'Một Trăm',
+          image: 'assets/Preset4.3.png',
           osc_message: 'column 3',
           transport: StatefulValuable<double>(0)),
       // Preset(
@@ -765,6 +773,7 @@ List<Room> rooms = [
     ],
     servers: [
       Server(
+        shotname: 'MAPPING SÀN P4',
         id: 9,
         ip: '192.168.1.242',
         name: 'Server mapping sàn phòng 4',
@@ -779,6 +788,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        shotname: 'MAPPING TƯỜNG P4',
         id: 10,
         ip: '192.168.1.243',
         name: 'Server mapping tường phòng 4',
@@ -800,6 +810,10 @@ List<Room> rooms = [
     general: 'Khu vực tương tác',
     resolume: true,
     current_preset: StatefulValuable<int>(10),
+    power_room_projectors: StatefulValuable<bool>(false),
+    shutter_room_projectors: StatefulValuable<bool>(false),
+    isSelectedPlay: StatefulValuable<bool>(false),
+    isSelectedStop: StatefulValuable<bool>(false),
     sensors: [
       Sensor(
           ip: '192.168.1.11',
@@ -822,15 +836,11 @@ List<Room> rooms = [
     ],
     presets: [
       Preset(
-          name: 'Nội dung 1',
-          image: 'assets/watching-a-movie_black.png',
+          name: 'Phản Chiếu',
+          image: 'assets/Preset5.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
     ],
-    power_room_projectors: StatefulValuable<bool>(false),
-    shutter_room_projectors: StatefulValuable<bool>(false),
-    isSelectedPlay: StatefulValuable<bool>(false),
-    isSelectedStop: StatefulValuable<bool>(false),
     projectors: [
       Projector(
         ip: '192.168.1.130',
@@ -937,6 +947,7 @@ List<Room> rooms = [
     ],
     servers: [
       Server(
+        shotname: 'TƯƠNG TÁC P5',
         id: 11,
         ip: '192.168.1.244',
         name: 'Server tương tác phòng 5',
@@ -951,6 +962,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        shotname: 'MAPPING P5',
         id: 12,
         ip: '192.168.1.245',
         name: 'Server mapping phòng 5',
@@ -979,25 +991,15 @@ List<Room> rooms = [
     current_preset: StatefulValuable<int>(10),
     presets: [
       Preset(
-          name: 'Nội dung 1',
-          image: 'assets/watching-a-movie_black.png',
+          name: 'Hạnh Phúc Sinh Sôi ',
+          image: 'assets/Preset6.1.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
       Preset(
-          name: 'Nội dung 2',
-          image: 'assets/watching-a-movie_black.png',
+          name: 'Ấm Thực Trừu Tượng',
+          image: 'assets/Preset6.2.png',
           osc_message: 'column 2',
           transport: StatefulValuable<double>(0)),
-      // Preset(
-      //     name: 'Nội dung 3',
-      //     image: 'assets/watching-a-movie_black.png',
-      //     osc_message: 'column 3',
-      //     transport: StatefulValuable<double>(0)),
-      // Preset(
-      //     name: 'Nội dung 4',
-      //     image: 'assets/watching-a-movie_black.png',
-      //     osc_message: 'column 4',
-      //     transport: StatefulValuable<double>(0)),
     ],
     projectors: [
       Projector(
@@ -1071,6 +1073,7 @@ List<Room> rooms = [
     ],
     servers: [
       Server(
+        shotname: '',
         id: 13,
         ip: '192.168.1.59',
         name: 'Brightsign 09',
@@ -1085,6 +1088,7 @@ List<Room> rooms = [
         isOnHover: StatefulValuable<bool>(false),
       ),
       Server(
+        shotname: '',
         id: 14,
         ip: '192.168.1.60',
         name: 'Brightsign 10',

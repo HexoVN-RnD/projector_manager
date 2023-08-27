@@ -165,7 +165,9 @@ String sendPJLinkCommandStatus(Projector projector) {
     socket.write('%1AVMT ?[CR]');
     socket.listen((data) async {
       response = utf8.decode(data);
-      // print('Response: ${projector.ip} $response');
+      // if (projector.ip == '192.168.1.133') {
+      //   print('Response: ${projector.ip} $response');
+      // }
       if (response.contains('%1POWR=0')) {
         projector.power_status.setValue(false);
         if (projector.shutter_status.getValue()) {
@@ -177,15 +179,15 @@ String sendPJLinkCommandStatus(Projector projector) {
             print('${projector.ip} status: ${projector.status.getValue()}');
           }
         }
-        // else {
-        //   if (projector.power_status.getValue()){
-        //     projector.status.setValue(4);
-        //     print('${projector.ip} status: ${projector.status.getValue()}');
-        //   } else {
-        //     projector.status.setValue(6);
-        //     print('${projector.ip} status: ${projector.status.getValue()}');
-        //   }
-        // }
+        else {
+          if (projector.power_status.getValue()){
+            projector.status.setValue(7);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          } else {
+            projector.status.setValue(7);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          }
+        }
       } else if (response.contains('%1POWR=1')) {
         projector.power_status.setValue(true);
         if (projector.shutter_status.getValue()) {
@@ -233,7 +235,8 @@ String sendPJLinkCommandStatus(Projector projector) {
         //   projector.status.setValue(6);
         //   print('${projector.ip} status: ${projector.status.getValue()}');
         // }
-      } else if (response.contains('%1AVMT=30') || response.contains('%1AVMT=21')) {
+      } else if (response.contains('%1AVMT=30') ||
+          response.contains('%1AVMT=21')) {
         projector.shutter_status.setValue(false);
       }
       socket.close();

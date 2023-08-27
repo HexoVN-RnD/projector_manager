@@ -235,7 +235,7 @@ class _HomePage extends State<HomePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(
-                                    Icons.account_balance,
+                                    Icons.local_movies_outlined,
                                     size: isSelected ? 26 : 15,
                                     color: AppColors.white,
                                   ),
@@ -282,9 +282,9 @@ class _HomePage extends State<HomePage> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                isSelectedPlay = true;
-                                isSelectedStop = false;
-                                PlayAllPreset();
+                                isSelectedStop = true;
+                                isSelectedPlay = false;
+                                StopAllPreset();
                               });
                             },
                             child: Column(
@@ -297,7 +297,7 @@ class _HomePage extends State<HomePage> {
                                   height: 50.0,
                                   margin: EdgeInsets.all(10.0),
                                   decoration: BoxDecoration(
-                                    color: isSelectedPlay
+                                    color: isSelectedStop
                                         ? AppColors.navy_blue2
                                         : Colors.transparent,
                                     borderRadius: BorderRadius.circular(15),
@@ -327,9 +327,9 @@ class _HomePage extends State<HomePage> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                isSelectedStop = true;
-                                isSelectedPlay = false;
-                                StopAllPreset();
+                                isSelectedPlay = true;
+                                isSelectedStop = false;
+                                PlayAllPreset();
                               });
                             },
                             child: Column(
@@ -342,7 +342,7 @@ class _HomePage extends State<HomePage> {
                                   height: 50.0,
                                   margin: EdgeInsets.all(10.0),
                                   decoration: BoxDecoration(
-                                    color: isSelectedStop
+                                    color: isSelectedPlay
                                         ? AppColors.navy_blue2
                                         : Colors.transparent,
                                     borderRadius: BorderRadius.circular(15),
@@ -660,197 +660,6 @@ class _HomePage extends State<HomePage> {
                 ),
               ],
             ),
-            //power_all: PowerAllProjectors, shutter_all: ShutterAllProjectors),
-            // Row(
-            //   children: [
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.navy_blue,
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Máy chiếu đang bật'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal * 6,
-            //     ),
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.red,
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Máy chiếu đang tắt'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal * 6,
-            //     ),
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.gray,
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Mất kết nối'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //   ],
-            // ),
-
-            // Row(
-            //   children: [
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.StatusColor[2],
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Máy chiếu đã bật'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.StatusColor[3],
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Màn chập đã bật'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.StatusColor[6],
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Máy chiếu đang tắt'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.StatusColor[1],
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Máy chiếu đã tắt'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Container(
-            //       height: 15,
-            //       width: 15,
-            //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            //       decoration: BoxDecoration(
-            //         color: AppColors.StatusColor[0],
-            //         borderRadius: BorderRadius.circular(5),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       width: SizeConfig.blockSizeHorizontal,
-            //     ),
-            //     Padding(
-            //       padding: const EdgeInsets.only(top: 8.0),
-            //       child: PrimaryText(
-            //         text: 'Mất kết nối'.toUpperCase(),
-            //         size: 14,
-            //         fontWeight: FontWeight.w500,
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // SizedBox(
-            //   height: SizeConfig.blockSizeVertical,
-            // ),
           ],
         ),
       ),
