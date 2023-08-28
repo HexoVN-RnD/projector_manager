@@ -196,31 +196,31 @@ class _OpeningSceneState extends State<OpeningScene>
                     SizedBox(
                       height: 20,
                     ),
-                    AnimatedBtn(
-                      btnAnimationController: _btnAnimationController,
-                      press: () {
-                        _btnAnimationController.isActive = true;
-
-                        Future.delayed(
-                          const Duration(milliseconds: 800),
-                              () {
-                            setState(() {
-                              isShowSignInDialog = true;
-                            });
-                            if(emailController.text == email && passwordController == password) {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (context) => Dashboard()),
-                              );
-                            }
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => Dashboard()),
-                            );
-                          },
-                        );
-                      },
-                    ),
+                    // AnimatedBtn(
+                    //   btnAnimationController: _btnAnimationController,
+                    //   press: () {
+                    //     _btnAnimationController.isActive = true;
+                    //
+                    //     Future.delayed(
+                    //       const Duration(milliseconds: 800),
+                    //           () {
+                    //         setState(() {
+                    //           isShowSignInDialog = true;
+                    //         });
+                    //         if(emailController.text == email && passwordController == password) {
+                    //           Navigator.of(context).pushReplacement(
+                    //             MaterialPageRoute(
+                    //                 builder: (context) => Dashboard()),
+                    //           );
+                    //         }
+                    //         Navigator.of(context).pushReplacement(
+                    //           MaterialPageRoute(
+                    //               builder: (context) => Dashboard()),
+                    //         );
+                    //       },
+                    //     );
+                    //   },
+                    // ),
                     isChecked
                         ? AnimatedBtn(
                             btnAnimationController: _btnAnimationController,

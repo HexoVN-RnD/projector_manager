@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
@@ -32,6 +34,22 @@ class PopupZoom extends StatefulWidget {
 }
 
 class _PopupZoomState extends State<PopupZoom> {
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) async {
+      setState(() {
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     Room room = widget.room;

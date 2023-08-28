@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
+import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/server_void.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/dashboard.dart';
@@ -99,6 +100,7 @@ class _PopupOffServerState extends State<PopupOffServer> {
                             ),
                             onPressed: () {
                               setState(() {
+                                StopAllPreset();
                                 ShutdownAllServer();
                                 // Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Dashboard()));
                                 Navigator.of(context).pop();

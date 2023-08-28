@@ -36,7 +36,7 @@ class _VolumeEditState extends State<VolumeEdit> {
   void ChangeVolume(Room room, Server server,double index) {
     // writeCellValue(index.toStringAsFixed(2), server.id, 1);
     if (room.resolume) {
-      SendAudioOSC(server, index);
+      SendAudioOSC(room, index);
     } else {
       SendUDPAudioMessage(server, index);
     }

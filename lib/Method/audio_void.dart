@@ -56,11 +56,20 @@ void EditAllAudioAndSave(index) {
 }
 
 
-void SendAudioOSC(Server server, double index) async {
+void SendAudioOSC(Room room, double index) async {
   // writeCellValue(index.toStringAsFixed(2), server.id, 1);
-  SendOscMessage(server.ip, server.preset_port, '/composition/layers/1/audio/volume', [index]);
-  SendOscMessage(server.ip, server.preset_port, '/composition/layers/2/audio/volume', [index]);
-  SendOscMessage(server.ip,server.preset_port, '/composition/layers/3/audio/volume', [index]);
+  print('Setaudio');
+  for (Server server in room.servers) {
+    SendOscMessage(
+        server.ip, server.preset_port, '/composition/layers/1/audio/volume',
+        [index]);
+    SendOscMessage(
+        server.ip, server.preset_port, '/composition/layers/2/audio/volume',
+        [index]);
+    SendOscMessage(
+        server.ip, server.preset_port, '/composition/layers/3/audio/volume',
+        [index]);
+  }
   // await prefs.setDouble('volume', volume);
 }
 

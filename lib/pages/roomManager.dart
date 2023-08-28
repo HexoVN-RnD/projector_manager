@@ -52,6 +52,7 @@ class _RoomManagerState extends State<RoomManager> {
         if (room.resolume) {
           SendPresetOSC(
               server.ip, server.preset_port, room.current_preset.getValue());
+          PlayPreset(current_page.getValue());
         } else {
           SendUDPMessage(
               server, 'Preset' + (room.current_preset.getValue()+1).toString());
@@ -78,11 +79,11 @@ class _RoomManagerState extends State<RoomManager> {
         }
       });
     });
-    _timer2 = Timer.periodic(Duration(seconds: 3), (timer) async {
+    _timer2 = Timer.periodic(Duration(seconds: (current_page.getValue() == 2)? 3:1), (timer) async {
       Room room = rooms[
           (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
       checkRoomSensorConnection(room);
-      checkRoomProjectorConnection(room, 3000);
+      checkRoomProjectorConnection(room, (current_page.getValue() == 2)? 3000:1000);
       if (current_page.getValue() != 1) {
         SetButtonControlRoom(room);
       }
