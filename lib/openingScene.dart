@@ -35,6 +35,7 @@ class _OpeningSceneState extends State<OpeningScene>
     with TickerProviderStateMixin {
   late RiveAnimationController _btnAnimationController;
   Timer? _timer;
+  Timer? _timer2;
   bool isShowSignInDialog = false;
   bool isChecked = false;
   late AnimationController _animationController;
@@ -50,8 +51,12 @@ class _OpeningSceneState extends State<OpeningScene>
       autoplay: false,
     );
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 3000), (timer) async {
+    _timer = Timer.periodic(Duration(milliseconds: 3000), (timer) {
       checkAllRoomConnection(3000);
+    });
+    _timer2 = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      setState(() {
+      });
     });
     _animationController = AnimationController(
       duration: Duration(seconds: 15),
@@ -70,6 +75,7 @@ class _OpeningSceneState extends State<OpeningScene>
   @override
   void dispose() {
     _timer?.cancel();
+    _timer2?.cancel();
     _animationController.dispose();
     super.dispose();
   }
@@ -309,8 +315,8 @@ class _OpeningSceneState extends State<OpeningScene>
                                 ),
                                 PrimaryText(
                                   text: server.connected.getValue()
-                                      ? 'Connected'
-                                      : 'Disconnect',
+                                      ? 'Đã kết nối'
+                                      : 'Mất kết nối',
                                   color: server.connected.getValue()
                                       ? AppColors.green
                                       : AppColors.red,
@@ -355,8 +361,8 @@ class _OpeningSceneState extends State<OpeningScene>
                                 ),
                                 PrimaryText(
                                   text: server.connected.getValue()
-                                      ? 'Connected'
-                                      : 'Disconnect',
+                                      ? 'Đã kết nối'
+                                      : 'Mất kết nối',
                                   color: server.connected.getValue()
                                       ? AppColors.green
                                       : AppColors.red,
@@ -400,8 +406,8 @@ class _OpeningSceneState extends State<OpeningScene>
                               ),
                               PrimaryText(
                                 text: projector.connected.getValue()
-                                    ? 'Connected'
-                                    : 'Disconnect',
+                                    ? 'Đã kết nối'
+                                    : 'Mất kết nối',
                                 color: projector.connected.getValue()
                                     ? AppColors.green
                                     : AppColors.red,
@@ -446,8 +452,8 @@ class _OpeningSceneState extends State<OpeningScene>
                               ),
                               PrimaryText(
                                 text: projector.connected.getValue()
-                                    ? 'Connected'
-                                    : 'Disconnect',
+                                    ? 'Đã kết nối'
+                                    : 'Mất kết nối',
                                 color: projector.connected.getValue()
                                     ? AppColors.green
                                     : AppColors.red,
@@ -491,8 +497,8 @@ class _OpeningSceneState extends State<OpeningScene>
                               ),
                               PrimaryText(
                                 text: projector.connected.getValue()
-                                    ? 'Connected'
-                                    : 'Disconnect',
+                                    ? 'Đã kết nối'
+                                    : 'Mất kết nối',
                                 color: projector.connected.getValue()
                                     ? AppColors.green
                                     : AppColors.red,
@@ -537,8 +543,8 @@ class _OpeningSceneState extends State<OpeningScene>
                               ),
                               PrimaryText(
                                 text: projector.connected.getValue()
-                                    ? 'Connected'
-                                    : 'Disconnect',
+                                    ? 'Đã kết nối'
+                                    : 'Mất kết nối',
                                 color: projector.connected.getValue()
                                     ? AppColors.green
                                     : AppColors.red,

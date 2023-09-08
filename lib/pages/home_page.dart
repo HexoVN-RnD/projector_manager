@@ -40,7 +40,7 @@ class _HomePage extends State<HomePage> {
     super.initState();
     _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       setState(() {
-        if (rooms[2].servers[0].connected.getValue()) {
+        if (rooms[2].servers[0].connected.getValue() && allRoom.current_preset.getValue()<allRoom.presets.length) {
           OSCReceive();
         }
       });

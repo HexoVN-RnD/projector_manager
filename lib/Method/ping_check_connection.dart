@@ -44,6 +44,7 @@ void checkConnectionServerResponse(Server server) {
     if (event.response?.time != null) {
       server.connected.setValue(true);
       server.power_status.setValue(true);
+      print('Connected to ${server.ip}: ${event.response?.time} ms');
     } else if (event.response?.time == null && count != 1) {
       server.connected.setValue(false);
       server.power_status.setValue(false);
@@ -62,6 +63,7 @@ void checkConnectionSensor(Sensor sensor) {
     // print('Ping to ${sensor.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       sensor.connected.setValue(true);
+      print('Connected to ${sensor.ip}: ${event.response?.time} ms');
     } else if (event.response?.ip == null && count != 1) {
       sensor.connected.setValue(false);
       // print('Error');
@@ -93,6 +95,38 @@ void checkConnectionProjector(Projector projector) {
 }
 
 Future<void> checkAllRoomConnection(int time) async {
+  print('checkAllRoomConnection');
+  int length =
+      allRoom.num_servers.getValue() + allRoom.num_projectors.getValue();
+  for (Room room in rooms) {
+    if (!room.sensors.isEmpty) {
+      for (Sensor sensor in room.sensors) {
+        checkConnectionSensor(sensor);
+      }
+    }
+    if (!room.projectors.isEmpty) {
+      for (Projector projector in room.projectors) {
+        await Future.delayed(Duration(milliseconds: (time / length).toInt()));
+        checkConnectionProjector(projector);
+        if (projector.type == 'Christie') {
+          String response = sendTCPIPCommandStatus(projector);
+          print(response);
+        } else {
+          sendPJLinkCommandStatus(projector);
+        }
+      }
+    }
+    if (!room.servers.isEmpty) {
+      for (Server server in room.servers) {
+        await Future.delayed(Duration(milliseconds: (time / length).toInt()));
+        checkConnectionServerResponse(server);
+      }
+    }
+  }
+  SetButtonControlAllSystem();
+}
+
+Future<void> checkFullConnection(int time) async {
   print('checkAllRoomConnection');
   int length =
       allRoom.num_servers.getValue() + allRoom.num_projectors.getValue();
