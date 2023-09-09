@@ -15,6 +15,8 @@ Future<void> OpeningCheck() async {
         .setValue(allRoom.num_servers.getValue() + room.servers.length);
     allRoom.num_sensors
         .setValue(allRoom.num_sensors.getValue() + room.sensors.length);
+    allRoom.num_leds
+        .setValue(allRoom.num_leds.getValue() + room.leds.length);
     allRoom.num_projectors
         .setValue(allRoom.num_projectors.getValue() + room.projectors.length);
   }

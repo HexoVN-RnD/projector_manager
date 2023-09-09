@@ -24,7 +24,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
   Widget build(BuildContext context) {
     AllRoom allRooms = allRoom;
     return Container(
-      height: Responsive.isDesktop(context) ? 200 : null,
+      height: Responsive.isDesktop(context) ? 250 : null,
       constraints: BoxConstraints(
           minWidth:
               Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
@@ -69,6 +69,9 @@ class _ManageAllServersState extends State<ManageAllServers> {
               //     color: AppColors.iconDeepGray,
               //     size: 16)
             ],
+          ),
+          SizedBox(
+            width: SizeConfig.blockSizeHorizontal,
           ),
           Container(
             height: 50,
@@ -169,12 +172,20 @@ class _ManageAllServersState extends State<ManageAllServers> {
               ],
             ),
           ),
-          SizedBox(height: SizeConfig.blockSizeVertical,),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              AllServerStatus(room: rooms[1]),
-              AllServerStatus(room: rooms[2]),
+              Column(
+                children: [
+                  AllServerStatus(room: rooms[0]),
+                  AllServerStatus(room: rooms[2]),
+                ],
+              ),
+              AllServerStatus(room: rooms[3]),
+              AllServerStatus(room: rooms[4]),
             ],
           )
         ],

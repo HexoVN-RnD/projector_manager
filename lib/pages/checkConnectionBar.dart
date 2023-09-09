@@ -4,6 +4,7 @@ import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
+import 'package:responsive_dashboard/new_component/ledConnection.dart';
 import 'package:responsive_dashboard/new_component/sensorConnection.dart';
 import 'package:responsive_dashboard/new_component/serverConnection.dart';
 import 'package:responsive_dashboard/new_component/projectorConnection.dart';
@@ -80,64 +81,6 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
       SizedBox(
         height: SizeConfig.blockSizeVertical * 3,
       ),
-      // MiniMap(room: rooms[(current_page.getValue()>0)? current_page.getValue()-1:1], page: current_page.getValue(),),
-      // Row(
-      //   children: [
-      //     Container(
-      //       height: 15,
-      //       width: 15,
-      //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-      //       decoration: BoxDecoration(
-      //         color: AppColors.navy_blue,
-      //         borderRadius: BorderRadius.circular(5),
-      //       ),
-      //     ),
-      //     SizedBox(width: SizeConfig.blockSizeHorizontal,),
-      //     Padding(
-      //       padding: const EdgeInsets.only(top: 8.0),
-      //       child: PrimaryText(text: 'Máy chiếu đang bật'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
-      //     )
-      //   ],
-      // ),
-      // Row(
-      //   children: [
-      //     Container(
-      //       height: 15,
-      //       width: 15,
-      //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-      //       decoration: BoxDecoration(
-      //         color: AppColors.red,
-      //         borderRadius: BorderRadius.circular(5),
-      //       ),
-      //     ),
-      //     SizedBox(width: SizeConfig.blockSizeHorizontal,),
-      //     Padding(
-      //       padding: const EdgeInsets.only(top: 8.0),
-      //       child: PrimaryText(text: 'Máy chiếu đang tắt'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
-      //     )
-      //   ],
-      // ),
-      // Row(
-      //   children: [
-      //     Container(
-      //       height: 15,
-      //       width: 15,
-      //       margin: EdgeInsets.fromLTRB(10, 10, 0, 0),
-      //       decoration: BoxDecoration(
-      //         color: AppColors.gray,
-      //         borderRadius: BorderRadius.circular(5),
-      //       ),
-      //     ),
-      //     SizedBox(width: SizeConfig.blockSizeHorizontal,),
-      //     Padding(
-      //       padding: const EdgeInsets.only(top: 8.0),
-      //       child: PrimaryText(text: 'Mất kết nối'.toUpperCase(), size: 14, fontWeight: FontWeight.w500,),
-      //     )
-      //   ],
-      // ),
-      // SizedBox(
-      //   height: SizeConfig.blockSizeVertical * 3,
-      // ),
       PrimaryText(
         text: room.resolume? 'Kiểm tra tín hiệu server'.toUpperCase(): 'Kiểm tra tín hiệu Bright Sign'.toUpperCase(),
         size: 16,
@@ -184,7 +127,35 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
           ],
         ),
-      if (room.resolume || current_page.getValue()==4) Column(
+      if (room.leds.length != 0)
+        Column(
+          children: [
+            Container(
+              alignment: Alignment.centerLeft,
+              child: PrimaryText(
+                text: 'Kiểm tra tín hiệu màn led'.toUpperCase(),
+                size: 16,
+                fontWeight: FontWeight.w500,
+                color: AppColors.iconDeepGray,
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 2,
+            ),
+            Column(
+              children: List.generate(
+                room.leds.length,
+                (index) => LedConnection(
+                  led: room.leds[index],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.blockSizeVertical * 2,
+            ),
+          ],
+        ),
+      if (room.projectors.length != 0 || current_page.getValue()==4) Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PrimaryText(

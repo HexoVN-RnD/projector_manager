@@ -1,18 +1,12 @@
-import 'dart:io';
-
 import 'package:dart_ping/dart_ping.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
-import 'package:responsive_dashboard/Method/Control_projector_void.dart';
-import 'package:responsive_dashboard/Method/networkAddress.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
-import 'package:responsive_dashboard/Method/projector_void.dart';
+import 'package:responsive_dashboard/Object/Led.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
-import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
-import 'package:valuable/valuable.dart';
 
 void checkConnectionServer(Server server) {
   int count = 0;
@@ -76,6 +70,27 @@ void checkConnectionSensor(Sensor sensor) {
   ping.command;
 }
 
+void checkConnectionLed(Led led) {
+  int count = 0;
+  final ping = Ping(led.ip, count: 1); // Thay đổi số lần ping tùy ý
+  ping.stream.listen((event) {
+    // print('ping led ${led.ip}: response ${event.response?.time} ${count}');
+    // print('Ping to ${led.ip}: ${event.response?.time} ms');
+    if (event.response?.time != null) {
+      led.connected.setValue(true);
+      print('Connected to ${led.ip}: ${event.response?.time} ms');
+    } else if (event.response?.ip == null && count != 1) {
+      led.connected.setValue(false);
+      // print('Error');
+    }
+    count++;
+    // ping.stop();
+  }, onError: (error) {
+    print(error);
+  });
+  ping.command;
+}
+
 void checkConnectionProjector(Projector projector) {
   int count = 0;
   final ping = Ping(projector.ip, count: 1); // Thay đổi số lần ping tùy ý
@@ -104,9 +119,14 @@ Future<void> checkAllRoomConnection(int time) async {
         checkConnectionSensor(sensor);
       }
     }
+    if (!room.leds.isEmpty) {
+      for (Led led in room.leds) {
+        checkConnectionLed(led);
+      }
+    }
     if (!room.projectors.isEmpty) {
       for (Projector projector in room.projectors) {
-        await Future.delayed(Duration(milliseconds: (time / length).toInt()));
+        await Future.delayed(Duration(milliseconds: time ~/ length));
         checkConnectionProjector(projector);
         if (projector.type == 'Christie') {
           String response = sendTCPIPCommandStatus(projector);
@@ -118,7 +138,7 @@ Future<void> checkAllRoomConnection(int time) async {
     }
     if (!room.servers.isEmpty) {
       for (Server server in room.servers) {
-        await Future.delayed(Duration(milliseconds: (time / length).toInt()));
+        await Future.delayed(Duration(milliseconds: time ~/ length));
         checkConnectionServerResponse(server);
       }
     }
@@ -136,9 +156,14 @@ Future<void> checkFullConnection(int time) async {
         checkConnectionSensor(sensor);
       }
     }
+    if (!room.leds.isEmpty) {
+      for (Led led in room.leds) {
+        checkConnectionLed(led);
+      }
+    }
     if (!room.projectors.isEmpty) {
       for (Projector projector in room.projectors) {
-        await Future.delayed(Duration(milliseconds: (time / length).toInt()));
+        await Future.delayed(Duration(milliseconds: time ~/ length));
         checkConnectionProjector(projector);
         if (projector.type == 'Christie') {
           String response = sendTCPIPCommandStatus(projector);
@@ -151,7 +176,7 @@ Future<void> checkFullConnection(int time) async {
     }
     if (!room.servers.isEmpty) {
       for (Server server in room.servers) {
-        await Future.delayed(Duration(milliseconds: (time / length).toInt()));
+        await Future.delayed(Duration(milliseconds: time ~/ length));
         checkConnectionServerResponse(server);
       }
     }
@@ -164,7 +189,7 @@ Future<void> checkRoomProjectorConnection(Room room, int time) async {
   if (!room.projectors.isEmpty) {
     for (Projector projector in room.projectors) {
       await Future.delayed(
-          Duration(milliseconds: (time / room.projectors.length).toInt()));
+          Duration(milliseconds: time ~/ room.projectors.length));
       checkConnectionProjector(projector);
       if (projector.type == 'Christie') {
         String response = sendTCPIPCommandStatus(projector);
@@ -182,7 +207,7 @@ Future<void> checkRoomServerConnection(Room room, int time) async {
   if (!room.servers.isEmpty) {
     for (Server server in room.servers) {
       await Future.delayed(
-          Duration(milliseconds: (time / room.servers.length).toInt()));
+          Duration(milliseconds: time ~/ room.servers.length));
       checkConnectionServerResponse(server);
     }
   }
@@ -193,6 +218,14 @@ Future<void> checkRoomSensorConnection(Room room) async {
   if (!room.sensors.isEmpty) {
     for (Sensor sensor in room.sensors) {
       checkConnectionSensor(sensor);
+    }
+  }
+}
+Future<void> checkRoomLedConnection(Room room) async {
+  print('checkRoomLedConnection');
+  if (!room.leds.isEmpty) {
+    for (Led led in room.leds) {
+      checkConnectionLed(led);
     }
   }
 }

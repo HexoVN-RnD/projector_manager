@@ -13,6 +13,8 @@ const String heroZoom1 = 'popup-zoom1';
 const String heroZoom2 = 'popup-zoom2';
 const String heroZoom3 = 'popup-zoom3';
 const String heroZoom4 = 'popup-zoom4';
+const String heroZoom5 = 'popup-zoom5';
+const String heroZoom6 = 'popup-zoom6';
 
 /// {@template add_todo_popup_card}
 /// Popup card to add a new [Todo]. Should be used in conjuction with
@@ -40,8 +42,7 @@ class _PopupZoomState extends State<PopupZoom> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(Duration(milliseconds: 100), (timer) async {
-      setState(() {
-      });
+      setState(() {});
     });
   }
 
@@ -50,6 +51,7 @@ class _PopupZoomState extends State<PopupZoom> {
     _timer?.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     Room room = widget.room;
@@ -66,7 +68,11 @@ class _PopupZoomState extends State<PopupZoom> {
                 ? heroZoom2
                 : (page == 3)
                     ? heroZoom3
-                    : heroZoom4),
+                    : (page == 4)
+                        ? heroZoom4
+                        : (page == 5)
+                            ? heroZoom5
+                            : heroZoom6),
         createRectTween: (begin, end) {
           return CustomRectTween(begin: begin, end: end);
         },
@@ -111,7 +117,48 @@ class _PopupZoomState extends State<PopupZoom> {
                   ),
                 ),
               ),
-              if (page == 2)
+              if (page == 3)
+                Stack(
+                  children: [
+                    Stack(
+                      children: List.generate(
+                        room.projectors.length,
+                            (index) => Positioned(
+                          left: width * room.projectors[index].position.dx,
+                          top: height * room.projectors[index].position.dy,
+                          width: width * 0.012,
+                          height: width * 0.012,
+                          child: Container(
+                            color: AppColors.StatusColor[
+                            room.projectors[index].status.getValue()],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Stack(
+                      children: List.generate(
+                        room.leds.length,
+                            (index) => Positioned(
+                          left: width * room.leds[index].position.dx,
+                          top: height * room.leds[index].position.dy,
+                          // left: width * 0.555,
+                          // top: height * 0.858,
+                          width: width * 0.016,
+                          height: width * 0.016,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: room.leds[index].connected.getValue()
+                                  ? AppColors.green
+                                  : AppColors.red,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              else if (page == 4)
                 Stack(
                   children: List.generate(
                     room.projectors.length,
@@ -121,12 +168,13 @@ class _PopupZoomState extends State<PopupZoom> {
                       width: width * 0.0095,
                       height: width * 0.0095,
                       child: Container(
-                        color: AppColors.StatusColor[room.projectors[index].status.getValue()],
+                        color: AppColors.StatusColor[
+                            room.projectors[index].status.getValue()],
                       ),
                     ),
                   ),
                 )
-              else if (page == 3)
+              else if (page == 5)
                 Stack(
                   children: [
                     Stack(
@@ -138,7 +186,8 @@ class _PopupZoomState extends State<PopupZoom> {
                           width: width * 0.018,
                           height: width * 0.018,
                           child: Container(
-                            color:  AppColors.StatusColor[room.projectors[index].status.getValue()],
+                            color: AppColors.StatusColor[
+                                room.projectors[index].status.getValue()],
                           ),
                         ),
                       ),
@@ -146,7 +195,7 @@ class _PopupZoomState extends State<PopupZoom> {
                     Stack(
                       children: List.generate(
                         room.sensors.length,
-                            (index) => Positioned(
+                        (index) => Positioned(
                           left: width * room.sensors[index].position.dx,
                           top: height * room.sensors[index].position.dy,
                           // left: width * 0.555,
@@ -166,7 +215,7 @@ class _PopupZoomState extends State<PopupZoom> {
                     ),
                   ],
                 )
-              else if (page == 4)
+              else if (page == 6)
                 Stack(
                   children: [
                     Stack(
@@ -178,7 +227,8 @@ class _PopupZoomState extends State<PopupZoom> {
                           width: width * 0.012,
                           height: width * 0.012,
                           child: Container(
-                            color: AppColors.StatusColor[room.projectors[index].status.getValue()],
+                            color: AppColors.StatusColor[
+                                room.projectors[index].status.getValue()],
                           ),
                         ),
                       ),
@@ -192,23 +242,27 @@ class _PopupZoomState extends State<PopupZoom> {
                       height: width * 0.1,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: room.servers[0].connected.getValue()? AppColors.green: AppColors.red,
+                            color: room.servers[0].connected.getValue()
+                                ? AppColors.green
+                                : AppColors.red,
                             borderRadius: BorderRadius.circular(5),
                             border: room.servers[0].isOnHover.getValue()
                                 ? Border.all(
-                              strokeAlign: BorderSide.strokeAlignCenter,
-                              color: room.servers[0].connected.getValue()? AppColors.green: AppColors.red,
-                              width: 10.0,
-                            )
+                                    strokeAlign: BorderSide.strokeAlignCenter,
+                                    color: room.servers[0].connected.getValue()
+                                        ? AppColors.green
+                                        : AppColors.red,
+                                    width: 10.0,
+                                  )
                                 : Border.all(
-                              color: Colors.transparent,
-                              width: 10.0,
-                            )),
+                                    color: Colors.transparent,
+                                    width: 10.0,
+                                  )),
                       ),
                     ),
                   ],
                 )
-              else if (page == 1)
+              else if (page == 2)
                 Stack(
                   children: List.generate(
                     room.servers.length,

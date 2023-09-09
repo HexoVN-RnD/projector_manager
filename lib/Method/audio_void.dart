@@ -5,6 +5,7 @@ import 'package:responsive_dashboard/Method/excel.dart';
 import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
+import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 
 void EditAllAudio(index) {
@@ -14,18 +15,10 @@ void EditAllAudio(index) {
     if (room.resolume) {
       for (Server server in room.servers) {
         server.volume.setValue(index);
-        // writeCellValue(index.toStringAsFixed(2), server.id, 1);
-        // SendOscMessage(server.ip, server.preset_port,
-        //     '/composition/layers/1/audio/volume', [index]);
-        // SendOscMessage(server.ip, server.preset_port,
-        //     '/composition/layers/2/audio/volume', [index]);
-        // SendOscMessage(server.ip, server.preset_port,
-        //     '/composition/layers/3/audio/volume', [index]);
       }
     } else {
       for (Server server in room.servers) {
         server.volume.setValue(index);
-        // SendUDPAudioMessage(server, index);
       }
     }
   }
@@ -45,6 +38,8 @@ void EditAllAudioAndSave(index) {
             '/composition/layers/2/audio/volume', [index]);
         SendOscMessage(server.ip, server.preset_port,
             '/composition/layers/3/audio/volume', [index]);
+        SendOscMessage(server.ip, server.preset_port,
+            '/composition/layers/4/audio/volume', [index]);
       }
     } else {
       for (Server server in room.servers) {
@@ -69,11 +64,15 @@ void SendAudioOSC(Room room, double index) async {
     SendOscMessage(
         server.ip, server.preset_port, '/composition/layers/3/audio/volume',
         [index]);
+    SendOscMessage(
+        server.ip, server.preset_port, '/composition/layers/4/audio/volume',
+        [index]);
   }
   // await prefs.setDouble('volume', volume);
 }
 
 void SendUDPAudioMessage(Server server, double index) async {
+  print('Setaudio: ${current_page.getValue()}');
   try {
     final message = 'volume:' + ((index * 100).toInt()).toString();
     // writeCellValue(index.toStringAsFixed(2), server.id, 1);

@@ -3,6 +3,7 @@ import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/PopupZoom.dart';
 import 'package:responsive_dashboard/PopUp/PositionPage2.dart';
+import 'package:responsive_dashboard/PopUp/PositionPage3.dart';
 import 'package:responsive_dashboard/PopUp/PositionPage4.dart';
 import 'package:responsive_dashboard/PopUp/PositionPage5.dart';
 import 'package:responsive_dashboard/PopUp/PositionPage6.dart';
@@ -29,26 +30,6 @@ class MiniMap extends StatefulWidget {
 }
 
 class _MiniMapState extends State<MiniMap> {
-  // Room get room => widget.roomNotifier.value;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   widget.roomNotifier.addListener(_handleRoomChange);
-  // }
-  //
-  // @override
-  // void dispose() {
-  //   widget.roomNotifier.removeListener(_handleRoomChange);
-  //   super.dispose();
-  // }
-  //
-  // void _handleRoomChange() {
-  //   setState(() {
-  //     // Đây là nơi bạn có thể thực hiện các tác vụ cần thiết khi giá trị của room thay đổi
-  //     // Ví dụ: Kiểm tra các giá trị mới và thực hiện cập nhật UI tương ứng
-  //   });
-  // }
   @override
   Widget build(BuildContext context) {
     Room room = widget.room;
@@ -66,7 +47,11 @@ class _MiniMapState extends State<MiniMap> {
               ? heroZoom2
               : (page == 3)
                   ? heroZoom3
-                  : heroZoom4),
+                  : (page == 4)
+                      ? heroZoom4
+                      : (page == 5)
+                          ? heroZoom5
+                          : heroZoom6),
       createRectTween: (begin, end) {
         return CustomRectTween(begin: begin, end: end);
       },
@@ -126,7 +111,41 @@ class _MiniMapState extends State<MiniMap> {
                   child: Material(
                       color: Colors.transparent,
                       child: PrimaryText(text: room.name))),
-            if (page == 2)
+            if (page == 3)
+              Stack(children: [
+                Stack(
+                  children: List.generate(
+                    room.projectors.length,
+                        (index) => PositionPage3(
+                        projector: room.projectors[index],
+                        width: width,
+                        height: height),
+                  ),
+                ),
+
+                Stack(
+                  children: List.generate(
+                    room.leds.length,
+                        (index) => Positioned(
+                      left: width * room.leds[index].position.dx,
+                      top: height * room.leds[index].position.dy,
+                      // left: width * 0.28,
+                      // top: height * 0.4,
+                      width: width * 0.05,
+                      height: width * 0.016,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: room.leds[index].connected.getValue()
+                              ? AppColors.green
+                              : AppColors.red,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ])
+            else if (page == 4)
               Stack(
                 children: List.generate(
                   room.projectors.length,
@@ -136,7 +155,7 @@ class _MiniMapState extends State<MiniMap> {
                       height: height),
                 ),
               )
-            else if (page == 3)
+            else if (page == 5)
               Stack(
                 children: [
                   Stack(
@@ -163,7 +182,7 @@ class _MiniMapState extends State<MiniMap> {
                             color: room.sensors[index].connected.getValue()
                                 ? AppColors.green
                                 : AppColors.red,
-                            borderRadius: BorderRadius.circular(8),
+                            borderRadius: BorderRadius.circular(5),
                           ),
                         ),
                       ),
@@ -171,7 +190,7 @@ class _MiniMapState extends State<MiniMap> {
                   ),
                 ],
               )
-            else if (page == 4)
+            else if (page == 6)
               Stack(children: [
                 Stack(
                   children: List.generate(
@@ -194,7 +213,7 @@ class _MiniMapState extends State<MiniMap> {
                         color: room.servers[0].connected.getValue()
                             ? AppColors.green
                             : AppColors.red,
-                          borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(5),
                         border: room.servers[0].isOnHover.getValue()
                             ? Border.all(
                                 strokeAlign: BorderSide.strokeAlignCenter,
@@ -210,7 +229,7 @@ class _MiniMapState extends State<MiniMap> {
                   ),
                 ),
               ])
-            else if (page == 1)
+            else if (page == 2)
               Stack(
                 children: List.generate(
                     room.servers.length,

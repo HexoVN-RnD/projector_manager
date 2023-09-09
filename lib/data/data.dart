@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Object/Led.dart';
 import 'package:responsive_dashboard/Object/Preset.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
@@ -6,10 +7,64 @@ import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 // import 'package:responsive_dashboard/Object/Test_Pattern.dart';
 import 'package:responsive_dashboard/Object/allRoom.dart';
+import 'package:responsive_dashboard/Object/rive_model.dart';
+import 'package:responsive_dashboard/data/menu.dart';
 import 'package:valuable/valuable.dart';
 
 String email = 'Hexogon';
 String password = 'Hexogon';
+
+List<Menu> sidebarMenus = [
+  Menu(
+    title: "Tổng quan".toUpperCase(),
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "HOME",
+        stateMachineName: "HOME_interactivity"),
+  ),
+  Menu(
+    title: rooms[0].name,
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "ROOM",
+        stateMachineName: "ROOM_interactivity"),
+  ),
+  Menu(
+    title: rooms[1].name,
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "ROOM",
+        stateMachineName: "ROOM_interactivity"),
+  ),
+  Menu(
+    title: rooms[2].name,
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "ROOM",
+        stateMachineName: "ROOM_interactivity"),
+  ),
+  Menu(
+    title: rooms[3].name,
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "ROOM",
+        stateMachineName: "ROOM_interactivity"),
+  ),
+  Menu(
+    title: rooms[4].name,
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "ROOM",
+        stateMachineName: "ROOM_interactivity"),
+  ),
+  Menu(
+    title: rooms[5].name,
+    rive: RiveModel(
+        src: "assets/RiveAssets/icons.riv",
+        artboard: "ROOM",
+        stateMachineName: "ROOM_interactivity"),
+  ),
+];
 
 AllRoom allRoom = AllRoom(
   // current_test_pattern: StatefulValuable<int>(0),
@@ -33,6 +88,7 @@ AllRoom allRoom = AllRoom(
   num_projectors_connected: StatefulValuable<int>(0),
   num_servers: StatefulValuable<int>(0),
   num_sensors: StatefulValuable<int>(0),
+  num_leds: StatefulValuable<int>(0),
   num_projectors: StatefulValuable<int>(0),
   presets: [
     Preset(
@@ -87,11 +143,44 @@ AllRoom allRoom = AllRoom(
 
 List<Room> rooms = [
   Room(
+    name: 'SOÁT VÉ',
+    map: 'assets/Map/P6.png',
+    general: 'Khu vực soát vé',
+    resolume: true,
+    power_room_projectors: StatefulValuable<bool>(false),
+    shutter_room_projectors: StatefulValuable<bool>(false),
+    isSelectedPlay: StatefulValuable<bool>(false),
+    isSelectedStop: StatefulValuable<bool>(false),
+    sensors: [],
+    leds: [],
+    current_preset: StatefulValuable<int>(10),
+    presets: [],
+    projectors: [],
+    servers: [
+      Server(
+        shotname: 'SV Soát Vé',
+        id: 11,
+        ip: '192.168.1.244',
+        name: 'Server soát vé',
+        preset_port: 7000,
+        power_port: 1234,
+        position: Offset(0,0),
+        mac_address: 'e0:73:e7:0D:fb:fa',
+        password: 'admin',
+        power_status: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
+        connected: StatefulValuable<bool>(false),
+        isOnHover: StatefulValuable<bool>(false),
+      ),
+    ],
+  ),
+  Room(
     name: 'PHÒNG 2',
     map: 'assets/Map/P2.png',
     general: 'Sảnh đón tiếp',
     resolume: false,
     sensors: [],
+    leds: [],
     power_room_projectors: StatefulValuable<bool>(false),
     shutter_room_projectors: StatefulValuable<bool>(false),
     isSelectedPlay: StatefulValuable<bool>(false),
@@ -244,6 +333,91 @@ List<Room> rooms = [
     ],
   ),
   Room(
+    name: 'PHÒNG 3',
+    map: 'assets/Map/P6.png',
+    general: 'Khu vực nghệ thuật tự do',
+    resolume: true,
+    power_room_projectors: StatefulValuable<bool>(false),
+    shutter_room_projectors: StatefulValuable<bool>(false),
+    isSelectedPlay: StatefulValuable<bool>(false),
+    isSelectedStop: StatefulValuable<bool>(false),
+    sensors: [],
+    leds: [Led(
+        ip: '192.168.1.11',
+        name: 'Màn led 01',
+        position: Offset(0.28,0.3),
+        port: 10940,
+        connected: StatefulValuable<bool>(false)
+    ),Led(
+        ip: '192.168.1.11',
+        name: 'Màn led 02',
+        position: Offset(0.28,0.4),
+        port: 10940,
+        connected: StatefulValuable<bool>(false)
+    )],
+    current_preset: StatefulValuable<int>(10),
+    presets: [
+      Preset(
+          name: 'Hồng Sắc Long',
+          image: 'assets/Preset3.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+    ],
+    projectors: [
+      Projector(
+        ip: '192.168.1.136',
+        name: 'Máy chiếu 01',
+        port: 3002,
+        position: Offset(0.3,0.8),
+        UsernameAndPassword: 'admin',
+        type: 'PJLink',
+        power_status_button: StatefulValuable<bool>(false),
+        shutter_status_button: StatefulValuable<bool>(false),
+        power_status: StatefulValuable<bool>(false),
+        shutter_status: StatefulValuable<bool>(false),
+        connected: StatefulValuable<bool>(false),
+        isOnHover: StatefulValuable<bool>(false),
+        lamp_hours: StatefulValuable<double>(0),
+        status: StatefulValuable<int>(0),
+        color_state: StatefulValuable<bool>(false),
+      ),
+      Projector(
+        ip: '192.168.1.137',
+        name: 'Máy chiếu 02',
+        port: 3002,
+        position: Offset(0.485,0.65),
+        UsernameAndPassword: 'admin',
+        type: 'PJLink',
+        power_status_button: StatefulValuable<bool>(false),
+        shutter_status_button: StatefulValuable<bool>(false),
+        power_status: StatefulValuable<bool>(false),
+        shutter_status: StatefulValuable<bool>(false),
+        connected: StatefulValuable<bool>(false),
+        isOnHover: StatefulValuable<bool>(false),
+        lamp_hours: StatefulValuable<double>(0),
+        status: StatefulValuable<int>(0),
+        color_state: StatefulValuable<bool>(false),
+      ),
+    ],
+    servers: [
+      Server(
+        shotname: 'MAPPING P3',
+        id: 9,
+        ip: '192.168.1.242',
+        name: 'Server mapping phòng 3',
+        preset_port: 7000,
+        power_port: 1234,
+        position: Offset(0.0, 0.0),
+        mac_address: 'e0:73:e7:0b:21:af',
+        password: 'admin',
+        power_status: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
+        connected: StatefulValuable<bool>(false),
+        isOnHover: StatefulValuable<bool>(false),
+      ),
+    ],
+  ),
+  Room(
     name: 'PHÒNG 4',
     map: 'assets/Map/P4.png',
     general: 'Phòng trải nghiệm không gian đa chiều',
@@ -254,6 +428,7 @@ List<Room> rooms = [
     isSelectedStop: StatefulValuable<bool>(false),
     current_preset: StatefulValuable<int>(10),
     sensors: [],
+    leds: [],
     presets: [
       Preset(
           name: 'Mọi Miền Tiềm Thức',
@@ -814,6 +989,7 @@ List<Room> rooms = [
     shutter_room_projectors: StatefulValuable<bool>(false),
     isSelectedPlay: StatefulValuable<bool>(false),
     isSelectedStop: StatefulValuable<bool>(false),
+    leds: [],
     sensors: [
       Sensor(
           ip: '192.168.1.11',
@@ -988,6 +1164,7 @@ List<Room> rooms = [
     isSelectedPlay: StatefulValuable<bool>(false),
     isSelectedStop: StatefulValuable<bool>(false),
     sensors: [],
+    leds: [],
     current_preset: StatefulValuable<int>(10),
     presets: [
       Preset(

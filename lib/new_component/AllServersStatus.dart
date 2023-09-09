@@ -43,7 +43,7 @@ class _AllServerStatusState extends State<AllServerStatus> {
   @override
   Widget build(BuildContext context) {
     Room room = widget.room;
-    return Row(
+    return Column(
         children: List.generate(
       room.servers.length,
       (index) => Container(

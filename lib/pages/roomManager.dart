@@ -17,14 +17,10 @@ import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffProjector.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffShutter.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
-import 'package:responsive_dashboard/component/barChart.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/new_component/header.dart';
 import 'package:responsive_dashboard/new_component/info_projector.dart';
-import 'package:responsive_dashboard/new_component/projectorConnection.dart';
-import 'package:responsive_dashboard/new_component/sensorConnection.dart';
-import 'package:responsive_dashboard/new_component/serverConnection.dart';
 import 'package:responsive_dashboard/new_component/volume_edit.dart';
 import 'package:responsive_dashboard/pages/appBarActionItems.dart';
 import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
@@ -54,8 +50,8 @@ class _RoomManagerState extends State<RoomManager> {
               server.ip, server.preset_port, room.current_preset.getValue());
           PlayPreset(current_page.getValue());
         } else {
-          SendUDPMessage(
-              server, 'Preset' + (room.current_preset.getValue()+1).toString());
+          SendUDPMessage(server,
+              'Preset' + (room.current_preset.getValue() + 1).toString());
         }
       }
     });
@@ -65,26 +61,35 @@ class _RoomManagerState extends State<RoomManager> {
   void initState() {
     super.initState();
     // Đặt một Timer để cập nhật widget sau mỗi giây
-    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
       Room room = rooms[
           (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
       setState(() {
-        if (current_page.getValue() == 2) {
+        if (current_page.getValue() == 4) {
           // for (Server server in room.servers) {
           if (room.servers[0].connected.getValue()) {
-            print('check');
+            OSCReceive();
+          }
+          // }
+        } else if (current_page.getValue() == 3) {
+          // for (Server server in room.servers) {
+          if (room.servers[0].connected.getValue()) {
             OSCReceive();
           }
           // }
         }
       });
     });
-    _timer2 = Timer.periodic(Duration(seconds: (current_page.getValue() == 2)? 3:1), (timer) async {
+    _timer2 = Timer.periodic(
+        Duration(seconds: (current_page.getValue() == 4) ? 3 : 1),
+        (timer) async {
       Room room = rooms[
           (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
       checkRoomSensorConnection(room);
-      checkRoomProjectorConnection(room, (current_page.getValue() == 2)? 3000:1000);
-      if (current_page.getValue() != 1) {
+      checkRoomLedConnection(room);
+      checkRoomProjectorConnection(
+          room, (current_page.getValue() == 4) ? 3000 : 1000);
+      if (current_page.getValue() != 1 && current_page.getValue() != 2) {
         SetButtonControlRoom(room);
       }
     });
@@ -122,174 +127,180 @@ class _RoomManagerState extends State<RoomManager> {
                     SizedBox(
                       height: SizeConfig.blockSizeVertical * 2,
                     ),
-                    SizedBox(
-                      height: SizeConfig.blockSizeVertical * 4,
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.movie_filter,
-                            size: 25,
-                            color: AppColors.gray,
-                          ),
-                          SizedBox(
-                            width: SizeConfig.blockSizeVertical,
-                          ),
-                          PrimaryText(
-                              text: 'Nội dung'.toUpperCase(),
-                              size: 20,
+                    if (current_page.getValue() != 1)
+                      SizedBox(
+                        height: SizeConfig.blockSizeVertical * 4,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.movie_filter,
+                              size: 25,
                               color: AppColors.gray,
-                              fontWeight: FontWeight.w500),
-                        ],
+                            ),
+                            SizedBox(
+                              width: SizeConfig.blockSizeVertical,
+                            ),
+                            PrimaryText(
+                                text: 'Nội dung'.toUpperCase(),
+                                size: 20,
+                                color: AppColors.gray,
+                                fontWeight: FontWeight.w500),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                      margin: EdgeInsets.fromLTRB(0, 20, 0, 30),
-                      decoration: BoxDecoration(
-                        color: AppColors.gray,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Column(
-                        children: [
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children:
-                                  List.generate(room.presets.length, (index) {
-                                bool isSelected =
-                                    room.current_preset.getValue() == index;
-                                return GestureDetector(
-                                  onTap: () {
-                                    select_preset(room, index);
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      AnimatedContainer(
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.easeInOut,
-                                        width: isSelected ? 180.0 : 120.0,
-                                        height: isSelected ? 180.0 : 120.0,
-                                        margin: EdgeInsets.all(20.0),
-                                        decoration: BoxDecoration(
-                                          color: isSelected
-                                              ? AppColors.navy_blue2
-                                              : AppColors.white,
-                                          borderRadius: BorderRadius.circular(
-                                              isSelected ? 20.0 : 15),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(5),
-                                          child: ClipRRect(
+                    if (current_page.getValue() != 1)
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        margin: EdgeInsets.fromLTRB(0, 20, 0, 30),
+                        decoration: BoxDecoration(
+                          color: AppColors.gray,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Column(
+                          children: [
+                            SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children:
+                                    List.generate(room.presets.length, (index) {
+                                  bool isSelected =
+                                      room.current_preset.getValue() == index;
+                                  return GestureDetector(
+                                    onTap: () {
+                                      select_preset(room, index);
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        AnimatedContainer(
+                                          duration: Duration(milliseconds: 500),
+                                          curve: Curves.easeInOut,
+                                          width: isSelected ? 250.0 : 160.0,
+                                          height: isSelected ? 250.0 : 160.0,
+                                          margin: EdgeInsets.all(20.0),
+                                          decoration: BoxDecoration(
+                                            color: isSelected
+                                                ? AppColors.navy_blue2
+                                                : AppColors.white,
                                             borderRadius: BorderRadius.circular(
-                                                isSelected ? 15.0 : 10),
-                                            child: Image.asset(
-                                              room.presets[index].image,
+                                                isSelected ? 20.0 : 15),
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(isSelected ? 8.0 : 5.0),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      isSelected ? 15.0 : 10),
+                                              child: Image.asset(
+                                                room.presets[index].image,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          if (isSelected &&
-                                              current_page.getValue() == 2)
-                                            SizedBox(
-                                              height: 12,
-                                              width: 160,
-                                              child: Container(
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  child:
-                                                      LinearProgressIndicator(
-                                                    value: (room.current_preset
-                                                                .getValue() <
-                                                            room.presets.length)
-                                                        ? room
-                                                            .presets[room
-                                                                .current_preset
-                                                                .getValue()]
-                                                            .transport
-                                                            .getValue()
-                                                        : 0,
-                                                    semanticsLabel:
-                                                        'Linear progress indicator',
-                                                    color: AppColors.navy_blue2,
-                                                    backgroundColor:
-                                                        AppColors.white,
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            if (isSelected &&
+                                                (current_page.getValue() == 3 ||
+                                                    current_page.getValue() ==
+                                                        4))
+                                              SizedBox(
+                                                height: 15,
+                                                width: 230,
+                                                child: Container(
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                    child:
+                                                        LinearProgressIndicator(
+                                                      value: (room.current_preset
+                                                                  .getValue() <
+                                                              room.presets
+                                                                  .length)
+                                                          ? room
+                                                              .presets[room
+                                                                  .current_preset
+                                                                  .getValue()]
+                                                              .transport
+                                                              .getValue()
+                                                          : 0,
+                                                      semanticsLabel:
+                                                          'Linear progress indicator',
+                                                      color:
+                                                          AppColors.navy_blue2,
+                                                      backgroundColor:
+                                                          AppColors.white,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          if (isSelected)
-                                            SizedBox(
-                                                height: SizeConfig
-                                                    .blockSizeVertical),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.local_movies_outlined,
-                                                size: isSelected ? 26 : 15,
-                                                color: AppColors.white,
-                                              ),
+                                            if (isSelected)
                                               SizedBox(
-                                                  width: SizeConfig
-                                                          .blockSizeHorizontal *
-                                                      (isSelected
-                                                          ? 1.5
-                                                          : 0.75)),
-                                              AnimatedDefaultTextStyle(
-                                                style: isSelected
-                                                    ? TextStyle(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: 17.0,
-                                                        fontWeight:
-                                                            FontWeight.w600)
-                                                    : TextStyle(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: 12.0,
-                                                        fontWeight:
-                                                            FontWeight.w600),
-                                                duration: const Duration(
-                                                    milliseconds: 200),
-                                                child: Text(
-                                                    room.presets[index].name),
-                                              ),
-                                              // PrimaryText(
-                                              //     text: room.presets[index].name,
-                                              //     size: isSelected ? 17 : 12,
-                                              //     color: AppColors.white,
-                                              //     fontWeight: FontWeight.w600),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }),
+                                                  height: SizeConfig
+                                                      .blockSizeVertical*1.5),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  Icons.local_movies_outlined,
+                                                  size: isSelected ? 26 : 18,
+                                                  color: AppColors.white,
+                                                ),
+                                                SizedBox(
+                                                    width: SizeConfig
+                                                            .blockSizeHorizontal *
+                                                        (isSelected
+                                                            ? 1.5
+                                                            : 0.75)),
+                                                AnimatedDefaultTextStyle(
+                                                  style: isSelected
+                                                      ? TextStyle(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: 17.0,
+                                                          fontWeight:
+                                                              FontWeight.w600)
+                                                      : TextStyle(
+                                                          fontFamily: 'Poppins',
+                                                          fontSize: 12.0,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                  duration: const Duration(
+                                                      milliseconds: 200),
+                                                  child: Text(
+                                                      room.presets[index].name),
+                                                ),
+                                                // PrimaryText(
+                                                //     text: room.presets[index].name,
+                                                //     size: isSelected ? 17 : 12,
+                                                //     color: AppColors.white,
+                                                //     fontWeight: FontWeight.w600),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                              ),
                             ),
-                          ),
-                          (current_page.getValue() != 1)
-                              ? Container(
-                                  margin: EdgeInsets.only(top: 20),
-                                  padding: const EdgeInsets.all(20),
-                                  child: VolumeEdit(
-                                      room: room, server: room.servers[1],),
-                                )
-                              : Container(
-                            margin: EdgeInsets.only(top: 20),
-                            padding: const EdgeInsets.all(20),
-                            child: VolumeEdit(
-                              room: room, server: room.servers[7],),
-                          ),
-                        ],
+                            // (current_page.getValue() == 1)?
+                            (current_page.getValue() == 2)
+                                ? VolumeEdit(
+                                    room: room,
+                                    server: room.servers[7],
+                                  )
+                                : VolumeEdit(
+                                    room: room,
+                                    server: room.servers[0],
+                                  ),
+                          ],
+                        ),
                       ),
-                    ),
                     Column(
                       children: [
                         MiniMap(
@@ -452,21 +463,17 @@ class _RoomManagerState extends State<RoomManager> {
                                 alignment: WrapAlignment.spaceBetween,
                                 children: List.generate(
                                   room.servers.length,
-                                  (index) =>
-                                      InfoServer(server: room.servers[index]),
-                                ))
-                            // : SpinKitThreeBounce(
-                            //     color: AppColors.navy_blue,
-                            //     size: 20,
-                            //   ),
-                            ),
+                                  (index) => InfoServer(
+                                      room: room, server: room.servers[index]),
+                                ))),
 
                         SizedBox(
                           height: SizeConfig.blockSizeVertical * 4,
                         ),
                       ]),
                     if (current_page.getValue() != 0 &&
-                        current_page.getValue() != 1)
+                        current_page.getValue() != 1 &&
+                        current_page.getValue() != 2)
                       Column(
                         children: [
                           SizedBox(
@@ -533,8 +540,7 @@ class _RoomManagerState extends State<RoomManager> {
                                         ),
                                         onPressed: () {
                                           setState(() {
-                                            PowerRoomProjectors(
-                                                room, true);
+                                            PowerRoomProjectors(room, true);
                                           });
                                         },
                                         child: PrimaryText(
@@ -580,7 +586,6 @@ class _RoomManagerState extends State<RoomManager> {
                                                     },
                                                   );
                                                 }));
-
                                               });
                                             },
                                             child: PrimaryText(
@@ -717,91 +722,8 @@ class _RoomManagerState extends State<RoomManager> {
                           ),
                         ],
                       ),
-
                     if (!Responsive.isDesktop(context))
                       CheckConnectionBar(room: room)
-                    // else
-                    //   Column(
-                    //     children: [
-                    //       Container(
-                    //         alignment: Alignment.centerLeft,
-                    //         child: PrimaryText(
-                    //           text: room.resolume
-                    //               ? 'Kiểm tra tín hiệu server'.toUpperCase()
-                    //               : 'Kiểm tra tín hiệu Bright Sign'
-                    //                   .toUpperCase(),
-                    //           size: 16,
-                    //           fontWeight: FontWeight.w500,
-                    //           color: AppColors.iconDeepGray,
-                    //         ),
-                    //       ),
-                    //       SizedBox(
-                    //         height: SizeConfig.blockSizeVertical * 2,
-                    //       ),
-                    //       Wrap(
-                    //         children: List.generate(
-                    //           room.servers.length,
-                    //           (index) => ServerConnection(
-                    //             server: room.servers[index],
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       SizedBox(
-                    //         height: SizeConfig.blockSizeVertical * 2,
-                    //       ),
-                    //       if (room.sensors.length != 0)
-                    //         Column(
-                    //           children: [
-                    //             Container(
-                    //               alignment: Alignment.centerLeft,
-                    //               child: PrimaryText(
-                    //                 text: 'Kiểm tra tín hiệu cảm biến'
-                    //                     .toUpperCase(),
-                    //                 size: 16,
-                    //                 fontWeight: FontWeight.w500,
-                    //                 color: AppColors.iconDeepGray,
-                    //               ),
-                    //             ),
-                    //             SizedBox(
-                    //               height: SizeConfig.blockSizeVertical * 2,
-                    //             ),
-                    //             Column(
-                    //               children: List.generate(
-                    //                 room.sensors.length,
-                    //                 (index) => SensorConnection(
-                    //                   sensor: room.sensors[index],
-                    //                 ),
-                    //               ),
-                    //             ),
-                    //             SizedBox(
-                    //               height: SizeConfig.blockSizeVertical * 2,
-                    //             ),
-                    //           ],
-                    //         ),
-                    //       if (room.resolume)
-                    //         Container(
-                    //           alignment: Alignment.centerLeft,
-                    //           child: PrimaryText(
-                    //             text:
-                    //                 'Kiểm tra tín hiệu máy chiếu'.toUpperCase(),
-                    //             size: 16,
-                    //             fontWeight: FontWeight.w500,
-                    //             color: AppColors.iconDeepGray,
-                    //           ),
-                    //         ),
-                    //       SizedBox(
-                    //         height: SizeConfig.blockSizeVertical * 2,
-                    //       ),
-                    //       Wrap(
-                    //         children: List.generate(
-                    //           room.projectors.length,
-                    //           (index) => ProjectorConnection(
-                    //             projector: room.projectors[index],
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
                   ],
                 ),
               ),

@@ -22,7 +22,6 @@ import 'package:responsive_dashboard/style/style.dart';
 import 'package:rive/rive.dart';
 import 'package:valuable/valuable.dart';
 
-
 final StatefulValuable<int> current_page = StatefulValuable<int>(0);
 
 class Dashboard extends StatefulWidget {
@@ -51,7 +50,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     Room room =
-    rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 0];
+        rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 0];
 
     return Scaffold(
       key: _drawerKey,
@@ -123,6 +122,28 @@ class _DashboardState extends State<Dashboard> {
                           ),
                           onPressed: () => changePage(4)),
                     ),
+                    Expanded(
+                      child: IconButton(
+                          iconSize: 30,
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          icon: RiveAnimation.asset(
+                            "assets/RiveAssets/icons.riv",
+                            artboard: "ROOM",
+                            // onInit: riveOnInit,
+                          ),
+                          onPressed: () => changePage(4)),
+                    ),
+                    Expanded(
+                      child: IconButton(
+                          iconSize: 30,
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          icon: RiveAnimation.asset(
+                            "assets/RiveAssets/icons.riv",
+                            artboard: "ROOM",
+                            // onInit: riveOnInit,
+                          ),
+                          onPressed: () => changePage(4)),
+                    ),
                   ],
                 ),
               ),
@@ -130,24 +151,24 @@ class _DashboardState extends State<Dashboard> {
           )),
       appBar: !Responsive.isDesktop(context)
           ? AppBar(
-        elevation: 0,
-        backgroundColor: AppColors.white,
-        leading: IconButton(
-            onPressed: () {
-              _drawerKey.currentState?.openDrawer();
-            },
-            icon: Icon(Icons.menu, color: AppColors.black)),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: AppBarActionItems(),
-          ),
-        ],
-      )
+              elevation: 0,
+              backgroundColor: AppColors.white,
+              leading: IconButton(
+                  onPressed: () {
+                    _drawerKey.currentState?.openDrawer();
+                  },
+                  icon: Icon(Icons.menu, color: AppColors.black)),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AppBarActionItems(),
+                ),
+              ],
+            )
           : PreferredSize(
-        preferredSize: Size.zero,
-        child: SizedBox(),
-      ),
+              preferredSize: Size.zero,
+              child: SizedBox(),
+            ),
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -157,7 +178,7 @@ class _DashboardState extends State<Dashboard> {
               decoration: BoxDecoration(
                   color: AppColors.barBg,
                   borderRadius:
-                  BorderRadius.horizontal(right: Radius.circular(30))),
+                      BorderRadius.horizontal(right: Radius.circular(30))),
               child: Column(
                 children: [
                   Container(
@@ -172,7 +193,7 @@ class _DashboardState extends State<Dashboard> {
                   Column(
                     children: List.generate(
                       sidebarMenus.length,
-                          (index) => SideMenu(
+                      (index) => SideMenu(
                         menu: sidebarMenus[index],
                         selectedMenu: selectedSideMenu,
                         press: () {
@@ -194,7 +215,7 @@ class _DashboardState extends State<Dashboard> {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         exit(0);
                       },
                       child: Container(
@@ -204,8 +225,9 @@ class _DashboardState extends State<Dashboard> {
                           height: 60,
                           decoration: BoxDecoration(
                               color: AppColors.navy_blue,
-                              borderRadius:
-                              BorderRadius.only(topRight: Radius.circular(15), bottomRight: Radius.circular(30))),
+                              borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(15),
+                                  bottomRight: Radius.circular(30))),
                           // padding: const EdgeInsets.only(bottom: 7.0),
                           child: PrimaryText(
                             text: 'Exit',

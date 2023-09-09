@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Object/Led.dart';
 import 'package:responsive_dashboard/Object/Preset.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Sensor.dart';
@@ -15,6 +16,7 @@ class Room {
     String general;
     bool resolume;
     List<Sensor> sensors;
+    List<Led> leds;
     StatefulValuable<int> current_preset;
     List<Preset> presets; // : 1,2,3
     List<Projector> projectors;
@@ -31,6 +33,7 @@ class Room {
         required this.general,
         required this.resolume,
         required this.sensors,
+        required this.leds,
         required this.current_preset,
         required this.presets,
         required this.projectors,

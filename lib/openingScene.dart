@@ -22,7 +22,7 @@ import 'package:valuable/valuable.dart';
 // StatefulValuable<double> opening_per = StatefulValuable<double>(0);
 
 double progressValue = 0.0;
-int half_length = (rooms[1].projectors.length / 2).toInt() + 1;
+int half_length = (rooms[3].projectors.length / 2).toInt() + 1;
 
 class OpeningScene extends StatefulWidget {
   const OpeningScene({key});
@@ -202,31 +202,31 @@ class _OpeningSceneState extends State<OpeningScene>
                     SizedBox(
                       height: 20,
                     ),
-                    // AnimatedBtn(
-                    //   btnAnimationController: _btnAnimationController,
-                    //   press: () {
-                    //     _btnAnimationController.isActive = true;
-                    //
-                    //     Future.delayed(
-                    //       const Duration(milliseconds: 800),
-                    //           () {
-                    //         setState(() {
-                    //           isShowSignInDialog = true;
-                    //         });
-                    //         if(emailController.text == email && passwordController == password) {
-                    //           Navigator.of(context).pushReplacement(
-                    //             MaterialPageRoute(
-                    //                 builder: (context) => Dashboard()),
-                    //           );
-                    //         }
-                    //         Navigator.of(context).pushReplacement(
-                    //           MaterialPageRoute(
-                    //               builder: (context) => Dashboard()),
-                    //         );
-                    //       },
-                    //     );
-                    //   },
-                    // ),
+                    AnimatedBtn(
+                      btnAnimationController: _btnAnimationController,
+                      press: () {
+                        _btnAnimationController.isActive = true;
+
+                        Future.delayed(
+                          const Duration(milliseconds: 800),
+                              () {
+                            setState(() {
+                              isShowSignInDialog = true;
+                            });
+                            if(emailController.text == email && passwordController == password) {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => Dashboard()),
+                              );
+                            }
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => Dashboard()),
+                            );
+                          },
+                        );
+                      },
+                    ),
                     isChecked
                         ? AnimatedBtn(
                             btnAnimationController: _btnAnimationController,
@@ -283,102 +283,51 @@ class _OpeningSceneState extends State<OpeningScene>
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
-                    children: [
-                      Column(
-                        children:
-                            List.generate(rooms[0].servers.length, (index) {
-                          Server server = rooms[0].servers[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 120,
-                                  child: PrimaryText(
-                                    text: '${server.name}',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width: 100,
-                                  child: PrimaryText(
-                                    text: '(${server.ip})',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                PrimaryText(
-                                  text: server.connected.getValue()
-                                      ? 'Đã kết nối'
-                                      : 'Mất kết nối',
-                                  color: server.connected.getValue()
-                                      ? AppColors.green
-                                      : AppColors.red,
-                                  size: 14,
-                                ),
-                              ],
+                    children: List.generate(rooms[2].projectors.length, (index) {
+                      Projector projector = rooms[2].projectors[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 150,
+                              child: PrimaryText(
+                                text: '${projector.name}',
+                                size: 14,
+                              ),
                             ),
-                          );
-                        }),
-                      ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      Column(
-                        children:
-                            List.generate(rooms[3].servers.length, (index) {
-                          Server server = rooms[3].servers[index];
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 120,
-                                  child: PrimaryText(
-                                    text: '${server.name}',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width: 100,
-                                  child: PrimaryText(
-                                    text: '(${server.ip})',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                PrimaryText(
-                                  text: server.connected.getValue()
-                                      ? 'Đã kết nối'
-                                      : 'Mất kết nối',
-                                  color: server.connected.getValue()
-                                      ? AppColors.green
-                                      : AppColors.red,
-                                  size: 14,
-                                ),
-                              ],
+                            SizedBox(
+                              width: 10,
                             ),
-                          );
-                        }),
-                      ),
-                    ],
+                            Container(
+                              width: 100,
+                              child: PrimaryText(
+                                text: '(${projector.ip})',
+                                size: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            PrimaryText(
+                              text: projector.connected.getValue()
+                                  ? 'Đã kết nối '
+                                  : 'Mất kết nối',
+                              color: projector.connected.getValue()
+                                  ? AppColors.green
+                                  : AppColors.red,
+                              size: 14,
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
                   ),
                   Expanded(
                     child: Column(
                       children: List.generate(half_length, (index) {
-                        Projector projector = rooms[1].projectors[index];
+                        Projector projector = rooms[3].projectors[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: Row(
@@ -406,7 +355,7 @@ class _OpeningSceneState extends State<OpeningScene>
                               ),
                               PrimaryText(
                                 text: projector.connected.getValue()
-                                    ? 'Đã kết nối'
+                                    ? 'Đã kết nối '
                                     : 'Mất kết nối',
                                 color: projector.connected.getValue()
                                     ? AppColors.green
@@ -422,9 +371,9 @@ class _OpeningSceneState extends State<OpeningScene>
                   Expanded(
                     child: Column(
                       children: List.generate(
-                          rooms[1].projectors.length - half_length, (index) {
+                          rooms[3].projectors.length - half_length, (index) {
                         Projector projector =
-                            rooms[1].projectors[index + half_length];
+                            rooms[3].projectors[index + half_length];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: Row(
@@ -452,7 +401,7 @@ class _OpeningSceneState extends State<OpeningScene>
                               ),
                               PrimaryText(
                                 text: projector.connected.getValue()
-                                    ? 'Đã kết nối'
+                                    ? 'Đã kết nối '
                                     : 'Mất kết nối',
                                 color: projector.connected.getValue()
                                     ? AppColors.green
@@ -468,8 +417,8 @@ class _OpeningSceneState extends State<OpeningScene>
                   Column(children: [
                     Column(
                       children:
-                          List.generate(rooms[2].projectors.length, (index) {
-                        Projector projector = rooms[2].projectors[index];
+                          List.generate(rooms[4].projectors.length, (index) {
+                        Projector projector = rooms[4].projectors[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: Row(
@@ -497,7 +446,7 @@ class _OpeningSceneState extends State<OpeningScene>
                               ),
                               PrimaryText(
                                 text: projector.connected.getValue()
-                                    ? 'Đã kết nối'
+                                    ? 'Đã kết nối '
                                     : 'Mất kết nối',
                                 color: projector.connected.getValue()
                                     ? AppColors.green
@@ -514,8 +463,8 @@ class _OpeningSceneState extends State<OpeningScene>
                     ),
                     Column(
                       children:
-                          List.generate(rooms[3].projectors.length, (index) {
-                        Projector projector = rooms[3].projectors[index];
+                          List.generate(rooms[5].projectors.length, (index) {
+                        Projector projector = rooms[5].projectors[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: Row(
@@ -543,7 +492,7 @@ class _OpeningSceneState extends State<OpeningScene>
                               ),
                               PrimaryText(
                                 text: projector.connected.getValue()
-                                    ? 'Đã kết nối'
+                                    ? 'Đã kết nối '
                                     : 'Mất kết nối',
                                 color: projector.connected.getValue()
                                     ? AppColors.green
@@ -556,6 +505,112 @@ class _OpeningSceneState extends State<OpeningScene>
                       }),
                     ),
                   ]),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            left: MediaQuery.of(context).size.width-382,
+            top: MediaQuery.of(context).size.height-460,
+            width: MediaQuery.of(context).size.width - 80,
+            height: MediaQuery.of(context).size.height,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(15.0, 60, 10, 10),
+              child:
+              Column(
+                children: [
+                  Column(
+                    children:
+                    List.generate(rooms[1].servers.length, (index) {
+                      Server server = rooms[1].servers[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 120,
+                              child: PrimaryText(
+                                text: '${server.name}',
+                                size: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              width: 100,
+                              child: PrimaryText(
+                                text: '(${server.ip})',
+                                size: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            PrimaryText(
+                              text: server.connected.getValue()
+                                  ? 'Đã kết nối '
+                                  : 'Mất kết nối',
+                              color: server.connected.getValue()
+                                  ? AppColors.green
+                                  : AppColors.red,
+                              size: 14,
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
+                  Column(
+                    children:
+                    List.generate(rooms[5].servers.length, (index) {
+                      Server server = rooms[5].servers[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: 120,
+                              child: PrimaryText(
+                                text: '${server.name}',
+                                size: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              width: 100,
+                              child: PrimaryText(
+                                text: '(${server.ip})',
+                                size: 14,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            PrimaryText(
+                              text: server.connected.getValue()
+                                  ? 'Đã kết nối '
+                                  : 'Mất kết nối',
+                              color: server.connected.getValue()
+                                  ? AppColors.green
+                                  : AppColors.red,
+                              size: 14,
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
                 ],
               ),
             ),

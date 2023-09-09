@@ -6,6 +6,7 @@ import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Method/server_void.dart';
 import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -13,9 +14,11 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
 class InfoServer extends StatefulWidget {
+  Room room;
   Server server;
 
   InfoServer({
+    required this.room,
     required this.server,
   });
 
@@ -29,15 +32,16 @@ class InfoServer extends StatefulWidget {
 class _InfoServer extends State<InfoServer> {
   @override
   Widget build(BuildContext context) {
+    Room room = widget.room;
     Server server = widget.server;
     return Container(
       constraints: BoxConstraints(
-          minWidth: Responsive.isDesktop(context)
+          minWidth: room.servers.length>1
               ? 300
               : SizeConfig.screenWidth / 2 - 75,
-          maxWidth: Responsive.isDesktop(context)
+          maxWidth: room.servers.length>1
               ? SizeConfig.screenWidth / 3 - 110
-              : SizeConfig.screenWidth / 2 - 45),
+              : SizeConfig.screenWidth / 3*2 - 45),
       padding: EdgeInsets.only(
           top: 20,
           bottom: 20,

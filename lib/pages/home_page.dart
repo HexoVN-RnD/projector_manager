@@ -40,23 +40,14 @@ class _HomePage extends State<HomePage> {
     super.initState();
     _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       setState(() {
-        if (rooms[2].servers[0].connected.getValue() && allRoom.current_preset.getValue()<allRoom.presets.length) {
+        if (rooms[2].servers[0].connected.getValue() &&
+            allRoom.current_preset.getValue() < allRoom.presets.length) {
           OSCReceive();
         }
       });
     });
     _timer2 = Timer.periodic(Duration(seconds: 3), (timer) async {
       checkAllRoomConnection(3000);
-      // SetButtonControlAllSystem();
-      // checkRoomServerConnection(rooms[0],1000);
-      // checkRoomProjectorConnection(rooms[1],1000);
-      // checkRoomServerConnection(rooms[1],1000);
-      // await Future.delayed(Duration(seconds: 1));
-      // checkRoomServerConnection(rooms[2],1000);
-      // checkRoomProjectorConnection(rooms[2],2000);
-      // await Future.delayed(Duration(seconds: 2));
-      // checkRoomServerConnection(rooms[3],1000);
-      // checkRoomProjectorConnection(rooms[3],1000);
     });
   }
 
@@ -158,7 +149,10 @@ class _HomePage extends State<HomePage> {
                             text: 'Nội dung',
                             size: 20,
                             fontWeight: FontWeight.w500),
-                        Expanded(child: SizedBox(width: 10,)),
+                        Expanded(
+                            child: SizedBox(
+                          width: 10,
+                        )),
                         Padding(
                           padding: const EdgeInsets.only(right: 30.0),
                           child: Row(
@@ -166,22 +160,22 @@ class _HomePage extends State<HomePage> {
                               PrimaryText(
                                   color: AppColors.white,
                                   text: (DateTime.now().hour < 10)
-                                      ? '0'+ DateTime.now().hour.toString()
+                                      ? '0' + DateTime.now().hour.toString()
                                       : DateTime.now().hour.toString(),
                                   size: 20,
                                   fontWeight: FontWeight.w500),
                               PrimaryText(
                                   color: AppColors.white,
                                   text: (DateTime.now().minute < 10)
-                                      ? ':0'+DateTime.now().minute.toString()
-                                      : ':'+DateTime.now().minute.toString(),
+                                      ? ':0' + DateTime.now().minute.toString()
+                                      : ':' + DateTime.now().minute.toString(),
                                   size: 20,
                                   fontWeight: FontWeight.w500),
                               PrimaryText(
                                   color: AppColors.white,
                                   text: (DateTime.now().second < 10)
-                                      ? ':0'+DateTime.now().second.toString()
-                                      : ':' +DateTime.now().second.toString(),
+                                      ? ':0' + DateTime.now().second.toString()
+                                      : ':' + DateTime.now().second.toString(),
                                   size: 20,
                                   fontWeight: FontWeight.w500),
                             ],
@@ -210,8 +204,8 @@ class _HomePage extends State<HomePage> {
                               AnimatedContainer(
                                 duration: Duration(milliseconds: 500),
                                 curve: Curves.easeInOut,
-                                width: isSelected ? 250.0 : 150.0,
-                                height: isSelected ? 250.0 : 150.0,
+                                width: isSelected ? 300.0 : 180.0,
+                                height: isSelected ? 300.0 : 180.0,
                                 margin: EdgeInsets.all(20.0),
                                 decoration: BoxDecoration(
                                   color: isSelected
@@ -221,7 +215,7 @@ class _HomePage extends State<HomePage> {
                                       isSelected ? 20.0 : 15),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(5),
+                                  padding: EdgeInsets.all(isSelected ? 8.0 : 5.0),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(
                                         isSelected ? 15.0 : 10),
@@ -453,60 +447,6 @@ class _HomePage extends State<HomePage> {
                       ),
                     ),
                   ),
-                  // Container(
-                  //   margin: EdgeInsets.fromLTRB(25, 30, 50, 0),
-                  //   // padding: EdgeInsets.fromLTRB(20, 0, 50, 0),
-                  //   height: 50,
-                  //   child: Row(
-                  //     crossAxisAlignment: CrossAxisAlignment.center,
-                  //     children: [
-                  //       Icon(
-                  //         (allRoom.volume_all.getValue() != 0)
-                  //             ? Icons.music_note
-                  //             : Icons.music_off,
-                  //         size: 25,
-                  //         color: AppColors.white,
-                  //       ),
-                  //       SizedBox(
-                  //         width: SizeConfig.blockSizeHorizontal,
-                  //       ),
-                  //       PrimaryText(
-                  //         text: "Âm thanh",
-                  //         color: AppColors.white,
-                  //         size: 18,
-                  //         fontWeight: FontWeight.w500,
-                  //       ),
-                  //       Expanded(
-                  //         child: Container(
-                  //           margin: EdgeInsets.fromLTRB(100, 0, 30, 0),
-                  //           width: 300,
-                  //           child: Transform.scale(
-                  //             scale: 1,
-                  //             child: Slider(
-                  //               activeColor: AppColors.navy_blue,
-                  //               inactiveColor: AppColors.light_navy_blue,
-                  //               value: allRoom.volume_all.getValue(),
-                  //               onChanged: (index) {
-                  //                 setState(() => EditAllAudio(index));
-                  //               },
-                  //               onChangeEnd: (index) {
-                  //                 setState(() => EditAllAudioAndSave(index));
-                  //               },
-                  //               min: 0,
-                  //               max: 1,
-                  //               // divisions: 5,
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //       PrimaryText(
-                  //           text: (allRoom.volume_all.getValue() * 100)
-                  //               .toStringAsFixed(0),
-                  //           color: AppColors.barBg,
-                  //           size: 16),
-                  //     ],
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -524,24 +464,12 @@ class _HomePage extends State<HomePage> {
             Wrap(
               spacing: 40,
               alignment: WrapAlignment.spaceBetween,
-              children: [
-                MiniMap(
-                  room: rooms[0],
-                  page: 1,
-                ),
-                MiniMap(
-                  room: rooms[1],
-                  page: 2,
-                ),
-                MiniMap(
-                  room: rooms[2],
-                  page: 3,
-                ),
-                MiniMap(
-                  room: rooms[3],
-                  page: 4,
-                ),
-              ],
+              children: List.generate(rooms.length, (index) {
+                return MiniMap(
+                  room: rooms[index],
+                  page: index + 1,
+                );
+              }),
             ),
 
             Row(
