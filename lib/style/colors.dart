@@ -22,6 +22,9 @@ class AppColors {
   static const yellow2 = Color.fromRGBO(250, 222, 154, 1.0);
   static const yellow3 = Color.fromRGBO(245, 202, 100, 1.0);
   static const yellow4 = Color.fromRGBO(224, 162, 19, 1.0);
+  static const column1 = Color.fromRGBO(150, 52, 230, 1.0);
+  static const column2 = Color.fromRGBO(245, 202, 100, 1.0);
+  static const column3 = Color.fromRGBO(246, 46, 93, 1.0);
   static List<Color> StatusColor = [
     Color.fromRGBO(246, 75, 75, 1.0),
     // Color.fromRGBO(0, 0, 0, 1.0),

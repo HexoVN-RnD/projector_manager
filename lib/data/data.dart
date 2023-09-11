@@ -67,21 +67,12 @@ List<Menu> sidebarMenus = [
 ];
 
 AllRoom allRoom = AllRoom(
-  // current_test_pattern: StatefulValuable<int>(0),
   current_preset: StatefulValuable<int>(10),
+  current_colume: StatefulValuable<int>(1),
   power_all_projectors: StatefulValuable<bool>(false),
   power_all_servers: StatefulValuable<bool>(false),
+  is_switch_colume: StatefulValuable<bool>(false),
   shutter_all_projectors: StatefulValuable<bool>(false),
-  // electronic_mode: StatefulValuable<bool>(false),
-  // ASU_mode: StatefulValuable<bool>(false),
-  // OSD_mode: StatefulValuable<bool>(false),
-  // whiteOrGreen: StatefulValuable<bool>(false),
-  // A1: StatefulValuable<bool>(true),
-  // A2: StatefulValuable<bool>(true),
-  // A3: StatefulValuable<bool>(true),
-  // B1: StatefulValuable<bool>(true),
-  // B2: StatefulValuable<bool>(true),
-  // B3: StatefulValuable<bool>(true),
   volume_all: StatefulValuable<double>(1),
   current_transport: StatefulValuable<double>(0),
   num_servers_connected: StatefulValuable<int>(0),
@@ -92,53 +83,21 @@ AllRoom allRoom = AllRoom(
   num_projectors: StatefulValuable<int>(0),
   presets: [
     Preset(
-        name: 'Kịch bản 1',
+        name: '123',
         image: 'assets/Preset4.1.png',
         osc_message: 'column 1',
         transport: StatefulValuable<double>(0)),
     Preset(
-        name: 'Kịch bản 2',
+        name: '231',
         image: 'assets/Preset4.2.png',
         osc_message: 'column 2',
         transport: StatefulValuable<double>(0)),
     Preset(
-        name: 'Kịch bản 3',
+        name: '312',
         image: 'assets/Preset4.3.png',
         osc_message: 'column 3',
         transport: StatefulValuable<double>(0)),
-    // Preset(
-    //     name: 'Preset 4',
-    //     image:  'assets/watching-a-movie_black.png',
-    //     osc_message: 'column 4',
-    //     transport: StatefulValuable<double>(0)),
   ],
-  // test_patterns: [
-  //   TestPattern(
-  //       name: 'Test Pattern Off',
-  //       image: 'assets/TestPattern/noPattern.png',
-  //       osc_message: 'column 1',
-  //       transport: StatefulValuable<double>(0)),
-  //   TestPattern(
-  //       name: 'Test Pattern Grid',
-  //       image: 'assets/TestPattern/grid.png',
-  //       osc_message: 'column 2',
-  //       transport: StatefulValuable<double>(0)),
-  //   TestPattern(
-  //       name: 'Test Pattern White',
-  //       image: 'assets/TestPattern/white.png',
-  //       osc_message: 'column 3',
-  //       transport: StatefulValuable<double>(0)),
-  //   TestPattern(
-  //       name: 'Test Pattern Black',
-  //       image: 'assets/TestPattern/black.png',
-  //       osc_message: 'column 4',
-  //       transport: StatefulValuable<double>(0)),
-  //   TestPattern(
-  //       name: 'Test Pattern Color',
-  //       image: 'assets/TestPattern/colorbars.png',
-  //       osc_message: 'column 5',
-  //       transport: StatefulValuable<double>(0)),
-  // ],
 );
 
 List<Room> rooms = [
@@ -160,12 +119,12 @@ List<Room> rooms = [
       Server(
         shotname: 'SV Soát Vé',
         id: 11,
-        ip: '192.168.1.244',
+        ip: '192.168.1.246',
         name: 'Server soát vé',
         preset_port: 7000,
         power_port: 1234,
         position: Offset(0,0),
-        mac_address: 'e0:73:e7:0D:fb:fa',
+        mac_address: '00:4e:01:b9:42:a0',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
         volume: StatefulValuable<double>(1),
@@ -192,21 +151,6 @@ List<Room> rooms = [
           image: 'assets/Preset2.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
-      // Preset(
-      //     name: 'Nội dung 2',
-      //     image: 'assets/watching-a-movie_black.png',
-      //     osc_message: 'column 2',
-      //     transport: StatefulValuable<double>(0)),
-      // Preset(
-      //     name: 'Nội dung 3',
-      //     image: 'assets/watching-a-movie_black.png',
-      //     osc_message: 'column 3',
-      //     transport: StatefulValuable<double>(0)),
-      // Preset(
-      //     name: 'Nội dung 4',
-      //     image: 'assets/watching-a-movie_black.png',
-      //     osc_message: 'column 4',
-      //     transport: StatefulValuable<double>(0)),
     ],
     projectors: [],
     servers: [
@@ -336,20 +280,20 @@ List<Room> rooms = [
     name: 'PHÒNG 3',
     map: 'assets/Map/P6.png',
     general: 'Khu vực nghệ thuật tự do',
-    resolume: true,
+    resolume: false,
     power_room_projectors: StatefulValuable<bool>(false),
     shutter_room_projectors: StatefulValuable<bool>(false),
     isSelectedPlay: StatefulValuable<bool>(false),
     isSelectedStop: StatefulValuable<bool>(false),
     sensors: [],
     leds: [Led(
-        ip: '192.168.1.11',
+        ip: '192.168.1.61',
         name: 'Màn led 01',
         position: Offset(0.28,0.3),
         port: 10940,
         connected: StatefulValuable<bool>(false)
     ),Led(
-        ip: '192.168.1.11',
+        ip: '192.168.1.61',
         name: 'Màn led 02',
         position: Offset(0.28,0.4),
         port: 10940,
@@ -365,7 +309,7 @@ List<Room> rooms = [
     ],
     projectors: [
       Projector(
-        ip: '192.168.1.136',
+        ip: '192.168.1.140',
         name: 'Máy chiếu 01',
         port: 3002,
         position: Offset(0.3,0.8),
@@ -382,7 +326,7 @@ List<Room> rooms = [
         color_state: StatefulValuable<bool>(false),
       ),
       Projector(
-        ip: '192.168.1.137',
+        ip: '192.168.1.141',
         name: 'Máy chiếu 02',
         port: 3002,
         position: Offset(0.485,0.65),
@@ -403,7 +347,7 @@ List<Room> rooms = [
       Server(
         shotname: 'MAPPING P3',
         id: 9,
-        ip: '192.168.1.242',
+        ip: '192.168.1.61',
         name: 'Server mapping phòng 3',
         preset_port: 7000,
         power_port: 1234,

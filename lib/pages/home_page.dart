@@ -40,7 +40,7 @@ class _HomePage extends State<HomePage> {
     super.initState();
     _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       setState(() {
-        if (rooms[2].servers[0].connected.getValue() &&
+        if (rooms[3].servers[0].connected.getValue() &&
             allRoom.current_preset.getValue() < allRoom.presets.length) {
           OSCReceive();
         }
@@ -215,7 +215,8 @@ class _HomePage extends State<HomePage> {
                                       isSelected ? 20.0 : 15),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(isSelected ? 8.0 : 5.0),
+                                  padding:
+                                      EdgeInsets.all(isSelected ? 8.0 : 5.0),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(
                                         isSelected ? 15.0 : 10),
@@ -379,7 +380,11 @@ class _HomePage extends State<HomePage> {
                                           .getValue()
                                       : 0,
                                   semanticsLabel: 'Linear progress indicator',
-                                  color: AppColors.navy_blue2,
+                                  color: allRoom.current_colume.getValue() == 1
+                                      ? AppColors.column1
+                                      : allRoom.current_colume.getValue() == 2
+                                          ? AppColors.column2
+                                          : AppColors.column3,
                                   backgroundColor: AppColors.white,
                                 ),
                               ),

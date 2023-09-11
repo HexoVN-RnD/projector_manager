@@ -9,8 +9,10 @@ class AllRoom {
     StatefulValuable<bool> power_all_projectors;
     StatefulValuable<bool> shutter_all_projectors;
     StatefulValuable<bool> power_all_servers;
+    StatefulValuable<bool> is_switch_colume;
     StatefulValuable<double> volume_all;
     StatefulValuable<int> current_preset;
+    StatefulValuable<int> current_colume;
     StatefulValuable<double> current_transport;
     StatefulValuable<int> num_servers_connected;
     StatefulValuable<int> num_projectors_connected;
@@ -27,8 +29,10 @@ class AllRoom {
         required this.power_all_projectors,
         required this.shutter_all_projectors,
         required this.power_all_servers,
+        required this.is_switch_colume,
         required this.volume_all,
         required this.current_preset,
+        required this.current_colume,
         required this.current_transport,
         required this.presets,
         required this.num_servers_connected,
