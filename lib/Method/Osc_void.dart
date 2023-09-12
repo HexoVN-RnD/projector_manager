@@ -16,12 +16,12 @@ void SendOscMessage(
 
     // Send message
     udp.send(oscData, remoteIP, port);
-    //print('Sent $oscMessage to $remoteIP at port: $port');
+    ////print('Sent $oscMessage to $remoteIP at port: $port');
 
     // Đóng kết nối UDP
     udp.close();
   } catch (e) {
-    //print('Error cant send OSC message');
+    ////print('Error cant send OSC message');
   }
 }
 
@@ -236,36 +236,37 @@ void OSCReceive() async {
           //         .getValue() <=
           //     1) {
           if (allRoom.presets.length > allRoom.current_preset.getValue()) {
-            // print('transport: $address $transport');
+            // //print('transport: $address $transport');
             if (transport > 0.999 && !allRoom.is_switch_colume.getValue()) {
               allRoom.is_switch_colume.setValue(true);
-              print('transport: $transport');
+              //print('transport: $transport');
               if (allRoom.current_colume.getValue() != 3) {
                 SwitchPreset(allRoom.current_colume.getValue());
               } else {
                 SwitchPreset(0);
               }
+              PlayAllPreset();
               await Future.delayed(Duration(seconds: 3));
-              print('switch done');
+              //print('switch done');
               allRoom.is_switch_colume.setValue(false);
             }
-            //print(allRoom.current_preset.getValue());
+            ////print(allRoom.current_preset.getValue());
             if (allRoom.current_preset.getValue() == 0) {
               if (address ==
                   '/composition/layers/1/clips/1/transport/position') {
-                //print(1);
+                //print('transport: ${transport * 0.5}');
                 allRoom.current_colume.setValue(1);
                 allRoom.presets[allRoom.current_preset.getValue()].transport
                     .setValue(transport * 0.5);
               } else if (address ==
                   '/composition/layers/1/clips/2/transport/position') {
-                //print(2);
+                //print('transport: ${transport * 0.27 + 0.5}');
                 allRoom.current_colume.setValue(2);
                 allRoom.presets[allRoom.current_preset.getValue()].transport
                     .setValue(transport * 0.27 + 0.5);
               } else if (address ==
                   '/composition/layers/1/clips/3/transport/position') {
-                //print(3);
+                //print('transport: ${transport * 0.23 + 0.77}');
                 allRoom.current_colume.setValue(3);
                 allRoom.presets[allRoom.current_preset.getValue()].transport
                     .setValue(transport * 0.23 + 0.77);
@@ -273,19 +274,19 @@ void OSCReceive() async {
             } else if (allRoom.current_preset.getValue() == 1) {
               if (address ==
                   '/composition/layers/1/clips/1/transport/position') {
-                //print(1);
+                //print('transport: ${transport * 0.5 + 0.5}');
                 allRoom.current_colume.setValue(1);
                 allRoom.presets[allRoom.current_preset.getValue()].transport
                     .setValue(transport * 0.5 + 0.5);
               } else if (address ==
                   '/composition/layers/1/clips/2/transport/position') {
-                //print(2);
+                //print('transport: ${transport * 0.27}');
                 allRoom.current_colume.setValue(2);
                 allRoom.presets[allRoom.current_preset.getValue()].transport
                     .setValue(transport * 0.27);
               } else if (address ==
                   '/composition/layers/1/clips/3/transport/position') {
-                //print(3);
+                //print('transport: ${transport * 0.23 + 0.27}');
                 allRoom.current_colume.setValue(3);
                 allRoom.presets[allRoom.current_preset.getValue()].transport
                     .setValue(transport * 0.23 + 0.27);
@@ -293,19 +294,19 @@ void OSCReceive() async {
             } else if (allRoom.current_preset.getValue() == 2) {
               if (address ==
                   '/composition/layers/1/clips/1/transport/position') {
-                //print(1);
+                //print('transport: ${transport * 0.5 + 0.23}');
                 allRoom.current_colume.setValue(1);
                 allRoom.presets[allRoom.current_preset.getValue()].transport
                     .setValue(transport * 0.5 + 0.23);
               } else if (address ==
                   '/composition/layers/1/clips/2/transport/position') {
-                //print(2);
+                //print('transport: ${transport * 0.27 + 0.73}');
                 allRoom.current_colume.setValue(2);
                 allRoom.presets[allRoom.current_preset.getValue()].transport
                     .setValue(transport * 0.27 + 0.73);
               } else if (address ==
                   '/composition/layers/1/clips/3/transport/position') {
-                //print(3);
+                //print('transport: ${transport * 0.23}');
                 allRoom.current_colume.setValue(3);
                 allRoom.presets[allRoom.current_preset.getValue()].transport
                     .setValue(transport * 0.23);
@@ -334,7 +335,7 @@ void OSCReceive() async {
                 .setValue(transport);
           }
           // }
-          // //print('Argument value: ' +
+          // ////print('Argument value: ' +
           //     rooms[(current_page.getValue() > 1) ? current_page.getValue() - 1 : 1]
           //         .presets[
           //             rooms[(current_page.getValue() > 1) ? current_page.getValue() - 1 : 1].current_preset.getValue()]
@@ -345,6 +346,6 @@ void OSCReceive() async {
       }
     });
   } catch (e) {
-    //print(e);
+    ////print(e);
   }
 }
