@@ -103,7 +103,7 @@ AllRoom allRoom = AllRoom(
 List<Room> rooms = [
   Room(
     name: 'SOÁT VÉ',
-    map: 'assets/Map/P6.png',
+    map: 'assets/Map/SoatVe.png',
     general: 'Khu vực soát vé',
     resolume: true,
     power_room_projectors: StatefulValuable<bool>(false),
@@ -278,7 +278,7 @@ List<Room> rooms = [
   ),
   Room(
     name: 'PHÒNG 3',
-    map: 'assets/Map/P6.png',
+    map: 'assets/Map/P3.png',
     general: 'Khu vực nghệ thuật tự do',
     resolume: false,
     power_room_projectors: StatefulValuable<bool>(false),
@@ -289,13 +289,13 @@ List<Room> rooms = [
     leds: [Led(
         ip: '192.168.1.61',
         name: 'Màn led 01',
-        position: Offset(0.28,0.3),
+        position: Offset(0.575,0.125),
         port: 10940,
         connected: StatefulValuable<bool>(false)
     ),Led(
         ip: '192.168.1.61',
         name: 'Màn led 02',
-        position: Offset(0.28,0.4),
+        position: Offset(0.73,0.125),
         port: 10940,
         connected: StatefulValuable<bool>(false)
     )],
@@ -310,9 +310,9 @@ List<Room> rooms = [
     projectors: [
       Projector(
         ip: '192.168.1.140',
-        name: 'Máy chiếu 01',
+        name: 'Máy chiếu tường',
         port: 3002,
-        position: Offset(0.3,0.8),
+        position: Offset(0.442,0.48),
         UsernameAndPassword: 'admin',
         type: 'PJLink',
         power_status_button: StatefulValuable<bool>(false),
@@ -327,9 +327,9 @@ List<Room> rooms = [
       ),
       Projector(
         ip: '192.168.1.141',
-        name: 'Máy chiếu 02',
+        name: 'Máy chiếu tượng',
         port: 3002,
-        position: Offset(0.485,0.65),
+        position: Offset(0.2295,0.15),
         UsernameAndPassword: 'admin',
         type: 'PJLink',
         power_status_button: StatefulValuable<bool>(false),

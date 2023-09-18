@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
 import 'package:responsive_dashboard/style/colors.dart';
@@ -10,9 +11,11 @@ import 'package:responsive_dashboard/style/style.dart';
 import 'package:auto_reload/auto_reload.dart';
 
 class ServerConnection extends StatefulWidget {
+  Room room;
   Server server;
   // final VoidCallback onUpdateState;
   ServerConnection({
+    required this.room,
     required this.server,
     // required this.onUpdateState,
   });
@@ -24,6 +27,7 @@ class ServerConnection extends StatefulWidget {
 class _ServerConnection extends State<ServerConnection> {
   @override
   Widget build(BuildContext context) {
+    Room room = widget.room;
     Server server = widget.server;
     return MouseRegion(
       onHover: (event){
@@ -81,7 +85,7 @@ class _ServerConnection extends State<ServerConnection> {
           setState(() {
             // check_connection(widget.server.ip, widget.server.connected);
             checkConnectionServerResponse(
-                server);
+                room,server);
             // widget.onUpdateState?.call();
           });
           // startAutoReload();

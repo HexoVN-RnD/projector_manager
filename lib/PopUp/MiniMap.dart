@@ -131,8 +131,8 @@ class _MiniMapState extends State<MiniMap> {
                       top: height * room.leds[index].position.dy,
                       // left: width * 0.28,
                       // top: height * 0.4,
-                      width: width * 0.05,
-                      height: width * 0.016,
+                      width: width * 0.016,
+                      height: width * 0.07,
                       child: Container(
                         decoration: BoxDecoration(
                           color: room.leds[index].connected.getValue()

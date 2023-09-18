@@ -93,7 +93,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
       Column(
         children: List.generate(
           room.servers.length,
-              (index) =>  ServerConnection(server: room.servers[index],),
+              (index) =>  ServerConnection(room: room,server: room.servers[index],),
         ),
       ),
       SizedBox(

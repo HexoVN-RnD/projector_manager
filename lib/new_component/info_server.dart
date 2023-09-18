@@ -103,7 +103,7 @@ class _InfoServer extends State<InfoServer> {
                   ),
                   onPressed: () {
                     setState(() {
-                      WakeonLan(server);
+                      WakeonLan(room,server);
                     });
                   },
                   child: PrimaryText(
@@ -130,7 +130,7 @@ class _InfoServer extends State<InfoServer> {
                     ),
                     onPressed: () {
                       setState(() {
-                        ShutdownServer(server);
+                        ShutdownServer(room,server);
                       });
                     },
                     child: PrimaryText(

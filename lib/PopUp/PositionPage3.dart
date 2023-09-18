@@ -45,8 +45,8 @@ class _PositionPage3State extends State<PositionPage3> {
     return Positioned(
       left: width * projector.position.dx,
       top: height * projector.position.dy,
-      // left: width * 0.485,
-      // top: height * 0.65,
+      // left: width * 0.2295,
+      // top: height * 0.15,
       width: width * 0.02,
       height: width * 0.02,
       child: Container(

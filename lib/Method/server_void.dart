@@ -10,7 +10,7 @@ Future<void> PowerOnAllServer() async {
     for (Server server in room.servers) {
       if (!server.power_status.getValue() && room.resolume) {
         server.power_status.setValue(true);
-        WakeonLan(server);
+        WakeonLan(room,server);
         await Future.delayed(Duration(seconds: 15));
       }
     }
@@ -31,7 +31,7 @@ Future<void> ShutdownAllServer() async {
     for (Server server in room.servers) {
       if (server.power_status.getValue() && room.resolume) {
         server.power_status.setValue(false);
-        ShutdownServer(server);
+        ShutdownServer(room,server);
       }
     }
   }
@@ -60,7 +60,7 @@ Future<void> ShutdownAllServer() async {
 //
 // }
 
-Future<void> ShutdownServer(Server server) async {
+Future<void> ShutdownServer(Room room, Server server) async {
   final message = 'shutdown';
   server.power_status.setValue(false);
   RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((socket) {
@@ -72,10 +72,10 @@ Future<void> ShutdownServer(Server server) async {
   print("Starting...");
   await Future.delayed(Duration(seconds: 30));
   print("30 seconds have passed!");
-  checkConnectionServerResponse(server);
+  checkConnectionServerResponse(room,server);
 }
 
-void WakeonLan(Server server, {int port = 9}) async {
+void WakeonLan(Room room, Server server, {int port = 9}) async {
   server.power_status.setValue(true);
 
   final boardcastIP = InternetAddress('255.255.255.255');
@@ -92,7 +92,7 @@ void WakeonLan(Server server, {int port = 9}) async {
   print("Starting wake server...");
   await Future.delayed(Duration(seconds: 90));
   print("90 seconds have passed!");
-  checkConnectionServer(server);
+  checkConnectionServer(room,server);
 }
 
 List<int> _parseMacAddress(String macAddress) {

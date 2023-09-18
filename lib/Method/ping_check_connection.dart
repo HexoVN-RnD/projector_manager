@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:valuable/valuable.dart';
 import 'package:dart_ping/dart_ping.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
@@ -8,7 +10,7 @@ import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/data/data.dart';
 
-void checkConnectionServer(Server server) {
+void checkConnectionServer(Room room, Server server) {
   int count = 0;
   final ping = Ping(server.ip, count: 1); // Thay đổi số lần ping tùy ý
 
@@ -16,7 +18,13 @@ void checkConnectionServer(Server server) {
     // print('ping server ${server.ip} response ${event.response?.time} ${count}');
     // print('Ping to ${server.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
-      server.connected.setValue(true);
+      if(room.resolume && event.response?.ttl==128) {
+        server.connected.setValue(true);
+      } else if (!room.resolume && event.response?.ttl==64) {
+        server.connected.setValue(true);
+      } else {
+        server.connected.setValue(false);
+      }
       // server.power_status.setValue(true);
     } else if (event.response?.time == null && count != 1) {
       server.connected.setValue(false);
@@ -28,7 +36,7 @@ void checkConnectionServer(Server server) {
   ping.command;
 }
 
-void checkConnectionServerResponse(Server server) {
+void checkConnectionServerResponse(Room room, Server server) {
   int count = 0;
   final ping = Ping(server.ip, count: 1); // Thay đổi số lần ping tùy ý
 
@@ -36,9 +44,20 @@ void checkConnectionServerResponse(Server server) {
     // print('ping server ${server.ip} response ${event.response?.time} ${count}');
     // print('Ping to ${server.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
-      server.connected.setValue(true);
-      server.power_status.setValue(true);
-      print('Connected to ${server.ip}: ${event.response?.time} ms');
+      if(room.resolume && event.response?.ttl==128) {
+        server.connected.setValue(true);
+        server.power_status.setValue(true);
+        print('Connected to ${server.ip}: ${event.response?.time} ms');
+      } else if (!room.resolume && event.response?.ttl==64) {
+        server.connected.setValue(true);
+        server.power_status.setValue(true);
+        print('Connected to ${server.ip}: ${event.response?.time} ms');
+      } else {
+        server.connected.setValue(false);
+        server.power_status.setValue(false);
+        print('Disconnected to ${server.ip}: ${event.response?.time} ms');
+      }
+
     } else if (event.response?.time == null && count != 1) {
       server.connected.setValue(false);
       server.power_status.setValue(false);
@@ -139,7 +158,7 @@ Future<void> checkAllRoomConnection(int time) async {
     if (!room.servers.isEmpty) {
       for (Server server in room.servers) {
         await Future.delayed(Duration(milliseconds: time ~/ length));
-        checkConnectionServerResponse(server);
+        checkConnectionServerResponse(room,server);
       }
     }
   }
@@ -177,7 +196,7 @@ Future<void> checkFullConnection(int time) async {
     if (!room.servers.isEmpty) {
       for (Server server in room.servers) {
         await Future.delayed(Duration(milliseconds: time ~/ length));
-        checkConnectionServerResponse(server);
+        checkConnectionServerResponse(room,server);
       }
     }
   }
@@ -208,7 +227,7 @@ Future<void> checkRoomServerConnection(Room room, int time) async {
     for (Server server in room.servers) {
       await Future.delayed(
           Duration(milliseconds: time ~/ room.servers.length));
-      checkConnectionServerResponse(server);
+      checkConnectionServerResponse(room,server);
     }
   }
 }

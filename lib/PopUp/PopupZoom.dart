@@ -126,8 +126,10 @@ class _PopupZoomState extends State<PopupZoom> {
                             (index) => Positioned(
                           left: width * room.projectors[index].position.dx,
                           top: height * room.projectors[index].position.dy,
-                          width: width * 0.012,
-                          height: width * 0.012,
+                          // left: width * 0.445,
+                          // top: height * 0.49,
+                          width: width * 0.018,
+                          height: width * 0.018,
                           child: Container(
                             color: AppColors.StatusColor[
                             room.projectors[index].status.getValue()],
@@ -141,10 +143,10 @@ class _PopupZoomState extends State<PopupZoom> {
                             (index) => Positioned(
                           left: width * room.leds[index].position.dx,
                           top: height * room.leds[index].position.dy,
-                          // left: width * 0.555,
-                          // top: height * 0.858,
+                          // left: width * 0.725,
+                          // top: height * 0.125,
                           width: width * 0.016,
-                          height: width * 0.016,
+                          height: width * 0.07,
                           child: Container(
                             decoration: BoxDecoration(
                               color: room.leds[index].connected.getValue()
