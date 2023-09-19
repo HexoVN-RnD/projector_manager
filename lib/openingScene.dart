@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
 
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firedart/firedart.dart';
+// import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:responsive_dashboard/Method/Control_projector_void.dart';
@@ -34,15 +37,35 @@ class OpeningScene extends StatefulWidget {
 class _OpeningSceneState extends State<OpeningScene>
     with TickerProviderStateMixin {
   late RiveAnimationController _btnAnimationController;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   Timer? _timer;
   Timer? _timer2;
   bool isShowSignInDialog = false;
   bool isChecked = false;
   late AnimationController _animationController;
-  final emailController = TextEditingController();
+
+  final accountController = TextEditingController();
   final passwordController = TextEditingController();
   // String password = '';
   bool isPasswordVisible = true;
+  bool isAccountCorrect = false;
+  bool isPasswordCorrect = false;
+  CollectionReference groceryCollection =
+      Firestore.instance.collection('license');
+  List<Document> account = [];
+  List<Document> password = [];
+  String _password1 = '';
+  String _password2 = '';
+
+  Future<List<Document>> getAccount() async {
+    account = await groceryCollection.orderBy('account').get();
+    return account;
+  }
+
+  Future<List<Document>> getPassword() async {
+    password = await groceryCollection.orderBy('password').get();
+    return account;
+  }
 
   @override
   void initState() {
@@ -55,8 +78,7 @@ class _OpeningSceneState extends State<OpeningScene>
       checkAllRoomConnection(3000);
     });
     _timer2 = Timer.periodic(Duration(milliseconds: 500), (timer) {
-      setState(() {
-      });
+      setState(() {});
     });
     _animationController = AnimationController(
       duration: Duration(seconds: 15),
@@ -111,163 +133,242 @@ class _OpeningSceneState extends State<OpeningScene>
             ),
           ),
           AnimatedPositioned(
-            top: isShowSignInDialog ? -50 : 0,
+            // top: isShowSignInDialog ? -50 : 0,
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             duration: const Duration(milliseconds: 260),
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // const Spacer(),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    SizedBox(
-                      width: 260,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Hexogon",
-                            style: TextStyle(
-                              fontSize: 50,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "Poppins",
-                              height: 1.2,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // const Spacer(),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      SizedBox(
+                        width: 260,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Hexogon",
+                              style: TextStyle(
+                                fontSize: 50,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Poppins",
+                                height: 1.2,
+                              ),
                             ),
-                          ),
-                          // SizedBox(height: 16),
-                          Text('Please waiting for check connection'),
-                          // Text('Contact: duyminh-vn@hexogonsol.com'),
-                        ],
-                      ),
-                    ),
-                    const Spacer(flex: 5),
-                    Container(
-                      width: 300,
-                      child: TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          hintText: 'Tên đăng nhập...',
-                          labelText: 'Tài khoản',
-                          // prefixIcon: Icon(Icons.mail),
-                          // icon: Icon(Icons.mail),
-                          suffixIcon: emailController.text.isEmpty
-                              ? Container(width: 0)
-                              : IconButton(
-                                  icon: Icon(Icons.close),
-                                  onPressed: () => emailController.clear(),
-                                ),
-                          border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: AppColors.navy_blue),
-                              borderRadius: BorderRadius.circular(20)),
+                            // SizedBox(height: 16),
+                            Text('Please waiting for check connection'),
+                            // Text('Contact: duyminh-vn@hexogonsol.com'),
+                          ],
                         ),
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.done,
-                        // autofocus: true,
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: 300,
-                      child: TextField(
-                        controller: passwordController,
-                        // onChanged: (value) => setState(() => this.password = value),
-                        // onSubmitted: (value) => setState(() => this.password = value),
-                        decoration: InputDecoration(
-                          hintText: 'Mật khẩu...',
-                          labelText: 'Mật khẩu',
-                          // errorText: 'Vui lòng thử lại',
-                          suffixIcon: IconButton(
-                            icon: isPasswordVisible
-                                ? Icon(Icons.visibility_off)
-                                : Icon(Icons.visibility),
-                            onPressed: () => setState(
-                                () => isPasswordVisible = !isPasswordVisible),
-                          ),
-                          border: OutlineInputBorder(
-                              borderSide:
-                              BorderSide(color: AppColors.navy_blue),
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        obscureText: isPasswordVisible,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    // AnimatedBtn(
-                    //   btnAnimationController: _btnAnimationController,
-                    //   press: () {
-                    //     _btnAnimationController.isActive = true;
-                    //
-                    //     Future.delayed(
-                    //       const Duration(milliseconds: 800),
-                    //           () {
-                    //         setState(() {
-                    //           isShowSignInDialog = true;
-                    //         });
-                    //         if(emailController.text == email && passwordController == password) {
-                    //           Navigator.of(context).pushReplacement(
-                    //             MaterialPageRoute(
-                    //                 builder: (context) => Dashboard()),
-                    //           );
-                    //         }
-                    //         Navigator.of(context).pushReplacement(
-                    //           MaterialPageRoute(
-                    //               builder: (context) => Dashboard()),
-                    //         );
-                    //       },
-                    //     );
-                    //   },
-                    // ),
-                    isChecked
-                        ? AnimatedBtn(
-                            btnAnimationController: _btnAnimationController,
-                            press: () {
-                              _btnAnimationController.isActive = true;
+                      const Spacer(flex: 5),
 
-                              Future.delayed(
-                                const Duration(milliseconds: 800),
-                                () {
-                                  setState(() {
-                                    isShowSignInDialog = true;
-                                  });
-                                  if (emailController.text == email &&
-                                      passwordController == password) {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) => Dashboard()),
-                                    );
-                                  }
-                                  Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => Dashboard()),
-                                  );
-                                },
-                              );
-                            },
-                          )
-                        : Container(
-                            height: 64,
+                      Container(
+                        width: 300,
+                        child: TextFormField(
+                          controller: accountController,
+                          validator: (value) {
+                            isAccountCorrect = account.any((grocery) {
+                              final account = grocery['account'].toString();
+                              return account == accountController.text;
+                            });
+                            if (value == null || value.isEmpty) {
+                              return 'Hãy điền tài khoản';
+                            } else if (!isAccountCorrect) {
+                              return 'Tài khoản không chính xác hoặc license đã hết hạn';
+                            }
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Tên đăng nhập...',
+                            labelText: 'Tài khoản',
+                            // prefixIcon: Icon(Icons.mail),
+                            // icon: Icon(Icons.mail),
+                            suffixIcon: accountController.text.isEmpty
+                                ? Container(width: 0)
+                                : IconButton(
+                                    icon: Icon(Icons.close),
+                                    onPressed: () => accountController.clear(),
+                                  ),
+                            border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: AppColors.navy_blue),
+                                borderRadius: BorderRadius.circular(20)),
                           ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    // const Padding(
-                    //   padding: EdgeInsets.symmetric(vertical: 24),
-                    //   child: PrimaryText(
-                    //       size: 14,
-                    //       text:
-                    //           'Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates.'),
-                    // )
-                  ],
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.done,
+                          // autofocus: true,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: 300,
+                        child: TextFormField(
+                          validator: (value) {
+                            // print('value: $value');
+                            isPasswordCorrect = password.any((grocery) {
+                              final password = grocery['password'].toString();
+                              return password == value;
+                            });
+                            if (value == null || value.isEmpty) {
+                              return 'Hãy điền mật khẩu';
+                            } else if (!isPasswordCorrect) {
+                              return 'Mật khẩu không chính xác hoặc license đã hết hạn';
+                            }
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              // print('value: $value');
+                              // passwordController.text = value;
+                            });
+                          },
+                          controller: passwordController,
+                          // onChanged: (value) => setState(() => this.password = value),
+                          // onSubmitted: (value) => setState(() => this.password = value),
+                          decoration: InputDecoration(
+                            hintText: 'Mật khẩu...',
+                            labelText: 'Mật khẩu',
+                            // errorText: 'Vui lòng thử lại',
+                            suffixIcon: IconButton(
+                              icon: isPasswordVisible
+                                  ? Icon(Icons.visibility_off)
+                                  : Icon(Icons.visibility),
+                              onPressed: () => setState(
+                                  () => isPasswordVisible = !isPasswordVisible),
+                            ),
+                            border: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: AppColors.navy_blue),
+                                borderRadius: BorderRadius.circular(20)),
+                          ),
+                          obscureText: isPasswordVisible,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      // Container(
+                      //   height: 100,
+                      //   width: 200,
+                      //   child: FutureBuilder<List<Document>>(
+                      //     future: getAccount(),
+                      //     builder: (BuildContext context,
+                      //         AsyncSnapshot<List<Document>> snapshot) {
+                      //       if (!snapshot.hasData) {
+                      //         return const Center(child: Text('Loading...'));
+                      //       }
+                      //       return snapshot.data!.isEmpty
+                      //           ? const Center(child: Text('No account in List'))
+                      //           : ListView(
+                      //         children: snapshot.data!.map((grocery) {
+                      //           return Text(grocery['account'].toString());// ListTile
+                      //         }).toList(),
+                      //       );
+                      //     },
+                      //   ),
+                      // ), //
+
+                      AnimatedBtn(
+                        btnAnimationController: _btnAnimationController,
+                        press: () async {
+                          _btnAnimationController.isActive = true;
+                          // getAccount();
+                          // getPassword();
+                          // isAccountCorrect = account.any((grocery) {
+                          //   final account = grocery['account'].toString();
+                          //   return account == accountController.text;
+                          // });
+                          // isPasswordCorrect = password.any((grocery) {
+                          //   final password = grocery['password'].toString();
+                          //   return password == passwordController.text;
+                          // });
+                          getAccount();
+                          getPassword();
+                          // print("isAccountCorrect: $isAccountCorrect ");
+                          Future.delayed(
+                            const Duration(milliseconds: 1000),
+                            () {
+                              setState(() {
+                                isShowSignInDialog = true;
+                              });
+                              if (_formKey.currentState!.validate()) {
+                                // The passwords match, you can proceed
+                                // For example, save the password to Firebase
+                                // Or navigate to another screen
+                              }
+                              if (isAccountCorrect && isPasswordCorrect) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => Dashboard()),
+                                );
+                              }
+                            },
+                          );
+                        },
+                      ),
+                      isChecked
+                          ? AnimatedBtn(
+                              btnAnimationController: _btnAnimationController,
+                        press: () async {
+                          _btnAnimationController.isActive = true;
+                          // getAccount();
+                          // getPassword();
+                          // isAccountCorrect = account.any((grocery) {
+                          //   final account = grocery['account'].toString();
+                          //   return account == accountController.text;
+                          // });
+                          // isPasswordCorrect = password.any((grocery) {
+                          //   final password = grocery['password'].toString();
+                          //   return password == passwordController.text;
+                          // });
+                          getAccount();
+                          getPassword();
+                          // print("isAccountCorrect: $isAccountCorrect ");
+                          Future.delayed(
+                            const Duration(milliseconds: 1000),
+                                () {
+                              setState(() {
+                                isShowSignInDialog = true;
+                              });
+                              if (_formKey.currentState!.validate()) {
+                                // The passwords match, you can proceed
+                                // For example, save the password to Firebase
+                                // Or navigate to another screen
+                              }
+                              if (isAccountCorrect && isPasswordCorrect) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (context) => Dashboard()),
+                                );
+                              }
+                            },
+                          );
+                        },
+                            )
+                          : Container(
+                              height: 64,
+                            ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      // const Padding(
+                      //   padding: EdgeInsets.symmetric(vertical: 24),
+                      //   child: PrimaryText(
+                      //       size: 14,
+                      //       text:
+                      //           'Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates.'),
+                      // )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -283,7 +384,8 @@ class _OpeningSceneState extends State<OpeningScene>
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
-                    children: List.generate(rooms[2].projectors.length, (index) {
+                    children:
+                        List.generate(rooms[2].projectors.length, (index) {
                       Projector projector = rooms[2].projectors[index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
@@ -516,12 +618,10 @@ class _OpeningSceneState extends State<OpeningScene>
             height: MediaQuery.of(context).size.height,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(15.0, 60, 10, 10),
-              child:
-              Column(
+              child: Column(
                 children: [
                   Column(
-                    children:
-                    List.generate(rooms[1].servers.length, (index) {
+                    children: List.generate(rooms[1].servers.length, (index) {
                       Server server = rooms[1].servers[index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
@@ -566,8 +666,7 @@ class _OpeningSceneState extends State<OpeningScene>
                     height: 50,
                   ),
                   Column(
-                    children:
-                    List.generate(rooms[5].servers.length, (index) {
+                    children: List.generate(rooms[5].servers.length, (index) {
                       Server server = rooms[5].servers[index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),

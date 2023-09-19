@@ -1,5 +1,5 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firedart/firedart.dart';
+
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/openingCheck.dart';
 import 'package:responsive_dashboard/openingScene.dart';
@@ -11,7 +11,10 @@ const projectId = 'toong-23d79';
 // final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
 Future<void> main() async {
-  // Firestore.initialize(projectId);
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp(name: projectId);
+  Firestore.initialize(projectId);
+  // Firestore.initialize('toong-23d79');
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
 
