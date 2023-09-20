@@ -50,21 +50,19 @@ class _OpeningSceneState extends State<OpeningScene>
   bool isPasswordVisible = true;
   bool isAccountCorrect = false;
   bool isPasswordCorrect = false;
-  CollectionReference groceryCollection =
+  CollectionReference licenseCollection =
       Firestore.instance.collection('license');
   List<Document> account = [];
   List<Document> password = [];
-  String _password1 = '';
-  String _password2 = '';
 
   Future<List<Document>> getAccount() async {
-    account = await groceryCollection.orderBy('account').get();
+    account = await licenseCollection.orderBy('account').get();
     return account;
   }
 
   Future<List<Document>> getPassword() async {
-    password = await groceryCollection.orderBy('password').get();
-    return account;
+    password = await licenseCollection.orderBy('password').get();
+    return password;
   }
 
   @override
@@ -176,8 +174,8 @@ class _OpeningSceneState extends State<OpeningScene>
                         child: TextFormField(
                           controller: accountController,
                           validator: (value) {
-                            isAccountCorrect = account.any((grocery) {
-                              final account = grocery['account'].toString();
+                            isAccountCorrect = account.any((license) {
+                              final account = license['account'].toString();
                               return account == accountController.text;
                             });
                             if (value == null || value.isEmpty) {
@@ -215,8 +213,8 @@ class _OpeningSceneState extends State<OpeningScene>
                         child: TextFormField(
                           validator: (value) {
                             // print('value: $value');
-                            isPasswordCorrect = password.any((grocery) {
-                              final password = grocery['password'].toString();
+                            isPasswordCorrect = password.any((license) {
+                              final password = license['password'].toString();
                               return password == value;
                             });
                             if (value == null || value.isEmpty) {
@@ -269,8 +267,8 @@ class _OpeningSceneState extends State<OpeningScene>
                       //       return snapshot.data!.isEmpty
                       //           ? const Center(child: Text('No account in List'))
                       //           : ListView(
-                      //         children: snapshot.data!.map((grocery) {
-                      //           return Text(grocery['account'].toString());// ListTile
+                      //         children: snapshot.data!.map((license) {
+                      //           return Text(license['account'].toString());// ListTile
                       //         }).toList(),
                       //       );
                       //     },
@@ -283,15 +281,16 @@ class _OpeningSceneState extends State<OpeningScene>
                           _btnAnimationController.isActive = true;
                           // getAccount();
                           // getPassword();
-                          // isAccountCorrect = account.any((grocery) {
-                          //   final account = grocery['account'].toString();
+                          // isAccountCorrect = account.any((license) {
+                          //   final account = license['account'].toString();
                           //   return account == accountController.text;
                           // });
-                          // isPasswordCorrect = password.any((grocery) {
-                          //   final password = grocery['password'].toString();
+                          // isPasswordCorrect = password.any((license) {
+                          //   final password = license['password'].toString();
                           //   return password == passwordController.text;
                           // });
                           getAccount();
+                          // print('account: ${account}');
                           getPassword();
                           // print("isAccountCorrect: $isAccountCorrect ");
                           Future.delayed(
@@ -322,12 +321,12 @@ class _OpeningSceneState extends State<OpeningScene>
                           _btnAnimationController.isActive = true;
                           // getAccount();
                           // getPassword();
-                          // isAccountCorrect = account.any((grocery) {
-                          //   final account = grocery['account'].toString();
+                          // isAccountCorrect = account.any((license) {
+                          //   final account = license['account'].toString();
                           //   return account == accountController.text;
                           // });
-                          // isPasswordCorrect = password.any((grocery) {
-                          //   final password = grocery['password'].toString();
+                          // isPasswordCorrect = password.any((license) {
+                          //   final password = license['password'].toString();
                           //   return password == passwordController.text;
                           // });
                           getAccount();

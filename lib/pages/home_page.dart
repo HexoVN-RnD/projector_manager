@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
@@ -34,10 +35,38 @@ class _HomePage extends State<HomePage> {
   bool isSelectedPlay = false;
   bool isSelectedStop = false;
   ScrollController scrollController = ScrollController();
+  CollectionReference volumeCollection =
+      Firestore.instance.collection('volume');
+  List<Document> allVolume = [];
+  String? selectedId;
+
+  Future<List<Document>> setAllVolume() async {
+    // List<Document> allVolume =
+    allVolume = await volumeCollection.orderBy('allVolume').get();
+    allVolume.map((volume) {
+      selectedId = volume.id;
+      print('selectedId: $selectedId');
+      final checkVolume = volume['allVolume'].toString();
+      print('allVolume: $checkVolume');
+      // allRoom.volume_all.setValue((double.tryParse(checkVolume.toString())??0.0));
+      return checkVolume;
+    });
+    return allVolume;
+  }
+
+  void updateAllVolume(double allVolumeValue) async {
+    // selectedId = allVolume.id;
+    print('ENLH4hL9FNkV87USu2Iv');
+    await volumeCollection.document('ENLH4hL9FNkV87USu2Iv').update({
+    // await volumeCollection.document(selectedId!).update({
+      'allVolume': allVolumeValue,
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    setAllVolume();
     _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       setState(() {
         if (rooms[3].servers[0].connected.getValue() &&
@@ -55,6 +84,49 @@ class _HomePage extends State<HomePage> {
     _timer?.cancel();
     _timer2?.cancel();
     super.dispose();
+  }
+
+  void EditAllAudio(index) {
+    allRoom.volume_all.setValue(index);
+    // writeCellValue(index.toStringAsFixed(2), 0, 1);
+    for (Room room in rooms) {
+      if (room.resolume) {
+        for (Server server in room.servers) {
+          server.volume.setValue(index);
+        }
+      } else {
+        for (Server server in room.servers) {
+          server.volume.setValue(index);
+        }
+      }
+    }
+  }
+
+  void EditAllAudioAndSave(index) {
+    // allRoom.volume_all.setValue(index);
+    updateAllVolume(index);
+    setAllVolume();
+    for (Room room in rooms) {
+      if (room.resolume) {
+        for (Server server in room.servers) {
+          server.volume.setValue(index);
+          // writeCellValue(index.toStringAsFixed(2), server.id, 1);
+          SendOscMessage(server.ip, server.preset_port,
+              '/composition/layers/1/audio/volume', [index]);
+          SendOscMessage(server.ip, server.preset_port,
+              '/composition/layers/2/audio/volume', [index]);
+          SendOscMessage(server.ip, server.preset_port,
+              '/composition/layers/3/audio/volume', [index]);
+          SendOscMessage(server.ip, server.preset_port,
+              '/composition/layers/4/audio/volume', [index]);
+        }
+      } else {
+        for (Server server in room.servers) {
+          server.volume.setValue(index);
+          SendUDPAudioMessage(server, index);
+        }
+      }
+    }
   }
 
   @override
