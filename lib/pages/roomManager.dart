@@ -40,6 +40,7 @@ class _RoomManagerState extends State<RoomManager> {
   Timer? _timer2;
   bool isSelectedPlay = false;
   bool isSelectedStop = false;
+  int oldPage = 0;
 
   void select_preset(Room room, int index) async {
     setState(() {
@@ -103,8 +104,14 @@ class _RoomManagerState extends State<RoomManager> {
 
   @override
   Widget build(BuildContext context) {
-    Room room =
-        rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 0];
+    final page = (current_page.getValue() > 0) ? current_page.getValue() - 1 : 0;
+    Room room = rooms[page];
+    if (page != oldPage){
+      oldPage = page;
+      room.setRoomVolume();
+      print('oldPage: $oldPage');
+    }
+
     return SafeArea(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -187,7 +194,8 @@ class _RoomManagerState extends State<RoomManager> {
                                                 isSelected ? 20.0 : 15),
                                           ),
                                           child: Padding(
-                                            padding: EdgeInsets.all(isSelected ? 8.0 : 5.0),
+                                            padding: EdgeInsets.all(
+                                                isSelected ? 8.0 : 5.0),
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(
@@ -240,7 +248,8 @@ class _RoomManagerState extends State<RoomManager> {
                                             if (isSelected)
                                               SizedBox(
                                                   height: SizeConfig
-                                                      .blockSizeVertical*1.5),
+                                                          .blockSizeVertical *
+                                                      1.5),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
@@ -289,15 +298,19 @@ class _RoomManagerState extends State<RoomManager> {
                               ),
                             ),
                             // (current_page.getValue() == 1)?
-                            (current_page.getValue() == 2)
-                                ? VolumeEdit(
-                                    room: room,
-                                    server: room.servers[7],
-                                  )
-                                : VolumeEdit(
-                                    room: room,
-                                    server: room.servers[0],
-                                  ),
+                            VolumeEdit(
+                              room: room,
+                              server: room.servers[0],
+                            ),
+                            // (current_page.getValue() == 2)
+                            //     ? VolumeEdit(
+                            //         room: room,
+                            //         server: room.servers[7],
+                            //       )
+                            //     : VolumeEdit(
+                            //         room: room,
+                            //         server: room.servers[0],
+                            //       ),
                           ],
                         ),
                       ),

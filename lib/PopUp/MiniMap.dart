@@ -110,7 +110,7 @@ class _MiniMapState extends State<MiniMap> {
                   top: 15,
                   child: Material(
                       color: Colors.transparent,
-                      child: PrimaryText(text: room.name))),
+                      child: PrimaryText(text: room.nameUI))),
             if (page == 3)
               Stack(children: [
                 Stack(

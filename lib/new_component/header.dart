@@ -26,7 +26,7 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
-    String name = widget.room.name;
+    String name = widget.room.nameUI;
     String general = widget.room.general;
     return Row(mainAxisSize: MainAxisSize.min, children: [
       SizedBox(

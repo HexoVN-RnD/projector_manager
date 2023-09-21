@@ -10,6 +10,7 @@ import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/openingScene.dart';
 
 Future<void> OpeningCheck() async {
+  allRoom.setAllVolume();
   for (Room room in rooms) {
     allRoom.num_servers
         .setValue(allRoom.num_servers.getValue() + room.servers.length);

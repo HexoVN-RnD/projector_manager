@@ -35,38 +35,39 @@ class _HomePage extends State<HomePage> {
   bool isSelectedPlay = false;
   bool isSelectedStop = false;
   ScrollController scrollController = ScrollController();
-  CollectionReference volumeCollection =
-      Firestore.instance.collection('volume');
-  List<Document> allVolume = [];
-  String? selectedId;
-
-  Future<List<Document>> setAllVolume() async {
-    // List<Document> allVolume =
-    allVolume = await volumeCollection.orderBy('allVolume').get();
-    allVolume.map((volume) {
-      selectedId = volume.id;
-      print('selectedId: $selectedId');
-      final checkVolume = volume['allVolume'].toString();
-      print('allVolume: $checkVolume');
-      // allRoom.volume_all.setValue((double.tryParse(checkVolume.toString())??0.0));
-      return checkVolume;
-    });
-    return allVolume;
-  }
-
-  void updateAllVolume(double allVolumeValue) async {
-    // selectedId = allVolume.id;
-    print('ENLH4hL9FNkV87USu2Iv');
-    await volumeCollection.document('ENLH4hL9FNkV87USu2Iv').update({
-    // await volumeCollection.document(selectedId!).update({
-      'allVolume': allVolumeValue,
-    });
-  }
+  // CollectionReference volumeCollection =
+  //     Firestore.instance.collection('volume');
+  // List<Document> allVolume = [];
+  // String? selectedId;
+  //
+  // Future<List<Document>> setAllVolume() async {
+  //   // List<Document> allVolume =
+  //   allVolume = await volumeCollection.orderBy('allVolume').get();
+  //   final check = allVolume.map((volume) {
+  //     selectedId = volume.id;
+  //     print('selectedId: $selectedId');
+  //     final checkVolume = volume['allVolume'].toString();
+  //     print('allVolume: $checkVolume');
+  //     allRoom.volume_all.setValue((double.tryParse(checkVolume.toString())??0.0));
+  //     return [selectedId, checkVolume];
+  //   });
+  //   print('allVolume: ${check}');
+  //   return allVolume;
+  // }
+  //
+  // void updateAllVolume(double allVolumeValue) async {
+  //   // selectedId = allVolume.id;
+  //   print('ENLH4hL9FNkV87USu2Iv');
+  //   await volumeCollection.document('ENLH4hL9FNkV87USu2Iv').update({
+  //   // await volumeCollection.document(selectedId!).update({
+  //     'allVolume': allVolumeValue,
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
-    setAllVolume();
+    allRoom.setAllVolume();
     _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       setState(() {
         if (rooms[3].servers[0].connected.getValue() &&
@@ -103,10 +104,11 @@ class _HomePage extends State<HomePage> {
   }
 
   void EditAllAudioAndSave(index) {
-    // allRoom.volume_all.setValue(index);
-    updateAllVolume(index);
-    setAllVolume();
+    allRoom.volume_all.setValue(index);
+    allRoom.updateAllVolume(index);
+    // setAllVolume();
     for (Room room in rooms) {
+      // room.updateRoomVolume(index);
       if (room.resolume) {
         for (Server server in room.servers) {
           server.volume.setValue(index);

@@ -48,7 +48,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
                 text: rooms[(current_page.getValue() > 0)
                         ? current_page.getValue() - 1
                         : 1]
-                    .name,
+                    .nameUI,
                 size: 18,
                 fontWeight: FontWeight.w600),
           ),
