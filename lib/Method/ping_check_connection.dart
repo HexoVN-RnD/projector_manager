@@ -15,8 +15,8 @@ void checkConnectionServer(Room room, Server server) {
   final ping = Ping(server.ip, count: 1); // Thay đổi số lần ping tùy ý
 
   ping.stream.listen((event) {
-    // print('ping server ${server.ip} response ${event.response?.time} ${count}');
-    // print('Ping to ${server.ip}: ${event.response?.time} ms');
+    // //print('ping server ${server.ip} response ${event.response?.time} ${count}');
+    // //print('Ping to ${server.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       if(room.resolume && event.response?.ttl==128) {
         server.connected.setValue(true);
@@ -29,7 +29,7 @@ void checkConnectionServer(Room room, Server server) {
     } else if (event.response?.time == null && count != 1) {
       server.connected.setValue(false);
       // server.power_status.setValue(false);
-      // print('ping server ${event.response?.ip} ${count}');
+      // //print('ping server ${event.response?.ip} ${count}');
     }
     count++;
   });
@@ -41,27 +41,27 @@ void checkConnectionServerResponse(Room room, Server server) {
   final ping = Ping(server.ip, count: 1); // Thay đổi số lần ping tùy ý
 
   ping.stream.listen((event) {
-    // print('ping server ${server.ip} response ${event.response?.time} ${count}');
-    // print('Ping to ${server.ip}: ${event.response?.time} ms');
+    // //print('ping server ${server.ip} response ${event.response?.time} ${count}');
+    // //print('Ping to ${server.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       if(room.resolume && event.response?.ttl==128) {
         server.connected.setValue(true);
         server.power_status.setValue(true);
-        print('Connected to ${server.ip}: ${event.response?.time} ms');
+        //print('Connected to ${server.ip}: ${event.response?.time} ms');
       } else if (!room.resolume && event.response?.ttl==64) {
         server.connected.setValue(true);
         server.power_status.setValue(true);
-        print('Connected to ${server.ip}: ${event.response?.time} ms');
+        //print('Connected to ${server.ip}: ${event.response?.time} ms');
       } else {
         server.connected.setValue(false);
         server.power_status.setValue(false);
-        print('Disconnected to ${server.ip}: ${event.response?.time} ms');
+        //print('Disconnected to ${server.ip}: ${event.response?.time} ms');
       }
 
     } else if (event.response?.time == null && count != 1) {
       server.connected.setValue(false);
       server.power_status.setValue(false);
-      // print('ping server ${event.response?.ip} ${count}');
+      // //print('ping server ${event.response?.ip} ${count}');
     }
     count++;
   });
@@ -72,19 +72,19 @@ void checkConnectionSensor(Sensor sensor) {
   int count = 0;
   final ping = Ping(sensor.ip, count: 1); // Thay đổi số lần ping tùy ý
   ping.stream.listen((event) {
-    // print('ping sensor ${sensor.ip}: response ${event.response?.time} ${count}');
-    // print('Ping to ${sensor.ip}: ${event.response?.time} ms');
+    // //print('ping sensor ${sensor.ip}: response ${event.response?.time} ${count}');
+    // //print('Ping to ${sensor.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       sensor.connected.setValue(true);
-      print('Connected to ${sensor.ip}: ${event.response?.time} ms');
+      //print('Connected to ${sensor.ip}: ${event.response?.time} ms');
     } else if (event.response?.ip == null && count != 1) {
       sensor.connected.setValue(false);
-      // print('Error');
+      // //print('Error');
     }
     count++;
     // ping.stop();
   }, onError: (error) {
-    print(error);
+    //print(error);
   });
   ping.command;
 }
@@ -93,19 +93,19 @@ void checkConnectionLed(Led led) {
   int count = 0;
   final ping = Ping(led.ip, count: 1); // Thay đổi số lần ping tùy ý
   ping.stream.listen((event) {
-    // print('ping led ${led.ip}: response ${event.response?.time} ${count}');
-    // print('Ping to ${led.ip}: ${event.response?.time} ms');
+    // //print('ping led ${led.ip}: response ${event.response?.time} ${count}');
+    // //print('Ping to ${led.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       led.connected.setValue(true);
-      print('Connected to ${led.ip}: ${event.response?.time} ms');
+      //print('Connected to ${led.ip}: ${event.response?.time} ms');
     } else if (event.response?.ip == null && count != 1) {
       led.connected.setValue(false);
-      // print('Error');
+      // //print('Error');
     }
     count++;
     // ping.stop();
   }, onError: (error) {
-    print(error);
+    //print(error);
   });
   ping.command;
 }
@@ -115,13 +115,13 @@ void checkConnectionProjector(Projector projector) {
   final ping = Ping(projector.ip, count: 1); // Thay đổi số lần ping tùy ý
 
   ping.stream.listen((event) {
-    // print('Ping to ${projector.ip}: ${event.response?.time} ms');
+    // //print('Ping to ${projector.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       projector.connected.setValue(true);
       ping.stop();
     } else if (event.response?.ip == null && count != 1) {
       projector.connected.setValue(false);
-      // print('Error');
+      // //print('Error');
     }
     count++;
   });
@@ -129,7 +129,7 @@ void checkConnectionProjector(Projector projector) {
 }
 
 Future<void> checkAllRoomConnection(int time) async {
-  print('checkAllRoomConnection');
+  //print('checkAllRoomConnection');
   int length =
       allRoom.num_servers.getValue() + allRoom.num_projectors.getValue();
   for (Room room in rooms) {
@@ -149,7 +149,7 @@ Future<void> checkAllRoomConnection(int time) async {
         checkConnectionProjector(projector);
         if (projector.type == 'Christie') {
           String response = sendTCPIPCommandStatus(projector);
-          print(response);
+          //print(response);
         } else {
           sendPJLinkCommandStatus(projector);
         }
@@ -166,7 +166,7 @@ Future<void> checkAllRoomConnection(int time) async {
 }
 
 Future<void> checkFullConnection(int time) async {
-  print('checkAllRoomConnection');
+  //print('checkAllRoomConnection');
   int length =
       allRoom.num_servers.getValue() + allRoom.num_projectors.getValue();
   for (Room room in rooms) {
@@ -186,10 +186,10 @@ Future<void> checkFullConnection(int time) async {
         checkConnectionProjector(projector);
         if (projector.type == 'Christie') {
           String response = sendTCPIPCommandStatus(projector);
-          print(response);
+          //print(response);
         } else {
           String response = sendPJLinkCommandStatus(projector);
-          print(response);
+          //print(response);
         }
       }
     }
@@ -204,7 +204,7 @@ Future<void> checkFullConnection(int time) async {
 }
 
 Future<void> checkRoomProjectorConnection(Room room, int time) async {
-  print('checkRoomProjectorConnection');
+  //print('checkRoomProjectorConnection');
   if (!room.projectors.isEmpty) {
     for (Projector projector in room.projectors) {
       await Future.delayed(
@@ -212,17 +212,17 @@ Future<void> checkRoomProjectorConnection(Room room, int time) async {
       checkConnectionProjector(projector);
       if (projector.type == 'Christie') {
         String response = sendTCPIPCommandStatus(projector);
-        print(response);
+        //print(response);
       } else {
         String response = sendPJLinkCommandStatus(projector);
-        print(response);
+        //print(response);
       }
     }
   }
 }
 
 Future<void> checkRoomServerConnection(Room room, int time) async {
-  print('checkRoomServerConnection');
+  //print('checkRoomServerConnection');
   if (!room.servers.isEmpty) {
     for (Server server in room.servers) {
       await Future.delayed(
@@ -233,7 +233,7 @@ Future<void> checkRoomServerConnection(Room room, int time) async {
 }
 
 Future<void> checkRoomSensorConnection(Room room) async {
-  print('checkRoomSensorConnection');
+  //print('checkRoomSensorConnection');
   if (!room.sensors.isEmpty) {
     for (Sensor sensor in room.sensors) {
       checkConnectionSensor(sensor);
@@ -241,7 +241,7 @@ Future<void> checkRoomSensorConnection(Room room) async {
   }
 }
 Future<void> checkRoomLedConnection(Room room) async {
-  print('checkRoomLedConnection');
+  //print('checkRoomLedConnection');
   if (!room.leds.isEmpty) {
     for (Led led in room.leds) {
       checkConnectionLed(led);
