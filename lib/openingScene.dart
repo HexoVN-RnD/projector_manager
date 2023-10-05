@@ -477,39 +477,41 @@ class _OpeningSceneState extends State<OpeningScene>
                             rooms[3].projectors[index + half_length];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
+                          child: SingleChildScrollView(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 150,
+                                  child: PrimaryText(
+                                    text: '${projector.name}',
+                                    size: 14,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Container(
+                                  width: 100,
+                                  child: PrimaryText(
+                                    text: '(${projector.ip})',
+                                    size: 14,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                PrimaryText(
+                                  text: projector.connected.getValue()
+                                      ? 'Đã kết nối '
+                                      : 'Mất kết nối',
+                                  color: projector.connected.getValue()
+                                      ? AppColors.green
+                                      : AppColors.red,
                                   size: 14,
                                 ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              PrimaryText(
-                                text: projector.connected.getValue()
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected.getValue()
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         );
                       }),
