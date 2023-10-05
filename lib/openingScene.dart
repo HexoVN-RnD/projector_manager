@@ -275,45 +275,45 @@ class _OpeningSceneState extends State<OpeningScene>
                       //   ),
                       // ), //
 
-                      AnimatedBtn(
-                        btnAnimationController: _btnAnimationController,
-                        press: () async {
-                          _btnAnimationController.isActive = true;
-                          // getAccount();
-                          // getPassword();
-                          // isAccountCorrect = account.any((license) {
-                          //   final account = license['account'].toString();
-                          //   return account == accountController.text;
-                          // });
-                          // isPasswordCorrect = password.any((license) {
-                          //   final password = license['password'].toString();
-                          //   return password == passwordController.text;
-                          // });
-                          getAccount();
-                          // print('account: ${account}');
-                          getPassword();
-                          // print("isAccountCorrect: $isAccountCorrect ");
-                          Future.delayed(
-                            const Duration(milliseconds: 1000),
-                            () {
-                              setState(() {
-                                isShowSignInDialog = true;
-                              });
-                              if (_formKey.currentState!.validate()) {
-                                // The passwords match, you can proceed
-                                // For example, save the password to Firebase
-                                // Or navigate to another screen
-                              }
-                              if (isAccountCorrect && isPasswordCorrect) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => Dashboard()),
-                                );
-                              }
-                            },
-                          );
-                        },
-                      ),
+                      // AnimatedBtn(
+                      //   btnAnimationController: _btnAnimationController,
+                      //   press: () async {
+                      //     _btnAnimationController.isActive = true;
+                      //     // getAccount();
+                      //     // getPassword();
+                      //     // isAccountCorrect = account.any((license) {
+                      //     //   final account = license['account'].toString();
+                      //     //   return account == accountController.text;
+                      //     // });
+                      //     // isPasswordCorrect = password.any((license) {
+                      //     //   final password = license['password'].toString();
+                      //     //   return password == passwordController.text;
+                      //     // });
+                      //     getAccount();
+                      //     // print('account: ${account}');
+                      //     getPassword();
+                      //     // print("isAccountCorrect: $isAccountCorrect ");
+                      //     Future.delayed(
+                      //       const Duration(milliseconds: 1000),
+                      //       () {
+                      //         setState(() {
+                      //           isShowSignInDialog = true;
+                      //         });
+                      //         if (_formKey.currentState!.validate()) {
+                      //           // The passwords match, you can proceed
+                      //           // For example, save the password to Firebase
+                      //           // Or navigate to another screen
+                      //         }
+                      //         if (isAccountCorrect && isPasswordCorrect) {
+                      //           Navigator.of(context).pushReplacement(
+                      //             MaterialPageRoute(
+                      //                 builder: (context) => Dashboard()),
+                      //           );
+                      //         }
+                      //       },
+                      //     );
+                      //   },
+                      // ),
                       isChecked
                           ? AnimatedBtn(
                               btnAnimationController: _btnAnimationController,

@@ -68,6 +68,7 @@ List<Menu> sidebarMenus = [
 ];
 
 AllRoom allRoom = AllRoom(
+  canRun: StatefulValuable<bool>(false),
   current_preset: StatefulValuable<int>(10),
   current_colume: StatefulValuable<int>(1),
   power_all_projectors: StatefulValuable<bool>(false),

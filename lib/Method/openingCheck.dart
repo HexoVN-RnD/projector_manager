@@ -11,6 +11,7 @@ import 'package:responsive_dashboard/openingScene.dart';
 
 Future<void> OpeningCheck() async {
   allRoom.setAllVolume();
+  allRoom.setLicenseStatus();
   for (Room room in rooms) {
     room.setRoomVolume();
     allRoom.num_servers
