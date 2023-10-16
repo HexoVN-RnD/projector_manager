@@ -368,7 +368,7 @@ List<Room> rooms = [
       Server(
         shotname: 'MAPPING P3',
         id: 9,
-        ip: '192.168.1.61',
+        ip: '192.168.1.247',
         name: 'Server mapping phòng 3',
         preset_port: 7000,
         power_port: 1234,
