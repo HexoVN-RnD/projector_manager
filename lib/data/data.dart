@@ -297,7 +297,7 @@ List<Room> rooms = [
      'PHÒNG 3',
     map: 'assets/Map/P3.png',
     general: 'Khu vực nghệ thuật tự do',
-    resolume: false,
+    resolume: true,
     power_room_projectors: StatefulValuable<bool>(false),
     shutter_room_projectors: StatefulValuable<bool>(false),
     isSelectedPlay: StatefulValuable<bool>(false),
