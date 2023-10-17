@@ -63,8 +63,7 @@ class _RoomManagerState extends State<RoomManager> {
     super.initState();
     // Đặt một Timer để cập nhật widget sau mỗi giây
     _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      Room room = rooms[
-          (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
+      Room room = rooms[0];
       setState(() {
         if (current_page.getValue() == 4) {
           // for (Server server in room.servers) {
@@ -84,8 +83,7 @@ class _RoomManagerState extends State<RoomManager> {
     _timer2 = Timer.periodic(
         Duration(seconds: (current_page.getValue() == 4) ? 3 : 1),
         (timer) async {
-      Room room = rooms[
-          (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
+      Room room = rooms[0];
       checkRoomSensorConnection(room);
       checkRoomLedConnection(room);
       checkRoomProjectorConnection(
@@ -104,9 +102,10 @@ class _RoomManagerState extends State<RoomManager> {
 
   @override
   Widget build(BuildContext context) {
-    final page = (current_page.getValue() > 0) ? current_page.getValue() - 1 : 0;
-    Room room = rooms[page];
-    if (page != oldPage){
+    final page =
+        (current_page.getValue() > 0) ? current_page.getValue() - 1 : 0;
+    Room room = rooms[0];
+    if (page != oldPage) {
       oldPage = page;
       room.setRoomVolume();
       print('oldPage: $oldPage');
@@ -155,171 +154,162 @@ class _RoomManagerState extends State<RoomManager> {
                           ],
                         ),
                       ),
-                    if (current_page.getValue() != 1)
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                        margin: EdgeInsets.fromLTRB(0, 20, 0, 30),
-                        decoration: BoxDecoration(
-                          color: AppColors.gray,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Column(
-                          children: [
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children:
-                                    List.generate(room.presets.length, (index) {
-                                  bool isSelected =
-                                      room.current_preset.getValue() == index;
-                                  return GestureDetector(
-                                    onTap: () {
-                                      select_preset(room, index);
-                                    },
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        AnimatedContainer(
-                                          duration: Duration(milliseconds: 500),
-                                          curve: Curves.easeInOut,
-                                          width: isSelected ? 250.0 : 160.0,
-                                          height: isSelected ? 250.0 : 160.0,
-                                          margin: EdgeInsets.all(20.0),
-                                          decoration: BoxDecoration(
-                                            color: isSelected
-                                                ? AppColors.navy_blue2
-                                                : AppColors.white,
-                                            borderRadius: BorderRadius.circular(
-                                                isSelected ? 20.0 : 15),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(
-                                                isSelected ? 8.0 : 5.0),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      isSelected ? 15.0 : 10),
-                                              child: Image.asset(
-                                                room.presets[index].image,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            if (isSelected &&
-                                                (current_page.getValue() == 3 ||
-                                                    current_page.getValue() ==
-                                                        4))
-                                              SizedBox(
-                                                height: 15,
-                                                width: 230,
-                                                child: Container(
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    child:
-                                                        LinearProgressIndicator(
-                                                      value: (room.current_preset
-                                                                  .getValue() <
-                                                              room.presets
-                                                                  .length)
-                                                          ? room
-                                                              .presets[room
-                                                                  .current_preset
-                                                                  .getValue()]
-                                                              .transport
-                                                              .getValue()
-                                                          : 0,
-                                                      semanticsLabel:
-                                                          'Linear progress indicator',
-                                                      color:
-                                                          AppColors.navy_blue2,
-                                                      backgroundColor:
-                                                          AppColors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            if (isSelected)
-                                              SizedBox(
-                                                  height: SizeConfig
-                                                          .blockSizeVertical *
-                                                      1.5),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.local_movies_outlined,
-                                                  size: isSelected ? 26 : 18,
-                                                  color: AppColors.white,
-                                                ),
-                                                SizedBox(
-                                                    width: SizeConfig
-                                                            .blockSizeHorizontal *
-                                                        (isSelected
-                                                            ? 1.5
-                                                            : 0.75)),
-                                                AnimatedDefaultTextStyle(
-                                                  style: isSelected
-                                                      ? TextStyle(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 17.0,
-                                                          fontWeight:
-                                                              FontWeight.w600)
-                                                      : TextStyle(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 12.0,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                  duration: const Duration(
-                                                      milliseconds: 200),
-                                                  child: Text(
-                                                      room.presets[index].name),
-                                                ),
-                                                // PrimaryText(
-                                                //     text: room.presets[index].name,
-                                                //     size: isSelected ? 17 : 12,
-                                                //     color: AppColors.white,
-                                                //     fontWeight: FontWeight.w600),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                              ),
-                            ),
-                            // (current_page.getValue() == 1)?
-                            VolumeEdit(
-                              room: room,
-                              server: room.servers[0],
-                            ),
-                            // (current_page.getValue() == 2)
-                            //     ? VolumeEdit(
-                            //         room: room,
-                            //         server: room.servers[7],
-                            //       )
-                            //     : VolumeEdit(
-                            //         room: room,
-                            //         server: room.servers[0],
-                            //       ),
-                          ],
-                        ),
-                      ),
+                    // Container(
+                    //   padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                    //   margin: EdgeInsets.fromLTRB(0, 20, 0, 30),
+                    //   decoration: BoxDecoration(
+                    //     color: AppColors.gray,
+                    //     borderRadius: BorderRadius.circular(30),
+                    //   ),
+                    //   child: Column(
+                    //     children: [
+                    //       SingleChildScrollView(
+                    //         scrollDirection: Axis.horizontal,
+                    //         child: Row(
+                    //           children:
+                    //               List.generate(room.presets.length, (index) {
+                    //             bool isSelected =
+                    //                 room.current_preset.getValue() == index;
+                    //             return GestureDetector(
+                    //               onTap: () {
+                    //                 select_preset(room, index);
+                    //               },
+                    //               child: Column(
+                    //                 mainAxisAlignment: MainAxisAlignment.center,
+                    //                 children: [
+                    //                   AnimatedContainer(
+                    //                     duration: Duration(milliseconds: 500),
+                    //                     curve: Curves.easeInOut,
+                    //                     width: isSelected ? 250.0 : 160.0,
+                    //                     height: isSelected ? 250.0 : 160.0,
+                    //                     margin: EdgeInsets.all(20.0),
+                    //                     decoration: BoxDecoration(
+                    //                       color: isSelected
+                    //                           ? AppColors.navy_blue2
+                    //                           : AppColors.white,
+                    //                       borderRadius: BorderRadius.circular(
+                    //                           isSelected ? 20.0 : 15),
+                    //                     ),
+                    //                     child: Padding(
+                    //                       padding: EdgeInsets.all(
+                    //                           isSelected ? 8.0 : 5.0),
+                    //                       child: ClipRRect(
+                    //                         borderRadius: BorderRadius.circular(
+                    //                             isSelected ? 15.0 : 10),
+                    //                         child: Image.asset(
+                    //                           room.presets[index].image,
+                    //                         ),
+                    //                       ),
+                    //                     ),
+                    //                   ),
+                    //                   Column(
+                    //                     mainAxisAlignment:
+                    //                         MainAxisAlignment.center,
+                    //                     children: [
+                    //                       if (isSelected &&
+                    //                           (current_page.getValue() == 3 ||
+                    //                               current_page.getValue() == 4))
+                    //                         SizedBox(
+                    //                           height: 15,
+                    //                           width: 230,
+                    //                           child: Container(
+                    //                             child: ClipRRect(
+                    //                               borderRadius:
+                    //                                   BorderRadius.circular(10),
+                    //                               child:
+                    //                                   LinearProgressIndicator(
+                    //                                 value: (room.current_preset
+                    //                                             .getValue() <
+                    //                                         room.presets.length)
+                    //                                     ? room
+                    //                                         .presets[room
+                    //                                             .current_preset
+                    //                                             .getValue()]
+                    //                                         .transport
+                    //                                         .getValue()
+                    //                                     : 0,
+                    //                                 semanticsLabel:
+                    //                                     'Linear progress indicator',
+                    //                                 color: AppColors.navy_blue2,
+                    //                                 backgroundColor:
+                    //                                     AppColors.white,
+                    //                               ),
+                    //                             ),
+                    //                           ),
+                    //                         ),
+                    //                       if (isSelected)
+                    //                         SizedBox(
+                    //                             height: SizeConfig
+                    //                                     .blockSizeVertical *
+                    //                                 1.5),
+                    //                       Row(
+                    //                         mainAxisAlignment:
+                    //                             MainAxisAlignment.center,
+                    //                         children: [
+                    //                           Icon(
+                    //                             Icons.local_movies_outlined,
+                    //                             size: isSelected ? 26 : 18,
+                    //                             color: AppColors.white,
+                    //                           ),
+                    //                           SizedBox(
+                    //                               width: SizeConfig
+                    //                                       .blockSizeHorizontal *
+                    //                                   (isSelected
+                    //                                       ? 1.5
+                    //                                       : 0.75)),
+                    //                           AnimatedDefaultTextStyle(
+                    //                             style: isSelected
+                    //                                 ? TextStyle(
+                    //                                     fontFamily: 'Poppins',
+                    //                                     fontSize: 17.0,
+                    //                                     fontWeight:
+                    //                                         FontWeight.w600)
+                    //                                 : TextStyle(
+                    //                                     fontFamily: 'Poppins',
+                    //                                     fontSize: 12.0,
+                    //                                     fontWeight:
+                    //                                         FontWeight.w600),
+                    //                             duration: const Duration(
+                    //                                 milliseconds: 200),
+                    //                             child: Text(
+                    //                                 room.presets[index].name),
+                    //                           ),
+                    //                           // PrimaryText(
+                    //                           //     text: room.presets[index].name,
+                    //                           //     size: isSelected ? 17 : 12,
+                    //                           //     color: AppColors.white,
+                    //                           //     fontWeight: FontWeight.w600),
+                    //                         ],
+                    //                       ),
+                    //                     ],
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //             );
+                    //           }),
+                    //         ),
+                    //       ),
+                    //       // (current_page.getValue() == 1)?
+                    //       // VolumeEdit(
+                    //       //   room: room,
+                    //       //   server: room.servers[0],
+                    //       // ),
+                    //       // (current_page.getValue() == 2)
+                    //       //     ? VolumeEdit(
+                    //       //         room: room,
+                    //       //         server: room.servers[7],
+                    //       //       )
+                    //       //     : VolumeEdit(
+                    //       //         room: room,
+                    //       //         server: room.servers[0],
+                    //       //       ),
+                    //     ],
+                    //   ),
+                    // ),
                     Column(
                       children: [
                         MiniMap(
-                          room: rooms[(current_page.getValue() > 0)
-                              ? current_page.getValue() - 1
-                              : 1],
+                          room: rooms[0],
                           page: current_page.getValue(),
                         ),
                         Row(
@@ -444,7 +434,7 @@ class _RoomManagerState extends State<RoomManager> {
                       ],
                     ),
                     //List server
-                    if (room.resolume)
+                    if (room.resolume && room.servers.length > 0)
                       Column(children: [
                         SizedBox(
                           height: SizeConfig.blockSizeVertical * 8,
@@ -484,257 +474,254 @@ class _RoomManagerState extends State<RoomManager> {
                           height: SizeConfig.blockSizeVertical * 4,
                         ),
                       ]),
-                    if (current_page.getValue() != 0 &&
-                        current_page.getValue() != 1 &&
-                        current_page.getValue() != 2)
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 8,
-                            child: Row(
-                              children: [
-                                Image.asset(
-                                  'assets/small_projector.png',
-                                  height: 30,
-                                ),
-                                SizedBox(
-                                  width: SizeConfig.blockSizeVertical,
-                                ),
-                                PrimaryText(
-                                    text: 'Quản lý máy chiếu'.toUpperCase(),
-                                    color: AppColors.gray,
-                                    size: 20,
-                                    fontWeight: FontWeight.w500),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            // height: Responsive.isDesktop(context)? 180:null,
-                            // constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
-                            //     maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth/2-150: SizeConfig.screenWidth- 40),
-                            margin: EdgeInsets.only(bottom: 30),
-                            padding: EdgeInsets.only(
-                                top: 20, bottom: 20, left: 20, right: 20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: AppColors.white,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    PrimaryText(
-                                      text: "Bật/tắt toàn bộ máy chiếu",
-                                      color: AppColors.gray,
-                                      size: 18,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    Expanded(
-                                      child: SizedBox(
-                                        width: SizeConfig.blockSizeHorizontal,
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 40,
-                                      width: 60,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: room
-                                                  .power_room_projectors
-                                                  .getValue()
-                                              ? AppColors.navy_blue
-                                              : AppColors.gray,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            PowerRoomProjectors(room, true);
-                                          });
-                                        },
-                                        child: PrimaryText(
-                                          text: 'On',
-                                          size: 14,
-                                          color: AppColors.white,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          15, 0, 0, 0),
-                                      child: Container(
-                                        height: 40,
-                                        width: 60,
-                                        child: Hero(
-                                          tag: heroOffProjector,
-                                          createRectTween: (begin, end) {
-                                            return CustomRectTween(
-                                                begin: begin, end: end);
-                                          },
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: !room
-                                                      .power_room_projectors
-                                                      .getValue()
-                                                  ? AppColors.red
-                                                  : AppColors.gray,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                Navigator.of(context).push(
-                                                    HeroDialogRoute(
-                                                        builder: (context) {
-                                                  return PopupOffProjector(
-                                                    onUpdateState: () {
-                                                      setState(() {});
-                                                    },
-                                                  );
-                                                }));
-                                              });
-                                            },
-                                            child: PrimaryText(
-                                              text: 'Off',
-                                              size: 14,
-                                              color: AppColors.white,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: SizeConfig.blockSizeVertical * 2,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    PrimaryText(
-                                      text: "Bật/tắt toàn bộ màn chập",
-                                      color: AppColors.gray,
-                                      size: 18,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    Expanded(
-                                      child: SizedBox(
-                                        width: SizeConfig.blockSizeHorizontal,
-                                      ),
-                                    ),
-                                    Container(
-                                      height: 40,
-                                      width: 60,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: room
-                                                  .shutter_room_projectors
-                                                  .getValue()
-                                              ? AppColors.navy_blue
-                                              : AppColors.gray,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            ShutterRoomProjectors(room, true);
-                                          });
-                                        },
-                                        child: PrimaryText(
-                                          text: 'On',
-                                          size: 14,
-                                          color: AppColors.white,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          15, 0, 0, 0),
-                                      child: Container(
-                                        height: 40,
-                                        width: 60,
-                                        child: Hero(
-                                          tag: heroOffShutter,
-                                          createRectTween: (begin, end) {
-                                            return CustomRectTween(
-                                                begin: begin, end: end);
-                                          },
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: !room
-                                                      .shutter_room_projectors
-                                                      .getValue()
-                                                  ? AppColors.red
-                                                  : AppColors.gray,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                Navigator.of(context).push(
-                                                    HeroDialogRoute(
-                                                        builder: (context) {
-                                                  return PopupOffShutter(
-                                                    onUpdateState: () {
-                                                      setState(() {});
-                                                    },
-                                                  );
-                                                }));
-                                                // ShutterAllProjectors(false);
-                                              });
-                                            },
-                                            child: PrimaryText(
-                                              text: 'Off',
-                                              size: 14,
-                                              color: AppColors.white,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                              width: SizeConfig.screenWidth,
-                              child: Wrap(
-                                  spacing: 20,
-                                  runSpacing: 20,
-                                  alignment: WrapAlignment.spaceBetween,
-                                  children: List.generate(
-                                    room.projectors.length,
-                                    (index) => InfoProjector(
-                                        projector: room.projectors[index]),
-                                  ))
-                              // : SpinKitThreeBounce(
-                              //     color: AppColors.navy_blue,
-                              //     size: 20,
-                              //   ),
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 8,
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/small_projector.png',
+                                height: 30,
                               ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 4,
+                              SizedBox(
+                                width: SizeConfig.blockSizeVertical,
+                              ),
+                              PrimaryText(
+                                  text: 'Quản lý máy chiếu'.toUpperCase(),
+                                  color: AppColors.gray,
+                                  size: 20,
+                                  fontWeight: FontWeight.w500),
+                            ],
                           ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 4,
+                        ),
+                        Container(
+                          // height: Responsive.isDesktop(context)? 180:null,
+                          // constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
+                          //     maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth/2-150: SizeConfig.screenWidth- 40),
+                          margin: EdgeInsets.only(bottom: 30),
+                          padding: EdgeInsets.only(
+                              top: 20, bottom: 20, left: 20, right: 20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColors.white,
                           ),
-                        ],
-                      ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  PrimaryText(
+                                    text: "Bật/tắt toàn bộ máy chiếu",
+                                    color: AppColors.gray,
+                                    size: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      width: SizeConfig.blockSizeHorizontal,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 60,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: room
+                                                .power_room_projectors
+                                                .getValue()
+                                            ? AppColors.navy_blue
+                                            : AppColors.gray,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          PowerRoomProjectors(room, true);
+                                        });
+                                      },
+                                      child: PrimaryText(
+                                        text: 'On',
+                                        size: 14,
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                    child: Container(
+                                      height: 40,
+                                      width: 60,
+                                      child: Hero(
+                                        tag: heroOffProjector,
+                                        createRectTween: (begin, end) {
+                                          return CustomRectTween(
+                                              begin: begin, end: end);
+                                        },
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: !room
+                                                    .power_room_projectors
+                                                    .getValue()
+                                                ? AppColors.red
+                                                : AppColors.gray,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              Navigator.of(context).push(
+                                                  HeroDialogRoute(
+                                                      builder: (context) {
+                                                return PopupOffProjector(
+                                                  onUpdateState: () {
+                                                    setState(() {});
+                                                  },
+                                                );
+                                              }));
+                                            });
+                                          },
+                                          child: PrimaryText(
+                                            text: 'Off',
+                                            size: 14,
+                                            color: AppColors.white,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: SizeConfig.blockSizeVertical * 2,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  PrimaryText(
+                                    text: "Bật/tắt toàn bộ màn chập",
+                                    color: AppColors.gray,
+                                    size: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      width: SizeConfig.blockSizeHorizontal,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 60,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: room
+                                                .shutter_room_projectors
+                                                .getValue()
+                                            ? AppColors.navy_blue
+                                            : AppColors.gray,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          ShutterRoomProjectors(room, true);
+                                        });
+                                      },
+                                      child: PrimaryText(
+                                        text: 'On',
+                                        size: 14,
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                    child: Container(
+                                      height: 40,
+                                      width: 60,
+                                      child: Hero(
+                                        tag: heroOffShutter,
+                                        createRectTween: (begin, end) {
+                                          return CustomRectTween(
+                                              begin: begin, end: end);
+                                        },
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: !room
+                                                    .shutter_room_projectors
+                                                    .getValue()
+                                                ? AppColors.red
+                                                : AppColors.gray,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              Navigator.of(context).push(
+                                                  HeroDialogRoute(
+                                                      builder: (context) {
+                                                return PopupOffShutter(
+                                                  onUpdateState: () {
+                                                    setState(() {});
+                                                  },
+                                                );
+                                              }));
+                                              // ShutterAllProjectors(false);
+                                            });
+                                          },
+                                          child: PrimaryText(
+                                            text: 'Off',
+                                            size: 14,
+                                            color: AppColors.white,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                            width: SizeConfig.screenWidth,
+                            child: Wrap(
+                                spacing: 20,
+                                runSpacing: 20,
+                                alignment: WrapAlignment.spaceBetween,
+                                children: List.generate(
+                                  room.projectors.length,
+                                  (index) => InfoProjector(
+                                      projector: room.projectors[index]),
+                                ))
+                            // : SpinKitThreeBounce(
+                            //     color: AppColors.navy_blue,
+                            //     size: 20,
+                            //   ),
+                            ),
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 4,
+                        ),
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 4,
+                        ),
+                      ],
+                    ),
                     if (!Responsive.isDesktop(context))
                       CheckConnectionBar(room: room)
                   ],
@@ -742,7 +729,7 @@ class _RoomManagerState extends State<RoomManager> {
               ),
             ),
           ),
-          if (Responsive.isDesktop(context) && current_page.getValue() != 0)
+          if (Responsive.isDesktop(context))
             Expanded(
               flex: 1,
               // child: SingleChildScrollView(child: CheckConnectionBar(room: room,)),

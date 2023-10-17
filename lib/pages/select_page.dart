@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/dashboard.dart';
+import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/pages/roomManager.dart';
 import 'package:responsive_dashboard/pages/home_page.dart';
 class SelectPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class SelectPage extends StatefulWidget {
 class _SelectPageState extends State<SelectPage> {
   @override
   Widget build(BuildContext context) {
-    if (current_page.getValue() == 0) {
+    if (current_page.getValue() == 0 && rooms.length > 1) {
       return HomePage();
     }
     else {

@@ -45,9 +45,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
         children: [
           Expanded(
             child: PrimaryText(
-                text: rooms[(current_page.getValue() > 0)
-                        ? current_page.getValue() - 1
-                        : 1]
+                text: rooms[0]
                     .nameUI,
                 size: 18,
                 fontWeight: FontWeight.w600),
@@ -81,12 +79,15 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
       SizedBox(
         height: SizeConfig.blockSizeVertical * 3,
       ),
+      if (room.servers.length > 0)
       PrimaryText(
         text: room.resolume? 'Kiểm tra tín hiệu server'.toUpperCase(): 'Kiểm tra tín hiệu Bright Sign'.toUpperCase(),
         size: 16,
         fontWeight: FontWeight.w500,
         color: AppColors.iconDeepGray,
       ),
+
+      if (room.servers.length > 0)
       SizedBox(
         height: SizeConfig.blockSizeVertical * 2,
       ),

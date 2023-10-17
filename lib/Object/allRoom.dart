@@ -53,7 +53,7 @@ class AllRoom {
   });
   void setLicenseStatus() async {
     CollectionReference licenseStatusCollection =
-        Firestore.instance.collection('license_status');
+        Firestore.instance.collection('license_status_vanmieu');
     List<Document> license_status = [];
     license_status = await licenseStatusCollection.orderBy('run').get();
     Future.delayed(

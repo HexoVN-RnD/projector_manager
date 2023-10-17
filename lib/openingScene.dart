@@ -79,7 +79,7 @@ class _OpeningSceneState extends State<OpeningScene>
       setState(() {});
     });
     _animationController = AnimationController(
-      duration: Duration(seconds: 15),
+      duration: Duration(seconds: 5),
       vsync: this,
     )..addListener(() {
         setState(() {
@@ -107,29 +107,29 @@ class _OpeningSceneState extends State<OpeningScene>
         children: [
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 450.0),
+              padding: const EdgeInsets.only(bottom: 350.0),
               child: Image.asset(
                 "assets/logo2.png",
-                width: 600,
+                width: 1200,
                 fit: BoxFit.fitWidth,
               ),
             ),
           ),
+          // // Positioned.fill(
+          // //   child: BackdropFilter(
+          // //     filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          // //     child: const SizedBox(),
+          // //   ),
+          // // ),
+          // // const RiveAnimation.asset(
+          // //   "assets/RiveAssets/shapes.riv",
+          // // ),
           // Positioned.fill(
           //   child: BackdropFilter(
           //     filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
           //     child: const SizedBox(),
           //   ),
           // ),
-          // const RiveAnimation.asset(
-          //   "assets/RiveAssets/shapes.riv",
-          // ),
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-              child: const SizedBox(),
-            ),
-          ),
           AnimatedPositioned(
             // top: isShowSignInDialog ? -50 : 0,
             height: MediaQuery.of(context).size.height,
@@ -373,8 +373,8 @@ class _OpeningSceneState extends State<OpeningScene>
             ),
           ),
           Positioned(
-            left: 30,
-            top: MediaQuery.of(context).size.height * 0.11,
+            left: MediaQuery.of(context).size.width*0.4,
+            top: MediaQuery.of(context).size.height * 0.69,
             width: MediaQuery.of(context).size.width - 80,
             height: MediaQuery.of(context).size.height,
             child: Padding(
@@ -384,8 +384,8 @@ class _OpeningSceneState extends State<OpeningScene>
                 children: [
                   Column(
                     children:
-                        List.generate(rooms[2].projectors.length, (index) {
-                      Projector projector = rooms[2].projectors[index];
+                        List.generate(rooms[0].projectors.length, (index) {
+                      Projector projector = rooms[0].projectors[index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
                         child: Row(
@@ -424,292 +424,6 @@ class _OpeningSceneState extends State<OpeningScene>
                         ),
                       );
                     }),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: List.generate(half_length, (index) {
-                        Projector projector = rooms[3].projectors[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              PrimaryText(
-                                text: projector.connected.getValue()
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected.getValue()
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: List.generate(
-                          rooms[3].projectors.length - half_length, (index) {
-                        Projector projector =
-                            rooms[3].projectors[index + half_length];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: SingleChildScrollView(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 150,
-                                  child: PrimaryText(
-                                    text: '${projector.name}',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width: 100,
-                                  child: PrimaryText(
-                                    text: '(${projector.ip})',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                PrimaryText(
-                                  text: projector.connected.getValue()
-                                      ? 'Đã kết nối '
-                                      : 'Mất kết nối',
-                                  color: projector.connected.getValue()
-                                      ? AppColors.green
-                                      : AppColors.red,
-                                  size: 14,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                  Column(children: [
-                    Column(
-                      children:
-                          List.generate(rooms[4].projectors.length, (index) {
-                        Projector projector = rooms[4].projectors[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              PrimaryText(
-                                text: projector.connected.getValue()
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected.getValue()
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Column(
-                      children:
-                          List.generate(rooms[5].projectors.length, (index) {
-                        Projector projector = rooms[5].projectors[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              PrimaryText(
-                                text: projector.connected.getValue()
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected.getValue()
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                  ]),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            left: 30,
-            top: 220,
-            width: MediaQuery.of(context).size.width - 80,
-            height: MediaQuery.of(context).size.height,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(15.0, 60, 10, 10),
-              child: Column(
-                children: [
-                  Column(
-                    children: List.generate(rooms[1].servers.length, (index) {
-                      Server server = rooms[1].servers[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 120,
-                              child: PrimaryText(
-                                text: '${server.name}',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 100,
-                              child: PrimaryText(
-                                text: '(${server.ip})',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            PrimaryText(
-                              text: server.connected.getValue()
-                                  ? 'Đã kết nối '
-                                  : 'Mất kết nối',
-                              color: server.connected.getValue()
-                                  ? AppColors.green
-                                  : AppColors.red,
-                              size: 14,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Column(
-                    children: List.generate(rooms[5].servers.length, (index) {
-                      Server server = rooms[5].servers[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 120,
-                              child: PrimaryText(
-                                text: '${server.name}',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 100,
-                              child: PrimaryText(
-                                text: '(${server.ip})',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            PrimaryText(
-                              text: server.connected.getValue()
-                                  ? 'Đã kết nối '
-                                  : 'Mất kết nối',
-                              color: server.connected.getValue()
-                                  ? AppColors.green
-                                  : AppColors.red,
-                              size: 14,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-                  SizedBox(
-                    height: 50,
                   ),
                 ],
               ),

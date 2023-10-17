@@ -41,7 +41,7 @@ class _DashboardState extends State<Dashboard> {
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   Menu selectedSideMenu = sidebarMenus.first;
   CollectionReference licenseStatusCollection =
-      Firestore.instance.collection('license_status');
+      Firestore.instance.collection('license_status_vanmieu');
   List<Document> license_status = [];
 
   Future<List<Document>> getLicenseStatus() async {
@@ -89,7 +89,7 @@ class _DashboardState extends State<Dashboard> {
     final width = SizeConfig.screenWidth;
     final height = SizeConfig.screenHeight;
     Room room =
-        rooms[(current_page.getValue() > 0) ? current_page.getValue() - 1 : 0];
+        rooms[0];
 
     return Stack(
       children: [
@@ -112,79 +112,10 @@ class _DashboardState extends State<Dashboard> {
                             padding: EdgeInsets.symmetric(vertical: 20.0),
                             icon: RiveAnimation.asset(
                               "assets/RiveAssets/icons.riv",
-                              artboard: "HOME",
-                              // onInit: riveOnInit,
-                            ),
-                            onPressed: () => changePage(0)),
-                        IconButton(
-                            iconSize: 30,
-                            padding: EdgeInsets.symmetric(vertical: 20.0),
-                            icon: RiveAnimation.asset(
-                              "assets/RiveAssets/icons.riv",
                               artboard: "ROOM",
                               // onInit: riveOnInit,
                             ),
                             onPressed: () => changePage(1)),
-                        IconButton(
-                            iconSize: 30,
-                            padding: EdgeInsets.symmetric(vertical: 20.0),
-                            icon: RiveAnimation.asset(
-                              "assets/RiveAssets/icons.riv",
-                              artboard: "ROOM",
-                              // onInit: riveOnInit,
-                            ),
-                            onPressed: () => changePage(2)),
-                        IconButton(
-                            iconSize: 30,
-                            padding: EdgeInsets.symmetric(vertical: 20.0),
-                            icon: RiveAnimation.asset(
-                              "assets/RiveAssets/icons.riv",
-                              artboard: "ROOM",
-                              // onInit: riveOnInit,
-                            ),
-                            onPressed: () => changePage(3)),
-                        IconButton(
-                            iconSize: 30,
-                            padding: EdgeInsets.symmetric(vertical: 20.0),
-                            icon: RiveAnimation.asset(
-                              "assets/RiveAssets/icons.riv",
-                              artboard: "ROOM",
-                              // onInit: riveOnInit,
-                            ),
-                            onPressed: () => changePage(4)),
-                        Expanded(
-                          child: IconButton(
-                              iconSize: 30,
-                              padding: EdgeInsets.symmetric(vertical: 20.0),
-                              icon: RiveAnimation.asset(
-                                "assets/RiveAssets/icons.riv",
-                                artboard: "ROOM",
-                                // onInit: riveOnInit,
-                              ),
-                              onPressed: () => changePage(4)),
-                        ),
-                        Expanded(
-                          child: IconButton(
-                              iconSize: 30,
-                              padding: EdgeInsets.symmetric(vertical: 20.0),
-                              icon: RiveAnimation.asset(
-                                "assets/RiveAssets/icons.riv",
-                                artboard: "ROOM",
-                                // onInit: riveOnInit,
-                              ),
-                              onPressed: () => changePage(4)),
-                        ),
-                        Expanded(
-                          child: IconButton(
-                              iconSize: 30,
-                              padding: EdgeInsets.symmetric(vertical: 20.0),
-                              icon: RiveAnimation.asset(
-                                "assets/RiveAssets/icons.riv",
-                                artboard: "ROOM",
-                                // onInit: riveOnInit,
-                              ),
-                              onPressed: () => changePage(4)),
-                        ),
                       ],
                     ),
                   ),
