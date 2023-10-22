@@ -60,7 +60,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 60), (timer) {
       getLicenseStatus();
       Future.delayed(
         const Duration(milliseconds: 500),

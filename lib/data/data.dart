@@ -309,13 +309,13 @@ List<Room> rooms = [
     sensors: [],
     leds: [
       Led(
-          ip: '192.168.1.61',
+          ip: '192.168.1.247',
           name: 'Màn led 01',
           position: Offset(0.575, 0.125),
           port: 10940,
           connected: StatefulValuable<bool>(false)),
       Led(
-          ip: '192.168.1.61',
+          ip: '192.168.1.247',
           name: 'Màn led 02',
           position: Offset(0.73, 0.125),
           port: 10940,
