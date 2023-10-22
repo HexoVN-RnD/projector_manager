@@ -373,7 +373,7 @@ List<Room> rooms = [
         preset_port: 7000,
         power_port: 1234,
         position: Offset(0.0, 0.0),
-        mac_address: 'e0:73:e7:0b:21:af',
+        mac_address: '5c:60:ba:3e:ce:1a',
         password: 'admin',
         power_status: StatefulValuable<bool>(false),
         volume: StatefulValuable<double>(1),

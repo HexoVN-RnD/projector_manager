@@ -244,7 +244,21 @@ void OSCReceive() async {
               } else {
                 SwitchPreset(0);
               }
-              PlayAllPreset();
+              for (Server server in rooms[1].servers) {
+                SendUDPMessage(
+                    server, 'Preset' + (rooms[1].current_preset.getValue() + 1).toString());
+              }
+              if (rooms[2].resolume) {
+                SendPlayOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port,
+                    rooms[2].current_preset.getValue());
+              } else {
+                SendUDPMessage(rooms[2].servers[0], 'Preset1');
+              }
+              SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port,
+                  rooms[3].current_preset.getValue());
+              SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port,
+                  rooms[3].current_preset.getValue());
+              SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 0);
               await Future.delayed(Duration(seconds: 3));
               //print('switch done');
               allRoom.is_switch_colume.setValue(false);
