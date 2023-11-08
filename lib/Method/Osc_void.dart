@@ -55,31 +55,31 @@ void PlayPreset(int index) {
     case 2:
       for (Server server in rooms[1].servers) {
         SendUDPMessage(server,
-            'Preset' + (rooms[1].current_preset.getValue() + 1).toString());
+            'Preset' + (rooms[1].current_preset + 1).toString());
       }
       break;
     case 3:
       if (rooms[2].resolume) {
         SendPlayOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port,
-            rooms[2].current_preset.getValue());
+            rooms[2].current_preset);
       } else {
         SendUDPMessage(rooms[2].servers[0], 'Preset1');
       }
       break;
     case 4:
       SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port,
-          rooms[3].current_preset.getValue());
+          rooms[3].current_preset);
       SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port,
-          rooms[3].current_preset.getValue());
+          rooms[3].current_preset);
       break;
     case 5:
       SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 0);
       break;
     case 6:
       SendUDPMessage(rooms[5].servers[0],
-          'Preset' + (rooms[5].current_preset.getValue() + 1).toString());
+          'Preset' + (rooms[5].current_preset + 1).toString());
       SendUDPMessage(rooms[5].servers[1],
-          'Preset' + (rooms[5].current_preset.getValue() + 1).toString());
+          'Preset' + (rooms[5].current_preset + 1).toString());
   }
 }
 
@@ -93,16 +93,16 @@ void StopPreset(int index) {
     case 3:
       if (rooms[2].resolume) {
         SendStopOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port,
-            rooms[2].current_preset.getValue());
+            rooms[2].current_preset);
       } else {
         SendUDPMessage(rooms[2].servers[0], 'Preset0');
       }
       break;
     case 4:
       SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port,
-          rooms[3].current_preset.getValue());
+          rooms[3].current_preset);
       SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port,
-          rooms[3].current_preset.getValue());
+          rooms[3].current_preset);
       break;
     case 5:
       SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 1);
@@ -116,7 +116,7 @@ void StopPreset(int index) {
 void PlayAllPreset() {
   for (Server server in rooms[1].servers) {
     SendUDPMessage(
-        server, 'Preset' + (rooms[1].current_preset.getValue() + 1).toString());
+        server, 'Preset' + (rooms[1].current_preset + 1).toString());
   }
   if (rooms[2].resolume) {
     SendPresetOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 0);
@@ -124,14 +124,14 @@ void PlayAllPreset() {
     SendUDPMessage(rooms[2].servers[0], 'Preset1');
   }
   SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port,
-      rooms[3].current_preset.getValue());
+      rooms[3].current_preset);
   SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port,
-      rooms[3].current_preset.getValue());
+      rooms[3].current_preset);
   SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 0);
   SendUDPMessage(rooms[5].servers[0],
-      'Preset' + (rooms[5].current_preset.getValue() + 1).toString());
+      'Preset' + (rooms[5].current_preset + 1).toString());
   SendUDPMessage(rooms[5].servers[1],
-      'Preset' + (rooms[5].current_preset.getValue() + 1).toString());
+      'Preset' + (rooms[5].current_preset + 1).toString());
 }
 
 void StopAllPreset() {
@@ -144,37 +144,37 @@ void StopAllPreset() {
     SendUDPMessage(rooms[2].servers[0], 'Preset0');
   }
   SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port,
-      rooms[3].current_preset.getValue());
+      rooms[3].current_preset);
   SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port,
-      rooms[3].current_preset.getValue());
+      rooms[3].current_preset);
   SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 1);
   SendUDPMessage(rooms[5].servers[0], 'Preset0');
   SendUDPMessage(rooms[5].servers[1], 'Preset0');
 }
 
 void SelectAllPreset(index) {
-  allRoom.current_preset.setValue(index);
+  allRoom.current_preset = (index);
   for (Room room in rooms) {
     if (index < room.presets.length) {
-      room.current_preset.setValue(index);
+      room.current_preset = (index);
       for (Server server in room.servers) {
         if (room.resolume) {
           SendPresetOSC(
-              server.ip, server.preset_port, room.current_preset.getValue());
+              server.ip, server.preset_port, room.current_preset);
         } else {
           SendUDPMessage(server,
-              'Preset' + (room.current_preset.getValue() + 1).toString());
+              'Preset' + (room.current_preset + 1).toString());
         }
       }
     } else {
-      room.current_preset.setValue(room.presets.length - 1);
+      room.current_preset = (room.presets.length - 1);
       for (Server server in room.servers) {
         if (room.resolume) {
           SendPresetOSC(
-              server.ip, server.preset_port, room.current_preset.getValue());
+              server.ip, server.preset_port, room.current_preset);
         } else {
           SendUDPMessage(server,
-              'Preset' + (room.current_preset.getValue() + 1).toString());
+              'Preset' + (room.current_preset + 1).toString());
         }
       }
     }
@@ -185,26 +185,26 @@ void SelectAllPreset(index) {
 void SwitchPreset(index) {
   for (Room room in rooms) {
     if (index < room.presets.length) {
-      room.current_preset.setValue(index);
+      room.current_preset = (index);
       for (Server server in room.servers) {
         if (room.resolume) {
           SendPresetOSC(
-              server.ip, server.preset_port, room.current_preset.getValue());
+              server.ip, server.preset_port, room.current_preset);
         } else {
           // SendUDPMessage(server,
-          //     'Preset' + (room.current_preset.getValue() + 1).toString());
+          //     'Preset' + (room.current_preset + 1).toString());
         }
       }
       // PlayAllPreset();
     } else {
-      room.current_preset.setValue(room.presets.length - 1);
+      room.current_preset = (room.presets.length - 1);
       for (Server server in room.servers) {
         if (room.resolume) {
           SendPresetOSC(
-              server.ip, server.preset_port, room.current_preset.getValue());
+              server.ip, server.preset_port, room.current_preset);
         } else {
           // SendUDPMessage(server,
-          //     'Preset' + (room.current_preset.getValue() + 1).toString());
+          //     'Preset' + (room.current_preset + 1).toString());
         }
       }
       // PlayAllPreset();
@@ -229,16 +229,16 @@ void OSCReceive() async {
           double transport =
               double.tryParse(oscMessage.arguments[0].toString()) ?? 0.0;
           String address = oscMessage.address;
-          // if (allRoom.presets[allRoom.current_preset.getValue()].transport
-          //         .getValue() <=
+          // if (allRoom.presets[allRoom.current_preset].transport
+          //          <=
           //     1) {
-          if (allRoom.presets.length > allRoom.current_preset.getValue()) {
+          if (allRoom.presets.length > allRoom.current_preset) {
             // //print('transport: $address $transport');
-            if (transport > 0.999 && !allRoom.is_switch_colume.getValue()) {
-              allRoom.is_switch_colume.setValue(true);
+            if (transport > 0.999 && !allRoom.is_switch_colume) {
+              allRoom.is_switch_colume = (true);
               //print('transport: $transport');
-              if (allRoom.current_colume.getValue() != 3) {
-                SwitchPreset(allRoom.current_colume.getValue());
+              if (allRoom.current_colume != 3) {
+                SwitchPreset(allRoom.current_colume);
               } else {
                 SwitchPreset(0);
               }
@@ -246,121 +246,121 @@ void OSCReceive() async {
                 SendUDPMessage(
                     server,
                     'Preset' +
-                        (rooms[1].current_preset.getValue() + 1).toString());
+                        (rooms[1].current_preset + 1).toString());
               }
               if (rooms[2].resolume) {
                 SendPlayOSC(
                     rooms[2].servers[0].ip,
                     rooms[2].servers[0].preset_port,
-                    rooms[2].current_preset.getValue());
+                    rooms[2].current_preset);
               } else {
                 SendUDPMessage(rooms[2].servers[0], 'Preset1');
               }
               SendPlayOSC(
                   rooms[3].servers[0].ip,
                   rooms[3].servers[0].preset_port,
-                  rooms[3].current_preset.getValue());
+                  rooms[3].current_preset);
               SendPlayOSC(
                   rooms[3].servers[1].ip,
                   rooms[3].servers[1].preset_port,
-                  rooms[3].current_preset.getValue());
+                  rooms[3].current_preset);
               SendPresetOSC(
                   rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 0);
               await Future.delayed(Duration(seconds: 3));
               //print('switch done');
-              allRoom.is_switch_colume.setValue(false);
+              allRoom.is_switch_colume = (false);
             }
-            ////print(allRoom.current_preset.getValue());
-            if (allRoom.current_preset.getValue() == 0) {
+            ////print(allRoom.current_preset);
+            if (allRoom.current_preset == 0) {
               if (address ==
                   '/composition/layers/1/clips/1/transport/position') {
                 //print('transport: ${transport * 0.5}');
-                allRoom.current_colume.setValue(1);
-                allRoom.presets[allRoom.current_preset.getValue()].transport
-                    .setValue(transport * 0.5);
+                allRoom.current_colume = (1);
+                allRoom.presets[allRoom.current_preset].transport
+                     = (transport * 0.5);
               } else if (address ==
                   '/composition/layers/1/clips/2/transport/position') {
                 //print('transport: ${transport * 0.27 + 0.5}');
-                allRoom.current_colume.setValue(2);
-                allRoom.presets[allRoom.current_preset.getValue()].transport
-                    .setValue(transport * 0.27 + 0.5);
+                allRoom.current_colume = (2);
+                allRoom.presets[allRoom.current_preset].transport
+                     = (transport * 0.27 + 0.5);
               } else if (address ==
                   '/composition/layers/1/clips/3/transport/position') {
                 //print('transport: ${transport * 0.23 + 0.77}');
-                allRoom.current_colume.setValue(3);
-                allRoom.presets[allRoom.current_preset.getValue()].transport
-                    .setValue(transport * 0.23 + 0.77);
+                allRoom.current_colume = (3);
+                allRoom.presets[allRoom.current_preset].transport
+                     = (transport * 0.23 + 0.77);
               }
-            } else if (allRoom.current_preset.getValue() == 1) {
+            } else if (allRoom.current_preset == 1) {
               if (address ==
                   '/composition/layers/1/clips/1/transport/position') {
                 //print('transport: ${transport * 0.5 + 0.5}');
-                allRoom.current_colume.setValue(1);
-                allRoom.presets[allRoom.current_preset.getValue()].transport
-                    .setValue(transport * 0.5 + 0.5);
+                allRoom.current_colume = (1);
+                allRoom.presets[allRoom.current_preset].transport
+                     = (transport * 0.5 + 0.5);
               } else if (address ==
                   '/composition/layers/1/clips/2/transport/position') {
                 //print('transport: ${transport * 0.27}');
-                allRoom.current_colume.setValue(2);
-                allRoom.presets[allRoom.current_preset.getValue()].transport
-                    .setValue(transport * 0.27);
+                allRoom.current_colume = (2);
+                allRoom.presets[allRoom.current_preset].transport
+                     = (transport * 0.27);
               } else if (address ==
                   '/composition/layers/1/clips/3/transport/position') {
                 //print('transport: ${transport * 0.23 + 0.27}');
-                allRoom.current_colume.setValue(3);
-                allRoom.presets[allRoom.current_preset.getValue()].transport
-                    .setValue(transport * 0.23 + 0.27);
+                allRoom.current_colume = (3);
+                allRoom.presets[allRoom.current_preset].transport
+                     = (transport * 0.23 + 0.27);
               }
-            } else if (allRoom.current_preset.getValue() == 2) {
+            } else if (allRoom.current_preset == 2) {
               if (address ==
                   '/composition/layers/1/clips/1/transport/position') {
                 //print('transport: ${transport * 0.5 + 0.23}');
-                allRoom.current_colume.setValue(1);
-                allRoom.presets[allRoom.current_preset.getValue()].transport
-                    .setValue(transport * 0.5 + 0.23);
+                allRoom.current_colume = (1);
+                allRoom.presets[allRoom.current_preset].transport
+                     = (transport * 0.5 + 0.23);
               } else if (address ==
                   '/composition/layers/1/clips/2/transport/position') {
                 //print('transport: ${transport * 0.27 + 0.73}');
-                allRoom.current_colume.setValue(2);
-                allRoom.presets[allRoom.current_preset.getValue()].transport
-                    .setValue(transport * 0.27 + 0.73);
+                allRoom.current_colume = (2);
+                allRoom.presets[allRoom.current_preset].transport
+                     = (transport * 0.27 + 0.73);
               } else if (address ==
                   '/composition/layers/1/clips/3/transport/position') {
                 //print('transport: ${transport * 0.23}');
-                allRoom.current_colume.setValue(3);
-                allRoom.presets[allRoom.current_preset.getValue()].transport
-                    .setValue(transport * 0.23);
+                allRoom.current_colume = (3);
+                allRoom.presets[allRoom.current_preset].transport
+                     = (transport * 0.23);
               }
             }
           }
-          if (rooms[(current_page.getValue() > 1)
-                      ? current_page.getValue() - 1
+          if (rooms[(current_page > 1)
+                      ? current_page - 1
                       : 1]
                   .presets
                   .length >
-              rooms[(current_page.getValue() > 1)
-                      ? current_page.getValue() - 1
+              rooms[(current_page > 1)
+                      ? current_page - 1
                       : 1]
                   .current_preset
-                  .getValue()) {
-            rooms[(current_page.getValue() > 1)
-                    ? current_page.getValue() - 1
+                  ) {
+            rooms[(current_page > 1)
+                    ? current_page - 1
                     : 1]
-                .presets[rooms[(current_page.getValue() > 1)
-                        ? current_page.getValue() - 1
+                .presets[rooms[(current_page > 1)
+                        ? current_page - 1
                         : 1]
                     .current_preset
-                    .getValue()]
+                    ]
                 .transport
-                .setValue(transport);
+                 = (transport);
           }
           // }
           // ////print('Argument value: ' +
-          //     rooms[(current_page.getValue() > 1) ? current_page.getValue() - 1 : 1]
+          //     rooms[(current_page > 1) ? current_page - 1 : 1]
           //         .presets[
-          //             rooms[(current_page.getValue() > 1) ? current_page.getValue() - 1 : 1].current_preset.getValue()]
+          //             rooms[(current_page > 1) ? current_page - 1 : 1].current_preset]
           //         .transport
-          //         .getValue()
+          //         
           //         .toString());
         }
       }

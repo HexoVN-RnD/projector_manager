@@ -48,15 +48,15 @@ class _PositionPage2State extends State<PositionPage2> {
       height: height * 0.09,
       child: Container(
         // color:
-        //     server.connected.getValue() ? AppColors.navy_blue : AppColors.gray,
+        //     server.connected ? AppColors.navy_blue : AppColors.gray,
         decoration: BoxDecoration(
-            color: server.connected.getValue()
+            color: server.connected
                 ? AppColors.green
                 : AppColors.red,
-            border: server.isOnHover.getValue()
+            border: server.isOnHover
                 ? Border.all(
                     strokeAlign: BorderSide.strokeAlignCenter,
-                    color: server.connected.getValue()
+                    color: server.connected
                         ? AppColors.green
                         : AppColors.red,
                     width: 4.0,

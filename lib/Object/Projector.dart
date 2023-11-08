@@ -7,16 +7,16 @@ class Projector {
     int port;
     String UsernameAndPassword;
     String type;
-    StatefulValuable<bool> power_status_button;
-    StatefulValuable<bool> shutter_status_button;
-    StatefulValuable<bool> connected;
-    StatefulValuable<bool> power_status;
-    StatefulValuable<bool> shutter_status;
-    StatefulValuable<double> lamp_hours;
-    StatefulValuable<int> status;
+    bool power_status_button;
+    bool shutter_status_button;
+    bool connected;
+    bool power_status;
+    bool shutter_status;
+    double lamp_hours;
+    int status;
     Offset position;
-    StatefulValuable<bool> color_state;
-    StatefulValuable<bool> isOnHover;
+    bool color_state;
+    bool isOnHover;
 
 
     // Constructor

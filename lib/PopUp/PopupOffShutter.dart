@@ -98,10 +98,10 @@ class _PopupOffShutterState extends State<PopupOffShutter> {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  if (current_page.getValue() ==0) {
+                                  if (current_page ==0) {
                                     ShutterAllProjectors(false);
                                   } else {
-                                    ShutterRoomProjectors(rooms[current_page.getValue()-1], false);
+                                    ShutterRoomProjectors(rooms[current_page-1], false);
                                   }
                                   Navigator.of(context).pop();
                                   widget.onUpdateState?.call();

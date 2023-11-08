@@ -17,7 +17,7 @@ class SelectPage extends StatefulWidget {
 class _SelectPageState extends State<SelectPage> {
   @override
   Widget build(BuildContext context) {
-    if (current_page.getValue() == 0) {
+    if (current_page == 0) {
       return HomePage();
     }
     else {

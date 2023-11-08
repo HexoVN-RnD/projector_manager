@@ -5,11 +5,11 @@ import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/data/data.dart';
 
 Future<void> PowerOnAllServer() async {
-  allRoom.power_all_servers.setValue(true);
+  allRoom.power_all_servers = (true);
   for (Room room in rooms) {
     for (Server server in room.servers) {
-      if (!server.power_status.getValue() && room.resolume) {
-        server.power_status.setValue(true);
+      if (!server.power_status && room.resolume) {
+        server.power_status = (true);
         WakeonLan(room,server);
         await Future.delayed(Duration(seconds: 15));
       }
@@ -26,11 +26,11 @@ Future<void> PowerOnAllServer() async {
 }
 
 Future<void> ShutdownAllServer() async {
-  allRoom.power_all_servers.setValue(false);
+  allRoom.power_all_servers = (false);
   for (Room room in rooms) {
     for (Server server in room.servers) {
-      if (server.power_status.getValue() && room.resolume) {
-        server.power_status.setValue(false);
+      if (server.power_status && room.resolume) {
+        server.power_status = (false);
         ShutdownServer(room,server);
       }
     }
@@ -46,7 +46,7 @@ Future<void> ShutdownAllServer() async {
 }
 
 // Future<void> PowerModeServer(Server server, bool mode) async {
-//   server.power_status.setValue(mode);
+//   server.power_status = (mode);
 //   if (mode) {
 //     WakeonLan(server);
 //   } else {
@@ -62,7 +62,7 @@ Future<void> ShutdownAllServer() async {
 
 Future<void> ShutdownServer(Room room, Server server) async {
   final message = 'shutdown';
-  server.power_status.setValue(false);
+  server.power_status = (false);
   RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((socket) {
     socket.send(
         message.codeUnits, InternetAddress(server.ip), server.power_port);
@@ -76,7 +76,7 @@ Future<void> ShutdownServer(Room room, Server server) async {
 }
 
 void WakeonLan(Room room, Server server, {int port = 9}) async {
-  server.power_status.setValue(true);
+  server.power_status = (true);
 
   final boardcastIP = InternetAddress('255.255.255.255');
   final macBytes = _parseMacAddress(server.mac_address);

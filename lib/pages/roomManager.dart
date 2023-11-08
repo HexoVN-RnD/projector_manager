@@ -14,6 +14,7 @@ import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
+import 'package:responsive_dashboard/PopUp/PopupAddProjetor.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffProjector.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffShutter.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
@@ -44,15 +45,14 @@ class _RoomManagerState extends State<RoomManager> {
 
   void select_preset(Room room, int index) async {
     setState(() {
-      room.current_preset.setValue(index);
+      room.current_preset = (index);
       for (Server server in room.servers) {
         if (room.resolume) {
-          SendPresetOSC(
-              server.ip, server.preset_port, room.current_preset.getValue());
-          PlayPreset(current_page.getValue());
+          SendPresetOSC(server.ip, server.preset_port, room.current_preset);
+          PlayPreset(current_page);
         } else {
-          SendUDPMessage(server,
-              'Preset' + (room.current_preset.getValue() + 1).toString());
+          SendUDPMessage(
+              server, 'Preset' + (room.current_preset + 1).toString());
         }
       }
     });
@@ -62,51 +62,51 @@ class _RoomManagerState extends State<RoomManager> {
   void initState() {
     super.initState();
     // Đặt một Timer để cập nhật widget sau mỗi giây
-    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      Room room = rooms[
-          (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
-      setState(() {
-        if (current_page.getValue() == 4) {
-          // for (Server server in room.servers) {
-          if (room.servers[0].connected.getValue()) {
-            OSCReceive();
-          }
-          // }
-        } else if (current_page.getValue() == 3) {
-          // for (Server server in room.servers) {
-          if (room.servers[0].connected.getValue()) {
-            OSCReceive();
-          }
-          // }
-        }
-      });
-    });
-    _timer2 = Timer.periodic(
-        Duration(seconds: (current_page.getValue() == 4) ? 3 : 1),
-        (timer) async {
-      Room room = rooms[
-          (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
-      checkRoomSensorConnection(room);
-      checkRoomLedConnection(room);
-      checkRoomProjectorConnection(
-          room, (current_page.getValue() == 4) ? 3000 : 1000);
-      if (current_page.getValue() != 1 && current_page.getValue() != 2) {
-        SetButtonControlRoom(room);
-      }
-    });
+    // _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+    //   Room room = rooms[
+    //       (current_page > 1) ? current_page - 1 : 1];
+    //   setState(() {
+    //     if (current_page == 4) {
+    //       // for (Server server in room.servers) {
+    //       if (room.servers[0].connected) {
+    //         OSCReceive();
+    //       }
+    //       // }
+    //     } else if (current_page == 3) {
+    //       // for (Server server in room.servers) {
+    //       if (room.servers[0].connected) {
+    //         OSCReceive();
+    //       }
+    //       // }
+    //     }
+    //   });
+    // });
+    // _timer2 = Timer.periodic(
+    //     Duration(seconds: (current_page == 4) ? 3 : 1),
+    //     (timer) async {
+    //   Room room = rooms[
+    //       (current_page > 1) ? current_page - 1 : 1];
+    //   checkRoomSensorConnection(room);
+    //   checkRoomLedConnection(room);
+    //   checkRoomProjectorConnection(
+    //       room, (current_page == 4) ? 3000 : 1000);
+    //   if (current_page != 1 && current_page != 2) {
+    //     SetButtonControlRoom(room);
+    //   }
+    // });
   }
 
   void dispose() {
-    _timer?.cancel();
-    _timer2?.cancel();
+    // _timer?.cancel();
+    // _timer2?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final page = (current_page.getValue() > 0) ? current_page.getValue() - 1 : 0;
+    final page = (current_page > 0) ? current_page - 1 : 0;
     Room room = rooms[page];
-    if (page != oldPage){
+    if (page != oldPage) {
       oldPage = page;
       room.setRoomVolume();
       print('oldPage: $oldPage');
@@ -121,7 +121,7 @@ class _RoomManagerState extends State<RoomManager> {
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
               child: Container(
-                // height: (current_page.getValue() == 1 &&
+                // height: (current_page == 1 &&
                 //         Responsive.isDesktop(context))
                 //     ? SizeConfig.screenHeight
                 //     : null,
@@ -134,193 +134,202 @@ class _RoomManagerState extends State<RoomManager> {
                     SizedBox(
                       height: SizeConfig.blockSizeVertical * 2,
                     ),
-                    if (current_page.getValue() != 1)
-                      SizedBox(
-                        height: SizeConfig.blockSizeVertical * 4,
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.movie_filter,
-                              size: 25,
+                    if (room.presets.length != 0)
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: SizeConfig.blockSizeVertical * 4,
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.movie_filter,
+                                  size: 25,
+                                  color: AppColors.gray,
+                                ),
+                                SizedBox(
+                                  width: SizeConfig.blockSizeVertical,
+                                ),
+                                PrimaryText(
+                                    text: 'Nội dung'.toUpperCase(),
+                                    size: 20,
+                                    color: AppColors.gray,
+                                    fontWeight: FontWeight.w500),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                            margin: EdgeInsets.fromLTRB(0, 20, 0, 30),
+                            decoration: BoxDecoration(
                               color: AppColors.gray,
+                              borderRadius: BorderRadius.circular(30),
                             ),
-                            SizedBox(
-                              width: SizeConfig.blockSizeVertical,
-                            ),
-                            PrimaryText(
-                                text: 'Nội dung'.toUpperCase(),
-                                size: 20,
-                                color: AppColors.gray,
-                                fontWeight: FontWeight.w500),
-                          ],
-                        ),
-                      ),
-                    if (current_page.getValue() != 1)
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                        margin: EdgeInsets.fromLTRB(0, 20, 0, 30),
-                        decoration: BoxDecoration(
-                          color: AppColors.gray,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Column(
-                          children: [
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children:
-                                    List.generate(room.presets.length, (index) {
-                                  bool isSelected =
-                                      room.current_preset.getValue() == index;
-                                  return GestureDetector(
-                                    onTap: () {
-                                      select_preset(room, index);
-                                    },
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        AnimatedContainer(
-                                          duration: Duration(milliseconds: 500),
-                                          curve: Curves.easeInOut,
-                                          width: isSelected ? 250.0 : 160.0,
-                                          height: isSelected ? 250.0 : 160.0,
-                                          margin: EdgeInsets.all(20.0),
-                                          decoration: BoxDecoration(
-                                            color: isSelected
-                                                ? AppColors.navy_blue2
-                                                : AppColors.white,
-                                            borderRadius: BorderRadius.circular(
-                                                isSelected ? 20.0 : 15),
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(
-                                                isSelected ? 8.0 : 5.0),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      isSelected ? 15.0 : 10),
-                                              child: Image.asset(
-                                                room.presets[index].image,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Column(
+                            child: Column(
+                              children: [
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: List.generate(room.presets.length,
+                                        (index) {
+                                      bool isSelected =
+                                          room.current_preset == index;
+                                      return GestureDetector(
+                                        onTap: () {
+                                          select_preset(room, index);
+                                        },
+                                        child: Column(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            if (isSelected &&
-                                                (current_page.getValue() == 3 ||
-                                                    current_page.getValue() ==
-                                                        4))
-                                              SizedBox(
-                                                height: 15,
-                                                width: 230,
-                                                child: Container(
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    child:
-                                                        LinearProgressIndicator(
-                                                      value: (room.current_preset
-                                                                  .getValue() <
-                                                              room.presets
-                                                                  .length)
-                                                          ? room
-                                                              .presets[room
-                                                                  .current_preset
-                                                                  .getValue()]
-                                                              .transport
-                                                              .getValue()
-                                                          : 0,
-                                                      semanticsLabel:
-                                                          'Linear progress indicator',
-                                                      color:
-                                                          AppColors.navy_blue2,
-                                                      backgroundColor:
-                                                          AppColors.white,
-                                                    ),
+                                            AnimatedContainer(
+                                              duration:
+                                                  Duration(milliseconds: 500),
+                                              curve: Curves.easeInOut,
+                                              width: isSelected ? 250.0 : 160.0,
+                                              height:
+                                                  isSelected ? 250.0 : 160.0,
+                                              margin: EdgeInsets.all(20.0),
+                                              decoration: BoxDecoration(
+                                                color: isSelected
+                                                    ? AppColors.navy_blue2
+                                                    : AppColors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        isSelected ? 20.0 : 15),
+                                              ),
+                                              child: Padding(
+                                                padding: EdgeInsets.all(
+                                                    isSelected ? 8.0 : 5.0),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          isSelected
+                                                              ? 15.0
+                                                              : 10),
+                                                  child: Image.asset(
+                                                    room.presets[index].image,
                                                   ),
                                                 ),
                                               ),
-                                            if (isSelected)
-                                              SizedBox(
-                                                  height: SizeConfig
-                                                          .blockSizeVertical *
-                                                      1.5),
-                                            Row(
+                                            ),
+                                            Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                Icon(
-                                                  Icons.local_movies_outlined,
-                                                  size: isSelected ? 26 : 18,
-                                                  color: AppColors.white,
+                                                if (isSelected &&
+                                                    (current_page == 3 ||
+                                                        current_page == 4))
+                                                  SizedBox(
+                                                    height: 15,
+                                                    width: 230,
+                                                    child: Container(
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10),
+                                                        child:
+                                                            LinearProgressIndicator(
+                                                          value: (room.current_preset <
+                                                                  room.presets
+                                                                      .length)
+                                                              ? room
+                                                                  .presets[room
+                                                                      .current_preset]
+                                                                  .transport
+                                                              : 0,
+                                                          semanticsLabel:
+                                                              'Linear progress indicator',
+                                                          color: AppColors
+                                                              .navy_blue2,
+                                                          backgroundColor:
+                                                              AppColors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                if (isSelected)
+                                                  SizedBox(
+                                                      height: SizeConfig
+                                                              .blockSizeVertical *
+                                                          1.5),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons
+                                                          .local_movies_outlined,
+                                                      size:
+                                                          isSelected ? 26 : 18,
+                                                      color: AppColors.white,
+                                                    ),
+                                                    SizedBox(
+                                                        width: SizeConfig
+                                                                .blockSizeHorizontal *
+                                                            (isSelected
+                                                                ? 1.5
+                                                                : 0.75)),
+                                                    AnimatedDefaultTextStyle(
+                                                      style: isSelected
+                                                          ? TextStyle(
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontSize: 17.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600)
+                                                          : TextStyle(
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontSize: 12.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                      duration: const Duration(
+                                                          milliseconds: 200),
+                                                      child: Text(room
+                                                          .presets[index].name),
+                                                    ),
+                                                    // PrimaryText(
+                                                    //     text: room.presets[index].name,
+                                                    //     size: isSelected ? 17 : 12,
+                                                    //     color: AppColors.white,
+                                                    //     fontWeight: FontWeight.w600),
+                                                  ],
                                                 ),
-                                                SizedBox(
-                                                    width: SizeConfig
-                                                            .blockSizeHorizontal *
-                                                        (isSelected
-                                                            ? 1.5
-                                                            : 0.75)),
-                                                AnimatedDefaultTextStyle(
-                                                  style: isSelected
-                                                      ? TextStyle(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 17.0,
-                                                          fontWeight:
-                                                              FontWeight.w600)
-                                                      : TextStyle(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 12.0,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                  duration: const Duration(
-                                                      milliseconds: 200),
-                                                  child: Text(
-                                                      room.presets[index].name),
-                                                ),
-                                                // PrimaryText(
-                                                //     text: room.presets[index].name,
-                                                //     size: isSelected ? 17 : 12,
-                                                //     color: AppColors.white,
-                                                //     fontWeight: FontWeight.w600),
                                               ],
                                             ),
                                           ],
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                }),
-                              ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                                // (current_page == 1)?
+                                VolumeEdit(
+                                  room: room,
+                                  server: room.servers[0],
+                                ),
+                                // (current_page == 2)
+                                //     ? VolumeEdit(
+                                //         room: room,
+                                //         server: room.servers[7],
+                                //       )
+                                //     : VolumeEdit(
+                                //         room: room,
+                                //         server: room.servers[0],
+                                //       ),
+                              ],
                             ),
-                            // (current_page.getValue() == 1)?
-                            VolumeEdit(
-                              room: room,
-                              server: room.servers[0],
-                            ),
-                            // (current_page.getValue() == 2)
-                            //     ? VolumeEdit(
-                            //         room: room,
-                            //         server: room.servers[7],
-                            //       )
-                            //     : VolumeEdit(
-                            //         room: room,
-                            //         server: room.servers[0],
-                            //       ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     Column(
                       children: [
                         MiniMap(
-                          room: rooms[(current_page.getValue() > 0)
-                              ? current_page.getValue() - 1
-                              : 1],
-                          page: current_page.getValue(),
+                          room:
+                              rooms[(current_page > 0) ? current_page - 1 : 1],
+                          page: current_page,
                         ),
                         Row(
                           children: [
@@ -484,288 +493,359 @@ class _RoomManagerState extends State<RoomManager> {
                           height: SizeConfig.blockSizeVertical * 4,
                         ),
                       ]),
-                    if (current_page.getValue() != 0 &&
-                        current_page.getValue() != 1 &&
-                        current_page.getValue() != 2)
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 8,
-                            child: Row(
-                              children: [
-                                Image.asset(
-                                  'assets/small_projector.png',
-                                  height: 30,
-                                ),
-                                SizedBox(
-                                  width: SizeConfig.blockSizeVertical,
-                                ),
-                                PrimaryText(
-                                    text: 'Quản lý máy chiếu'.toUpperCase(),
+                    // if (current_page != 0 &&
+                    //     current_page != 1 &&
+                    //     current_page != 2)
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 8,
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/small_projector.png',
+                                height: 30,
+                              ),
+                              SizedBox(
+                                width: SizeConfig.blockSizeVertical,
+                              ),
+                              PrimaryText(
+                                  text: 'Quản lý máy chiếu'.toUpperCase(),
+                                  color: AppColors.gray,
+                                  size: 20,
+                                  fontWeight: FontWeight.w500),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          // height: Responsive.isDesktop(context)? 180:null,
+                          // constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
+                          //     maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth/2-150: SizeConfig.screenWidth- 40),
+                          margin: EdgeInsets.only(bottom: 30),
+                          padding: EdgeInsets.only(
+                              top: 20, bottom: 20, left: 20, right: 20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: AppColors.white,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  PrimaryText(
+                                    text: "Bật/tắt toàn bộ máy chiếu",
                                     color: AppColors.gray,
-                                    size: 20,
-                                    fontWeight: FontWeight.w500),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            // height: Responsive.isDesktop(context)? 180:null,
-                            // constraints: BoxConstraints(minWidth: Responsive.isDesktop(context) ? 300 : SizeConfig.screenWidth - 40,
-                            //     maxWidth: Responsive.isDesktop(context) ? SizeConfig.screenWidth/2-150: SizeConfig.screenWidth- 40),
-                            margin: EdgeInsets.only(bottom: 30),
-                            padding: EdgeInsets.only(
-                                top: 20, bottom: 20, left: 20, right: 20),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: AppColors.white,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    PrimaryText(
-                                      text: "Bật/tắt toàn bộ máy chiếu",
-                                      color: AppColors.gray,
-                                      size: 18,
-                                      fontWeight: FontWeight.w500,
+                                    size: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      width: SizeConfig.blockSizeHorizontal,
                                     ),
-                                    Expanded(
-                                      child: SizedBox(
-                                        width: SizeConfig.blockSizeHorizontal,
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 60,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            room.power_room_projectors
+                                                ? AppColors.navy_blue
+                                                : AppColors.gray,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          PowerRoomProjectors(room, true);
+                                        });
+                                      },
+                                      child: PrimaryText(
+                                        text: 'On',
+                                        size: 14,
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    Container(
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                    child: Container(
                                       height: 40,
                                       width: 60,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: room
-                                                  .power_room_projectors
-                                                  .getValue()
-                                              ? AppColors.navy_blue
-                                              : AppColors.gray,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            PowerRoomProjectors(room, true);
-                                          });
+                                      child: Hero(
+                                        tag: heroOffProjector,
+                                        createRectTween: (begin, end) {
+                                          return CustomRectTween(
+                                              begin: begin, end: end);
                                         },
-                                        child: PrimaryText(
-                                          text: 'On',
-                                          size: 14,
-                                          color: AppColors.white,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          15, 0, 0, 0),
-                                      child: Container(
-                                        height: 40,
-                                        width: 60,
-                                        child: Hero(
-                                          tag: heroOffProjector,
-                                          createRectTween: (begin, end) {
-                                            return CustomRectTween(
-                                                begin: begin, end: end);
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                !room.power_room_projectors
+                                                    ? AppColors.red
+                                                    : AppColors.gray,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              Navigator.of(context).push(
+                                                  HeroDialogRoute(
+                                                      builder: (context) {
+                                                return PopupOffProjector(
+                                                  onUpdateState: () {
+                                                    setState(() {});
+                                                  },
+                                                );
+                                              }));
+                                            });
                                           },
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: !room
-                                                      .power_room_projectors
-                                                      .getValue()
-                                                  ? AppColors.red
-                                                  : AppColors.gray,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                Navigator.of(context).push(
-                                                    HeroDialogRoute(
-                                                        builder: (context) {
-                                                  return PopupOffProjector(
-                                                    onUpdateState: () {
-                                                      setState(() {});
-                                                    },
-                                                  );
-                                                }));
-                                              });
-                                            },
-                                            child: PrimaryText(
-                                              text: 'Off',
-                                              size: 14,
-                                              color: AppColors.white,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                          child: PrimaryText(
+                                            text: 'Off',
+                                            size: 14,
+                                            color: AppColors.white,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: SizeConfig.blockSizeVertical * 2,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    PrimaryText(
-                                      text: "Bật/tắt toàn bộ màn chập",
-                                      color: AppColors.gray,
-                                      size: 18,
-                                      fontWeight: FontWeight.w500,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: SizeConfig.blockSizeVertical * 2,
+                              ),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  PrimaryText(
+                                    text: "Bật/tắt toàn bộ màn chập",
+                                    color: AppColors.gray,
+                                    size: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      width: SizeConfig.blockSizeHorizontal,
                                     ),
-                                    Expanded(
-                                      child: SizedBox(
-                                        width: SizeConfig.blockSizeHorizontal,
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 60,
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor:
+                                            room.shutter_room_projectors
+                                                ? AppColors.navy_blue
+                                                : AppColors.gray,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          ShutterRoomProjectors(room, true);
+                                        });
+                                      },
+                                      child: PrimaryText(
+                                        text: 'On',
+                                        size: 14,
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    Container(
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                                    child: Container(
                                       height: 40,
                                       width: 60,
-                                      child: ElevatedButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: room
-                                                  .shutter_room_projectors
-                                                  .getValue()
-                                              ? AppColors.navy_blue
-                                              : AppColors.gray,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          setState(() {
-                                            ShutterRoomProjectors(room, true);
-                                          });
+                                      child: Hero(
+                                        tag: heroOffShutter,
+                                        createRectTween: (begin, end) {
+                                          return CustomRectTween(
+                                              begin: begin, end: end);
                                         },
-                                        child: PrimaryText(
-                                          text: 'On',
-                                          size: 14,
-                                          color: AppColors.white,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          15, 0, 0, 0),
-                                      child: Container(
-                                        height: 40,
-                                        width: 60,
-                                        child: Hero(
-                                          tag: heroOffShutter,
-                                          createRectTween: (begin, end) {
-                                            return CustomRectTween(
-                                                begin: begin, end: end);
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                !room.shutter_room_projectors
+                                                    ? AppColors.red
+                                                    : AppColors.gray,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              Navigator.of(context).push(
+                                                  HeroDialogRoute(
+                                                      builder: (context) {
+                                                return PopupOffShutter(
+                                                  onUpdateState: () {
+                                                    setState(() {});
+                                                  },
+                                                );
+                                              }));
+                                              // ShutterAllProjectors(false);
+                                            });
                                           },
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor: !room
-                                                      .shutter_room_projectors
-                                                      .getValue()
-                                                  ? AppColors.red
-                                                  : AppColors.gray,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                Navigator.of(context).push(
-                                                    HeroDialogRoute(
-                                                        builder: (context) {
-                                                  return PopupOffShutter(
-                                                    onUpdateState: () {
-                                                      setState(() {});
-                                                    },
-                                                  );
-                                                }));
-                                                // ShutterAllProjectors(false);
-                                              });
-                                            },
-                                            child: PrimaryText(
-                                              text: 'Off',
-                                              size: 14,
-                                              color: AppColors.white,
-                                              fontWeight: FontWeight.w500,
-                                            ),
+                                          child: PrimaryText(
+                                            text: 'Off',
+                                            size: 14,
+                                            color: AppColors.white,
+                                            fontWeight: FontWeight.w500,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                              width: SizeConfig.screenWidth,
-                              child: Wrap(
+                        ),
+                        SizedBox(
+                          width: SizeConfig.screenWidth,
+                          child: room.projectors.length > 0
+                              ? Wrap(
                                   spacing: 20,
                                   runSpacing: 20,
-                                  alignment: WrapAlignment.spaceBetween,
-                                  children: List.generate(
-                                    room.projectors.length,
-                                    (index) => InfoProjector(
-                                        projector: room.projectors[index]),
-                                  ))
-                              // : SpinKitThreeBounce(
-                              //     color: AppColors.navy_blue,
-                              //     size: 20,
-                              //   ),
-                              ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 4,
-                          ),
-                          SizedBox(
-                            height: SizeConfig.blockSizeVertical * 4,
-                          ),
-                        ],
-                      ),
-                    if (!Responsive.isDesktop(context))
-                      CheckConnectionBar(room: room)
+                                  children: [
+                                    Wrap(
+                                      spacing: 20,
+                                      runSpacing: 20,
+                                      children: [
+                                        Container(
+                                          constraints: BoxConstraints(
+                                              minWidth: 280,
+                                              maxWidth:
+                                                  SizeConfig.screenWidth / 3 -
+                                                      110),
+                                          height: 245,
+                                          padding: EdgeInsets.all(20),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: AppColors.white,
+                                          ),
+                                          child: Center(
+                                            child: Hero(
+                                              tag: heroAddProjector,
+                                              createRectTween: (begin, end) {
+                                                return CustomRectTween(
+                                                    begin: begin, end: end);
+                                              },
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      HeroDialogRoute(
+                                                          builder: (context) {
+                                                    return PopupAddProjector();
+                                                  }));
+                                                },
+                                                child: PrimaryText(
+                                                  text: '+',
+                                                  fontWeight: FontWeight.w300,
+                                                  size: 80,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        InfoProjector(
+                                            projector: room.projectors[0])
+                                      ],
+                                    ),
+                                    Wrap(
+                                        spacing: 20,
+                                        runSpacing: 20,
+                                        alignment: WrapAlignment.spaceBetween,
+                                        children: List.generate(
+                                          room.projectors.length - 1,
+                                          (index) =>
+                                              // if(index>0)
+                                              InfoProjector(
+                                                  projector: room
+                                                      .projectors[index + 1]),
+                                        )),
+                                  ],
+                                )
+                              : Container(
+                                  constraints: BoxConstraints(
+                                      minWidth: 280,
+                                      maxWidth:
+                                          SizeConfig.screenWidth / 3 - 110),
+                                  height: 245,
+                                  padding: EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: AppColors.white,
+                                  ),
+                                  child: Center(
+                                    child: GestureDetector(
+                                      child: PrimaryText(
+                                        text: '+',
+                                        fontWeight: FontWeight.w300,
+                                        size: 80,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                          // : SpinKitThreeBounce(
+                          //     color: AppColors.navy_blue,
+                          //     size: 20,
+                          //   ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 4,
+                        ),
+                        SizedBox(
+                          height: SizeConfig.blockSizeVertical * 4,
+                        ),
+                      ],
+                    ),
+                    // if (!Responsive.isDesktop(context))
+                    //   CheckConnectionBar(room: room)
                   ],
                 ),
               ),
             ),
           ),
-          if (Responsive.isDesktop(context) && current_page.getValue() != 0)
-            Expanded(
-              flex: 1,
-              // child: SingleChildScrollView(child: CheckConnectionBar(room: room,)),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: AppColors.barBg,
-                    borderRadius:
-                        BorderRadius.horizontal(left: Radius.circular(30))),
-                width: double.infinity,
-                height: SizeConfig.screenHeight,
-                child: SingleChildScrollView(
-                  padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                  child: Column(
-                    children: [
-                      AppBarActionItems(),
-                      CheckConnectionBar(
-                        room: room,
-                      ),
-                    ],
-                  ),
+          Expanded(
+            flex: 1,
+            // child: SingleChildScrollView(child: CheckConnectionBar(room: room,)),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: AppColors.barBg,
+                  borderRadius:
+                      BorderRadius.horizontal(left: Radius.circular(30))),
+              width: double.infinity,
+              height: SizeConfig.screenHeight,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                child: Column(
+                  children: [
+                    AppBarActionItems(),
+                    CheckConnectionBar(
+                      room: room,
+                    ),
+                  ],
                 ),
               ),
             ),
+          ),
         ],
       ),
     );

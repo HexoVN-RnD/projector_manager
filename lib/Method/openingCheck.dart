@@ -15,12 +15,12 @@ Future<void> OpeningCheck() async {
   for (Room room in rooms) {
     room.setRoomVolume();
     allRoom.num_servers
-        .setValue(allRoom.num_servers.getValue() + room.servers.length);
+         = (allRoom.num_servers + room.servers.length);
     allRoom.num_sensors
-        .setValue(allRoom.num_sensors.getValue() + room.sensors.length);
+         = (allRoom.num_sensors + room.sensors.length);
     allRoom.num_leds
-        .setValue(allRoom.num_leds.getValue() + room.leds.length);
+         = (allRoom.num_leds + room.leds.length);
     allRoom.num_projectors
-        .setValue(allRoom.num_projectors.getValue() + room.projectors.length);
+         = (allRoom.num_projectors + room.projectors.length);
   }
 }

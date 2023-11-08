@@ -32,12 +32,12 @@ class _ServerConnection extends State<ServerConnection> {
     return MouseRegion(
       onHover: (event){
         setState(() {
-          server.isOnHover.setValue(true);
+          server.isOnHover = true;
         });
       },
       onExit: (event) {
         setState(() {
-          server.isOnHover.setValue(false);
+          server.isOnHover = false;
         });
       },
       child: ListTile(
@@ -51,13 +51,13 @@ class _ServerConnection extends State<ServerConnection> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(
-              server.connected.getValue()
+              server.connected
                   ? Icons.settings_ethernet
                   : Icons.code_off,
-              color: server.connected.getValue()
+              color: server.connected
                   ? AppColors.navy_blue
                   : AppColors.red,
-              // widget.projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
+              // widget.projector.connected ? Icons.wifi_tethering : Icons.wifi_tethering_off,
               size: 20),
         ),
         title: Row(
@@ -77,7 +77,7 @@ class _ServerConnection extends State<ServerConnection> {
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: PrimaryText(
-              text: server.connected.getValue() ? 'Đã kết nối' : 'Đã mất kết nối',
+              text: server.connected ? 'Đã kết nối' : 'Đã mất kết nối',
               size: 13,
               fontWeight: FontWeight.w600),
         ),

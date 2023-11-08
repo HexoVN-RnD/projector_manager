@@ -132,7 +132,7 @@ class _PopupZoomState extends State<PopupZoom> {
                           height: width * 0.018,
                           child: Container(
                             color: AppColors.StatusColor[
-                            room.projectors[index].status.getValue()],
+                            room.projectors[index].status],
                           ),
                         ),
                       ),
@@ -149,7 +149,7 @@ class _PopupZoomState extends State<PopupZoom> {
                           height: width * 0.07,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: room.leds[index].connected.getValue()
+                              color: room.leds[index].connected
                                   ? AppColors.green
                                   : AppColors.red,
                               borderRadius: BorderRadius.circular(10),
@@ -171,7 +171,7 @@ class _PopupZoomState extends State<PopupZoom> {
                       height: width * 0.0095,
                       child: Container(
                         color: AppColors.StatusColor[
-                            room.projectors[index].status.getValue()],
+                            room.projectors[index].status],
                       ),
                     ),
                   ),
@@ -189,7 +189,7 @@ class _PopupZoomState extends State<PopupZoom> {
                           height: width * 0.018,
                           child: Container(
                             color: AppColors.StatusColor[
-                                room.projectors[index].status.getValue()],
+                                room.projectors[index].status],
                           ),
                         ),
                       ),
@@ -206,7 +206,7 @@ class _PopupZoomState extends State<PopupZoom> {
                           height: width * 0.016,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: room.sensors[index].connected.getValue()
+                              color: room.sensors[index].connected
                                   ? AppColors.green
                                   : AppColors.red,
                               borderRadius: BorderRadius.circular(10),
@@ -230,7 +230,7 @@ class _PopupZoomState extends State<PopupZoom> {
                           height: width * 0.012,
                           child: Container(
                             color: AppColors.StatusColor[
-                                room.projectors[index].status.getValue()],
+                                room.projectors[index].status],
                           ),
                         ),
                       ),
@@ -244,14 +244,14 @@ class _PopupZoomState extends State<PopupZoom> {
                       height: width * 0.1,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: room.servers[0].connected.getValue()
+                            color: room.servers[0].connected
                                 ? AppColors.green
                                 : AppColors.red,
                             borderRadius: BorderRadius.circular(5),
-                            border: room.servers[0].isOnHover.getValue()
+                            border: room.servers[0].isOnHover
                                 ? Border.all(
                                     strokeAlign: BorderSide.strokeAlignCenter,
-                                    color: room.servers[0].connected.getValue()
+                                    color: room.servers[0].connected
                                         ? AppColors.green
                                         : AppColors.red,
                                     width: 10.0,
@@ -274,7 +274,7 @@ class _PopupZoomState extends State<PopupZoom> {
                       width: width * 0.009,
                       height: height * 0.09,
                       child: Container(
-                        color: room.servers[index].connected.getValue()
+                        color: room.servers[index].connected
                             ? AppColors.green
                             : AppColors.red,
                       ),

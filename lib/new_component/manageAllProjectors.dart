@@ -90,7 +90,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                 width: 60,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: allRoom.power_all_projectors.getValue()
+                    backgroundColor: allRoom.power_all_projectors
                         ? AppColors.navy_blue
                         : AppColors.gray,
                     shape: RoundedRectangleBorder(
@@ -123,7 +123,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            !allRoom.power_all_projectors.getValue()
+                            !allRoom.power_all_projectors
                                 ? AppColors.red
                                 : AppColors.gray,
                         shape: RoundedRectangleBorder(
@@ -156,7 +156,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
               // Transform.scale(
               //   scale: 1,
               //   child: CupertinoSwitch(
-              //     value: allRoom.power_all_projectors.getValue(),
+              //     value: allRoom.power_all_projectors,
               //     activeColor: AppColors.navy_blue,
               //     onChanged: (value) {
               //       setState(() {
@@ -168,19 +168,19 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
             ],
           ),
           // PrimaryText(
-          //     text: 'Phòng 2 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+          //     text: 'Phòng 2 đã bật '+ allRoom.num_projectors_connected.toString() +'/' + allRoom.num_projectors.toString(),
           //     color: AppColors.iconDeepGray,
           //     size: 16),
           // PrimaryText(
-          //     text: 'Phòng 4 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+          //     text: 'Phòng 4 đã bật '+ allRoom.num_projectors_connected.toString() +'/' + allRoom.num_projectors.toString(),
           //     color: AppColors.iconDeepGray,
           //     size: 16),
           // PrimaryText(
-          //     text: 'Phòng 5 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+          //     text: 'Phòng 5 đã bật '+ allRoom.num_projectors_connected.toString() +'/' + allRoom.num_projectors.toString(),
           //     color: AppColors.iconDeepGray,
           //     size: 16),
           // PrimaryText(
-          //     text: 'Phòng 6 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+          //     text: 'Phòng 6 đã bật '+ allRoom.num_projectors_connected.toString() +'/' + allRoom.num_projectors.toString(),
           //     color: AppColors.iconDeepGray,
           //     size: 16),
           SizedBox(
@@ -205,7 +205,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                 width: 60,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: allRoom.shutter_all_projectors.getValue()
+                    backgroundColor: allRoom.shutter_all_projectors
                         ? AppColors.navy_blue
                         : AppColors.gray,
                     shape: RoundedRectangleBorder(
@@ -238,7 +238,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
-                            !allRoom.shutter_all_projectors.getValue()
+                            !allRoom.shutter_all_projectors
                                 ? AppColors.red
                                 : AppColors.gray,
                         shape: RoundedRectangleBorder(
@@ -271,7 +271,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
               // Transform.scale(
               //   scale: 1,
               //   child: CupertinoSwitch(
-              //   value: allRoom.shutter_all_projectors.getValue(),
+              //   value: allRoom.shutter_all_projectors,
               //   activeColor: AppColors.navy_blue,
               //   onChanged: (value) {
               //       setState(() {
@@ -283,19 +283,19 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
             ],
           ),
           // PrimaryText(
-          //     text: 'Phòng 2 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+          //     text: 'Phòng 2 đã bật '+ allRoom.num_projectors_connected.toString() +'/' + allRoom.num_projectors.toString(),
           //     color: AppColors.iconDeepGray,
           //     size: 16),
           // PrimaryText(
-          //     text: 'Phòng 4 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+          //     text: 'Phòng 4 đã bật '+ allRoom.num_projectors_connected.toString() +'/' + allRoom.num_projectors.toString(),
           //     color: AppColors.iconDeepGray,
           //     size: 16),
           // PrimaryText(
-          //     text: 'Phòng 5 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+          //     text: 'Phòng 5 đã bật '+ allRoom.num_projectors_connected.toString() +'/' + allRoom.num_projectors.toString(),
           //     color: AppColors.iconDeepGray,
           //     size: 16),
           // PrimaryText(
-          //     text: 'Phòng 6 đã bật '+ allRoom.num_projectors_connected.getValue().toString() +'/' + allRoom.num_projectors.getValue().toString(),
+          //     text: 'Phòng 6 đã bật '+ allRoom.num_projectors_connected.toString() +'/' + allRoom.num_projectors.toString(),
           //     color: AppColors.iconDeepGray,
           //     size: 16),
         ],

@@ -19,16 +19,16 @@ void checkConnectionServer(Room room, Server server) {
     // //print('Ping to ${server.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       if(room.resolume && event.response?.ttl==128) {
-        server.connected.setValue(true);
+        server.connected = (true);
       } else if (!room.resolume && event.response?.ttl==64) {
-        server.connected.setValue(true);
+        server.connected = (true);
       } else {
-        server.connected.setValue(false);
+        server.connected = (false);
       }
-      // server.power_status.setValue(true);
+      // server.power_status = (true);
     } else if (event.response?.time == null && count != 1) {
-      server.connected.setValue(false);
-      // server.power_status.setValue(false);
+      server.connected = (false);
+      // server.power_status = (false);
       // //print('ping server ${event.response?.ip} ${count}');
     }
     count++;
@@ -45,22 +45,22 @@ void checkConnectionServerResponse(Room room, Server server) {
     // //print('Ping to ${server.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
       if(room.resolume && event.response?.ttl==128) {
-        server.connected.setValue(true);
-        server.power_status.setValue(true);
+        server.connected = (true);
+        server.power_status = (true);
         //print('Connected to ${server.ip}: ${event.response?.time} ms');
       } else if (!room.resolume && event.response?.ttl==64) {
-        server.connected.setValue(true);
-        server.power_status.setValue(true);
+        server.connected = (true);
+        server.power_status = (true);
         //print('Connected to ${server.ip}: ${event.response?.time} ms');
       } else {
-        server.connected.setValue(false);
-        server.power_status.setValue(false);
+        server.connected = (false);
+        server.power_status = (false);
         //print('Disconnected to ${server.ip}: ${event.response?.time} ms');
       }
 
     } else if (event.response?.time == null && count != 1) {
-      server.connected.setValue(false);
-      server.power_status.setValue(false);
+      server.connected = (false);
+      server.power_status = (false);
       // //print('ping server ${event.response?.ip} ${count}');
     }
     count++;
@@ -75,10 +75,10 @@ void checkConnectionSensor(Sensor sensor) {
     // //print('ping sensor ${sensor.ip}: response ${event.response?.time} ${count}');
     // //print('Ping to ${sensor.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
-      sensor.connected.setValue(true);
+      sensor.connected = (true);
       //print('Connected to ${sensor.ip}: ${event.response?.time} ms');
     } else if (event.response?.ip == null && count != 1) {
-      sensor.connected.setValue(false);
+      sensor.connected = (false);
       // //print('Error');
     }
     count++;
@@ -96,10 +96,10 @@ void checkConnectionLed(Led led) {
     // //print('ping led ${led.ip}: response ${event.response?.time} ${count}');
     // //print('Ping to ${led.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
-      led.connected.setValue(true);
+      led.connected = (true);
       //print('Connected to ${led.ip}: ${event.response?.time} ms');
     } else if (event.response?.ip == null && count != 1) {
-      led.connected.setValue(false);
+      led.connected = (false);
       // //print('Error');
     }
     count++;
@@ -117,10 +117,10 @@ void checkConnectionProjector(Projector projector) {
   ping.stream.listen((event) {
     // //print('Ping to ${projector.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
-      projector.connected.setValue(true);
+      projector.connected = (true);
       ping.stop();
     } else if (event.response?.ip == null && count != 1) {
-      projector.connected.setValue(false);
+      projector.connected = (false);
       // //print('Error');
     }
     count++;
@@ -131,7 +131,7 @@ void checkConnectionProjector(Projector projector) {
 Future<void> checkAllRoomConnection(int time) async {
   //print('checkAllRoomConnection');
   int length =
-      allRoom.num_servers.getValue() + allRoom.num_projectors.getValue();
+      allRoom.num_servers + allRoom.num_projectors;
   for (Room room in rooms) {
     if (!room.sensors.isEmpty) {
       for (Sensor sensor in room.sensors) {
@@ -168,7 +168,7 @@ Future<void> checkAllRoomConnection(int time) async {
 Future<void> checkFullConnection(int time) async {
   //print('checkAllRoomConnection');
   int length =
-      allRoom.num_servers.getValue() + allRoom.num_projectors.getValue();
+      allRoom.num_servers + allRoom.num_projectors;
   for (Room room in rooms) {
     if (!room.sensors.isEmpty) {
       for (Sensor sensor in room.sensors) {

@@ -5,7 +5,7 @@ class Sensor {
     String ip;
     String name;
     int port;
-    StatefulValuable<bool> connected;
+    bool connected;
     Offset position;
 
 

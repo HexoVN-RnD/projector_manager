@@ -6,9 +6,9 @@ import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/data/data.dart';
 
 // void select_preset(int index) async {
-//   allRoom.current_preset.setValue(index);
+//   allRoom.current_preset=index);
 //   for (Room room in rooms) {
-//     room.current_preset.setValue(index);
+//     room.current_preset=index);
 //   }
 // }
 void SetButtonControlAllSystem(){
@@ -17,33 +17,33 @@ void SetButtonControlAllSystem(){
   int numServerPowerOn = 0;
   for (Room room in rooms){
     for(Server server in room.servers){
-      if(server.connected.getValue()){
+      if(server.connected){
         numServerPowerOn++;
       }
     }
     for (Projector projector in room.projectors) {
-      if (projector.power_status.getValue()) {
+      if (projector.power_status) {
         numProjectorPowerOn++;
       }
-      if (projector.shutter_status.getValue()){
+      if (projector.shutter_status){
         numProjectorShutterOn++;
       }
     }
   }
-  if(allRoom.num_projectors.getValue() == numProjectorPowerOn){
-    allRoom.power_all_projectors.setValue(true);
+  if(allRoom.num_projectors == numProjectorPowerOn){
+    allRoom.power_all_projectors=true;
   } else if(numProjectorPowerOn==0) {
-    allRoom.power_all_projectors.setValue(false);
+    allRoom.power_all_projectors=false;
   }
-  if(allRoom.num_projectors.getValue() == numProjectorShutterOn){
-    allRoom.shutter_all_projectors.setValue(true);
+  if(allRoom.num_projectors == numProjectorShutterOn){
+    allRoom.shutter_all_projectors=true;
   } else if(numProjectorShutterOn==0){
-    allRoom.shutter_all_projectors.setValue(false);
+    allRoom.shutter_all_projectors=false;
   }
-  if(allRoom.num_servers.getValue() == numServerPowerOn){
-    allRoom.power_all_servers.setValue(true);
+  if(allRoom.num_servers == numServerPowerOn){
+    allRoom.power_all_servers=true;
   } else if(numServerPowerOn == 0){
-    allRoom.power_all_servers.setValue(false);
+    allRoom.power_all_servers=false;
   }
 }
 
@@ -51,27 +51,27 @@ void SetButtonControlRoom(Room room){
   int numProjectorPowerOn = 0;
   int numProjectorShutterOn = 0;
     for (Projector projector in room.projectors) {
-      if (projector.power_status.getValue()) {
+      if (projector.power_status) {
         numProjectorPowerOn++;
       }
-      if (projector.shutter_status.getValue()){
+      if (projector.shutter_status){
         numProjectorShutterOn++;
       }
     }
   if(room.projectors.length == numProjectorPowerOn){
-    room.power_room_projectors.setValue(true);
+    room.power_room_projectors=true;
   } else if(numProjectorPowerOn==0) {
-    room.power_room_projectors.setValue(false);
+    room.power_room_projectors=false;
   }
   if(room.projectors.length == numProjectorShutterOn){
-    room.shutter_room_projectors.setValue(true);
+    room.shutter_room_projectors=true;
   } else if(numProjectorShutterOn==0){
-    room.shutter_room_projectors.setValue(false);
+    room.shutter_room_projectors=false;
   }
 }
 
 void PowerAllProjectors(bool mode) async {
-  allRoom.power_all_projectors.setValue(mode);
+  allRoom.power_all_projectors=mode;
   for (var room in rooms) {
     for (var projector in room.projectors) {
       checkConnectionProjector(projector);
@@ -80,12 +80,12 @@ void PowerAllProjectors(bool mode) async {
   await Future.delayed(Duration(seconds: 1));
   for (var room in rooms) {
     for (var projector in room.projectors) {
-      // if (projector.power_status_button.getValue() !=
-      //     allRoom.power_all_projectors.getValue()) {
+      // if (projector.power_status_button !=
+      //     allRoom.power_all_projectors) {
       // checkConnectionProjector(projector);
-      if (projector.power_status.getValue() != mode) {
+      if (projector.power_status != mode) {
         projector.power_status
-            .setValue(allRoom.power_all_projectors.getValue());
+            =allRoom.power_all_projectors;
         if (mode) {
           if (projector.type == 'Christie') {
             print(projector.ip.toString() + '(PWR 1)');
@@ -118,15 +118,15 @@ void PowerAllProjectors(bool mode) async {
 }
 
 void PowerRoomProjectors(Room room, bool mode) async {
-  room.power_room_projectors.setValue(mode);
+  room.power_room_projectors=mode;
     for (var projector in room.projectors) {
       checkConnectionProjector(projector);
     }
   await Future.delayed(Duration(seconds: 1));
     for (var projector in room.projectors) {
-      if (projector.power_status.getValue() != mode) {
+      if (projector.power_status != mode) {
         projector.power_status
-            .setValue(room.power_room_projectors.getValue());
+            =room.power_room_projectors;
         if (mode) {
           if (projector.type == 'Christie') {
             print(projector.ip.toString() + '(PWR 1)');
@@ -158,7 +158,7 @@ void PowerRoomProjectors(Room room, bool mode) async {
 }
 
 void ShutterAllProjectors(bool mode) {
-  allRoom.shutter_all_projectors.setValue(mode);
+  allRoom.shutter_all_projectors=mode;
   for (var room in rooms) {
     for (var projector in room.projectors) {
       if (mode) {
@@ -183,13 +183,13 @@ void ShutterAllProjectors(bool mode) {
         }
       }
       projector.shutter_status
-          .setValue(allRoom.shutter_all_projectors.getValue());
+          =allRoom.shutter_all_projectors;
     }
   }
 }
 
 void ShutterRoomProjectors(Room room,bool mode) {
-  room.shutter_room_projectors.setValue(mode);
+  room.shutter_room_projectors=mode;
   for (var projector in room.projectors) {
       if (mode) {
         if (projector.type == 'Christie') {
@@ -213,16 +213,16 @@ void ShutterRoomProjectors(Room room,bool mode) {
         }
       }
       projector.shutter_status
-          .setValue(allRoom.shutter_all_projectors.getValue());
+          = allRoom.shutter_all_projectors;
     }
 }
 
 // void TestPatternSelectAll(int num) {
-//   allRoom.current_test_pattern.setValue(num);
+//   allRoom.current_test_pattern=num);
 //   for (var room in rooms) {
 //     for (var projector in room.projectors) {
 //       // checkConnectionProjector(projector);
-//       projector.current_test_pattern.setValue(num);
+//       projector.current_test_pattern=num);
 //       if (num == 0) {
 //         print(projector.ip.toString() + '(ITP 0)');
 //         sendTCPIPCommand(projector, '(ITP 0)');
@@ -244,14 +244,14 @@ void ShutterRoomProjectors(Room room,bool mode) {
 // }
 
 // void LampModeAll(int num) {
-//   allRoom.lamp_mode.setValue(num);
+//   allRoom.lamp_mode=num);
 //   if (num == 0) {
-//     allRoom.A1.setValue(true);
-//     allRoom.A2.setValue(true);
-//     allRoom.A3.setValue(true);
-//     allRoom.B1.setValue(true);
-//     allRoom.B2.setValue(true);
-//     allRoom.B3.setValue(true);
+//     allRoom.A1=true);
+//     allRoom.A2=true);
+//     allRoom.A3=true);
+//     allRoom.B1=true);
+//     allRoom.B2=true);
+//     allRoom.B3=true);
 //     for (var room in rooms) {
 //       for (var projector in room.projectors) {
 //         print(projector.ip.toString() + '(LOP+MULT 63)');
@@ -260,12 +260,12 @@ void ShutterRoomProjectors(Room room,bool mode) {
 //       }
 //     }
 //   } else if (num == 1) {
-//     allRoom.A1.setValue(true);
-//     allRoom.A2.setValue(true);
-//     allRoom.A3.setValue(true);
-//     allRoom.B1.setValue(false);
-//     allRoom.B2.setValue(false);
-//     allRoom.B3.setValue(false);
+//     allRoom.A1=true);
+//     allRoom.A2=true);
+//     allRoom.A3=true);
+//     allRoom.B1=false);
+//     allRoom.B2=false);
+//     allRoom.B3=false);
 //     for (var room in rooms) {
 //       for (var projector in room.projectors) {
 //         print(projector.ip.toString() + '(LOP+MULT 7)');
@@ -274,12 +274,12 @@ void ShutterRoomProjectors(Room room,bool mode) {
 //       }
 //     }
 //   } else if (num == 2) {
-//     allRoom.A1.setValue(false);
-//     allRoom.A2.setValue(false);
-//     allRoom.A3.setValue(false);
-//     allRoom.B1.setValue(true);
-//     allRoom.B2.setValue(true);
-//     allRoom.B3.setValue(true);
+//     allRoom.A1=false);
+//     allRoom.A2=false);
+//     allRoom.A3=false);
+//     allRoom.B1=true);
+//     allRoom.B2=true);
+//     allRoom.B3=true);
 //     for (var room in rooms) {
 //       for (var projector in room.projectors) {
 //         print(projector.ip.toString() + '(LOP+MULT 56)');
@@ -288,12 +288,12 @@ void ShutterRoomProjectors(Room room,bool mode) {
 //       }
 //     }
 //   } else if (num == 3) {
-//     allRoom.A1.setValue(true);
-//     allRoom.A2.setValue(false);
-//     allRoom.A3.setValue(false);
-//     allRoom.B1.setValue(true);
-//     allRoom.B2.setValue(false);
-//     allRoom.B3.setValue(false);
+//     allRoom.A1=true);
+//     allRoom.A2=false);
+//     allRoom.A3=false);
+//     allRoom.B1=true);
+//     allRoom.B2=false);
+//     allRoom.B3=false);
 //     for (var room in rooms) {
 //       for (var projector in room.projectors) {
 //         print(projector.ip.toString() + '(LOP+MULT 9)');
@@ -302,12 +302,12 @@ void ShutterRoomProjectors(Room room,bool mode) {
 //       }
 //     }
 //   } else if (num == 4) {
-//     allRoom.A1.setValue(false);
-//     allRoom.A2.setValue(true);
-//     allRoom.A3.setValue(false);
-//     allRoom.B1.setValue(false);
-//     allRoom.B2.setValue(true);
-//     allRoom.B3.setValue(false);
+//     allRoom.A1=false);
+//     allRoom.A2=true);
+//     allRoom.A3=false);
+//     allRoom.B1=false);
+//     allRoom.B2=true);
+//     allRoom.B3=false);
 //     for (var room in rooms) {
 //       for (var projector in room.projectors) {
 //         print(projector.ip.toString() + '(LOP+MULT 18)');
@@ -316,12 +316,12 @@ void ShutterRoomProjectors(Room room,bool mode) {
 //       }
 //     }
 //   } else if (num == 5) {
-//     allRoom.A1.setValue(false);
-//     allRoom.A2.setValue(false);
-//     allRoom.A3.setValue(true);
-//     allRoom.B1.setValue(false);
-//     allRoom.B2.setValue(false);
-//     allRoom.B3.setValue(true);
+//     allRoom.A1=false);
+//     allRoom.A2=false);
+//     allRoom.A3=true);
+//     allRoom.B1=false);
+//     allRoom.B2=false);
+//     allRoom.B3=true);
 //     for (var room in rooms) {
 //       for (var projector in room.projectors) {
 //         print(projector.ip.toString() + '(LOP+MULT 36)');
@@ -340,10 +340,10 @@ void ShutterRoomProjectors(Room room,bool mode) {
 // }
 
 // void ElectronicModeAll(bool mode) {
-//   allRoom.electronic_mode.setValue(mode);
+//   allRoom.electronic_mode=mode);
 //   for (var room in rooms) {
 //     for (var projector in room.projectors) {
-//       if (allRoom.electronic_mode.getValue()) {
+//       if (allRoom.electronic_mode) {
 //         print(projector.ip.toString() + '(PWR+ELEC 1)');
 //         // checkConnectionProjector(projector);
 //         sendTCPIPCommand(projector, '(PWR+ELEC 1)');
@@ -357,7 +357,7 @@ void ShutterRoomProjectors(Room room,bool mode) {
 // }
 
 // void ASUModeAll() {
-//   allRoom.ASU_mode.setValue(true);
+//   allRoom.ASU_mode=true);
 //   for (var room in rooms) {
 //     for (var projector in room.projectors) {
 //       print(projector.ip.toString() + '(ASU)');
@@ -368,10 +368,10 @@ void ShutterRoomProjectors(Room room,bool mode) {
 // }
 
 // void OSDModeAll(bool mode) {
-//   allRoom.OSD_mode.setValue(mode);
+//   allRoom.OSD_mode=mode);
 //   for (var room in rooms) {
 //     for (var projector in room.projectors) {
-//       if (allRoom.OSD_mode.getValue()) {
+//       if (allRoom.OSD_mode) {
 //         print(projector.ip.toString() + '(OSD 1)');
 //         // checkConnectionProjector(projector);
 //         sendTCPIPCommand(projector, '(OSD 1)');
@@ -385,10 +385,10 @@ void ShutterRoomProjectors(Room room,bool mode) {
 // }
 
 // void WhiteOrGreenModeAll(bool mode) {
-//   allRoom.whiteOrGreen.setValue(mode);
+//   allRoom.whiteOrGreen=mode);
 //   for (var room in rooms) {
 //     for (var projector in room.projectors) {
-//       if (allRoom.whiteOrGreen.getValue()) {
+//       if (allRoom.whiteOrGreen) {
 //         print(projector.ip.toString() + '(CLE 2)');
 //         // checkConnectionProjector(projector);
 //         sendTCPIPCommand(projector, '(CLE 2)');
@@ -404,32 +404,32 @@ void ShutterRoomProjectors(Room room,bool mode) {
 // void CheckLog(Projector projector) {
 //   print(projector.ip.toString() + '(LOG?)');
 //   String response = sendTCPIPCommand(projector, '(LOG?)');
-//   projector.log.setValue(response);
+//   projector.log=response);
 // }
 //
 // void CheckLogRoom(Room room) {
 //   for (var projector in room.projectors) {
 //     print(projector.ip.toString() + '(LOG?)');
 //     String response = sendTCPIPCommand(projector, '(LOG?)');
-//     projector.log.setValue(response);
+//     projector.log=response);
 //   }
 // }
 
 // void PowerAllServers(bool mode) {
 //   print(mode);
-//   allRoom.power_all_servers.setValue(mode);
+//   allRoom.power_all_servers=mode);
 //   for (var room in rooms) {
 //     for (var server in room.servers) {
-//       server.power_status.setValue(allRoom.power_all_servers.getValue());
+//       server.power_status=allRoom.power_all_servers);
 //     }
 //   }
 // }
 
 // void ChangeAllVolume(double index) {
-//   allRoom.volume_all.setValue(index);
+//   allRoom.volume_all=index);
 //   for (var room in rooms) {
 //     for (var server in room.servers) {
-//       server.volume.setValue(index);
+//       server.volume=index);
 //     }
 //   }
 // }

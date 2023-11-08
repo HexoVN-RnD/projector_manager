@@ -98,10 +98,10 @@ class _PopupOffProjectorState extends State<PopupOffProjector> {
                               ),
                               onPressed: () {
                                 setState(() {
-                                  if (current_page.getValue() == 0) {
+                                  if (current_page == 0) {
                                     PowerAllProjectors(false);
                                   }else{
-                                    PowerRoomProjectors(rooms[current_page.getValue()-1], false);
+                                    PowerRoomProjectors(rooms[current_page-1], false);
                                   }
                                   Navigator.of(context).pop();
                                   widget.onUpdateState?.call();

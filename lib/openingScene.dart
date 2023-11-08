@@ -254,103 +254,110 @@ class _OpeningSceneState extends State<OpeningScene>
                       SizedBox(
                         height: 20,
                       ),
-                      // Container(
-                      //   height: 100,
-                      //   width: 200,
-                      //   child: FutureBuilder<List<Document>>(
-                      //     future: getAccount(),
-                      //     builder: (BuildContext context,
-                      //         AsyncSnapshot<List<Document>> snapshot) {
-                      //       if (!snapshot.hasData) {
-                      //         return const Center(child: Text('Loading...'));
-                      //       }
-                      //       return snapshot.data!.isEmpty
-                      //           ? const Center(child: Text('No account in List'))
-                      //           : ListView(
-                      //         children: snapshot.data!.map((license) {
-                      //           return Text(license['account'].toString());// ListTile
-                      //         }).toList(),
-                      //       );
-                      //     },
-                      //   ),
-                      // ), //
+                      Container(
+                        height: 100,
+                        width: 200,
+                        child: FutureBuilder<List<Document>>(
+                          future: getAccount(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<Document>> snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(child: Text('Loading...'));
+                            }
+                            return snapshot.data!.isEmpty
+                                ? const Center(child: Text('No account in List'))
+                                : ListView(
+                              children: snapshot.data!.map((license) {
+                                return Text(license['account'].toString());// ListTile
+                              }).toList(),
+                            );
+                          },
+                        ),
+                      ), //
 
-                      // AnimatedBtn(
-                      //   btnAnimationController: _btnAnimationController,
-                      //   press: () async {
-                      //     _btnAnimationController.isActive = true;
-                      //     // getAccount();
-                      //     // getPassword();
-                      //     // isAccountCorrect = account.any((license) {
-                      //     //   final account = license['account'].toString();
-                      //     //   return account == accountController.text;
-                      //     // });
-                      //     // isPasswordCorrect = password.any((license) {
-                      //     //   final password = license['password'].toString();
-                      //     //   return password == passwordController.text;
-                      //     // });
-                      //     getAccount();
-                      //     // print('account: ${account}');
-                      //     getPassword();
-                      //     // print("isAccountCorrect: $isAccountCorrect ");
-                      //     Future.delayed(
-                      //       const Duration(milliseconds: 1000),
-                      //       () {
-                      //         setState(() {
-                      //           isShowSignInDialog = true;
-                      //         });
-                      //         if (_formKey.currentState!.validate()) {
-                      //           // The passwords match, you can proceed
-                      //           // For example, save the password to Firebase
-                      //           // Or navigate to another screen
-                      //         }
-                      //         if (isAccountCorrect && isPasswordCorrect) {
-                      //           Navigator.of(context).pushReplacement(
-                      //             MaterialPageRoute(
-                      //                 builder: (context) => Dashboard()),
-                      //           );
-                      //         }
-                      //       },
-                      //     );
-                      //   },
-                      // ),
+                      AnimatedBtn(
+                        btnAnimationController: _btnAnimationController,
+                        press: () async {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                                builder: (context) => Dashboard()),
+                          );
+                          // _btnAnimationController.isActive = true;
+                          // // getAccount();
+                          // // getPassword();
+                          // // isAccountCorrect = account.any((license) {
+                          // //   final account = license['account'].toString();
+                          // //   return account == accountController.text;
+                          // // });
+                          // // isPasswordCorrect = password.any((license) {
+                          // //   final password = license['password'].toString();
+                          // //   return password == passwordController.text;
+                          // // });
+                          // getAccount();
+                          // getPassword();
+                          // // print("isAccountCorrect: $isAccountCorrect ");
+                          // Future.delayed(
+                          //   const Duration(milliseconds: 1000),
+                          //       () {
+                          //     setState(() {
+                          //       isShowSignInDialog = true;
+                          //     });
+                          //     if (_formKey.currentState!.validate()) {
+                          //       // The passwords match, you can proceed
+                          //       // For example, save the password to Firebase
+                          //       // Or navigate to another screen
+                          //     }
+                          //     if (isAccountCorrect && isPasswordCorrect) {
+                          //       Navigator.of(context).pushReplacement(
+                          //         MaterialPageRoute(
+                          //             builder: (context) => Dashboard()),
+                          //       );
+                          //     }
+                          //   },
+                          // );
+                        },
+                      ),
                       isChecked
                           ? AnimatedBtn(
                               btnAnimationController: _btnAnimationController,
                         press: () async {
-                          _btnAnimationController.isActive = true;
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                                builder: (context) => Dashboard()),
+                          );
+                          // _btnAnimationController.isActive = true;
+                          // // getAccount();
+                          // // getPassword();
+                          // // isAccountCorrect = account.any((license) {
+                          // //   final account = license['account'].toString();
+                          // //   return account == accountController.text;
+                          // // });
+                          // // isPasswordCorrect = password.any((license) {
+                          // //   final password = license['password'].toString();
+                          // //   return password == passwordController.text;
+                          // // });
                           // getAccount();
                           // getPassword();
-                          // isAccountCorrect = account.any((license) {
-                          //   final account = license['account'].toString();
-                          //   return account == accountController.text;
-                          // });
-                          // isPasswordCorrect = password.any((license) {
-                          //   final password = license['password'].toString();
-                          //   return password == passwordController.text;
-                          // });
-                          getAccount();
-                          getPassword();
-                          // print("isAccountCorrect: $isAccountCorrect ");
-                          Future.delayed(
-                            const Duration(milliseconds: 1000),
-                                () {
-                              setState(() {
-                                isShowSignInDialog = true;
-                              });
-                              if (_formKey.currentState!.validate()) {
-                                // The passwords match, you can proceed
-                                // For example, save the password to Firebase
-                                // Or navigate to another screen
-                              }
-                              if (isAccountCorrect && isPasswordCorrect) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => Dashboard()),
-                                );
-                              }
-                            },
-                          );
+                          // // print("isAccountCorrect: $isAccountCorrect ");
+                          // Future.delayed(
+                          //   const Duration(milliseconds: 1000),
+                          //       () {
+                          //     setState(() {
+                          //       isShowSignInDialog = true;
+                          //     });
+                          //     if (_formKey.currentState!.validate()) {
+                          //       // The passwords match, you can proceed
+                          //       // For example, save the password to Firebase
+                          //       // Or navigate to another screen
+                          //     }
+                          //     if (isAccountCorrect && isPasswordCorrect) {
+                          //       Navigator.of(context).pushReplacement(
+                          //         MaterialPageRoute(
+                          //             builder: (context) => Dashboard()),
+                          //       );
+                          //     }
+                          //   },
+                          // );
                         },
                             )
                           : Container(
@@ -412,10 +419,10 @@ class _OpeningSceneState extends State<OpeningScene>
                               width: 10,
                             ),
                             PrimaryText(
-                              text: projector.connected.getValue()
+                              text: projector.connected
                                   ? 'Đã kết nối '
                                   : 'Mất kết nối',
-                              color: projector.connected.getValue()
+                              color: projector.connected
                                   ? AppColors.green
                                   : AppColors.red,
                               size: 14,
@@ -455,10 +462,10 @@ class _OpeningSceneState extends State<OpeningScene>
                                 width: 10,
                               ),
                               PrimaryText(
-                                text: projector.connected.getValue()
+                                text: projector.connected
                                     ? 'Đã kết nối '
                                     : 'Mất kết nối',
-                                color: projector.connected.getValue()
+                                color: projector.connected
                                     ? AppColors.green
                                     : AppColors.red,
                                 size: 14,
@@ -502,10 +509,10 @@ class _OpeningSceneState extends State<OpeningScene>
                                   width: 10,
                                 ),
                                 PrimaryText(
-                                  text: projector.connected.getValue()
+                                  text: projector.connected
                                       ? 'Đã kết nối '
                                       : 'Mất kết nối',
-                                  color: projector.connected.getValue()
+                                  color: projector.connected
                                       ? AppColors.green
                                       : AppColors.red,
                                   size: 14,
@@ -548,10 +555,10 @@ class _OpeningSceneState extends State<OpeningScene>
                                 width: 10,
                               ),
                               PrimaryText(
-                                text: projector.connected.getValue()
+                                text: projector.connected
                                     ? 'Đã kết nối '
                                     : 'Mất kết nối',
-                                color: projector.connected.getValue()
+                                color: projector.connected
                                     ? AppColors.green
                                     : AppColors.red,
                                 size: 14,
@@ -594,10 +601,10 @@ class _OpeningSceneState extends State<OpeningScene>
                                 width: 10,
                               ),
                               PrimaryText(
-                                text: projector.connected.getValue()
+                                text: projector.connected
                                     ? 'Đã kết nối '
                                     : 'Mất kết nối',
-                                color: projector.connected.getValue()
+                                color: projector.connected
                                     ? AppColors.green
                                     : AppColors.red,
                                 size: 14,
@@ -650,10 +657,10 @@ class _OpeningSceneState extends State<OpeningScene>
                               width: 10,
                             ),
                             PrimaryText(
-                              text: server.connected.getValue()
+                              text: server.connected
                                   ? 'Đã kết nối '
                                   : 'Mất kết nối',
-                              color: server.connected.getValue()
+                              color: server.connected
                                   ? AppColors.green
                                   : AppColors.red,
                               size: 14,
@@ -695,10 +702,10 @@ class _OpeningSceneState extends State<OpeningScene>
                               width: 10,
                             ),
                             PrimaryText(
-                              text: server.connected.getValue()
+                              text: server.connected
                                   ? 'Đã kết nối '
                                   : 'Mất kết nối',
-                              color: server.connected.getValue()
+                              color: server.connected
                                   ? AppColors.green
                                   : AppColors.red,
                               size: 14,

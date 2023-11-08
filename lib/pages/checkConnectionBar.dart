@@ -45,8 +45,8 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
         children: [
           Expanded(
             child: PrimaryText(
-                text: rooms[(current_page.getValue() > 0)
-                        ? current_page.getValue() - 1
+                text: rooms[(current_page  > 0)
+                        ? current_page  - 1
                         : 1]
                     .nameUI,
                 size: 18,
@@ -81,23 +81,32 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
       SizedBox(
         height: SizeConfig.blockSizeVertical * 3,
       ),
-      PrimaryText(
-        text: room.resolume? 'Kiểm tra tín hiệu server'.toUpperCase(): 'Kiểm tra tín hiệu Bright Sign'.toUpperCase(),
-        size: 16,
-        fontWeight: FontWeight.w500,
-        color: AppColors.iconDeepGray,
-      ),
-      SizedBox(
-        height: SizeConfig.blockSizeVertical * 2,
-      ),
+
+      if (room.servers.length != 0)
       Column(
-        children: List.generate(
-          room.servers.length,
-              (index) =>  ServerConnection(room: room,server: room.servers[index],),
-        ),
-      ),
-      SizedBox(
-        height: SizeConfig.blockSizeVertical * 2,
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            child: PrimaryText(
+              text: room.resolume? 'Kiểm tra tín hiệu server'.toUpperCase(): 'Kiểm tra tín hiệu Bright Sign'.toUpperCase(),
+              size: 16,
+              fontWeight: FontWeight.w500,
+              color: AppColors.iconDeepGray,
+            ),
+          ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical * 2,
+          ),
+          Column(
+            children: List.generate(
+              room.servers.length,
+                  (index) =>  ServerConnection(room: room,server: room.servers[index],),
+            ),
+          ),
+          SizedBox(
+            height: SizeConfig.blockSizeVertical * 2,
+          ),
+        ],
       ),
       if (room.sensors.length != 0)
         Column(
@@ -155,7 +164,8 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
           ],
         ),
-      if (room.projectors.length != 0 || current_page.getValue()==4) Column(
+      if (room.projectors.length != 0)
+        Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PrimaryText(

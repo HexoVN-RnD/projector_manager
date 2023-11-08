@@ -10,11 +10,11 @@ class Server {
     int power_port;
     String mac_address;
     String password;
-    StatefulValuable<bool> power_status;
+    bool power_status;
     Offset position;
-    StatefulValuable<double> volume;
-    StatefulValuable<bool> connected;
-    StatefulValuable<bool> isOnHover;
+    double volume;
+    bool connected;
+    bool isOnHover;
 
     // Constructor
     Server({

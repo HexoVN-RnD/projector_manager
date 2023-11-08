@@ -28,10 +28,10 @@ class _LedConnectionState extends State<LedConnection> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Icon(
-            led.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
+            led.connected ? Icons.settings_ethernet : Icons.code_off,
             color:
-                led.connected.getValue() ? AppColors.navy_blue : AppColors.red,
-            // projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
+                led.connected ? AppColors.navy_blue : AppColors.red,
+            // projector.connected ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
       title: Row(
@@ -51,7 +51,7 @@ class _LedConnectionState extends State<LedConnection> {
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: PrimaryText(
-            text: led.connected.getValue() ? 'Đã kết nối' : 'Đã mất kết nối',
+            text: led.connected ? 'Đã kết nối' : 'Đã mất kết nối',
             size: 13,
             fontWeight: FontWeight.w600),
       ),

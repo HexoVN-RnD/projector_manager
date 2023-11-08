@@ -37,7 +37,7 @@ class _AllServerStatusState extends State<AllServerStatus> {
     } else {
       SendUDPAudioMessage(server, index);
     }
-    server.volume.setValue(index);
+    server.volume = (index);
   }
 
   @override
@@ -52,7 +52,7 @@ class _AllServerStatusState extends State<AllServerStatus> {
         height: 45,
         margin: EdgeInsets.fromLTRB(20 , 10, 20, 0),
         decoration: BoxDecoration(
-            color: room.servers[index].connected.getValue()
+            color: room.servers[index].connected
                 ? AppColors.green
                 : AppColors.red,
             borderRadius: BorderRadius.circular(15)),

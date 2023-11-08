@@ -94,7 +94,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
                   width: 60,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: allRooms.power_all_servers.getValue()
+                      backgroundColor: allRooms.power_all_servers
                           ? AppColors.navy_blue
                           : AppColors.gray,
                       shape: RoundedRectangleBorder(
@@ -127,7 +127,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              !allRooms.power_all_servers.getValue()
+                              !allRooms.power_all_servers
                                   ? AppColors.red
                                   : AppColors.gray,
                           shape: RoundedRectangleBorder(
@@ -160,7 +160,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
                 // Transform.scale(
                 //   scale: 1,
                 //   child: CupertinoSwitch(
-                //     value: allRooms.power_all_servers.getValue(),
+                //     value: allRooms.power_all_servers,
                 //     activeColor: AppColors.navy_blue,
                 //     onChanged: (value) {
                 //       setState(() {

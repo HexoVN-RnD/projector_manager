@@ -24,12 +24,12 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
     return MouseRegion(
       onHover: (event){
         setState(() {
-          projector.isOnHover.setValue(true);
+          projector.isOnHover = true;
         });
       },
       onExit: (event) {
         setState(() {
-          projector.isOnHover.setValue(false);
+          projector.isOnHover = false;
         });
       },
       child: ListTile(
@@ -43,11 +43,11 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
             borderRadius: BorderRadius.circular(20),
           ),
           child: Icon(
-              projector.connected.getValue()
+              projector.connected
                   ? Icons.settings_ethernet
                   : Icons.code_off,
-              color: AppColors.StatusColor[projector.status.getValue()],
-              // projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
+              color: AppColors.StatusColor[projector.status],
+              // projector.connected ? Icons.wifi_tethering : Icons.wifi_tethering_off,
               size: 20),
         ),
         title: Row(
@@ -69,7 +69,7 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
         subtitle: Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: PrimaryText(
-              text: projector.connected.getValue()
+              text: projector.connected
                   ? 'Đã kết nối'
                   : 'Đã mất kết nối',
               size: 13,
@@ -77,7 +77,7 @@ class _ProjectorConnectionState extends State<ProjectorConnection> {
         ),
         onTap: () {
           setState(() {
-            // projector.connected.setValue(!projector.connected.getValue());
+            // projector.connected = !projector.connected);
             checkConnectionProjector(projector);
             // final CheckConnectionScene =
             // context.findAncestorStateOfType<CheckConnectionBarState>();

@@ -33,9 +33,9 @@ class _SensorConnectionState extends State<SensorConnection> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Icon(
-            sensor.connected.getValue() ? Icons.settings_ethernet : Icons.code_off,
-            color: sensor.connected.getValue() ? AppColors.navy_blue: AppColors.red,
-            // projector.connected.getValue() ? Icons.wifi_tethering : Icons.wifi_tethering_off,
+            sensor.connected ? Icons.settings_ethernet : Icons.code_off,
+            color: sensor.connected ? AppColors.navy_blue: AppColors.red,
+            // projector.connected ? Icons.wifi_tethering : Icons.wifi_tethering_off,
             size: 20),
       ),
       title: Row(
@@ -56,7 +56,7 @@ class _SensorConnectionState extends State<SensorConnection> {
       subtitle: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: PrimaryText(
-            text: sensor.connected.getValue()? 'Đã kết nối' : 'Đã mất kết nối',
+            text: sensor.connected? 'Đã kết nối' : 'Đã mất kết nối',
             size: 13,
             fontWeight: FontWeight.w600),
       ),

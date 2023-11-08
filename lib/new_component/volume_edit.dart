@@ -35,7 +35,7 @@ class _VolumeEditState extends State<VolumeEdit> {
   void ChangeVolume(Room room, Server server, double index) {
     // writeCellValue(index.toStringAsFixed(2), server.id, 1);
     room.updateRoomVolume(index);
-    print('volumeP${current_page.getValue()}'+index.toString());
+    print('volumeP${current_page }'+index.toString());
     if (room.resolume) {
       SendAudioOSC(room, index);
     } else {
@@ -43,7 +43,7 @@ class _VolumeEditState extends State<VolumeEdit> {
         SendUDPAudioMessage(server, index);
       }
     }
-    server.volume.setValue(index);
+    server.volume = index;
   }
 
   @override
@@ -59,9 +59,9 @@ class _VolumeEditState extends State<VolumeEdit> {
           GestureDetector(
             onTap: () {
               setState(() {
-                room.isSelectedStop.setValue(true);
-                room.isSelectedPlay.setValue(false);
-                StopPreset(current_page.getValue());
+                room.isSelectedStop = true;
+                room.isSelectedPlay = false;
+                StopPreset(current_page );
                 // for (Server server in rooms[0].servers) {
                 //   SendUDPMessage(server, 'Preset0');
                 // }
@@ -77,7 +77,7 @@ class _VolumeEditState extends State<VolumeEdit> {
                   height: 50.0,
                   margin: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
-                    color: room.isSelectedStop.getValue()
+                    color: room.isSelectedStop 
                         ? AppColors.navy_blue2
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(15),
@@ -94,9 +94,9 @@ class _VolumeEditState extends State<VolumeEdit> {
           GestureDetector(
             onTap: () {
               setState(() {
-                room.isSelectedPlay.setValue(true);
-                room.isSelectedStop.setValue(false);
-                PlayPreset(current_page.getValue());
+                room.isSelectedPlay = true;
+                room.isSelectedStop = false;
+                PlayPreset(current_page );
               });
             },
             child: Column(
@@ -109,7 +109,7 @@ class _VolumeEditState extends State<VolumeEdit> {
                   height: 50.0,
                   margin: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
-                    color: room.isSelectedPlay.getValue()
+                    color: room.isSelectedPlay 
                         ? AppColors.navy_blue2
                         : Colors.transparent,
                     borderRadius: BorderRadius.circular(15),
@@ -140,7 +140,7 @@ class _VolumeEditState extends State<VolumeEdit> {
           //   width: SizeConfig.blockSizeHorizontal,
           // ),
           Icon(
-            (server.volume.getValue() != 0)
+            (server.volume  != 0)
                 ? Icons.music_note
                 : Icons.music_off,
             size: 25,
@@ -155,10 +155,10 @@ class _VolumeEditState extends State<VolumeEdit> {
                 child: Slider(
                   activeColor: AppColors.navy_blue,
                   inactiveColor: AppColors.light_navy_blue,
-                  value: server.volume.getValue(),
+                  value: server.volume ,
                   onChanged: (index) {
                     setState(() {
-                      server.volume.setValue(index);
+                      server.volume = index;
                     });
                   },
                   onChangeEnd: (index) {
@@ -172,7 +172,7 @@ class _VolumeEditState extends State<VolumeEdit> {
             ),
           ),
           PrimaryText(
-              text: (server.volume.getValue() * 100).toStringAsFixed(0),
+              text: (server.volume  * 100).toStringAsFixed(0),
               color: AppColors.barBg,
               size: 16),
         ],

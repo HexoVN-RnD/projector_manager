@@ -35,7 +35,7 @@ class _MiniMapState extends State<MiniMap> {
     Room room = widget.room;
     int page = widget.page;
     double width = Responsive.isDesktop(context)
-        ? ((current_page.getValue() != 0)
+        ? ((current_page != 0)
             ? (SizeConfig.screenWidth - 200) / 3 * 2 - 60
             : SizeConfig.screenWidth / 2 - 150)
         : SizeConfig.screenWidth - 60;
@@ -104,7 +104,7 @@ class _MiniMapState extends State<MiniMap> {
                 ),
               ),
             ),
-            if (current_page.getValue() == 0)
+            if (current_page == 0)
               Positioned(
                   left: 20,
                   top: 15,
@@ -135,7 +135,7 @@ class _MiniMapState extends State<MiniMap> {
                       height: width * 0.07,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: room.leds[index].connected.getValue()
+                          color: room.leds[index].connected
                               ? AppColors.green
                               : AppColors.red,
                           borderRadius: BorderRadius.circular(5),
@@ -179,7 +179,7 @@ class _MiniMapState extends State<MiniMap> {
                         height: width * 0.018,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: room.sensors[index].connected.getValue()
+                            color: room.sensors[index].connected
                                 ? AppColors.green
                                 : AppColors.red,
                             borderRadius: BorderRadius.circular(5),
@@ -210,14 +210,14 @@ class _MiniMapState extends State<MiniMap> {
                   height: width * 0.1,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: room.servers[0].connected.getValue()
+                        color: room.servers[0].connected
                             ? AppColors.green
                             : AppColors.red,
                         borderRadius: BorderRadius.circular(5),
-                        border: room.servers[0].isOnHover.getValue()
+                        border: room.servers[0].isOnHover
                             ? Border.all(
                                 strokeAlign: BorderSide.strokeAlignCenter,
-                                color: room.servers[0].connected.getValue()
+                                color: room.servers[0].connected
                                     ? AppColors.green
                                     : AppColors.red,
                                 width: 10.0,

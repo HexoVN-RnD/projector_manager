@@ -5,7 +5,7 @@ class Preset {
     String name;
     String image;
     String osc_message;
-    StatefulValuable<double> transport;
+    double transport;
     // Constructor
     Preset({
         required this.name,

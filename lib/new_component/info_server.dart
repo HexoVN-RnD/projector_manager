@@ -94,7 +94,7 @@ class _InfoServer extends State<InfoServer> {
                 width: 60,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: server.power_status.getValue()
+                    backgroundColor: server.power_status 
                         ? AppColors.navy_blue
                         : AppColors.gray,
                     shape: RoundedRectangleBorder(
@@ -121,7 +121,7 @@ class _InfoServer extends State<InfoServer> {
                   width: 60,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: server.power_status.getValue()
+                      backgroundColor: server.power_status 
                           ? AppColors.gray
                           : AppColors.red,
                       shape: RoundedRectangleBorder(
@@ -145,7 +145,7 @@ class _InfoServer extends State<InfoServer> {
               // Transform.scale(
               //   scale: 1,
               //   child: CupertinoSwitch(
-              //     value: server.power_status.getValue(),
+              //     value: server.power_status ,
               //     activeColor: AppColors.navy_blue,
               //     onChanged: (value) {
               //       setState(() {
@@ -162,11 +162,11 @@ class _InfoServer extends State<InfoServer> {
           Row(
             children: [
               PrimaryText(
-                  text: server.connected.getValue()
-                      ? (server.power_status.getValue()
+                  text: server.connected 
+                      ? (server.power_status 
                           ? 'Đã bật server'
                           : 'Đang tắt server ...')
-                      : (server.power_status.getValue()
+                      : (server.power_status 
                           ? 'Đang bật server ...'
                           : 'Đã tắt server'),
                   color: AppColors.secondary,
@@ -205,7 +205,7 @@ class _InfoServer extends State<InfoServer> {
           //       ),
           //     ),
           //     // PrimaryText(
-          //     //     text: server.volume.getValue().toString(),
+          //     //     text: server.volume .toString(),
           //     //     color: AppColors.secondary,
           //     //     size: 16),
           //     // SizedBox(
@@ -217,7 +217,7 @@ class _InfoServer extends State<InfoServer> {
           //         child: Slider(
           //           activeColor: AppColors.navy_blue,
           //           inactiveColor: AppColors.light_navy_blue,
-          //           value: server.volume.getValue(),
+          //           value: server.volume ,
           //           onChanged: (index) {
           //             setState(() => ChangeVolume(server, index));
           //           },
@@ -230,7 +230,7 @@ class _InfoServer extends State<InfoServer> {
           //   ],
           // ),
           // PrimaryText(
-          //     text: (server.volume.getValue()*100).toStringAsFixed(0), //+'%',
+          //     text: (server.volume *100).toStringAsFixed(0), //+'%',
           //     color: AppColors.secondary,
           //     size: 16),
         ],

@@ -49,11 +49,11 @@ class _PositionPage6State extends State<PositionPage6> {
       height: width * 0.012,
       child: Container(
         decoration: BoxDecoration(
-            color: AppColors.StatusColor[projector.status.getValue()],
-            border: projector.isOnHover.getValue()
+            color: AppColors.StatusColor[projector.status],
+            border: projector.isOnHover
                 ? Border.all(
                     strokeAlign: BorderSide.strokeAlignCenter,
-                    color: AppColors.StatusColor[projector.status.getValue()],
+                    color: AppColors.StatusColor[projector.status],
                     width: 4.0,
                   )
                 : Border.all(

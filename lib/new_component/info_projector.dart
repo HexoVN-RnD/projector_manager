@@ -28,13 +28,13 @@ class _InfoProjector extends State<InfoProjector> {
 
 
   // void MuteVideoProjector() {
-  //   projector.mute_video.setValue(!projector.mute_video.getValue());
-  //   print(projector.ip + " " +projector.port.toString() +" MUTE_Video " +projector.shutter_status.getValue().toString());
+  //   projector.mute_video.setValue(!projector.mute_video );
+  //   print(projector.ip + " " +projector.port.toString() +" MUTE_Video " +projector.shutter_status .toString());
   // }
   //
   // void MuteAudioProjector() {
-  //   projector.mute_audio.setValue(!projector.mute_audio.getValue());
-  //   print(projector.ip + " " +projector.port.toString() +" MUTE_Audio " +projector.shutter_status.getValue().toString());
+  //   projector.mute_audio.setValue(!projector.mute_audio );
+  //   print(projector.ip + " " +projector.port.toString() +" MUTE_Audio " +projector.shutter_status .toString());
   // }
 
   @override
@@ -42,12 +42,9 @@ class _InfoProjector extends State<InfoProjector> {
     Projector projector = widget.projector;
     return Container(
       constraints: BoxConstraints(
-          minWidth: Responsive.isDesktop(context)
-              ? 280
-              : SizeConfig.screenWidth / 2 - 75,
-          maxWidth: Responsive.isDesktop(context)
-              ? SizeConfig.screenWidth / 3 - 110
-              : SizeConfig.screenWidth / 2 - 45),
+          minWidth: 280,
+          maxWidth: SizeConfig.screenWidth / 3 - 110),
+      height: 245,
       padding: EdgeInsets.only(
           top: 20,
           bottom: 20,
@@ -103,7 +100,7 @@ class _InfoProjector extends State<InfoProjector> {
                 width: 60,
                 child: ElevatedButton(
                   style:ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.PowerOnButtonColor[projector.status.getValue()],
+                    backgroundColor: AppColors.PowerOnButtonColor[projector.status ],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -126,7 +123,7 @@ class _InfoProjector extends State<InfoProjector> {
                   width: 60,
                   child: ElevatedButton(
                     style:ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.PowerOffButtonColor[projector.status.getValue()],
+                      backgroundColor: AppColors.PowerOffButtonColor[projector.status ],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -151,8 +148,8 @@ class _InfoProjector extends State<InfoProjector> {
           Row(
             children: [
               PrimaryText(
-                  text: Power_Status[projector.status.getValue()],
-                  color: AppColors.StatusColor[projector.status.getValue()],
+                  text: Power_Status[projector.status ],
+                  color: AppColors.StatusColor[projector.status ],
                   size: 16),
               // Expanded(
               //   child: SizedBox(
@@ -198,7 +195,7 @@ class _InfoProjector extends State<InfoProjector> {
                 width: 60,
                 child: ElevatedButton(
                   style:ElevatedButton.styleFrom(
-                    backgroundColor:AppColors.ShutterOnButtonColor[projector.status.getValue()],
+                    backgroundColor:AppColors.ShutterOnButtonColor[projector.status ],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -221,7 +218,7 @@ class _InfoProjector extends State<InfoProjector> {
                   width: 60,
                   child: ElevatedButton(
                     style:ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.ShutterOffButtonColor[projector.status.getValue()],
+                      backgroundColor: AppColors.ShutterOffButtonColor[projector.status ],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -246,8 +243,8 @@ class _InfoProjector extends State<InfoProjector> {
           Row(
             children: [
               PrimaryText(
-                  text: Shutter_Status[projector.status.getValue()],
-                  color: AppColors.StatusColor[projector.status.getValue()],
+                  text: Shutter_Status[projector.status ],
+                  color: AppColors.StatusColor[projector.status ],
                   size: 16),
               // Expanded(
               //   child: SizedBox(
@@ -273,7 +270,7 @@ class _InfoProjector extends State<InfoProjector> {
           // Row(
           //   children: [
           //     PrimaryText(
-          //       text: "Số giờ bóng: ${projector.lamp_hours.getValue().toStringAsFixed(1)}",
+          //       text: "Số giờ bóng: ${projector.lamp_hours .toStringAsFixed(1)}",
           //       size: 17,
           //       fontWeight: FontWeight.w500,
           //     ),
@@ -311,7 +308,7 @@ class _InfoProjector extends State<InfoProjector> {
           //       ),
           //     ),
           //     PrimaryText(
-          //         text: projector.mute_video.getValue().toString(),
+          //         text: projector.mute_video .toString(),
           //         color: AppColors.secondary,
           //         size: 14),
           //     SizedBox(
@@ -320,7 +317,7 @@ class _InfoProjector extends State<InfoProjector> {
           //     Transform.scale(
           //       scale: 1,
           //       child: CupertinoSwitch(
-          //         value: projector.mute_video.getValue(),
+          //         value: projector.mute_video ,
           //         onChanged: (value) {
           //           setState(() {
           //             MuteVideoProjector();
@@ -344,7 +341,7 @@ class _InfoProjector extends State<InfoProjector> {
           //       ),
           //     ),
           //     PrimaryText(
-          //         text: projector.mute_audio.getValue().toString(),
+          //         text: projector.mute_audio .toString(),
           //         color: AppColors.secondary,
           //         size: 14),
           //     SizedBox(
@@ -353,7 +350,7 @@ class _InfoProjector extends State<InfoProjector> {
           //     Transform.scale(
           //       scale: 1,
           //       child: CupertinoSwitch(
-          //         value: projector.mute_audio.getValue(),
+          //         value: projector.mute_audio ,
           //         onChanged: (value) {
           //           setState(() {
           //             MuteAudioProjector();

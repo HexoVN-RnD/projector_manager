@@ -68,50 +68,50 @@ class _HomePage extends State<HomePage> {
   void initState() {
     super.initState();
     allRoom.setAllVolume();
-    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
-      setState(() {
-        if (rooms[3].servers[0].connected.getValue() &&
-            allRoom.current_preset.getValue() < allRoom.presets.length) {
-          OSCReceive();
-        }
-      });
-    });
-    _timer2 = Timer.periodic(Duration(seconds: 3), (timer) async {
-      checkAllRoomConnection(3000);
-    });
+    // _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+    //   setState(() {
+    //     if (rooms[3].servers[0].connected  &&
+    //         allRoom.current_preset  < allRoom.presets.length) {
+    //       OSCReceive();
+    //     }
+    //   });
+    // });
+    // _timer2 = Timer.periodic(Duration(seconds: 3), (timer) async {
+    //   checkAllRoomConnection(3000);
+    // });
   }
 
   void dispose() {
-    _timer?.cancel();
-    _timer2?.cancel();
+    // _timer?.cancel();
+    // _timer2?.cancel();
     super.dispose();
   }
 
   void EditAllAudio(index) {
-    allRoom.volume_all.setValue(index);
+    allRoom.volume_all = (index);
     // writeCellValue(index.toStringAsFixed(2), 0, 1);
     for (Room room in rooms) {
       if (room.resolume) {
         for (Server server in room.servers) {
-          server.volume.setValue(index);
+          server.volume = index;
         }
       } else {
         for (Server server in room.servers) {
-          server.volume.setValue(index);
+          server.volume = index;
         }
       }
     }
   }
 
   void EditAllAudioAndSave(index) {
-    allRoom.volume_all.setValue(index);
+    allRoom.volume_all = (index);
     allRoom.updateAllVolume(index);
     // setAllVolume();
     for (Room room in rooms) {
       // room.updateRoomVolume(index);
       if (room.resolume) {
         for (Server server in room.servers) {
-          server.volume.setValue(index);
+          server.volume = (index);
           // writeCellValue(index.toStringAsFixed(2), server.id, 1);
           SendOscMessage(server.ip, server.preset_port,
               '/composition/layers/1/audio/volume', [index]);
@@ -124,7 +124,7 @@ class _HomePage extends State<HomePage> {
         }
       } else {
         for (Server server in room.servers) {
-          server.volume.setValue(index);
+          server.volume = index;
           SendUDPAudioMessage(server, index);
         }
       }
@@ -265,7 +265,7 @@ class _HomePage extends State<HomePage> {
                     child: Row(
                       children: List.generate(allRoom.presets.length, (index) {
                         bool isSelected =
-                            allRoom.current_preset.getValue() == index;
+                            allRoom.current_preset  == index;
                         return GestureDetector(
                           onTap: () {
                             setState(() {
@@ -445,18 +445,15 @@ class _HomePage extends State<HomePage> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: LinearProgressIndicator(
-                                  value: (allRoom.current_preset.getValue() <
+                                  value: (allRoom.current_preset  <
                                           allRoom.presets.length)
-                                      ? allRoom
-                                          .presets[
-                                              allRoom.current_preset.getValue()]
-                                          .transport
-                                          .getValue()
+                                      ? allRoom.presets[allRoom.current_preset].transport
+                                           
                                       : 0,
                                   semanticsLabel: 'Linear progress indicator',
-                                  color: allRoom.current_colume.getValue() == 1
+                                  color: allRoom.current_colume  == 1
                                       ? AppColors.column1
-                                      : allRoom.current_colume.getValue() == 2
+                                      : allRoom.current_colume  == 2
                                           ? AppColors.column2
                                           : AppColors.column3,
                                   backgroundColor: AppColors.white,
@@ -474,7 +471,7 @@ class _HomePage extends State<HomePage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Icon(
-                                  (allRoom.volume_all.getValue() != 0)
+                                  (allRoom.volume_all  != 0)
                                       ? Icons.music_note
                                       : Icons.music_off,
                                   size: 25,
@@ -499,7 +496,7 @@ class _HomePage extends State<HomePage> {
                                         activeColor: AppColors.navy_blue,
                                         inactiveColor:
                                             AppColors.light_navy_blue,
-                                        value: allRoom.volume_all.getValue(),
+                                        value: allRoom.volume_all ,
                                         onChanged: (index) {
                                           setState(() => EditAllAudio(index));
                                         },
@@ -515,7 +512,7 @@ class _HomePage extends State<HomePage> {
                                   ),
                                 ),
                                 PrimaryText(
-                                    text: (allRoom.volume_all.getValue() * 100)
+                                    text: (allRoom.volume_all  * 100)
                                         .toStringAsFixed(0),
                                     color: AppColors.barBg,
                                     size: 16),
@@ -539,7 +536,7 @@ class _HomePage extends State<HomePage> {
                 ManageAllProjectors(),
               ],
             ),
-            // MiniMap(room: rooms[(current_page.getValue()>0)? current_page.getValue()-1:0], page: current_page.getValue()+1,),
+            // MiniMap(room: rooms[(current_page >0)? current_page -1:0], page: current_page +1,),
             Wrap(
               spacing: 40,
               alignment: WrapAlignment.spaceBetween,

@@ -6,25 +6,25 @@ import 'package:responsive_dashboard/data/data.dart';
 import 'package:valuable/valuable.dart';
 
 class AllRoom {
-  StatefulValuable<bool> canRun;
-  StatefulValuable<bool> power_all_projectors;
-  StatefulValuable<bool> shutter_all_projectors;
-  StatefulValuable<bool> power_all_servers;
-  StatefulValuable<bool> is_switch_colume;
-  StatefulValuable<double> volume_all;
-  StatefulValuable<int> current_preset;
-  StatefulValuable<int> current_colume;
-  StatefulValuable<double> current_transport;
-  StatefulValuable<int> num_servers_connected;
-  StatefulValuable<int> num_projectors_connected;
-  StatefulValuable<int> num_servers;
-  StatefulValuable<int> num_sensors;
-  StatefulValuable<int> num_leds;
-  StatefulValuable<int> num_projectors;
+  bool canRun;
+  bool power_all_projectors;
+  bool shutter_all_projectors;
+  bool power_all_servers;
+  bool is_switch_colume;
+  double volume_all;
+  int current_preset;
+  int current_colume;
+  double current_transport;
+  int num_servers_connected;
+  int num_projectors_connected;
+  int num_servers;
+  int num_sensors;
+  int num_leds;
+  int num_projectors;
   List<Preset> presets;
   List<Document> allVolumeFB;
   CollectionReference volumeCollection;
-  StatefulValuable<String> volumeId;
+  String volumeId;
   // : 1,2,3
   // List<Projector> projectors;
   // List<Server> servers;
@@ -59,10 +59,10 @@ class AllRoom {
     Future.delayed(
       const Duration(milliseconds: 500),
       () {
-        allRoom.canRun.setValue(license_status.any((status) {
+        allRoom.canRun = license_status.any((status) {
           final license_status = status['run'].toString();
           return license_status == 'true';
-        }));
+        });
       },
     );
     print('setLicenseStatus');
@@ -72,12 +72,12 @@ class AllRoom {
     // List<Document> allVolume =
     allVolumeFB = await volumeCollection.orderBy('allVolume').get();
     final check = allVolumeFB.map((volume) {
-      volumeId.setValue(volume.id);
-      // print('volumeId: ${volumeId.getValue()}');
+      volumeId = (volume.id);
+      // print('volumeId: ${volumeId}');
       final checkVolume = volume['allVolume'].toString();
       // print('allVolume: $checkVolume');
-      volume_all.setValue((double.tryParse(checkVolume.toString()) ?? 0.0));
-      return [volumeId.getValue(), checkVolume];
+      volume_all = double.tryParse(checkVolume.toString()) ?? 0.0;
+      return [volumeId, checkVolume];
     });
     print('allVolume: ${check}');
   }
@@ -85,12 +85,12 @@ class AllRoom {
   void updateAllVolume(double allVolumeValue) async {
     // volumeId = allVolume.id;
     // print('ENLH4hL9FNkV87USu2Iv');
-    await volumeCollection.document(volumeId.getValue()).update({
+    await volumeCollection.document(volumeId).update({
       // await volumeCollection.document(volumeId!).update({
       'allVolume': allVolumeValue,
     });
     for (Room room in rooms) {
-      await room.roomVolumeCollection.document(volumeId.getValue()).update({
+      await room.roomVolumeCollection.document(volumeId).update({
         // await roomVolumeCollection.document(roomVolumeId!).update({
         room.nameDatabase: allVolumeValue,
         //   'volumeP3' : roomVolumeValue,
