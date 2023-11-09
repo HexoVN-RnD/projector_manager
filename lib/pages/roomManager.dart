@@ -15,6 +15,7 @@ import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/PopUp/PopupAddProjetor.dart';
+import 'package:responsive_dashboard/PopUp/PopupAddProjetor_new.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffProjector.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffShutter.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
@@ -745,7 +746,7 @@ class _RoomManagerState extends State<RoomManager> {
                                           ),
                                           child: Center(
                                             child: Hero(
-                                              tag: heroAddProjector,
+                                              tag: heroAddProjectorNew,
                                               createRectTween: (begin, end) {
                                                 return CustomRectTween(
                                                     begin: begin, end: end);
@@ -755,7 +756,7 @@ class _RoomManagerState extends State<RoomManager> {
                                                   Navigator.of(context).push(
                                                       HeroDialogRoute(
                                                           builder: (context) {
-                                                    return PopupAddProjector();
+                                                    return PopupAddProjectorNew();
                                                   }));
                                                 },
                                                 child: PrimaryText(

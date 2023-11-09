@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
@@ -45,7 +46,7 @@ class _PopupAddProjectorState extends State<PopupAddProjector> {
   final lamp_hours =0;
   final status = 0 ;
   final color_state =  false;
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   // late Future<int> _counter;
   late Future<Projector> projector;
   final Future<Projector> default_projector = Future.value(Projector(
@@ -67,8 +68,8 @@ class _PopupAddProjectorState extends State<PopupAddProjector> {
       isOnHover: false));
 
   Future<Projector> getProjector(String key) async {
-    final SharedPreferences prefs = await _prefs;
-    final String? jsonString = prefs.getString(key);
+    final SharedPreferences new_prefs = await prefs;
+    final String? jsonString = new_prefs.getString(key);
     if (jsonString != null) {
       final Map<String, dynamic> jsonMap = json.decode(jsonString);
       return Projector.fromJson(jsonMap);
@@ -76,56 +77,32 @@ class _PopupAddProjectorState extends State<PopupAddProjector> {
       return default_projector;
     }
   }
-  Future<void> setNewProjector() async {
-    final SharedPreferences prefs = await _prefs;
-    final Projector new_projector = Projector(
-        ip: '192.168.3.3',
-        name: 'Christie',
-        port: 3002,
-        UsernameAndPassword: 'admin',
-        type: 'PJLink',
-        power_status_button: false,
-        shutter_status_button: false,
-        power_status: false,
-        shutter_status: false,
-        lamp_hours: 0,
-        status: 0,
-        connected: false,
-        position_x: 0.0,
-        position_y: 0.0,
-        color_state: false,
-        isOnHover: false);
 
-    setState(() {
-      projector = Future.value(new_projector);
-      prefs.setString('projector_1', json.encode(new_projector.toJson()));
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // projector = default_projector;
-    projector = getProjector('projector_1');
-  }
 
   // @override
   // void initState() {
   //   super.initState();
-  //   nameEditing.text = 'Projector ';
-  //   ipEditing.text = '192.168.';
-  //   position_x.text = '0.0';
-  //   position_y.text = '0.0';
-  //   // _timer = Timer.periodic(Duration(milliseconds: 100), (timer) async {
-  //   //   setState(() {});
-  //   // });
+  //   // projector = default_projector;
+  //   projector = getProjector('projector_1');
   // }
-  //
-  // @override
-  // void dispose() {
-  //   // _timer?.cancel();
-  //   super.dispose();
-  // }
+
+  @override
+  void initState() {
+    super.initState();
+    nameEditing.text = 'Projector ';
+    ipEditing.text = '192.168.';
+    position_x.text = '0.0';
+    position_y.text = '0.0';
+    // _timer = Timer.periodic(Duration(milliseconds: 100), (timer) async {
+    //   setState(() {});
+    // });
+  }
+
+  @override
+  void dispose() {
+    // _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

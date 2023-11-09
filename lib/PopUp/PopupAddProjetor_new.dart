@@ -13,7 +13,7 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const String heroAddProjector = 'popupProjector';
+const String heroAddProjectorNew = 'popupProjectorNew';
 
 /// {@template add_todo_popup_card}
 /// Popup card to add a new [Todo]. Should be used in conjuction with
@@ -21,14 +21,14 @@ const String heroAddProjector = 'popupProjector';
 ///
 /// Uses a [Hero] with tag [_heroAddTodo].
 /// {@endtemplate}
-class PopupAddProjector extends StatefulWidget {
+class PopupAddProjectorNew extends StatefulWidget {
   /// {@macro add_todo_popup_card}
 
   @override
-  State<PopupAddProjector> createState() => _PopupAddProjectorState();
+  State<PopupAddProjectorNew> createState() => _PopupAddProjectorNewState();
 }
 
-class _PopupAddProjectorState extends State<PopupAddProjector> {
+class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   // late Future<int> _counter;
   late Future<Projector> projector;
@@ -60,6 +60,7 @@ class _PopupAddProjectorState extends State<PopupAddProjector> {
       return default_projector;
     }
   }
+
   Future<void> setNewProjector() async {
     final SharedPreferences prefs = await _prefs;
     final Projector new_projector = Projector(
@@ -99,43 +100,60 @@ class _PopupAddProjectorState extends State<PopupAddProjector> {
     final height = 550.0;
     return Center(
       child: Hero(
-        tag: heroAddProjector,
-        createRectTween: (begin, end) {
-          return CustomRectTween(begin: begin, end: end);
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('SharedPreferences Demo'),
+          tag: heroAddProjectorNew,
+          createRectTween: (begin, end) {
+            return CustomRectTween(begin: begin, end: end);
+          },
+          child: Material(
+            child: Container(
+              width: width,
+              height: height,
+              decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(30)),
+              child: Stack(
+                  children: [
+                FutureBuilder<Projector>(
+                    future: projector,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<Projector> projector_snapshot) {
+                      switch (projector_snapshot.connectionState) {
+                        case ConnectionState.none:
+                        case ConnectionState.waiting:
+                          return const CircularProgressIndicator();
+                        case ConnectionState.active:
+                        case ConnectionState.done:
+                          if (projector_snapshot.hasError) {
+                            return Text('Error: ${projector_snapshot.error}');
+                          } else {
+                            return Text(
+                              '${projector_snapshot.data?.toJson().toString()}',
+                            );
+                          }
+                      }
+                    }),
+                Positioned(
+                  bottom: 0
+                  ,
+                  child: GestureDetector(
+                    onTap: setNewProjector,
+                    child: Container(
+                      width: 100,
+                      height: 50,
+                      child: Icon(Icons.add),
+                    ),
+                  ),
+                ),
+                  ],
+                ),
+                // floatingActionButton: FloatingActionButton(
+                //   onPressed: setNewProjector,
+                //   tooltip: 'Increment',
+                //   child: const Icon(Icons.add),
+                // ),
+              ),
           ),
-          body: Center(
-            //     child: Text(projector.toJson().toString()),
-            // ),
-              child: FutureBuilder<Projector>(
-                  future: projector,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<Projector> projector_snapshot) {
-                    switch (projector_snapshot.connectionState) {
-                      case ConnectionState.none:
-                      case ConnectionState.waiting:
-                        return const CircularProgressIndicator();
-                      case ConnectionState.active:
-                      case ConnectionState.done:
-                        if (projector_snapshot.hasError) {
-                          return Text('Error: ${projector_snapshot.error}');
-                        } else {
-                          return Text(
-                            '${projector_snapshot.data?.toJson().toString()}',
-                          );
-                        }
-                    }
-                  })),
-          floatingActionButton: FloatingActionButton(
-            onPressed: setNewProjector,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
           ),
-        ),
-      ),
     );
   }
 }
