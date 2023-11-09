@@ -39,7 +39,7 @@ class _HeaderState extends State<Header> {
                   Icon(
                     Icons.door_sliding,
                     size: 25,
-                    color: AppColors.gray,
+                    color: AppColors.grey,
                   ),
                   SizedBox(
                     width: SizeConfig.blockSizeVertical,

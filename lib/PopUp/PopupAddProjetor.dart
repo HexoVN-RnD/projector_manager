@@ -1,16 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
-import 'package:responsive_dashboard/config/responsive.dart';
-import 'package:responsive_dashboard/config/size_config.dart';
-import 'package:responsive_dashboard/dashboard.dart';
-import 'package:responsive_dashboard/data/data.dart';
+import 'package:responsive_dashboard/new_component/MyDropBar.dart';
 import 'package:responsive_dashboard/new_component/MyTextField.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
-import 'package:valuable/valuable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const String heroAddProjector = 'popupProjector';
 
@@ -28,10 +29,11 @@ class PopupAddProjector extends StatefulWidget {
 }
 
 class _PopupAddProjectorState extends State<PopupAddProjector> {
-  final idEditing = TextEditingController();
-  final infoEditing = TextEditingController();
+  final nameEditing = TextEditingController();
+  final ipEditing = TextEditingController();
   final port = 3002 ;
-  final position = Offset(0.393 , 0.138) ;
+  final position_x = TextEditingController();
+  final position_y = TextEditingController();
   final UsernameAndPassword = 'admin' ;
   final type = 'PJLink' ;
   final power_status_button = false ;
@@ -43,33 +45,133 @@ class _PopupAddProjectorState extends State<PopupAddProjector> {
   final lamp_hours =0;
   final status = 0 ;
   final color_state =  false;
-  // Timer? _timer;
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  // late Future<int> _counter;
+  late Future<Projector> projector;
+  final Future<Projector> default_projector = Future.value(Projector(
+      ip: '192.168.0.0',
+      name: 'name',
+      port: 3002,
+      UsernameAndPassword: 'UsernameAndPassword',
+      type: 'type',
+      power_status_button: false,
+      shutter_status_button: false,
+      power_status: false,
+      shutter_status: false,
+      lamp_hours: 0,
+      status: 0,
+      connected: false,
+      position_x: 0.5,
+      position_y: 0.5,
+      color_state: false,
+      isOnHover: false));
+
+  Future<Projector> getProjector(String key) async {
+    final SharedPreferences prefs = await _prefs;
+    final String? jsonString = prefs.getString(key);
+    if (jsonString != null) {
+      final Map<String, dynamic> jsonMap = json.decode(jsonString);
+      return Projector.fromJson(jsonMap);
+    } else {
+      return default_projector;
+    }
+  }
+  Future<void> setNewProjector() async {
+    final SharedPreferences prefs = await _prefs;
+    final Projector new_projector = Projector(
+        ip: '192.168.3.3',
+        name: 'Christie',
+        port: 3002,
+        UsernameAndPassword: 'admin',
+        type: 'PJLink',
+        power_status_button: false,
+        shutter_status_button: false,
+        power_status: false,
+        shutter_status: false,
+        lamp_hours: 0,
+        status: 0,
+        connected: false,
+        position_x: 0.0,
+        position_y: 0.0,
+        color_state: false,
+        isOnHover: false);
+
+    setState(() {
+      projector = Future.value(new_projector);
+      prefs.setString('projector_1', json.encode(new_projector.toJson()));
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    // _timer = Timer.periodic(Duration(milliseconds: 100), (timer) async {
-    //   setState(() {});
-    // });
+    // projector = default_projector;
+    projector = getProjector('projector_1');
   }
 
-  @override
-  void dispose() {
-    // _timer?.cancel();
-    super.dispose();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   nameEditing.text = 'Projector ';
+  //   ipEditing.text = '192.168.';
+  //   position_x.text = '0.0';
+  //   position_y.text = '0.0';
+  //   // _timer = Timer.periodic(Duration(milliseconds: 100), (timer) async {
+  //   //   setState(() {});
+  //   // });
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   // _timer?.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final width = SizeConfig.screenWidth - 200;
-    final height = width * 1050 / 1920;
+    final width = 1100.0;
+    final height = 550.0;
     return Center(
       child: Hero(
         tag: heroAddProjector,
         createRectTween: (begin, end) {
           return CustomRectTween(begin: begin, end: end);
         },
-        child: SingleChildScrollView(
+        child:
+        // Scaffold(
+        //   appBar: AppBar(
+        //     title: const Text('SharedPreferences Demo'),
+        //   ),
+        //   body: Center(
+        //     //     child: Text(projector.toJson().toString()),
+        //     // ),
+        //       child: FutureBuilder<Projector>(
+        //           future: projector,
+        //           builder: (BuildContext context,
+        //               AsyncSnapshot<Projector> projector_snapshot) {
+        //             switch (projector_snapshot.connectionState) {
+        //               case ConnectionState.none:
+        //               case ConnectionState.waiting:
+        //                 return const CircularProgressIndicator();
+        //               case ConnectionState.active:
+        //               case ConnectionState.done:
+        //                 if (projector_snapshot.hasError) {
+        //                   return Text('Error: ${projector_snapshot.error}');
+        //                 } else {
+        //                   return Text(
+        //                     '${projector_snapshot.data?.toJson().toString()}',
+        //                   );
+        //                 }
+        //             }
+        //           })),
+        //   floatingActionButton: FloatingActionButton(
+        //     onPressed: setNewProjector,
+        //     tooltip: 'Increment',
+        //     child: const Icon(Icons.add),
+        //   ),
+        // ),
+
+        SingleChildScrollView(
           child: Container(
             width: width,
             height: height,
@@ -93,7 +195,33 @@ class _PopupAddProjectorState extends State<PopupAddProjector> {
                           ),
                         ),
                         onPressed: () {
-                          setState(() {
+                          setState(() async {
+                            Projector projector = Projector(
+                              ip: ipEditing.text,
+                              name: nameEditing.text,
+                              position_x: double.parse(position_x.text) ?? 0.0,
+                              position_y: double.parse(position_y.text) ?? 0.0,
+                              port: type == '4352'
+                                  ? 4352
+                                  : type == '3002'
+                                      ? 3002
+                                      : 0000,
+                              UsernameAndPassword: 'admin',
+                              type: type,
+                              power_status_button: false,
+                              shutter_status_button: false,
+                              power_status: false,
+                              shutter_status: false,
+                              connected: false,
+                              isOnHover: false,
+                              lamp_hours: 0,
+                              status: 0,
+                              color_state: false,
+                            );
+
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.setString('projectorKey',
+                                json.encode(projector.toJson()));
                             print('save');
                           });
                         },
@@ -164,34 +292,68 @@ class _PopupAddProjectorState extends State<PopupAddProjector> {
                                   fontWeight: FontWeight.w500,
                                 )),
                             MyTextField(
-                              textEditing: idEditing,
+                              textEditing: nameEditing,
                               textLable: 'Projector\'s Name',
                               textHint: 'Christie',
                             ),
                             MyTextField(
-                              textEditing: infoEditing,
+                              textEditing: ipEditing,
                               textLable: 'IP',
                               textHint: '192.168.0.1',
                             ),
-                            MyTextField(
-                              textEditing: infoEditing,
-                              textLable: 'Port',
-                              textHint: '3002',
+                            // Container(
+                            //     margin: EdgeInsets.only(left: 20),
+                            //     child: PrimaryText(
+                            //       text: 'Port',
+                            //       fontWeight: FontWeight.w300,
+                            //       size: 14,
+                            //     )),
+                            // MyDropBar(
+                            //   dropdownMenu: port,
+                            //   defaultValue: '4352',
+                            //   items: [
+                            //     DropdownMenuItem<String>(
+                            //         value: '4352', child: Text('4352')),
+                            //     DropdownMenuItem<String>(
+                            //         value: '3002', child: Text('3002'))
+                            //   ],
+                            // ),
+                            Container(
+                                margin: EdgeInsets.only(left: 20),
+                                child: PrimaryText(
+                                  text: 'Command Type',
+                                  fontWeight: FontWeight.w300,
+                                  size: 14,
+                                )),
+                            MyDropBar(
+                              dropdownMenu: type,
+                              defaultValue: 'PJLink',
+                              items: [
+                                DropdownMenuItem<String>(
+                                    value: 'PJLink', child: Text('PJLink')),
+                                DropdownMenuItem<String>(
+                                    value: 'TCPIP', child: Text('TCPIP')),
+                              ],
                             ),
-                            MyTextField(
-                              textEditing: infoEditing,
-                              textLable: 'Type',
-                              textHint: 'PJLink',
-                            ),
-                            MyTextField(
-                              textEditing: infoEditing,
-                              textLable: 'Position-x in map',
-                              textHint: '0.1',
-                            ),
-                            MyTextField(
-                              textEditing: infoEditing,
-                              textLable: 'Position-y in map',
-                              textHint: '0.2',
+                            Row(
+                              children: [
+                                MyTextField(
+                                  width: 230,
+                                  textEditing: position_x,
+                                  textLable: 'Position-x in map',
+                                  textHint: '0.0',
+                                  onChanged: (value) {},
+                                ),
+                                // Expanded(child: SizedBox()),
+                                Expanded(
+                                  child: MyTextField(
+                                    textEditing: position_y,
+                                    textLable: 'Position-y in map',
+                                    textHint: '0.0',
+                                    onChanged: (value) {},
+                                  ),
+                                ),
+                              ],
                             ),
                             // MyTextField(
                             //   textEditing: idEditing,

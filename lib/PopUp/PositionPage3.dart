@@ -43,8 +43,8 @@ class _PositionPage3State extends State<PositionPage3> {
     double width = widget.width;
     double height = widget.height;
     return Positioned(
-      left: width * projector.position.dx,
-      top: height * projector.position.dy,
+      left: width * projector.position_x,
+      top: height * projector.position_y,
       // left: width * 0.2295,
       // top: height * 0.15,
       width: width * 0.02,

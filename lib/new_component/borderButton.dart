@@ -4,7 +4,7 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
 class BorderButton extends StatefulWidget {
-  late Color backgroundColor = AppColors.gray;
+  late Color backgroundColor = AppColors.grey;
   late Color textColor = AppColors.white;
   double height = 40;
   double width = 60;

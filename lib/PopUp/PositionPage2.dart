@@ -42,8 +42,8 @@ class _PositionPage2State extends State<PositionPage2> {
     double width = widget.width;
     double height = widget.height;
     return Positioned(
-      left: width * server.position.dx,
-      top: height * server.position.dy,
+      left: width * server.position_x,
+      top: height * server.position_y,
       width: width * 0.009,
       height: height * 0.09,
       child: Container(

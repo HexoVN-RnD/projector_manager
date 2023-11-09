@@ -124,8 +124,8 @@ class _PopupZoomState extends State<PopupZoom> {
                       children: List.generate(
                         room.projectors.length,
                             (index) => Positioned(
-                          left: width * room.projectors[index].position.dx,
-                          top: height * room.projectors[index].position.dy,
+                          left: width * room.projectors[index].position_x,
+                          top: height * room.projectors[index].position_y,
                           // left: width * 0.445,
                           // top: height * 0.49,
                           width: width * 0.018,
@@ -141,8 +141,8 @@ class _PopupZoomState extends State<PopupZoom> {
                       children: List.generate(
                         room.leds.length,
                             (index) => Positioned(
-                          left: width * room.leds[index].position.dx,
-                          top: height * room.leds[index].position.dy,
+                          left: width * room.leds[index].position_x,
+                          top: height * room.leds[index].position_y,
                           // left: width * 0.725,
                           // top: height * 0.125,
                           width: width * 0.016,
@@ -165,8 +165,8 @@ class _PopupZoomState extends State<PopupZoom> {
                   children: List.generate(
                     room.projectors.length,
                     (index) => Positioned(
-                      left: width * room.projectors[index].position.dx,
-                      top: height * room.projectors[index].position.dy,
+                      left: width * room.projectors[index].position_x,
+                      top: height * room.projectors[index].position_y,
                       width: width * 0.0095,
                       height: width * 0.0095,
                       child: Container(
@@ -183,8 +183,8 @@ class _PopupZoomState extends State<PopupZoom> {
                       children: List.generate(
                         room.projectors.length,
                         (index) => Positioned(
-                          left: width * room.projectors[index].position.dx,
-                          top: height * room.projectors[index].position.dy,
+                          left: width * room.projectors[index].position_x,
+                          top: height * room.projectors[index].position_y,
                           width: width * 0.018,
                           height: width * 0.018,
                           child: Container(
@@ -198,8 +198,8 @@ class _PopupZoomState extends State<PopupZoom> {
                       children: List.generate(
                         room.sensors.length,
                         (index) => Positioned(
-                          left: width * room.sensors[index].position.dx,
-                          top: height * room.sensors[index].position.dy,
+                          left: width * room.sensors[index].position_x,
+                          top: height * room.sensors[index].position_y,
                           // left: width * 0.555,
                           // top: height * 0.858,
                           width: width * 0.016,
@@ -224,8 +224,8 @@ class _PopupZoomState extends State<PopupZoom> {
                       children: List.generate(
                         room.projectors.length,
                         (index) => Positioned(
-                          left: width * room.projectors[index].position.dx,
-                          top: height * room.projectors[index].position.dy,
+                          left: width * room.projectors[index].position_x,
+                          top: height * room.projectors[index].position_y,
                           width: width * 0.012,
                           height: width * 0.012,
                           child: Container(
@@ -236,8 +236,8 @@ class _PopupZoomState extends State<PopupZoom> {
                       ),
                     ),
                     Positioned(
-                      left: width * room.servers[0].position.dx,
-                      top: height * room.servers[0].position.dy,
+                      left: width * room.servers[0].position_x,
+                      top: height * room.servers[0].position_y,
                       // left: width * 0.448,
                       // top: height * 0.45,
                       width: width * 0.1,
@@ -269,8 +269,8 @@ class _PopupZoomState extends State<PopupZoom> {
                   children: List.generate(
                     room.servers.length,
                     (index) => Positioned(
-                      left: width * room.servers[index].position.dx,
-                      top: height * room.servers[index].position.dy,
+                      left: width * room.servers[index].position_x,
+                      top: height * room.servers[index].position_y,
                       width: width * 0.009,
                       height: height * 0.09,
                       child: Container(

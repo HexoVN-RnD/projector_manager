@@ -11,7 +11,8 @@ class Server {
     String mac_address;
     String password;
     bool power_status;
-    Offset position;
+    double position_x;
+    double position_y;
     double volume;
     bool connected;
     bool isOnHover;
@@ -26,7 +27,8 @@ class Server {
         required this.power_port,
         required this.mac_address,
         required this.password,
-        required this.position,
+        required this.position_x,
+        required this.position_y,
         required this.power_status,
         required this.volume,
         required this.connected,

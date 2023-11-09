@@ -91,7 +91,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
               text: room.resolume? 'Kiểm tra tín hiệu server'.toUpperCase(): 'Kiểm tra tín hiệu Bright Sign'.toUpperCase(),
               size: 16,
               fontWeight: FontWeight.w500,
-              color: AppColors.iconDeepGray,
+              color: AppColors.iconDeepGrey,
             ),
           ),
           SizedBox(
@@ -117,7 +117,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
                 text: 'Kiểm tra tín hiệu cảm biến'.toUpperCase(),
                 size: 16,
                 fontWeight: FontWeight.w500,
-                color: AppColors.iconDeepGray,
+                color: AppColors.iconDeepGrey,
               ),
             ),
             SizedBox(
@@ -145,7 +145,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
                 text: 'Kiểm tra tín hiệu màn led'.toUpperCase(),
                 size: 16,
                 fontWeight: FontWeight.w500,
-                color: AppColors.iconDeepGray,
+                color: AppColors.iconDeepGrey,
               ),
             ),
             SizedBox(
@@ -172,7 +172,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             text: 'Kiểm tra tín hiệu máy chiếu'.toUpperCase(),
             size: 16,
             fontWeight: FontWeight.w500,
-            color: AppColors.iconDeepGray,
+            color: AppColors.iconDeepGrey,
           ),
         ],
       ),

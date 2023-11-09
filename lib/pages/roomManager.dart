@@ -134,6 +134,7 @@ class _RoomManagerState extends State<RoomManager> {
                     SizedBox(
                       height: SizeConfig.blockSizeVertical * 2,
                     ),
+                    /// Preset
                     if (room.presets.length != 0)
                       Column(
                         children: [
@@ -144,7 +145,7 @@ class _RoomManagerState extends State<RoomManager> {
                                 Icon(
                                   Icons.movie_filter,
                                   size: 25,
-                                  color: AppColors.gray,
+                                  color: AppColors.grey,
                                 ),
                                 SizedBox(
                                   width: SizeConfig.blockSizeVertical,
@@ -152,7 +153,7 @@ class _RoomManagerState extends State<RoomManager> {
                                 PrimaryText(
                                     text: 'Nội dung'.toUpperCase(),
                                     size: 20,
-                                    color: AppColors.gray,
+                                    color: AppColors.grey,
                                     fontWeight: FontWeight.w500),
                               ],
                             ),
@@ -161,7 +162,7 @@ class _RoomManagerState extends State<RoomManager> {
                             padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                             margin: EdgeInsets.fromLTRB(0, 20, 0, 30),
                             decoration: BoxDecoration(
-                              color: AppColors.gray,
+                              color: AppColors.grey,
                               borderRadius: BorderRadius.circular(30),
                             ),
                             child: Column(
@@ -324,6 +325,7 @@ class _RoomManagerState extends State<RoomManager> {
                           ),
                         ],
                       ),
+                    /// Map
                     Column(
                       children: [
                         MiniMap(
@@ -452,7 +454,7 @@ class _RoomManagerState extends State<RoomManager> {
                         ),
                       ],
                     ),
-                    //List server
+                    /// Server
                     if (room.resolume)
                       Column(children: [
                         SizedBox(
@@ -462,14 +464,14 @@ class _RoomManagerState extends State<RoomManager> {
                               Icon(
                                 Icons.airplay,
                                 size: 25,
-                                color: AppColors.gray,
+                                color: AppColors.grey,
                               ),
                               SizedBox(
                                 width: SizeConfig.blockSizeVertical,
                               ),
                               PrimaryText(
                                   text: 'Quản lý server'.toUpperCase(),
-                                  color: AppColors.gray,
+                                  color: AppColors.grey,
                                   size: 20,
                                   fontWeight: FontWeight.w500),
                             ],
@@ -496,6 +498,7 @@ class _RoomManagerState extends State<RoomManager> {
                     // if (current_page != 0 &&
                     //     current_page != 1 &&
                     //     current_page != 2)
+                    /// Projector
                     Column(
                       children: [
                         SizedBox(
@@ -511,7 +514,7 @@ class _RoomManagerState extends State<RoomManager> {
                               ),
                               PrimaryText(
                                   text: 'Quản lý máy chiếu'.toUpperCase(),
-                                  color: AppColors.gray,
+                                  color: AppColors.grey,
                                   size: 20,
                                   fontWeight: FontWeight.w500),
                             ],
@@ -536,7 +539,7 @@ class _RoomManagerState extends State<RoomManager> {
                                 children: [
                                   PrimaryText(
                                     text: "Bật/tắt toàn bộ máy chiếu",
-                                    color: AppColors.gray,
+                                    color: AppColors.grey,
                                     size: 18,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -553,7 +556,7 @@ class _RoomManagerState extends State<RoomManager> {
                                         backgroundColor:
                                             room.power_room_projectors
                                                 ? AppColors.navy_blue
-                                                : AppColors.gray,
+                                                : AppColors.grey,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(20),
@@ -589,7 +592,7 @@ class _RoomManagerState extends State<RoomManager> {
                                             backgroundColor:
                                                 !room.power_room_projectors
                                                     ? AppColors.red
-                                                    : AppColors.gray,
+                                                    : AppColors.grey,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(20),
@@ -628,7 +631,7 @@ class _RoomManagerState extends State<RoomManager> {
                                 children: [
                                   PrimaryText(
                                     text: "Bật/tắt toàn bộ màn chập",
-                                    color: AppColors.gray,
+                                    color: AppColors.grey,
                                     size: 18,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -645,7 +648,7 @@ class _RoomManagerState extends State<RoomManager> {
                                         backgroundColor:
                                             room.shutter_room_projectors
                                                 ? AppColors.navy_blue
-                                                : AppColors.gray,
+                                                : AppColors.grey,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(20),
@@ -681,7 +684,7 @@ class _RoomManagerState extends State<RoomManager> {
                                             backgroundColor:
                                                 !room.shutter_room_projectors
                                                     ? AppColors.red
-                                                    : AppColors.gray,
+                                                    : AppColors.grey,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(20),

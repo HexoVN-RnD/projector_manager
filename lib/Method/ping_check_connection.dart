@@ -147,7 +147,7 @@ Future<void> checkAllRoomConnection(int time) async {
       for (Projector projector in room.projectors) {
         await Future.delayed(Duration(milliseconds: time ~/ length));
         checkConnectionProjector(projector);
-        if (projector.type == 'Christie') {
+        if (projector.type == 'TCPIP') {
           String response = sendTCPIPCommandStatus(projector);
           //print(response);
         } else {
@@ -184,7 +184,7 @@ Future<void> checkFullConnection(int time) async {
       for (Projector projector in room.projectors) {
         await Future.delayed(Duration(milliseconds: time ~/ length));
         checkConnectionProjector(projector);
-        if (projector.type == 'Christie') {
+        if (projector.type == 'TCPIP') {
           String response = sendTCPIPCommandStatus(projector);
           //print(response);
         } else {
@@ -210,7 +210,7 @@ Future<void> checkRoomProjectorConnection(Room room, int time) async {
       await Future.delayed(
           Duration(milliseconds: time ~/ room.projectors.length));
       checkConnectionProjector(projector);
-      if (projector.type == 'Christie') {
+      if (projector.type == 'TCPIP') {
         String response = sendTCPIPCommandStatus(projector);
         //print(response);
       } else {

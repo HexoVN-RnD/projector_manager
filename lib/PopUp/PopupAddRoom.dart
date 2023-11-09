@@ -47,8 +47,8 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
 
   @override
   Widget build(BuildContext context) {
-    final width = SizeConfig.screenWidth - 200;
-    final height = width * 1050 / 1920;
+    final width = 600.0;
+    final height = 370.0;
     return Center(
       child: Hero(
         tag: heroAddRoom,
@@ -66,8 +66,8 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
               Positioned(
                 width: 190,
                 height: 60,
-                bottom: 20,
-                right: 20,
+                bottom: 30,
+                right: 40,
                 child: Row(
                   children: [
                     Expanded(
@@ -123,11 +123,11 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
                   ],
                 ),
               ),
-              Positioned(
-                  width: 500,
-                  child: Container(
-                      padding: EdgeInsets.all(30),
-                      child: Image.asset('assets/Icon/projector.png'))),
+              // Positioned(
+              //     width: 500,
+              //     child: Container(
+              //         padding: EdgeInsets.all(30),
+              //         child: Image.asset('assets/Icon/projector.png'))),
               Positioned(
                   width: 600,
                   // height: 900,

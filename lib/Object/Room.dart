@@ -8,10 +8,10 @@ import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:valuable/valuable.dart';
 
 class Room {
-   bool power_room_projectors;
-   bool shutter_room_projectors;
-   bool isSelectedPlay;
-   bool isSelectedStop;
+  bool power_room_projectors;
+  bool shutter_room_projectors;
+  bool isSelectedPlay;
+  bool isSelectedStop;
   String nameUI;
   String nameDatabase;
   String map;
@@ -52,7 +52,7 @@ class Room {
   void setRoomVolume() async {
     // List<Document> allVolume =
     roomVolumeFB = await roomVolumeCollection.orderBy(nameDatabase).get();
-    final getData =  roomVolumeFB.map((volume) {
+    final getData = roomVolumeFB.map((volume) {
       roomVolumeId = volume.id;
       // print('roomVolumeId: ${roomVolumeId.getValue()}');
       final checkVolume = volume[nameDatabase].toString();
@@ -61,8 +61,7 @@ class Room {
     });
     print('roomVolume: ${getData.first}');
     for (Server server in servers) {
-      server.volume
-          =(double.tryParse(getData.first) ?? 0.0);
+      server.volume = (double.tryParse(getData.first) ?? 0.0);
       // print('roomVolume: ${server.volume.getValue()}');
     }
     // return check.toString();
@@ -72,7 +71,7 @@ class Room {
     // roomVolumeId = allVolume.id;
     await roomVolumeCollection.document(roomVolumeId).update({
       // await roomVolumeCollection.document(roomVolumeId!).update({
-      nameDatabase : roomVolumeValue,
+      nameDatabase: roomVolumeValue,
       //   'volumeP3' : roomVolumeValue,
     });
   }

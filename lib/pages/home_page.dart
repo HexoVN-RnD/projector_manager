@@ -144,7 +144,7 @@ class _HomePage extends State<HomePage> {
                 Icon(
                   Icons.tune,
                   size: 30,
-                  color: AppColors.gray,
+                  color: AppColors.grey,
                 ),
                 SizedBox(
                   width: SizeConfig.blockSizeVertical,
@@ -197,7 +197,7 @@ class _HomePage extends State<HomePage> {
               padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
               margin: EdgeInsets.fromLTRB(0, 20, 0, 30),
               decoration: BoxDecoration(
-                color: AppColors.gray,
+                color: AppColors.grey,
                 borderRadius: BorderRadius.circular(30),
               ),
               child: Column(

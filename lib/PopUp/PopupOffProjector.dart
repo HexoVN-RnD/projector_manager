@@ -52,7 +52,7 @@ class _PopupOffProjectorState extends State<PopupOffProjector> {
                       child: PrimaryText(
                         text: 'Bạn chắc chắn muốn tắt toàn bộ máy chiếu?',
                         size: 16,
-                        color: AppColors.gray,
+                        color: AppColors.grey,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -67,7 +67,7 @@ class _PopupOffProjectorState extends State<PopupOffProjector> {
                             margin: EdgeInsets.fromLTRB(10, 0, 10, 5),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.gray,
+                                backgroundColor: AppColors.grey,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30),
                                 ),

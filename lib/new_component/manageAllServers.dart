@@ -48,14 +48,14 @@ class _ManageAllServersState extends State<ManageAllServers> {
               Icon(
                 Icons.airplay,
                 size: 30,
-                color: AppColors.gray,
+                color: AppColors.grey,
               ),
               SizedBox(
                 width: SizeConfig.blockSizeHorizontal,
               ),
               PrimaryText(
                 text: 'Quản lý servers',
-                color: AppColors.gray,
+                color: AppColors.grey,
                 size: 20,
                 fontWeight: FontWeight.w600,
               ),
@@ -80,7 +80,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
               children: [
                 PrimaryText(
                   text: "Bật/tắt toàn bộ servers",
-                  color: AppColors.gray,
+                  color: AppColors.grey,
                   size: 18,
                   fontWeight: FontWeight.w500,
                 ),
@@ -96,7 +96,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: allRooms.power_all_servers
                           ? AppColors.navy_blue
-                          : AppColors.gray,
+                          : AppColors.grey,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -129,7 +129,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
                           backgroundColor:
                               !allRooms.power_all_servers
                                   ? AppColors.red
-                                  : AppColors.gray,
+                                  : AppColors.grey,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),

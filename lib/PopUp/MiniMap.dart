@@ -127,8 +127,8 @@ class _MiniMapState extends State<MiniMap> {
                   children: List.generate(
                     room.leds.length,
                         (index) => Positioned(
-                      left: width * room.leds[index].position.dx,
-                      top: height * room.leds[index].position.dy,
+                      left: width * room.leds[index].position_x,
+                      top: height * room.leds[index].position_y,
                       // left: width * 0.28,
                       // top: height * 0.4,
                       width: width * 0.016,
@@ -171,10 +171,10 @@ class _MiniMapState extends State<MiniMap> {
                     children: List.generate(
                       room.sensors.length,
                       (index) => Positioned(
-                        // left: width * room.projectors[index].position.dx,
-                        // top: height * room.projectors[index].position.dy,
-                        left: width * room.sensors[index].position.dx,
-                        top: height * room.sensors[index].position.dy,
+                        // left: width * room.projectors[index].position_x,
+                        // top: height * room.projectors[index].position_y,
+                        left: width * room.sensors[index].position_x,
+                        top: height * room.sensors[index].position_y,
                         width: width * 0.018,
                         height: width * 0.018,
                         child: Container(
@@ -202,8 +202,8 @@ class _MiniMapState extends State<MiniMap> {
                   ),
                 ),
                 Positioned(
-                  left: width * room.servers[0].position.dx,
-                  top: height * room.servers[0].position.dy,
+                  left: width * room.servers[0].position_x,
+                  top: height * room.servers[0].position_y,
                   // left: width * 0.448,
                   // top: height * 0.45,
                   width: width * 0.1,

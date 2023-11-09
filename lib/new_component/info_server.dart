@@ -96,7 +96,7 @@ class _InfoServer extends State<InfoServer> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: server.power_status 
                         ? AppColors.navy_blue
-                        : AppColors.gray,
+                        : AppColors.grey,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -122,7 +122,7 @@ class _InfoServer extends State<InfoServer> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: server.power_status 
-                          ? AppColors.gray
+                          ? AppColors.grey
                           : AppColors.red,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),

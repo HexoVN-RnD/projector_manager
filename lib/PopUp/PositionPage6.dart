@@ -43,8 +43,8 @@ class _PositionPage6State extends State<PositionPage6> {
     double width = widget.width;
     double height = widget.height;
     return Positioned(
-      left: width * projector.position.dx,
-      top: height * projector.position.dy,
+      left: width * projector.position_x,
+      top: height * projector.position_y,
       width: width * 0.012,
       height: width * 0.012,
       child: Container(

@@ -7,6 +7,7 @@ class MyTextField extends StatefulWidget {
   TextEditingController textEditing;
   String textLable;
   String textHint;
+  Function(String?)? onChanged;
 
   MyTextField({
     this.width,
@@ -14,6 +15,7 @@ class MyTextField extends StatefulWidget {
     required this.textEditing,
     required this.textLable,
     required this.textHint,
+    this.onChanged,
   });
   @override
   State<MyTextField> createState() => _MyTextFieldState();
@@ -38,29 +40,40 @@ class _MyTextFieldState extends State<MyTextField>
             return 'This value cannot empty';
           }
         },
-        onTap: () {
+        onChanged: widget.onChanged ?? (value) {
           setState(() {
+            // print(widget.textEditing.text);
           });
         },
+        // style: TextStyle(color: AppColors.navy_blue),
         decoration: InputDecoration(
           hintText: widget.textHint,
           labelText: widget.textLable,
+          labelStyle: TextStyle(color: AppColors.grey),
           // prefixIcon: Icon(Icons.mail),
           // icon: Icon(Icons.mail),
           suffixIcon: widget.textEditing.text.isEmpty
               ? Container(width: 0)
               : IconButton(
-                  icon: Icon(Icons.close),
-                  splashRadius:1,
+                  icon: Icon(Icons.close, color: AppColors.navy_blue,),
+                  splashRadius: 1,
                   // splashColor: Colors.transparent,
-                  onPressed: () => widget.textEditing.clear(),
+                  onPressed: () {
+                    setState(() {
+                      widget.textEditing.clear();
+                    });
+                  },
                 ),
-          border: OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.navy_blue),
+              borderRadius: BorderRadius.circular(20)),
+          border: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.green),
               borderRadius: BorderRadius.circular(20)),
         ),
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.done,
+
         // autofocus: true,
       ),
     );
