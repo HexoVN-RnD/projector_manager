@@ -67,3 +67,9 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+Future<void> clearSharedPreferences() async {
+  final SharedPreferences new_prefs = await prefs;
+  new_prefs.clear();
+  print('SharedPreferences cleared.');
+}

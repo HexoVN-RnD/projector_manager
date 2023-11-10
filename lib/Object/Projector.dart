@@ -84,55 +84,95 @@ class Projector {
     );
   }
 }
+//
+// Future<Projector> getProjector(String keyPrefix) async {
+//   final prefs = await SharedPreferences.getInstance();
+//   final projectorJson = prefs.getString(keyPrefix);
+//   if (projectorJson != null) {
+//     final Map<String, dynamic> projectorMap = json.decode(projectorJson);
+//     return Projector.fromJson(
+//         projectorMap); // You need to implement fromJson constructor in your Projector class
+//   } else {
+//     // Handle the case where no projector is stored
+//     throw Exception('No projector found in SharedPreferences');
+//   }
+// }
+//
+// Future<void> saveProjector(Projector projector, String keyPrefix) async {
+//   final prefs = await SharedPreferences.getInstance();
+//   prefs.setString(keyPrefix, json.encode(projector.toJson()));
+// }
+//
+// Future<void> updateProjector(
+//     Projector updatedProjector, String keyPrefix) async {
+//   final prefs = await SharedPreferences.getInstance();
+//   prefs.setString(keyPrefix, json.encode(updatedProjector.toJson()));
+// }
+//
+// Future<void> deleteProjector(String keyPrefix) async {
+//   final prefs = await SharedPreferences.getInstance();
+//   prefs.remove(keyPrefix);
+// }
+final Future<Projector> default_projector = Future.value(Projector(
+    ip: '192.168.0.0',
+    name: 'Projector',
+    port: 3002,
+    UsernameAndPassword: 'admin',
+    type: 'PJlink',
+    power_status_button: false,
+    shutter_status_button: false,
+    power_status: false,
+    shutter_status: false,
+    lamp_hours: 0,
+    status: 0,
+    connected: false,
+    position_x: 0.0,
+    position_y: 0.0,
+    color_state: false,
+    isOnHover: false));
 
-Future<Projector> getProjector(String keyPrefix) async {
-  final prefs = await SharedPreferences.getInstance();
-  final projectorJson = prefs.getString(keyPrefix);
-  if (projectorJson != null) {
-    final Map<String, dynamic> projectorMap = json.decode(projectorJson);
-    return Projector.fromJson(
-        projectorMap); // You need to implement fromJson constructor in your Projector class
+Future<Projector> getProjector(String key) async {
+  final SharedPreferences new_prefs = await prefs;
+  final String? jsonString = new_prefs.getString(key);
+  if (jsonString != null) {
+    final Map<String, dynamic> jsonMap = json.decode(jsonString);
+    return Projector.fromJson(jsonMap);
   } else {
-    // Handle the case where no projector is stored
-    throw Exception('No projector found in SharedPreferences');
+    return default_projector;
   }
 }
-
-Future<void> saveProjector(Projector projector, String keyPrefix) async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.setString(keyPrefix, json.encode(projector.toJson()));
+void setNewProjector(Projector new_projector, String new_key) async {
+  final SharedPreferences new_prefs = await prefs;
+  new_prefs.setString(new_key, json.encode(new_projector.toJson()));
+}
+void adjustProjector(Projector new_projector, String new_key) async {
+  final SharedPreferences new_prefs = await prefs;
+  new_prefs.setString(new_key, json.encode(new_projector.toJson()));
 }
 
-Future<void> updateProjector(
-    Projector updatedProjector, String keyPrefix) async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.setString(keyPrefix, json.encode(updatedProjector.toJson()));
+
+Future<Map<String, dynamic>> getAllDatabyKey(String keyword) async {
+  final SharedPreferences new_prefs = await prefs;
+  List<String> Keys = [];
+  Map<String, dynamic> allData = {};
+
+  Keys = new_prefs.getKeys().where((key) => key.startsWith(keyword)).toList();
+  for (var key in Keys) {
+    allData[key] = new_prefs.get(key);
+  }
+  return allData;
+  // print('Projector keys: $projectorKeys');
 }
 
-Future<void> deleteProjector(String keyPrefix) async {
-  final prefs = await SharedPreferences.getInstance();
-  prefs.remove(keyPrefix);
-}
+bool isIP(String value) {
+  // Regular expression for IPv4
+  final RegExp ipv4Regex =
+  RegExp(r'^(\d{1,3}\.){3}\d{1,3}$');
 
-Future<void> setNewProjector(Future<Projector> projector) async {
-  final SharedPreferences newprefs = await prefs;
-  final Projector new_projector = Projector(
-      ip: '192.168.3.3',
-      name: 'Christie',
-      port: 3002,
-      UsernameAndPassword: 'admin',
-      type: 'PJLink',
-      power_status_button: false,
-      shutter_status_button: false,
-      power_status: false,
-      shutter_status: false,
-      lamp_hours: 0,
-      status: 0,
-      connected: false,
-      position_x: 0.0,
-      position_y: 0.0,
-      color_state: false,
-      isOnHover: false);
-  projector = Future.value(new_projector);
-  newprefs.setString('projector_1', json.encode(new_projector.toJson()));
+  // Regular expression for IPv6
+  final RegExp ipv6Regex =
+  RegExp(r'^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$');
+
+  // Check if the value matches either IPv4 or IPv6 regex
+  return ipv4Regex.hasMatch(value) || ipv6Regex.hasMatch(value);
 }

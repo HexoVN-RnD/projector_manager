@@ -8,6 +8,7 @@ class MyTextField extends StatefulWidget {
   String textLable;
   String textHint;
   Function(String?)? onChanged;
+  String? Function(String?)? validator;
 
   MyTextField({
     this.width,
@@ -16,6 +17,7 @@ class MyTextField extends StatefulWidget {
     required this.textLable,
     required this.textHint,
     this.onChanged,
+    this.validator,
   });
   @override
   State<MyTextField> createState() => _MyTextFieldState();
@@ -35,7 +37,7 @@ class _MyTextFieldState extends State<MyTextField>
       margin: EdgeInsets.all(20),
       child: TextFormField(
         controller: widget.textEditing,
-        validator: (value) {
+        validator: widget.validator ?? (value) {
           if (value == null || value.isEmpty) {
             return 'This value cannot empty';
           }

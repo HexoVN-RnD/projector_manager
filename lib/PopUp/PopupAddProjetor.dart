@@ -46,37 +46,36 @@ class _PopupAddProjectorState extends State<PopupAddProjector> {
   final lamp_hours =0;
   final status = 0 ;
   final color_state =  false;
-
   // late Future<int> _counter;
   late Future<Projector> projector;
-  final Future<Projector> default_projector = Future.value(Projector(
-      ip: '192.168.0.0',
-      name: 'name',
-      port: 3002,
-      UsernameAndPassword: 'UsernameAndPassword',
-      type: 'type',
-      power_status_button: false,
-      shutter_status_button: false,
-      power_status: false,
-      shutter_status: false,
-      lamp_hours: 0,
-      status: 0,
-      connected: false,
-      position_x: 0.5,
-      position_y: 0.5,
-      color_state: false,
-      isOnHover: false));
-
-  Future<Projector> getProjector(String key) async {
-    final SharedPreferences new_prefs = await prefs;
-    final String? jsonString = new_prefs.getString(key);
-    if (jsonString != null) {
-      final Map<String, dynamic> jsonMap = json.decode(jsonString);
-      return Projector.fromJson(jsonMap);
-    } else {
-      return default_projector;
-    }
-  }
+  // final Future<Projector> default_projector = Future.value(Projector(
+  //     ip: '192.168.0.0',
+  //     name: 'name',
+  //     port: 3002,
+  //     UsernameAndPassword: 'UsernameAndPassword',
+  //     type: 'type',
+  //     power_status_button: false,
+  //     shutter_status_button: false,
+  //     power_status: false,
+  //     shutter_status: false,
+  //     lamp_hours: 0,
+  //     status: 0,
+  //     connected: false,
+  //     position_x: 0.5,
+  //     position_y: 0.5,
+  //     color_state: false,
+  //     isOnHover: false));
+  //
+  // Future<Projector> getProjector(String key) async {
+  //   final SharedPreferences new_prefs = await prefs;
+  //   final String? jsonString = new_prefs.getString(key);
+  //   if (jsonString != null) {
+  //     final Map<String, dynamic> jsonMap = json.decode(jsonString);
+  //     return Projector.fromJson(jsonMap);
+  //   } else {
+  //     return default_projector;
+  //   }
+  // }
 
 
   // @override

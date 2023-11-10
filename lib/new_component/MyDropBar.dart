@@ -58,10 +58,9 @@ class _MyDropBarState extends State<MyDropBar>
         style: TextStyle(color: AppColors.primary),
         borderRadius: BorderRadius.circular(20),
         underline: Container(),
-        onChanged: widget.onChanged?? (value){
+        onChanged: widget.onChanged ?? (value){
           setState(() {
             widget.dropdownMenu = value?? widget.defaultValue;
-            // print(widget.dropdownMenu);
           });
         },
         items: widget.items,
