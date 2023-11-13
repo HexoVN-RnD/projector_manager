@@ -29,7 +29,7 @@ class Room {
   List<Projector> projectors;
   List<Server> servers;
   List<Document> roomVolumeFB;
-  CollectionReference roomVolumeCollection;
+  // CollectionReference roomVolumeCollection;
   String roomVolumeId;
 
   // Constructor
@@ -50,7 +50,7 @@ class Room {
     required this.projectors,
     required this.servers,
     required this.roomVolumeFB,
-    required this.roomVolumeCollection,
+    // required this.roomVolumeCollection,
     required this.roomVolumeId,
   });
 
@@ -71,7 +71,7 @@ class Room {
         'projectors': projectors,
         'servers': servers,
         'roomVolumeFB': roomVolumeFB,
-        'roomVolumeCollection': roomVolumeCollection,
+        // 'roomVolumeCollection': roomVolumeCollection,
         'roomVolumeId': roomVolumeId,
       };
 
@@ -93,35 +93,35 @@ class Room {
         projectors: json['projectors'],
         servers: json['servers'],
         roomVolumeFB: json['roomVolumeFB'],
-        roomVolumeCollection: json['roomVolumeCollection'],
+        // roomVolumeCollection: json['roomVolumeCollection'],
         roomVolumeId: json['roomVolumeId']);
   }
-  void setRoomVolume() async {
-    // List<Document> allVolume =
-    roomVolumeFB = await roomVolumeCollection.orderBy(nameDatabase).get();
-    final getData = roomVolumeFB.map((volume) {
-      roomVolumeId = volume.id;
-      // print('roomVolumeId: ${roomVolumeId.getValue()}');
-      final checkVolume = volume[nameDatabase].toString();
-      // print('roomVolume: $checkVolume');
-      return checkVolume;
-    });
-    print('roomVolume: ${getData.first}');
-    for (Server server in servers) {
-      server.volume = (double.tryParse(getData.first) ?? 0.0);
-      // print('roomVolume: ${server.volume.getValue()}');
-    }
-    // return check.toString();
-  }
-
-  updateRoomVolume(double roomVolumeValue) async {
-    // roomVolumeId = allVolume.id;
-    await roomVolumeCollection.document(roomVolumeId).update({
-      // await roomVolumeCollection.document(roomVolumeId!).update({
-      nameDatabase: roomVolumeValue,
-      //   'volumeP3' : roomVolumeValue,
-    });
-  }
+  // void setRoomVolume() async {
+  //   // List<Document> allVolume =
+  //   roomVolumeFB = await roomVolumeCollection.orderBy(nameDatabase).get();
+  //   final getData = roomVolumeFB.map((volume) {
+  //     roomVolumeId = volume.id;
+  //     // print('roomVolumeId: ${roomVolumeId.getValue()}');
+  //     final checkVolume = volume[nameDatabase].toString();
+  //     // print('roomVolume: $checkVolume');
+  //     return checkVolume;
+  //   });
+  //   print('roomVolume: ${getData.first}');
+  //   for (Server server in servers) {
+  //     server.volume = (double.tryParse(getData.first) ?? 0.0);
+  //     // print('roomVolume: ${server.volume.getValue()}');
+  //   }
+  //   // return check.toString();
+  // }
+  //
+  // updateRoomVolume(double roomVolumeValue) async {
+  //   // roomVolumeId = allVolume.id;
+  //   await roomVolumeCollection.document(roomVolumeId).update({
+  //     // await roomVolumeCollection.document(roomVolumeId!).update({
+  //     nameDatabase: roomVolumeValue,
+  //     //   'volumeP3' : roomVolumeValue,
+  //   });
+  // }
 }
 
 final Future<Room> default_room = Future.value(Room(
@@ -141,7 +141,6 @@ final Future<Room> default_room = Future.value(Room(
     projectors: [],
     servers: [],
     roomVolumeFB: [],
-    roomVolumeCollection: Firestore.instance.collection('volume'),
     roomVolumeId: ''));
 
 Future<Room> getRoom(String key) async {
@@ -159,8 +158,7 @@ Future<void> deleteRoom(String key) async {
   await new_prefs.remove(key);
 }
 
-Future<void> setNewRoom(Future<Room> Room, Room new_Room) async {
-  final SharedPreferences newprefs = await prefs;
-  Room = Future.value(new_Room);
-  newprefs.setString('Room_1', json.encode(new_Room.toJson()));
+Future<void> setNewRoom(Room new_Room, String new_key) async {
+  final SharedPreferences new_prefs = await prefs;
+  new_prefs.setString(new_key, json.encode(new_Room.toJson()));
 }

@@ -109,7 +109,7 @@ class _RoomManagerState extends State<RoomManager> {
     Room room = rooms[page];
     if (page != oldPage) {
       oldPage = page;
-      room.setRoomVolume();
+      // room.setRoomVolume();
       print('oldPage: $oldPage');
     }
 

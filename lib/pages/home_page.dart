@@ -67,7 +67,7 @@ class _HomePage extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    allRoom.setAllVolume();
+    // allRoom.setAllVolume();
     // _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
     //   setState(() {
     //     if (rooms[3].servers[0].connected  &&
@@ -105,7 +105,7 @@ class _HomePage extends State<HomePage> {
 
   void EditAllAudioAndSave(index) {
     allRoom.volume_all = (index);
-    allRoom.updateAllVolume(index);
+    // allRoom.updateAllVolume(index);
     // setAllVolume();
     for (Room room in rooms) {
       // room.updateRoomVolume(index);

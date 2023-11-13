@@ -84,6 +84,7 @@ class Projector {
     );
   }
 }
+
 //
 // Future<Projector> getProjector(String keyPrefix) async {
 //   final prefs = await SharedPreferences.getInstance();
@@ -141,38 +142,35 @@ Future<Projector> getProjector(String key) async {
     return default_projector;
   }
 }
-void setNewProjector(Projector new_projector, String new_key) async {
+
+void addNewProjector(
+    Projector new_projector, String room_key) async {
   final SharedPreferences new_prefs = await prefs;
-  new_prefs.setString(new_key, json.encode(new_projector.toJson()));
+  String? storedRoomValue = new_prefs.getString(room_key);
+  if (storedRoomValue != null) {
+    // Parse the stored JSON string into a Map
+    final Map<String, dynamic> storedRoomData = json.decode(storedRoomValue);
+    // Update the 'name' field with the new name
+    if (storedRoomData['projectors'].any((projector) => new_projector.ip == json.decode(projector)['ip'])) {
+      // If it exists, you can handle it accordingly (throw an error, update the existing projector, etc.)
+      print('${json.decode(storedRoomData['projectors'][0])['ip']}');
+      print('Projector with ID ${new_projector.ip} already exists in the room.');
+    } else {
+      // If it doesn't exist, add the new projector
+      storedRoomData['projectors'].add(json.encode(new_projector.toJson()));
+      print('${new_projector.ip} ');
+      print('Projector with ID ${new_projector.ip} added to the room.');
+    }
+    // Convert the Map back to a JSON string
+    final String updatedRoomValue = json.encode(storedRoomData);
+    // Save the updated value back to SharedPreferences
+    await new_prefs.setString(room_key, updatedRoomValue);
+
+  }
+  // new_prefs.setString(new_key, json.encode(new_projector.toJson()));
 }
+
 void adjustProjector(Projector new_projector, String new_key) async {
   final SharedPreferences new_prefs = await prefs;
   new_prefs.setString(new_key, json.encode(new_projector.toJson()));
-}
-
-
-Future<Map<String, dynamic>> getAllDatabyKey(String keyword) async {
-  final SharedPreferences new_prefs = await prefs;
-  List<String> Keys = [];
-  Map<String, dynamic> allData = {};
-
-  Keys = new_prefs.getKeys().where((key) => key.startsWith(keyword)).toList();
-  for (var key in Keys) {
-    allData[key] = new_prefs.get(key);
-  }
-  return allData;
-  // print('Projector keys: $projectorKeys');
-}
-
-bool isIP(String value) {
-  // Regular expression for IPv4
-  final RegExp ipv4Regex =
-  RegExp(r'^(\d{1,3}\.){3}\d{1,3}$');
-
-  // Regular expression for IPv6
-  final RegExp ipv6Regex =
-  RegExp(r'^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$');
-
-  // Check if the value matches either IPv4 or IPv6 regex
-  return ipv4Regex.hasMatch(value) || ipv6Regex.hasMatch(value);
 }

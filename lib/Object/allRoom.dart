@@ -23,7 +23,7 @@ class AllRoom {
   int num_projectors;
   List<Preset> presets;
   List<Document> allVolumeFB;
-  CollectionReference volumeCollection;
+  // CollectionReference volumeCollection;
   String volumeId;
   // : 1,2,3
   // List<Projector> projectors;
@@ -48,7 +48,7 @@ class AllRoom {
     required this.num_leds,
     required this.num_projectors,
     required this.allVolumeFB,
-    required this.volumeCollection,
+    // required this.volumeCollection,
     required this.volumeId,
   });
   void setLicenseStatus() async {
@@ -68,33 +68,33 @@ class AllRoom {
     print('setLicenseStatus');
   }
 
-  void setAllVolume() async {
-    // List<Document> allVolume =
-    allVolumeFB = await volumeCollection.orderBy('allVolume').get();
-    final check = allVolumeFB.map((volume) {
-      volumeId = (volume.id);
-      // print('volumeId: ${volumeId}');
-      final checkVolume = volume['allVolume'].toString();
-      // print('allVolume: $checkVolume');
-      volume_all = double.tryParse(checkVolume.toString()) ?? 0.0;
-      return [volumeId, checkVolume];
-    });
-    print('allVolume: ${check}');
-  }
-
-  void updateAllVolume(double allVolumeValue) async {
-    // volumeId = allVolume.id;
-    // print('ENLH4hL9FNkV87USu2Iv');
-    await volumeCollection.document(volumeId).update({
-      // await volumeCollection.document(volumeId!).update({
-      'allVolume': allVolumeValue,
-    });
-    for (Room room in rooms) {
-      await room.roomVolumeCollection.document(volumeId).update({
-        // await roomVolumeCollection.document(roomVolumeId!).update({
-        room.nameDatabase: allVolumeValue,
-        //   'volumeP3' : roomVolumeValue,
-      });
-    }
-  }
+  // void setAllVolume() async {
+  //   // List<Document> allVolume =
+  //   allVolumeFB = await volumeCollection.orderBy('allVolume').get();
+  //   final check = allVolumeFB.map((volume) {
+  //     volumeId = (volume.id);
+  //     // print('volumeId: ${volumeId}');
+  //     final checkVolume = volume['allVolume'].toString();
+  //     // print('allVolume: $checkVolume');
+  //     volume_all = double.tryParse(checkVolume.toString()) ?? 0.0;
+  //     return [volumeId, checkVolume];
+  //   });
+  //   print('allVolume: ${check}');
+  // }
+  //
+  // void updateAllVolume(double allVolumeValue) async {
+  //   // volumeId = allVolume.id;
+  //   // print('ENLH4hL9FNkV87USu2Iv');
+  //   await volumeCollection.document(volumeId).update({
+  //     // await volumeCollection.document(volumeId!).update({
+  //     'allVolume': allVolumeValue,
+  //   });
+  //   for (Room room in rooms) {
+  //     await room.roomVolumeCollection.document(volumeId).update({
+  //       // await roomVolumeCollection.document(roomVolumeId!).update({
+  //       room.nameDatabase: allVolumeValue,
+  //       //   'volumeP3' : roomVolumeValue,
+  //     });
+  //   }
+  // }
 }

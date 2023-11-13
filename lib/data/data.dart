@@ -85,7 +85,7 @@ AllRoom allRoom = AllRoom(
   num_projectors: 0,
   allVolumeFB: [],
   volumeId: '',
-  volumeCollection: Firestore.instance.collection('volume'),
+  // volumeCollection: Firestore.instance.collection('volume'),
   presets: [
     Preset(
         name: '123',
@@ -121,7 +121,7 @@ List<Room> rooms = [
     leds: [],
     roomVolumeFB: [],
     roomVolumeId: '',
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    // roomVolumeCollection: Firestore.instance.collection('volume'),
     current_preset: 10,
     presets: [],
     projectors: [],
@@ -155,7 +155,7 @@ List<Room> rooms = [
     leds: [],
     roomVolumeFB: [],
     roomVolumeId: '',
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    // roomVolumeCollection: Firestore.instance.collection('volume'),
     power_room_projectors: false,
     shutter_room_projectors: false,
     isSelectedPlay: false,
@@ -314,7 +314,7 @@ List<Room> rooms = [
     current_preset: 10,
     roomVolumeFB: [],
     roomVolumeId: '',
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    // roomVolumeCollection: Firestore.instance.collection('volume'),
     sensors: [],
     leds: [
       Led(
@@ -412,7 +412,7 @@ List<Room> rooms = [
     leds: [],
     roomVolumeFB: [],
     roomVolumeId: '',
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    // roomVolumeCollection: Firestore.instance.collection('volume'),
     presets: [
       Preset(
           name: 'Mọi Miền Tiềm Thức',
@@ -577,7 +577,7 @@ List<Room> rooms = [
     leds: [],
     roomVolumeFB: [],
     roomVolumeId: '',
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    // roomVolumeCollection: Firestore.instance.collection('volume'),
     sensors: [
       Sensor(
           ip: '192.168.1.11',
@@ -732,7 +732,7 @@ List<Room> rooms = [
     leds: [],
     roomVolumeFB: [],
     roomVolumeId: '',
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    // roomVolumeCollection: Firestore.instance.collection('volume'),
     current_preset: 10,
     presets: [
       Preset(

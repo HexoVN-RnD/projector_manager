@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/data/Shared_Prefs_Method.dart';
 import 'package:responsive_dashboard/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,7 @@ class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
     position_x.text = '0.0';
     position_y.text = '0.0';
     projector = getProjector('projector_1');
-    allDatas = getAllDatabyKey('projector');
+    allDatas = getAllDatabyKey('room');
   }
 
   @override
@@ -114,7 +115,7 @@ class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
                               setState(() {
                                 if (_formKey.currentState!.validate()) {
                                   projector = Future.value(new_projector);
-                                  setNewProjector(new_projector, 'projector_3');
+                                  addNewProjector(new_projector, 'room_1');
                                 }
                               });
                             },
@@ -281,70 +282,68 @@ class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
                             }
                         }
                       }),
-                  Positioned(
-                    bottom: 0,
-                    child: GestureDetector(
-                      onTap: () async {
-                        final Projector new_projector = Projector(
-                          ip: ipEditing.text,
-                          name: nameEditing.text,
-                          position_x: double.parse(position_x.text),
-                          position_y: double.parse(position_y.text),
-                          port: type == '4352'
-                              ? 4352
-                              : type == '3002'
-                                  ? 3002
-                                  : 0000,
-                          UsernameAndPassword: 'admin',
-                          type: type,
-                          power_status_button: false,
-                          shutter_status_button: false,
-                          power_status: false,
-                          shutter_status: false,
-                          connected: false,
-                          isOnHover: false,
-                          lamp_hours: 0,
-                          status: 0,
-                          color_state: false,
-                        );
-                        final SharedPreferences new_prefs = await prefs;
-                        // final Projector new_projector = Projector(
-                        //     ip: '192.168.3.3',
-                        //     name: 'Christie',
-                        //     port: 3002,
-                        //     UsernameAndPassword: 'admin',
-                        //     type: 'PJLink',
-                        //     power_status_button: false,
-                        //     shutter_status_button: false,
-                        //     power_status: false,
-                        //     shutter_status: false,
-                        //     lamp_hours: 0,
-                        //     status: 0,
-                        //     connected: false,
-                        //     position_x: 0.0,
-                        //     position_y: 0.0,
-                        //     color_state: false,
-                        //     isOnHover: false);
-                        setState(() {
-                          projector = Future.value(new_projector);
-                          setNewProjector(new_projector, 'projector_1');
-                        });
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 50,
-                        child: Icon(Icons.add),
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   bottom: 0,
+                  //   child: GestureDetector(
+                  //     onTap: () async {
+                  //       final Projector new_projector = Projector(
+                  //         ip: ipEditing.text,
+                  //         name: nameEditing.text,
+                  //         position_x: double.parse(position_x.text),
+                  //         position_y: double.parse(position_y.text),
+                  //         port: type == '4352'
+                  //             ? 4352
+                  //             : type == '3002'
+                  //                 ? 3002
+                  //                 : 0000,
+                  //         UsernameAndPassword: 'admin',
+                  //         type: type,
+                  //         power_status_button: false,
+                  //         shutter_status_button: false,
+                  //         power_status: false,
+                  //         shutter_status: false,
+                  //         connected: false,
+                  //         isOnHover: false,
+                  //         lamp_hours: 0,
+                  //         status: 0,
+                  //         color_state: false,
+                  //       );
+                  //       final SharedPreferences new_prefs = await prefs;
+                  //       // final Projector new_projector = Projector(
+                  //       //     ip: '192.168.3.3',
+                  //       //     name: 'Christie',
+                  //       //     port: 3002,
+                  //       //     UsernameAndPassword: 'admin',
+                  //       //     type: 'PJLink',
+                  //       //     power_status_button: false,
+                  //       //     shutter_status_button: false,
+                  //       //     power_status: false,
+                  //       //     shutter_status: false,
+                  //       //     lamp_hours: 0,
+                  //       //     status: 0,
+                  //       //     connected: false,
+                  //       //     position_x: 0.0,
+                  //       //     position_y: 0.0,
+                  //       //     color_state: false,
+                  //       //     isOnHover: false);
+                  //       setState(() {
+                  //         projector = Future.value(new_projector);
+                  //         addNewProjector(new_projector, 'projector_1');
+                  //       });
+                  //     },
+                  //     child: Container(
+                  //       width: 100,
+                  //       height: 50,
+                  //       child: Icon(Icons.add),
+                  //     ),
+                  //   ),
+                  // ),
                   Positioned(
                     left: 300,
                     bottom: 0,
                     child: GestureDetector(
                       onTap: () async {
-                        SharedPreferences new_prefs = await prefs;
-                        // set State and clear prefs
-                        new_prefs.clear();
+                        deleteAllData();
                         setState(() {
                           projector = Future.error(('Data cannot found '));
                         });
