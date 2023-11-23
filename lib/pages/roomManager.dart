@@ -118,7 +118,7 @@ class _RoomManagerState extends State<RoomManager> {
 
     return SafeArea(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start ,
         children: [
           Expanded(
             flex: 2,
