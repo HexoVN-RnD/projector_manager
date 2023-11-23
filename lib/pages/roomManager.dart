@@ -20,6 +20,7 @@ import 'package:responsive_dashboard/PopUp/PopupOffProjector.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffShutter.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/dashboard.dart';
+import 'package:responsive_dashboard/data/Shared_Prefs_Method.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/new_component/header.dart';
 import 'package:responsive_dashboard/new_component/info_projector.dart';
@@ -38,11 +39,12 @@ class RoomManager extends StatefulWidget {
 }
 
 class _RoomManagerState extends State<RoomManager> {
-  Timer? _timer;
+  // Timer? _timer;
   Timer? _timer2;
   bool isSelectedPlay = false;
   bool isSelectedStop = false;
   int oldPage = 0;
+  late Future<Room> roomdata;
 
   void select_preset(Room room, int index) async {
     setState(() {
@@ -62,6 +64,7 @@ class _RoomManagerState extends State<RoomManager> {
   @override
   void initState() {
     super.initState();
+    roomdata = getRoom('room_1');
     // Đặt một Timer để cập nhật widget sau mỗi giây
     // _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
     //   Room room = rooms[
@@ -129,6 +132,29 @@ class _RoomManagerState extends State<RoomManager> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    FutureBuilder<Room>(
+                        future: roomdata,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<Room>
+                            projector_snapshot) {
+                          switch (projector_snapshot.connectionState) {
+                            case ConnectionState.none:
+                              return SizedBox();
+                            case ConnectionState.waiting:
+                              return const CircularProgressIndicator();
+                            case ConnectionState.active:
+                            case ConnectionState.done:
+                              if (projector_snapshot.hasError) {
+                                return Text('${projector_snapshot.error}');
+                              } else {
+                                return Text(
+                                    '${projector_snapshot.data?.toString()}');
+                                //   Text(
+                                //   '${projector_snapshot.data?.toJson().toString()}',
+                                // );
+                              }
+                          }
+                        }),
                     Header(
                       room: room,
                     ),
