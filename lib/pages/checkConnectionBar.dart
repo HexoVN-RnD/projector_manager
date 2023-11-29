@@ -82,7 +82,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
         height: SizeConfig.blockSizeVertical * 3,
       ),
 
-      if (room.servers.length != 0)
+      if (room.servers!.length != 0)
       Column(
         children: [
           Container(
@@ -99,8 +99,8 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
           ),
           Column(
             children: List.generate(
-              room.servers.length,
-                  (index) =>  ServerConnection(room: room,server: room.servers[index],),
+              room.servers!.length,
+                  (index) =>  ServerConnection(room: room,server: room.servers![index],),
             ),
           ),
           SizedBox(
@@ -108,7 +108,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
           ),
         ],
       ),
-      if (room.sensors.length != 0)
+      if (room.sensors!.length != 0)
         Column(
           children: [
             Container(
@@ -125,9 +125,9 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
             Column(
               children: List.generate(
-                room.sensors.length,
+                room.sensors!.length,
                 (index) => SensorConnection(
-                  sensor: room.sensors[index],
+                  sensor: room.sensors![index],
                 ),
               ),
             ),
@@ -136,7 +136,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
           ],
         ),
-      if (room.leds.length != 0)
+      if (room.leds!.length != 0)
         Column(
           children: [
             Container(
@@ -153,9 +153,9 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
             Column(
               children: List.generate(
-                room.leds.length,
+                room.leds!.length,
                 (index) => LedConnection(
-                  led: room.leds[index],
+                  led: room.leds![index],
                 ),
               ),
             ),
@@ -164,7 +164,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
           ],
         ),
-      if (room.projectors.length != 0)
+      if (room.projectors!.length != 0)
         Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -181,9 +181,9 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
       ),
       Column(
         children: List.generate(
-          room.projectors.length,
+          room.projectors!.length,
           (index) => ProjectorConnection(
-            projector: room.projectors[index],
+            projector: room.projectors![index],
           ),
         ),
       ),

@@ -115,9 +115,9 @@ class _MiniMapState extends State<MiniMap> {
               Stack(children: [
                 Stack(
                   children: List.generate(
-                    room.projectors.length,
+                    room.projectors!.length,
                         (index) => PositionPage3(
-                        projector: room.projectors[index],
+                        projector: room.projectors![index],
                         width: width,
                         height: height),
                   ),
@@ -125,17 +125,17 @@ class _MiniMapState extends State<MiniMap> {
 
                 Stack(
                   children: List.generate(
-                    room.leds.length,
+                    room.leds!.length,
                         (index) => Positioned(
-                      left: width * room.leds[index].position_x,
-                      top: height * room.leds[index].position_y,
+                      left: width * room.leds![index].position_x,
+                      top: height * room.leds![index].position_y,
                       // left: width * 0.28,
                       // top: height * 0.4,
                       width: width * 0.016,
                       height: width * 0.07,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: room.leds[index].connected
+                          color: room.leds![index].connected
                               ? AppColors.green
                               : AppColors.red,
                           borderRadius: BorderRadius.circular(5),
@@ -148,9 +148,9 @@ class _MiniMapState extends State<MiniMap> {
             else if (page == 4)
               Stack(
                 children: List.generate(
-                  room.projectors.length,
+                  room.projectors!.length,
                   (index) => PositionPage4(
-                      projector: room.projectors[index],
+                      projector: room.projectors![index],
                       width: width,
                       height: height),
                 ),
@@ -160,26 +160,26 @@ class _MiniMapState extends State<MiniMap> {
                 children: [
                   Stack(
                     children: List.generate(
-                      room.projectors.length,
+                      room.projectors!.length,
                       (index) => PositionPage5(
-                          projector: room.projectors[index],
+                          projector: room.projectors![index],
                           width: width,
                           height: height),
                     ),
                   ),
                   Stack(
                     children: List.generate(
-                      room.sensors.length,
+                      room.sensors!.length,
                       (index) => Positioned(
-                        // left: width * room.projectors[index].position_x,
-                        // top: height * room.projectors[index].position_y,
-                        left: width * room.sensors[index].position_x,
-                        top: height * room.sensors[index].position_y,
+                        // left: width * room.projectors![index].position_x,
+                        // top: height * room.projectors![index].position_y,
+                        left: width * room.sensors![index].position_x,
+                        top: height * room.sensors![index].position_y,
                         width: width * 0.018,
                         height: width * 0.018,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: room.sensors[index].connected
+                            color: room.sensors![index].connected
                                 ? AppColors.green
                                 : AppColors.red,
                             borderRadius: BorderRadius.circular(5),
@@ -194,30 +194,30 @@ class _MiniMapState extends State<MiniMap> {
               Stack(children: [
                 Stack(
                   children: List.generate(
-                    room.projectors.length,
+                    room.projectors!.length,
                     (index) => PositionPage6(
-                        projector: room.projectors[index],
+                        projector: room.projectors![index],
                         width: width,
                         height: height),
                   ),
                 ),
                 Positioned(
-                  left: width * room.servers[0].position_x,
-                  top: height * room.servers[0].position_y,
+                  left: width * room.servers![0].position_x,
+                  top: height * room.servers![0].position_y,
                   // left: width * 0.448,
                   // top: height * 0.45,
                   width: width * 0.1,
                   height: width * 0.1,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: room.servers[0].connected
+                        color: room.servers![0].connected
                             ? AppColors.green
                             : AppColors.red,
                         borderRadius: BorderRadius.circular(5),
-                        border: room.servers[0].isOnHover
+                        border: room.servers![0].isOnHover
                             ? Border.all(
                                 strokeAlign: BorderSide.strokeAlignCenter,
-                                color: room.servers[0].connected
+                                color: room.servers![0].connected
                                     ? AppColors.green
                                     : AppColors.red,
                                 width: 10.0,
@@ -232,9 +232,9 @@ class _MiniMapState extends State<MiniMap> {
             else if (page == 2)
               Stack(
                 children: List.generate(
-                    room.servers.length,
+                    room.servers!.length,
                     (index) => PositionPage2(
-                        server: room.servers[index],
+                        server: room.servers![index],
                         width: width,
                         height: height)),
               ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Object/BrightSign.dart';
 import 'package:responsive_dashboard/Object/Led.dart';
 import 'package:responsive_dashboard/Object/Preset.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
@@ -22,15 +23,16 @@ class Room {
   String map;
   String general;
   bool resolume;
-  List<Sensor> sensors;
-  List<Led> leds;
   int current_preset;
-  List<Preset> presets; // : 1,2,3
-  List<Projector> projectors;
-  List<Server> servers;
-  List<Document> roomVolumeFB;
-  // CollectionReference roomVolumeCollection;
   String roomVolumeId;
+  List<Sensor>? sensors;
+  List<Led>? leds;
+  List<Preset>? presets; // : 1,2,3
+  List<Projector>? projectors;
+  String? list_projectors;
+  List<Server>? servers;
+  List<BrightSign>? brightSign;
+  // CollectionReference? roomVolumeCollection;
 
   // Constructor
   Room({
@@ -43,15 +45,16 @@ class Room {
     required this.map,
     required this.general,
     required this.resolume,
-    required this.sensors,
-    required this.leds,
     required this.current_preset,
-    required this.presets,
-    required this.projectors,
-    required this.servers,
-    required this.roomVolumeFB,
-    // required this.roomVolumeCollection,
     required this.roomVolumeId,
+    this.sensors,
+    this.leds,
+    this.presets,
+    this.projectors,
+    this.list_projectors,
+    this.servers,
+    this.brightSign,
+    // required this.roomVolumeCollection,
   });
 
   Map<String, dynamic> toJson() => {
@@ -64,37 +67,49 @@ class Room {
         'map': map,
         'general': general,
         'resolume': resolume,
+        'current_preset': current_preset,
+        'roomVolumeId': roomVolumeId,
         'sensors': sensors,
         'leds': leds,
-        'current_preset': current_preset,
         'presets': presets,
         'projectors': projectors,
+        'list_projectors': projectors,
         'servers': servers,
-        'roomVolumeFB': roomVolumeFB,
-        // 'roomVolumeCollection': roomVolumeCollection,
-        'roomVolumeId': roomVolumeId,
+        'roomVolumeFB': brightSign,
       };
 
   factory Room.fromJson(Map<String, dynamic> json) {
     return Room(
-        nameUI: json['nameUI'],
-        nameDatabase: json['nameDatabase'],
-        power_room_projectors: json['power_room_projectors'],
-        shutter_room_projectors: json['shutter_room_projectors'],
-        isSelectedPlay: json['isSelectedPlay'],
-        isSelectedStop: json['isSelectedStop'],
-        map: json['map'],
-        general: json['general'],
-        resolume: json['resolume'],
-        sensors: json['sensors'],
-        leds: json['leds'],
-        current_preset: json['current_preset'],
-        presets: json['presets'],
-        projectors: json['projectors'],
-        servers: json['servers'],
-        roomVolumeFB: json['roomVolumeFB'],
-        // roomVolumeCollection: json['roomVolumeCollection'],
-        roomVolumeId: json['roomVolumeId']);
+      nameUI: json['nameUI'],
+      nameDatabase: json['nameDatabase'],
+      power_room_projectors: json['power_room_projectors'],
+      shutter_room_projectors: json['shutter_room_projectors'],
+      isSelectedPlay: json['isSelectedPlay'],
+      isSelectedStop: json['isSelectedStop'],
+      map: json['map'],
+      general: json['general'],
+      resolume: json['resolume'],
+      current_preset: json['current_preset'],
+      sensors: [],
+      leds: [],
+      presets: [],
+      projectors: [],
+      list_projectors: json['list_projectors'],
+      servers: [],
+      brightSign: [],
+      // sensors: (json['sensors'] as List<dynamic>).map((sensorJson) => Sensor.fromJson(sensorJson)).toList(),
+      // leds: (json['leds'] as List<dynamic>).map((ledJson) => Led.fromJson(ledJson)).toList(),
+      // current_preset: json['current_preset'],
+      // presets: (json['presets'] as List<dynamic>).map((presetJson) => Preset.fromJson(presetJson)).toList(),
+      // projectors:(json['projectors'].map((projectorJson) => Projector.fromJson(
+      //     projectorJson is Map<String, dynamic>
+      //         ? projectorJson
+      //         : jsonDecode(projectorJson as String)))
+      //     .toList()),
+      // servers: (json['servers'] as List<dynamic>).map((serverJson) => Server.fromJson(serverJson)).toList(),
+      // brightSign: (json['brightSign'] as List<dynamic>).map((brightSignJson) => BrightSign.fromJson(brightSignJson)).toList(),
+      roomVolumeId: json['roomVolumeId'],
+    );
   }
   // void setRoomVolume() async {
   //   // List<Document> allVolume =
@@ -125,23 +140,25 @@ class Room {
 }
 
 final Future<Room> default_room = Future.value(Room(
-    nameUI: 'Room 1',
-    nameDatabase: 'Volume P1',
-    power_room_projectors: false,
-    shutter_room_projectors: false,
-    isSelectedPlay: false,
-    isSelectedStop: false,
-    map: '',
-    general: '',
-    resolume: false,
-    sensors: [],
-    leds: [],
-    current_preset: 10,
-    presets: [],
-    projectors: [],
-    servers: [],
-    roomVolumeFB: [],
-    roomVolumeId: ''));
+  nameUI: 'Room 1',
+  nameDatabase: 'Volume P1',
+  power_room_projectors: false,
+  shutter_room_projectors: false,
+  isSelectedPlay: false,
+  isSelectedStop: false,
+  map: '',
+  general: '',
+  resolume: false,
+  current_preset: 10,
+  roomVolumeId: '',
+  sensors: [],
+  leds: [],
+  presets: [],
+  projectors: [],
+  list_projectors: '',
+  servers: [],
+  brightSign: [],
+));
 
 Future<Room> getRoom(String key) async {
   final SharedPreferences new_prefs = await prefs;
@@ -153,6 +170,7 @@ Future<Room> getRoom(String key) async {
     return default_room;
   }
 }
+
 Future<void> deleteRoom(String key) async {
   final SharedPreferences new_prefs = await prefs;
   await new_prefs.remove(key);

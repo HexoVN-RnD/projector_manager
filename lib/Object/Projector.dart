@@ -158,6 +158,7 @@ void addNewProjector(
     } else {
       // If it doesn't exist, add the new projector
       storedRoomData['projectors'].add(json.encode(new_projector.toJson()));
+      storedRoomData['list_projectors'] = json.encode(new_projector.toJson()).toString();
       print('${new_projector.ip} ');
       print('Projector with ID ${new_projector.ip} added to the room.');
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
+import 'package:responsive_dashboard/data/Shared_Prefs_Method.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 
 class AppBarActionItems extends StatelessWidget {
@@ -19,33 +20,29 @@ class AppBarActionItems extends StatelessWidget {
                 width: 160,
                 height: 50,
                 child: Image.asset(
-
                   'assets/small_logo.png',
                   // filterQuality: FilterQuality.high,
                   fit: BoxFit.fitHeight,
                 ))
             : Expanded(
-              child: Container(
-                  alignment: Alignment.centerLeft,
-                  width: 150,
-                  height: 50,
-                  child: Image.asset(
-                    'assets/small_logo.png',
-                    // filterQuality: FilterQuality.high,
-                    fit: BoxFit.fitHeight,
-                  )),
-            ),
+                child: Container(
+                    alignment: Alignment.centerLeft,
+                    width: 150,
+                    height: 50,
+                    child: Image.asset(
+                      'assets/small_logo.png',
+                      // filterQuality: FilterQuality.high,
+                      fit: BoxFit.fitHeight,
+                    )),
+              ),
+        SizedBox(width: 10),
+        IconButton(icon: Icon(Icons.edit), onPressed: () {}),
         SizedBox(width: 10),
         IconButton(
-            icon: SvgPicture.asset(
-              'assets/calendar.svg',
-              width: 20,
-            ),
-            onPressed: () {}),
-        SizedBox(width: 10),
-        IconButton(
-            icon: SvgPicture.asset('assets/ring.svg', width: 20.0),
-            onPressed: () {}),
+            icon: Icon(Icons.delete_outline_rounded),
+            onPressed: () {
+              deleteAllData();
+            }),
         // SizedBox(width: 15),
         // Row(children: [
         //   CircleAvatar(

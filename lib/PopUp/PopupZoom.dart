@@ -122,34 +122,34 @@ class _PopupZoomState extends State<PopupZoom> {
                   children: [
                     Stack(
                       children: List.generate(
-                        room.projectors.length,
+                        room.projectors!.length,
                             (index) => Positioned(
-                          left: width * room.projectors[index].position_x,
-                          top: height * room.projectors[index].position_y,
+                          left: width * room.projectors![index].position_x,
+                          top: height * room.projectors![index].position_y,
                           // left: width * 0.445,
                           // top: height * 0.49,
                           width: width * 0.018,
                           height: width * 0.018,
                           child: Container(
                             color: AppColors.StatusColor[
-                            room.projectors[index].status],
+                            room.projectors![index].status],
                           ),
                         ),
                       ),
                     ),
                     Stack(
                       children: List.generate(
-                        room.leds.length,
+                        room.leds!.length,
                             (index) => Positioned(
-                          left: width * room.leds[index].position_x,
-                          top: height * room.leds[index].position_y,
+                          left: width * room.leds![index].position_x,
+                          top: height * room.leds![index].position_y,
                           // left: width * 0.725,
                           // top: height * 0.125,
                           width: width * 0.016,
                           height: width * 0.07,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: room.leds[index].connected
+                              color: room.leds![index].connected
                                   ? AppColors.green
                                   : AppColors.red,
                               borderRadius: BorderRadius.circular(10),
@@ -163,15 +163,15 @@ class _PopupZoomState extends State<PopupZoom> {
               else if (page == 4)
                 Stack(
                   children: List.generate(
-                    room.projectors.length,
+                    room.projectors!.length,
                     (index) => Positioned(
-                      left: width * room.projectors[index].position_x,
-                      top: height * room.projectors[index].position_y,
+                      left: width * room.projectors![index].position_x,
+                      top: height * room.projectors![index].position_y,
                       width: width * 0.0095,
                       height: width * 0.0095,
                       child: Container(
                         color: AppColors.StatusColor[
-                            room.projectors[index].status],
+                            room.projectors![index].status],
                       ),
                     ),
                   ),
@@ -181,32 +181,32 @@ class _PopupZoomState extends State<PopupZoom> {
                   children: [
                     Stack(
                       children: List.generate(
-                        room.projectors.length,
+                        room.projectors!.length,
                         (index) => Positioned(
-                          left: width * room.projectors[index].position_x,
-                          top: height * room.projectors[index].position_y,
+                          left: width * room.projectors![index].position_x,
+                          top: height * room.projectors![index].position_y,
                           width: width * 0.018,
                           height: width * 0.018,
                           child: Container(
                             color: AppColors.StatusColor[
-                                room.projectors[index].status],
+                                room.projectors![index].status],
                           ),
                         ),
                       ),
                     ),
                     Stack(
                       children: List.generate(
-                        room.sensors.length,
+                        room.sensors!.length,
                         (index) => Positioned(
-                          left: width * room.sensors[index].position_x,
-                          top: height * room.sensors[index].position_y,
+                          left: width * room.sensors![index].position_x,
+                          top: height * room.sensors![index].position_y,
                           // left: width * 0.555,
                           // top: height * 0.858,
                           width: width * 0.016,
                           height: width * 0.016,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: room.sensors[index].connected
+                              color: room.sensors![index].connected
                                   ? AppColors.green
                                   : AppColors.red,
                               borderRadius: BorderRadius.circular(10),
@@ -222,36 +222,36 @@ class _PopupZoomState extends State<PopupZoom> {
                   children: [
                     Stack(
                       children: List.generate(
-                        room.projectors.length,
+                        room.projectors!.length,
                         (index) => Positioned(
-                          left: width * room.projectors[index].position_x,
-                          top: height * room.projectors[index].position_y,
+                          left: width * room.projectors![index].position_x,
+                          top: height * room.projectors![index].position_y,
                           width: width * 0.012,
                           height: width * 0.012,
                           child: Container(
                             color: AppColors.StatusColor[
-                                room.projectors[index].status],
+                                room.projectors![index].status],
                           ),
                         ),
                       ),
                     ),
                     Positioned(
-                      left: width * room.servers[0].position_x,
-                      top: height * room.servers[0].position_y,
+                      left: width * room.servers![0].position_x,
+                      top: height * room.servers![0].position_y,
                       // left: width * 0.448,
                       // top: height * 0.45,
                       width: width * 0.1,
                       height: width * 0.1,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: room.servers[0].connected
+                            color: room.servers![0].connected
                                 ? AppColors.green
                                 : AppColors.red,
                             borderRadius: BorderRadius.circular(5),
-                            border: room.servers[0].isOnHover
+                            border: room.servers![0].isOnHover
                                 ? Border.all(
                                     strokeAlign: BorderSide.strokeAlignCenter,
-                                    color: room.servers[0].connected
+                                    color: room.servers![0].connected
                                         ? AppColors.green
                                         : AppColors.red,
                                     width: 10.0,
@@ -267,14 +267,14 @@ class _PopupZoomState extends State<PopupZoom> {
               else if (page == 2)
                 Stack(
                   children: List.generate(
-                    room.servers.length,
+                    room.servers!.length,
                     (index) => Positioned(
-                      left: width * room.servers[index].position_x,
-                      top: height * room.servers[index].position_y,
+                      left: width * room.servers![index].position_x,
+                      top: height * room.servers![index].position_y,
                       width: width * 0.009,
                       height: height * 0.09,
                       child: Container(
-                        color: room.servers[index].connected
+                        color: room.servers![index].connected
                             ? AppColors.green
                             : AppColors.red,
                       ),

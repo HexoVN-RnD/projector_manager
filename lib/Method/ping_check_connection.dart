@@ -133,18 +133,18 @@ Future<void> checkAllRoomConnection(int time) async {
   int length =
       allRoom.num_servers + allRoom.num_projectors;
   for (Room room in rooms) {
-    if (!room.sensors.isEmpty) {
-      for (Sensor sensor in room.sensors) {
+    if (!room.sensors!.isEmpty) {
+      for (Sensor sensor in room.sensors!!) {
         checkConnectionSensor(sensor);
       }
     }
-    if (!room.leds.isEmpty) {
-      for (Led led in room.leds) {
+    if (!room.leds!.isEmpty) {
+      for (Led led in room.leds!!) {
         checkConnectionLed(led);
       }
     }
-    if (!room.projectors.isEmpty) {
-      for (Projector projector in room.projectors) {
+    if (!room.projectors!.isEmpty) {
+      for (Projector projector in room.projectors!) {
         await Future.delayed(Duration(milliseconds: time ~/ length));
         checkConnectionProjector(projector);
         if (projector.type == 'TCPIP') {
@@ -155,8 +155,8 @@ Future<void> checkAllRoomConnection(int time) async {
         }
       }
     }
-    if (!room.servers.isEmpty) {
-      for (Server server in room.servers) {
+    if (!room.servers!.isEmpty) {
+      for (Server server in room.servers!) {
         await Future.delayed(Duration(milliseconds: time ~/ length));
         checkConnectionServerResponse(room,server);
       }
@@ -170,18 +170,18 @@ Future<void> checkFullConnection(int time) async {
   int length =
       allRoom.num_servers + allRoom.num_projectors;
   for (Room room in rooms) {
-    if (!room.sensors.isEmpty) {
-      for (Sensor sensor in room.sensors) {
+    if (!room.sensors!.isEmpty) {
+      for (Sensor sensor in room.sensors!) {
         checkConnectionSensor(sensor);
       }
     }
-    if (!room.leds.isEmpty) {
-      for (Led led in room.leds) {
+    if (!room.leds!.isEmpty) {
+      for (Led led in room.leds!) {
         checkConnectionLed(led);
       }
     }
-    if (!room.projectors.isEmpty) {
-      for (Projector projector in room.projectors) {
+    if (!room.projectors!.isEmpty) {
+      for (Projector projector in room.projectors!) {
         await Future.delayed(Duration(milliseconds: time ~/ length));
         checkConnectionProjector(projector);
         if (projector.type == 'TCPIP') {
@@ -193,8 +193,8 @@ Future<void> checkFullConnection(int time) async {
         }
       }
     }
-    if (!room.servers.isEmpty) {
-      for (Server server in room.servers) {
+    if (!room.servers!.isEmpty) {
+      for (Server server in room.servers!) {
         await Future.delayed(Duration(milliseconds: time ~/ length));
         checkConnectionServerResponse(room,server);
       }
@@ -205,10 +205,10 @@ Future<void> checkFullConnection(int time) async {
 
 Future<void> checkRoomProjectorConnection(Room room, int time) async {
   //print('checkRoomProjectorConnection');
-  if (!room.projectors.isEmpty) {
-    for (Projector projector in room.projectors) {
+  if (!room.projectors!.isEmpty) {
+    for (Projector projector in room.projectors!) {
       await Future.delayed(
-          Duration(milliseconds: time ~/ room.projectors.length));
+          Duration(milliseconds: time ~/ room.projectors!.length));
       checkConnectionProjector(projector);
       if (projector.type == 'TCPIP') {
         String response = sendTCPIPCommandStatus(projector);
@@ -223,10 +223,10 @@ Future<void> checkRoomProjectorConnection(Room room, int time) async {
 
 Future<void> checkRoomServerConnection(Room room, int time) async {
   //print('checkRoomServerConnection');
-  if (!room.servers.isEmpty) {
-    for (Server server in room.servers) {
+  if (!room.servers!.isEmpty) {
+    for (Server server in room.servers!) {
       await Future.delayed(
-          Duration(milliseconds: time ~/ room.servers.length));
+          Duration(milliseconds: time ~/ room.servers!.length));
       checkConnectionServerResponse(room,server);
     }
   }
@@ -234,16 +234,16 @@ Future<void> checkRoomServerConnection(Room room, int time) async {
 
 Future<void> checkRoomSensorConnection(Room room) async {
   //print('checkRoomSensorConnection');
-  if (!room.sensors.isEmpty) {
-    for (Sensor sensor in room.sensors) {
+  if (!room.sensors!.isEmpty) {
+    for (Sensor sensor in room.sensors!) {
       checkConnectionSensor(sensor);
     }
   }
 }
 Future<void> checkRoomLedConnection(Room room) async {
   //print('checkRoomLedConnection');
-  if (!room.leds.isEmpty) {
-    for (Led led in room.leds) {
+  if (!room.leds!.isEmpty) {
+    for (Led led in room.leds!) {
       checkConnectionLed(led);
     }
   }

@@ -271,6 +271,7 @@ class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
                             return const CircularProgressIndicator();
                           case ConnectionState.active:
                           case ConnectionState.done:
+                            print(projector_snapshot.data.toString());
                             if (projector_snapshot.hasError) {
                               return Text('${projector_snapshot.error}');
                             } else {

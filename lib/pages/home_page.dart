@@ -92,11 +92,11 @@ class _HomePage extends State<HomePage> {
     // writeCellValue(index.toStringAsFixed(2), 0, 1);
     for (Room room in rooms) {
       if (room.resolume) {
-        for (Server server in room.servers) {
+        for (Server server in room.servers!) {
           server.volume = index;
         }
       } else {
-        for (Server server in room.servers) {
+        for (Server server in room.servers!) {
           server.volume = index;
         }
       }
@@ -110,7 +110,7 @@ class _HomePage extends State<HomePage> {
     for (Room room in rooms) {
       // room.updateRoomVolume(index);
       if (room.resolume) {
-        for (Server server in room.servers) {
+        for (Server server in room.servers!) {
           server.volume = (index);
           // writeCellValue(index.toStringAsFixed(2), server.id, 1);
           SendOscMessage(server.ip, server.preset_port,
@@ -123,7 +123,7 @@ class _HomePage extends State<HomePage> {
               '/composition/layers/4/audio/volume', [index]);
         }
       } else {
-        for (Server server in room.servers) {
+        for (Server server in room.servers!) {
           server.volume = index;
           SendUDPAudioMessage(server, index);
         }

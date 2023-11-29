@@ -25,7 +25,7 @@ import 'package:valuable/valuable.dart';
 // StatefulValuable<double> opening_per = StatefulValuable<double>(0);
 
 double progressValue = 0.0;
-int half_length = (rooms[3].projectors.length / 2).toInt() + 1;
+int half_length = (rooms[3].projectors!.length / 2).toInt() + 1;
 
 class OpeningScene extends StatefulWidget {
   const OpeningScene({key});
@@ -391,8 +391,8 @@ class _OpeningSceneState extends State<OpeningScene>
                 children: [
                   Column(
                     children:
-                        List.generate(rooms[2].projectors.length, (index) {
-                      Projector projector = rooms[2].projectors[index];
+                        List.generate(rooms[2].projectors!.length, (index) {
+                      Projector projector = rooms[2].projectors![index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
                         child: Row(
@@ -435,7 +435,7 @@ class _OpeningSceneState extends State<OpeningScene>
                   Expanded(
                     child: Column(
                       children: List.generate(half_length, (index) {
-                        Projector projector = rooms[3].projectors[index];
+                        Projector projector = rooms[3].projectors![index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: Row(
@@ -479,9 +479,9 @@ class _OpeningSceneState extends State<OpeningScene>
                   Expanded(
                     child: Column(
                       children: List.generate(
-                          rooms[3].projectors.length - half_length, (index) {
+                          rooms[3].projectors!.length - half_length, (index) {
                         Projector projector =
-                            rooms[3].projectors[index + half_length];
+                            rooms[3].projectors![index + half_length];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: SingleChildScrollView(
@@ -527,8 +527,8 @@ class _OpeningSceneState extends State<OpeningScene>
                   Column(children: [
                     Column(
                       children:
-                          List.generate(rooms[4].projectors.length, (index) {
-                        Projector projector = rooms[4].projectors[index];
+                          List.generate(rooms[4].projectors!.length, (index) {
+                        Projector projector = rooms[4].projectors![index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: Row(
@@ -573,8 +573,8 @@ class _OpeningSceneState extends State<OpeningScene>
                     ),
                     Column(
                       children:
-                          List.generate(rooms[5].projectors.length, (index) {
-                        Projector projector = rooms[5].projectors[index];
+                          List.generate(rooms[5].projectors!.length, (index) {
+                        Projector projector = rooms[5].projectors![index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 10.0),
                           child: Row(
@@ -629,8 +629,8 @@ class _OpeningSceneState extends State<OpeningScene>
               child: Column(
                 children: [
                   Column(
-                    children: List.generate(rooms[1].servers.length, (index) {
-                      Server server = rooms[1].servers[index];
+                    children: List.generate(rooms[1].servers!.length, (index) {
+                      Server server = rooms[1].servers![index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
                         child: Row(
@@ -674,8 +674,8 @@ class _OpeningSceneState extends State<OpeningScene>
                     height: 50,
                   ),
                   Column(
-                    children: List.generate(rooms[5].servers.length, (index) {
-                      Server server = rooms[5].servers[index];
+                    children: List.generate(rooms[5].servers!.length, (index) {
+                      Server server = rooms[5].servers![index];
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 10.0),
                         child: Row(

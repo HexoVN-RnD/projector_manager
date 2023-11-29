@@ -16,12 +16,12 @@ void SetButtonControlAllSystem(){
   int numProjectorShutterOn = 0;
   int numServerPowerOn = 0;
   for (Room room in rooms){
-    for(Server server in room.servers){
+    for(Server server in room.servers!){
       if(server.connected){
         numServerPowerOn++;
       }
     }
-    for (Projector projector in room.projectors) {
+    for (Projector projector in room.projectors!) {
       if (projector.power_status) {
         numProjectorPowerOn++;
       }
@@ -50,7 +50,7 @@ void SetButtonControlAllSystem(){
 void SetButtonControlRoom(Room room){
   int numProjectorPowerOn = 0;
   int numProjectorShutterOn = 0;
-    for (Projector projector in room.projectors) {
+    for (Projector projector in room.projectors!) {
       if (projector.power_status) {
         numProjectorPowerOn++;
       }
@@ -58,12 +58,12 @@ void SetButtonControlRoom(Room room){
         numProjectorShutterOn++;
       }
     }
-  if(room.projectors.length == numProjectorPowerOn){
+  if(room.projectors!.length == numProjectorPowerOn){
     room.power_room_projectors=true;
   } else if(numProjectorPowerOn==0) {
     room.power_room_projectors=false;
   }
-  if(room.projectors.length == numProjectorShutterOn){
+  if(room.projectors!.length == numProjectorShutterOn){
     room.shutter_room_projectors=true;
   } else if(numProjectorShutterOn==0){
     room.shutter_room_projectors=false;
@@ -73,13 +73,13 @@ void SetButtonControlRoom(Room room){
 void PowerAllProjectors(bool mode) async {
   allRoom.power_all_projectors=mode;
   for (var room in rooms) {
-    for (var projector in room.projectors) {
+    for (var projector in room.projectors!) {
       checkConnectionProjector(projector);
     }
   }
   await Future.delayed(Duration(seconds: 1));
   for (var room in rooms) {
-    for (var projector in room.projectors) {
+    for (var projector in room.projectors!) {
       // if (projector.power_status_button !=
       //     allRoom.power_all_projectors) {
       // checkConnectionProjector(projector);
@@ -119,11 +119,11 @@ void PowerAllProjectors(bool mode) async {
 
 void PowerRoomProjectors(Room room, bool mode) async {
   room.power_room_projectors=mode;
-    for (var projector in room.projectors) {
+    for (var projector in room.projectors!) {
       checkConnectionProjector(projector);
     }
   await Future.delayed(Duration(seconds: 1));
-    for (var projector in room.projectors) {
+    for (var projector in room.projectors!) {
       if (projector.power_status != mode) {
         projector.power_status
             =room.power_room_projectors;
@@ -160,7 +160,7 @@ void PowerRoomProjectors(Room room, bool mode) async {
 void ShutterAllProjectors(bool mode) {
   allRoom.shutter_all_projectors=mode;
   for (var room in rooms) {
-    for (var projector in room.projectors) {
+    for (var projector in room.projectors!) {
       if (mode) {
         if (projector.type == 'Christie') {
           print(projector.ip.toString() + '(SHU 1)');
@@ -190,7 +190,7 @@ void ShutterAllProjectors(bool mode) {
 
 void ShutterRoomProjectors(Room room,bool mode) {
   room.shutter_room_projectors=mode;
-  for (var projector in room.projectors) {
+  for (var projector in room.projectors!) {
       if (mode) {
         if (projector.type == 'Christie') {
           print(projector.ip.toString() + '(SHU 1)');

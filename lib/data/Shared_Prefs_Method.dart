@@ -16,6 +16,7 @@ Future<Map<String, dynamic>> getAllDatabyKey(String keyword) async {
 Future<void> deleteAllData() async {
   SharedPreferences new_prefs = await prefs;
   new_prefs.clear();
+  print('Delete all database');
 }
 
 

@@ -74,10 +74,10 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
                   borderRadius: BorderRadius.circular(30)),
               child: Stack(alignment: Alignment.topRight, children: [
                 Positioned(
-                  child: FutureBuilder<Map<String, dynamic>>(
-                      future: allRoom,
+                  child: FutureBuilder<Room>(
+                      future: room,
                       builder: (BuildContext context,
-                          AsyncSnapshot<Map<String, dynamic>> room_snapshot) {
+                          AsyncSnapshot<Room> room_snapshot) {
                         switch (room_snapshot.connectionState) {
                           case ConnectionState.none:
                             return SizedBox();
@@ -86,6 +86,7 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
                           case ConnectionState.active:
                           case ConnectionState.done:
                             if (room_snapshot.hasError) {
+                              print(room_snapshot.error);
                               return Text('${room_snapshot.error}');
                             } else {
                               return Text('${room_snapshot.data?.toString()}');
@@ -151,7 +152,7 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
                                 presets: [],
                                 projectors: [],
                                 servers: [],
-                                roomVolumeFB: [],
+                                brightSign: [],
                                 roomVolumeId: '');
                             setState(() {
                               room = Future.value(new_room);

@@ -49,7 +49,7 @@ class _RoomManagerState extends State<RoomManager> {
   void select_preset(Room room, int index) async {
     setState(() {
       room.current_preset = (index);
-      for (Server server in room.servers) {
+      for (Server server in room.servers!) {
         if (room.resolume) {
           SendPresetOSC(server.ip, server.preset_port, room.current_preset);
           PlayPreset(current_page);
@@ -64,21 +64,20 @@ class _RoomManagerState extends State<RoomManager> {
   @override
   void initState() {
     super.initState();
-    roomdata = getRoom('room_1');
     // Đặt một Timer để cập nhật widget sau mỗi giây
     // _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
     //   Room room = rooms[
     //       (current_page > 1) ? current_page - 1 : 1];
     //   setState(() {
     //     if (current_page == 4) {
-    //       // for (Server server in room.servers) {
-    //       if (room.servers[0].connected) {
+    //       // for (Server server in room.servers!) {
+    //       if (room.servers![0].connected) {
     //         OSCReceive();
     //       }
     //       // }
     //     } else if (current_page == 3) {
-    //       // for (Server server in room.servers) {
-    //       if (room.servers[0].connected) {
+    //       // for (Server server in room.servers!) {
+    //       if (room.servers![0].connected) {
     //         OSCReceive();
     //       }
     //       // }
@@ -108,6 +107,7 @@ class _RoomManagerState extends State<RoomManager> {
 
   @override
   Widget build(BuildContext context) {
+    roomdata = getRoom('room_1');
     final page = (current_page > 0) ? current_page - 1 : 0;
     Room room = rooms[page];
     if (page != oldPage) {
@@ -118,7 +118,7 @@ class _RoomManagerState extends State<RoomManager> {
 
     return SafeArea(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start ,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(
             flex: 2,
@@ -135,8 +135,7 @@ class _RoomManagerState extends State<RoomManager> {
                     FutureBuilder<Room>(
                         future: roomdata,
                         builder: (BuildContext context,
-                            AsyncSnapshot<Room>
-                            projector_snapshot) {
+                            AsyncSnapshot<Room> projector_snapshot) {
                           switch (projector_snapshot.connectionState) {
                             case ConnectionState.none:
                               return SizedBox();
@@ -144,11 +143,23 @@ class _RoomManagerState extends State<RoomManager> {
                               return const CircularProgressIndicator();
                             case ConnectionState.active:
                             case ConnectionState.done:
+                            print(projector_snapshot.data != null);
                               if (projector_snapshot.hasError) {
                                 return Text('${projector_snapshot.error}');
                               } else {
-                                return Text(
-                                    '${projector_snapshot.data?.toString()}');
+                                return Column(
+                                  children: [
+                                    Text(projector_snapshot.data!.nameUI.toString()),
+                                    Text(projector_snapshot.data!.nameDatabase.toString()),
+                                    Text(projector_snapshot.data!.power_room_projectors.toString()),
+                                    Text(projector_snapshot.data!.projectors!.length.toString()),
+                                    Text(projector_snapshot.data!.list_projectors!),
+                                    Text(projector_snapshot.data!.nameUI.toString()),
+                                    Text(projector_snapshot.data!.nameUI.toString()),
+                                    Text(projector_snapshot.data!.nameUI.toString()),
+
+                                  ],
+                                );
                                 //   Text(
                                 //   '${projector_snapshot.data?.toJson().toString()}',
                                 // );
@@ -161,8 +172,9 @@ class _RoomManagerState extends State<RoomManager> {
                     SizedBox(
                       height: SizeConfig.blockSizeVertical * 2,
                     ),
+
                     /// Preset
-                    if (room.presets.length != 0)
+                    if (room.presets!.length != 0)
                       Column(
                         children: [
                           SizedBox(
@@ -197,7 +209,7 @@ class _RoomManagerState extends State<RoomManager> {
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
-                                    children: List.generate(room.presets.length,
+                                    children: List.generate(room.presets!.length,
                                         (index) {
                                       bool isSelected =
                                           room.current_preset == index;
@@ -235,7 +247,7 @@ class _RoomManagerState extends State<RoomManager> {
                                                               ? 15.0
                                                               : 10),
                                                   child: Image.asset(
-                                                    room.presets[index].image,
+                                                    room.presets![index].image,
                                                   ),
                                                 ),
                                               ),
@@ -258,10 +270,10 @@ class _RoomManagerState extends State<RoomManager> {
                                                         child:
                                                             LinearProgressIndicator(
                                                           value: (room.current_preset <
-                                                                  room.presets
+                                                                  room.presets!
                                                                       .length)
                                                               ? room
-                                                                  .presets[room
+                                                                  .presets![room
                                                                       .current_preset]
                                                                   .transport
                                                               : 0,
@@ -316,10 +328,10 @@ class _RoomManagerState extends State<RoomManager> {
                                                       duration: const Duration(
                                                           milliseconds: 200),
                                                       child: Text(room
-                                                          .presets[index].name),
+                                                          .presets![index].name),
                                                     ),
                                                     // PrimaryText(
-                                                    //     text: room.presets[index].name,
+                                                    //     text: room.presets![index].name,
                                                     //     size: isSelected ? 17 : 12,
                                                     //     color: AppColors.white,
                                                     //     fontWeight: FontWeight.w600),
@@ -336,22 +348,23 @@ class _RoomManagerState extends State<RoomManager> {
                                 // (current_page == 1)?
                                 VolumeEdit(
                                   room: room,
-                                  server: room.servers[0],
+                                  server: room.servers![0],
                                 ),
                                 // (current_page == 2)
                                 //     ? VolumeEdit(
                                 //         room: room,
-                                //         server: room.servers[7],
+                                //         server: room.servers![7],
                                 //       )
                                 //     : VolumeEdit(
                                 //         room: room,
-                                //         server: room.servers[0],
+                                //         server: room.servers![0],
                                 //       ),
                               ],
                             ),
                           ),
                         ],
                       ),
+
                     /// Map
                     Column(
                       children: [
@@ -481,6 +494,7 @@ class _RoomManagerState extends State<RoomManager> {
                         ),
                       ],
                     ),
+
                     /// Server
                     if (room.resolume)
                       Column(children: [
@@ -513,9 +527,9 @@ class _RoomManagerState extends State<RoomManager> {
                                 runSpacing: 20,
                                 alignment: WrapAlignment.spaceBetween,
                                 children: List.generate(
-                                  room.servers.length,
+                                  room.servers!.length,
                                   (index) => InfoServer(
-                                      room: room, server: room.servers[index]),
+                                      room: room, server: room.servers![index]),
                                 ))),
 
                         SizedBox(
@@ -748,7 +762,7 @@ class _RoomManagerState extends State<RoomManager> {
                         ),
                         SizedBox(
                           width: SizeConfig.screenWidth,
-                          child: room.projectors.length > 0
+                          child: room.projectors!.length > 0
                               ? Wrap(
                                   spacing: 20,
                                   runSpacing: 20,
@@ -795,7 +809,7 @@ class _RoomManagerState extends State<RoomManager> {
                                           ),
                                         ),
                                         InfoProjector(
-                                            projector: room.projectors[0])
+                                            projector: room.projectors![0])
                                       ],
                                     ),
                                     Wrap(
@@ -803,12 +817,12 @@ class _RoomManagerState extends State<RoomManager> {
                                         runSpacing: 20,
                                         alignment: WrapAlignment.spaceBetween,
                                         children: List.generate(
-                                          room.projectors.length - 1,
+                                          room.projectors!.length - 1,
                                           (index) =>
                                               // if(index>0)
                                               InfoProjector(
                                                   projector: room
-                                                      .projectors[index + 1]),
+                                                      .projectors![index + 1]),
                                         )),
                                   ],
                                 )

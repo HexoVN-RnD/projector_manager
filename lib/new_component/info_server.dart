@@ -36,10 +36,10 @@ class _InfoServer extends State<InfoServer> {
     Server server = widget.server;
     return Container(
       constraints: BoxConstraints(
-          minWidth: room.servers.length>1
+          minWidth: room.servers!.length>1
               ? 300
               : SizeConfig.screenWidth / 2 - 75,
-          maxWidth: room.servers.length>1
+          maxWidth: room.servers!.length>1
               ? SizeConfig.screenWidth / 3 - 110
               : SizeConfig.screenWidth / 3*2 - 45),
       padding: EdgeInsets.only(

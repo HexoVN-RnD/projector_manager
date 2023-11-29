@@ -39,7 +39,7 @@ class _VolumeEditState extends State<VolumeEdit> {
     if (room.resolume) {
       SendAudioOSC(room, index);
     } else {
-      for (Server server in room.servers) {
+      for (Server server in room.servers!) {
         SendUDPAudioMessage(server, index);
       }
     }

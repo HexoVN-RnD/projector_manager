@@ -45,19 +45,19 @@ class _AllServerStatusState extends State<AllServerStatus> {
     Room room = widget.room;
     return Column(
         children: List.generate(
-      room.servers.length,
+      room.servers!.length,
       (index) => Container(
         alignment: Alignment.center,
         width: 140,
         height: 45,
         margin: EdgeInsets.fromLTRB(20 , 10, 20, 0),
         decoration: BoxDecoration(
-            color: room.servers[index].connected
+            color: room.servers![index].connected
                 ? AppColors.green
                 : AppColors.red,
             borderRadius: BorderRadius.circular(15)),
         child: PrimaryText(
-          text: room.servers[index].shotname,
+          text: room.servers![index].shotname,
           size: 12,
           fontWeight: FontWeight.w500,
         ),

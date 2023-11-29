@@ -54,7 +54,7 @@ import 'package:responsive_dashboard/data/data.dart';
 void SendAudioOSC(Room room, double index) async {
   // writeCellValue(index.toStringAsFixed(2), server.id, 1);
   // print('Setaudio');
-  for (Server server in room.servers) {
+  for (Server server in room.servers!) {
     SendOscMessage(
         server.ip, server.preset_port, '/composition/layers/1/audio/volume',
         [index]);

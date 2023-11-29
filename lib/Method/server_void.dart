@@ -7,7 +7,7 @@ import 'package:responsive_dashboard/data/data.dart';
 Future<void> PowerOnAllServer() async {
   allRoom.power_all_servers = (true);
   for (Room room in rooms) {
-    for (Server server in room.servers) {
+    for (Server server in room.servers!) {
       if (!server.power_status && room.resolume) {
         server.power_status = (true);
         WakeonLan(room,server);
@@ -28,7 +28,7 @@ Future<void> PowerOnAllServer() async {
 Future<void> ShutdownAllServer() async {
   allRoom.power_all_servers = (false);
   for (Room room in rooms) {
-    for (Server server in room.servers) {
+    for (Server server in room.servers!) {
       if (server.power_status && room.resolume) {
         server.power_status = (false);
         ShutdownServer(room,server);
