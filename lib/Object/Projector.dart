@@ -6,6 +6,7 @@ import 'package:valuable/valuable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Projector {
+  int room;
   String ip;
   String name;
   int port;
@@ -25,6 +26,7 @@ class Projector {
 
   // Constructor
   Projector({
+    required this.room,
     required this.ip,
     required this.name,
     required this.port,
@@ -45,6 +47,7 @@ class Projector {
   });
 
   Map<String, dynamic> toJson() => {
+        'room': room,
         'ip': ip,
         'name': name,
         'port': port,
@@ -65,6 +68,7 @@ class Projector {
 
   factory Projector.fromJson(Map<String, dynamic> json) {
     return Projector(
+      room: json['room'],
       ip: json['ip'],
       name: json['name'],
       port: json['port'],
@@ -115,6 +119,7 @@ class Projector {
 //   prefs.remove(keyPrefix);
 // }
 final Future<Projector> default_projector = Future.value(Projector(
+    room: 0,
     ip: '192.168.0.0',
     name: 'Projector',
     port: 3002,
@@ -143,32 +148,52 @@ Future<Projector> getProjector(String key) async {
   }
 }
 
-void addNewProjector(
-    Projector new_projector, String room_key) async {
-  final SharedPreferences new_prefs = await prefs;
-  String? storedRoomValue = new_prefs.getString(room_key);
-  if (storedRoomValue != null) {
-    // Parse the stored JSON string into a Map
-    final Map<String, dynamic> storedRoomData = json.decode(storedRoomValue);
-    // Update the 'name' field with the new name
-    if (storedRoomData['projectors'].any((projector) => new_projector.ip == json.decode(projector)['ip'])) {
-      // If it exists, you can handle it accordingly (throw an error, update the existing projector, etc.)
-      print('${json.decode(storedRoomData['projectors'][0])['ip']}');
-      print('Projector with ID ${new_projector.ip} already exists in the room.');
-    } else {
-      // If it doesn't exist, add the new projector
-      storedRoomData['projectors'].add(json.encode(new_projector.toJson()));
-      storedRoomData['list_projectors'] = json.encode(new_projector.toJson()).toString();
-      print('${new_projector.ip} ');
-      print('Projector with ID ${new_projector.ip} added to the room.');
-    }
-    // Convert the Map back to a JSON string
-    final String updatedRoomValue = json.encode(storedRoomData);
-    // Save the updated value back to SharedPreferences
-    await new_prefs.setString(room_key, updatedRoomValue);
+Future<List<Projector>> getListProjector(int roomNumber) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  List<Projector> projectorsInRoom = [];
 
+  // Lấy danh sách các key trong SharedPreferences
+  Set<String> keys = prefs.getKeys();
+
+  // Lọc những key có dạng 'projector_'
+  List<String> projectorKeys =
+      keys.where((key) => key.startsWith('projector_')).toList();
+
+  // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'room'
+  for (String key in projectorKeys) {
+    String? jsonString = prefs.getString(key);
+    if (jsonString != null) {
+      Map<String, dynamic> jsonMap = json.decode(jsonString);
+
+      // Kiểm tra trường 'room'
+      if (jsonMap['room'] == roomNumber) {
+        Projector projector = Projector.fromJson(jsonMap);
+        projectorsInRoom.add(projector);
+      }
+    }
   }
-  // new_prefs.setString(new_key, json.encode(new_projector.toJson()));
+  print(projectorsInRoom.length);
+  return projectorsInRoom;
+}
+
+void addNewProjector(Projector new_projector) async {
+  final SharedPreferences new_prefs = await prefs;
+  List<String> Keys = [];
+  int number = 0;
+  Keys=new_prefs.getKeys().where((key) => key.startsWith('projector_')).toList();
+  // Sử dụng biểu thức chính quy để tìm số trong chuỗi
+  if (Keys.length != 0) {
+    RegExp regExp = RegExp(r'\d+');
+    Match match = regExp.firstMatch(Keys.last)!;
+    // Lấy chuỗi số từ kết quả tìm kiếm
+    String numberString = match.group(0)!;
+    // Chuyển chuỗi số thành số nguyên
+    number = int.parse(numberString);
+  }
+
+  String newKey = 'projector_${number + 1}';
+  print(newKey);
+  new_prefs.setString(newKey, json.encode(new_projector.toJson()));
 }
 
 void adjustProjector(Projector new_projector, String new_key) async {

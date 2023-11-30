@@ -1,7 +1,7 @@
 import 'package:responsive_dashboard/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Map<String, dynamic>> getAllDatabyKey(String keyword) async {
+Future<Map<String, dynamic>> getAllDataByKey(String keyword) async {
   final SharedPreferences new_prefs = await prefs;
   List<String> Keys = [];
   Map<String, dynamic> allData = {};
@@ -13,6 +13,19 @@ Future<Map<String, dynamic>> getAllDatabyKey(String keyword) async {
   return allData;
   // print('Projector keys: $projectorKeys');
 }
+// Future<int> countKey(String keyword) async {
+//   final SharedPreferences new_prefs = await prefs;
+//   List<String> Keys = [];
+//   // int count = 0;
+//
+//   Keys = new_prefs.getKeys()
+//       .where((key) => key.startsWith(keyword)).toList();
+//   // if (key.startsWith('projector_')) {
+//   //   count++;
+//   // }
+//   return Keys.length;
+// }
+
 Future<void> deleteAllData() async {
   SharedPreferences new_prefs = await prefs;
   new_prefs.clear();

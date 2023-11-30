@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/RoomData.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -31,7 +33,9 @@ class PopupAddRoom extends StatefulWidget {
 class _PopupAddRoomState extends State<PopupAddRoom> {
   final nameEditing = TextEditingController();
   final infoEditing = TextEditingController();
-  late Future<Room> room;
+  late Room room;
+  late Future<RoomData> roomdata;
+  late Future<List<Projector>> listProjector;
 
   late Future<Map<String, dynamic>> allRoom;
   // Timer? _timer;
@@ -41,8 +45,8 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
     super.initState();
     nameEditing.text = 'Room 1';
     infoEditing.text = 'Interactive';
-    room = getRoom('room_1');
-    allRoom = getAllDatabyKey('room');
+    roomdata = getRoomData('room_1');
+    allRoom = getAllDataByKey('room');
     // _timer = Timer.periodic(Duration(milliseconds: 100), (timer) async {
     //   setState(() {});
     // });
@@ -73,11 +77,35 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(30)),
               child: Stack(alignment: Alignment.topRight, children: [
+                // Positioned(
+                //   child: FutureBuilder<Room>(
+                //       future: room,
+                //       builder: (BuildContext context,
+                //           AsyncSnapshot<Room> room_snapshot) {
+                //         switch (room_snapshot.connectionState) {
+                //           case ConnectionState.none:
+                //             return SizedBox();
+                //           case ConnectionState.waiting:
+                //             return const CircularProgressIndicator();
+                //           case ConnectionState.active:
+                //           case ConnectionState.done:
+                //             if (room_snapshot.hasError) {
+                //               print(room_snapshot.error);
+                //               return Text('${room_snapshot.error}');
+                //             } else {
+                //               return Text('${room_snapshot.data?.toString()}');
+                //               //   Text(
+                //               //   '${room_snapshot.data?.toJson().toString()}',
+                //               // );
+                //             }
+                //         }
+                //       }),
+                // ),
                 Positioned(
-                  child: FutureBuilder<Room>(
-                      future: room,
+                  child: FutureBuilder<RoomData>(
+                      future: roomdata,
                       builder: (BuildContext context,
-                          AsyncSnapshot<Room> room_snapshot) {
+                          AsyncSnapshot<RoomData> room_snapshot) {
                         switch (room_snapshot.connectionState) {
                           case ConnectionState.none:
                             return SizedBox();
@@ -86,10 +114,9 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
                           case ConnectionState.active:
                           case ConnectionState.done:
                             if (room_snapshot.hasError) {
-                              print(room_snapshot.error);
                               return Text('${room_snapshot.error}');
                             } else {
-                              return Text('${room_snapshot.data?.toString()}');
+                              return Text('${room_snapshot.data?.toJson().toString()}');
                               //   Text(
                               //   '${room_snapshot.data?.toJson().toString()}',
                               // );
@@ -97,29 +124,7 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
                         }
                       }),
                 ),
-                Positioned(
-                  child: FutureBuilder<Room>(
-                      future: room,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<Room> room_snapshot) {
-                        switch (room_snapshot.connectionState) {
-                          case ConnectionState.none:
-                            return SizedBox();
-                          case ConnectionState.waiting:
-                            return const CircularProgressIndicator();
-                          case ConnectionState.active:
-                          case ConnectionState.done:
-                            if (room_snapshot.hasError) {
-                              return Text('${room_snapshot.error}');
-                            } else {
-                              return Text('${room_snapshot.data?.toString()}');
-                              //   Text(
-                              //   '${room_snapshot.data?.toJson().toString()}',
-                              // );
-                            }
-                        }
-                      }),
-                ),
+
                 Positioned(
                   width: 190,
                   height: 60,
@@ -136,27 +141,21 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
                             ),
                           ),
                           onPressed: () {
-                            final Room new_room = Room(
+                            final RoomData new_room = RoomData(
                                 nameUI: nameEditing.text,
                                 nameDatabase: infoEditing.text,
                                 power_room_projectors: false,
                                 shutter_room_projectors: false,
                                 isSelectedPlay: false,
                                 isSelectedStop: false,
+                                resolume: false,
                                 map: '',
                                 general: '',
-                                resolume: false,
-                                sensors: [],
-                                leds: [],
                                 current_preset: 10,
-                                presets: [],
-                                projectors: [],
-                                servers: [],
-                                brightSign: [],
                                 roomVolumeId: '');
                             setState(() {
-                              room = Future.value(new_room);
-                              setNewRoom(new_room, 'room_1');
+                              roomdata = Future.value(new_room);
+                              addNewRoomData(new_room);
                             });
                             print('save');
                           },

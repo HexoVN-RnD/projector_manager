@@ -341,6 +341,7 @@ List<Room> rooms = [
     ],
     projectors: [
       Projector(
+        room: 0,
         ip: '192.168.1.140',
         name: 'Máy chiếu tường',
         port: 3002,
@@ -359,6 +360,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.141',
         name: 'Máy chiếu tượng',
         port: 3002,
@@ -437,6 +439,7 @@ List<Room> rooms = [
     ],
     projectors: [
       Projector(
+        room: 0,
         ip: '192.168.1.101',
         name: 'Máy chiếu sàn 01',
         port: 3002,
@@ -455,6 +458,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.102',
         name: 'Máy chiếu sàn 02',
         port: 3002,
@@ -473,6 +477,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.103',
         name: 'Máy chiếu sàn 03',
         port: 3002,
@@ -491,6 +496,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.104',
         name: 'Máy chiếu sàn 04',
         port: 3002,
@@ -509,6 +515,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.105',
         name: 'Máy chiếu sàn 05',
         port: 3002,
@@ -610,6 +617,7 @@ List<Room> rooms = [
     ],
     projectors: [
       Projector(
+        room: 0,
         ip: '192.168.1.130',
         name: 'Máy chiếu sàn 01',
         port: 3002,
@@ -628,6 +636,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.131',
         name: 'Máy chiếu sàn 02',
         port: 3002,
@@ -646,6 +655,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.132',
         name: 'Máy chiếu sàn 03',
         port: 3002,
@@ -664,6 +674,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.133',
         name: 'Máy chiếu sàn 04',
         port: 3002,
@@ -748,6 +759,7 @@ List<Room> rooms = [
     ],
     projectors: [
       Projector(
+        room: 0,
         ip: '192.168.1.136',
         name: 'Máy chiếu 01',
         port: 3002,
@@ -766,6 +778,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.137',
         name: 'Máy chiếu 02',
         port: 3002,
@@ -784,6 +797,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.138',
         name: 'Máy chiếu 03',
         port: 3002,
@@ -802,6 +816,7 @@ List<Room> rooms = [
         color_state: false,
       ),
       Projector(
+        room: 0,
         ip: '192.168.1.139',
         name: 'Máy chiếu 04',
         port: 3002,

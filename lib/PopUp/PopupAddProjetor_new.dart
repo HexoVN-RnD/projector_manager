@@ -48,7 +48,7 @@ class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
     position_x.text = '0.0';
     position_y.text = '0.0';
     projector = getProjector('projector_1');
-    allDatas = getAllDatabyKey('room');
+    allDatas = getAllDataByKey('projector');
   }
 
   @override
@@ -91,6 +91,7 @@ class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
                             ),
                             onPressed: () async {
                               final Projector new_projector = Projector(
+                                room: 0,
                                 ip: ipEditing.text,
                                 name: nameEditing.text,
                                 position_x: double.parse(position_x.text),
@@ -115,7 +116,8 @@ class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
                               setState(() {
                                 if (_formKey.currentState!.validate()) {
                                   projector = Future.value(new_projector);
-                                  addNewProjector(new_projector, 'room_1');
+                                  addNewProjector(new_projector);
+                                  Navigator.of(context).pop;
                                 }
                               });
                             },
@@ -259,30 +261,30 @@ class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
                           ),
                         ),
                       )),
-                  FutureBuilder<Map<String, dynamic>>(
-                      future: allDatas,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<Map<String, dynamic>>
-                              projector_snapshot) {
-                        switch (projector_snapshot.connectionState) {
-                          case ConnectionState.none:
-                            return SizedBox();
-                          case ConnectionState.waiting:
-                            return const CircularProgressIndicator();
-                          case ConnectionState.active:
-                          case ConnectionState.done:
-                            print(projector_snapshot.data.toString());
-                            if (projector_snapshot.hasError) {
-                              return Text('${projector_snapshot.error}');
-                            } else {
-                              return Text(
-                                  '${projector_snapshot.data?.toString()}');
-                              //   Text(
-                              //   '${projector_snapshot.data?.toJson().toString()}',
-                              // );
-                            }
-                        }
-                      }),
+                  // FutureBuilder<Map<String, dynamic>>(
+                  //     future: allDatas,
+                  //     builder: (BuildContext context,
+                  //         AsyncSnapshot<Map<String, dynamic>>
+                  //             projector_snapshot) {
+                  //       switch (projector_snapshot.connectionState) {
+                  //         case ConnectionState.none:
+                  //           return SizedBox();
+                  //         case ConnectionState.waiting:
+                  //           return const CircularProgressIndicator();
+                  //         case ConnectionState.active:
+                  //         case ConnectionState.done:
+                  //           print(projector_snapshot.data.toString());
+                  //           if (projector_snapshot.hasError) {
+                  //             return Text('${projector_snapshot.error}');
+                  //           } else {
+                  //             return Text(
+                  //                 '${projector_snapshot.data?.toString()}');
+                  //             //   Text(
+                  //             //   '${projector_snapshot.data?.toJson().toString()}',
+                  //             // );
+                  //           }
+                  //       }
+                  //     }),
                   // Positioned(
                   //   bottom: 0,
                   //   child: GestureDetector(
@@ -339,27 +341,27 @@ class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
                   //     ),
                   //   ),
                   // ),
-                  Positioned(
-                    left: 300,
-                    bottom: 0,
-                    child: GestureDetector(
-                      onTap: () async {
-                        deleteAllData();
-                        setState(() {
-                          projector = Future.error(('Data cannot found '));
-                        });
-                        // setState(() {
-                        //   //clear this prefs
-                        //   // new_prefs.clear();
-                        // });
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 50,
-                        child: Icon(Icons.delete),
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   left: 300,
+                  //   bottom: 0,
+                  //   child: GestureDetector(
+                  //     onTap: () async {
+                  //       deleteAllData();
+                  //       setState(() {
+                  //         projector = Future.error(('Data cannot found '));
+                  //       });
+                  //       // setState(() {
+                  //       //   //clear this prefs
+                  //       //   // new_prefs.clear();
+                  //       // });
+                  //     },
+                  //     child: Container(
+                  //       width: 100,
+                  //       height: 50,
+                  //       child: Icon(Icons.delete),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               // floatingActionButton: FloatingActionButton(

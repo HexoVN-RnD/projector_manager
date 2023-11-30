@@ -11,6 +11,7 @@ import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/RoomData.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
@@ -39,12 +40,14 @@ class RoomManager extends StatefulWidget {
 }
 
 class _RoomManagerState extends State<RoomManager> {
-  // Timer? _timer;
+  Timer? _timer;
   Timer? _timer2;
   bool isSelectedPlay = false;
   bool isSelectedStop = false;
   int oldPage = 0;
-  late Future<Room> roomdata;
+  late Future<RoomData> roomdata;
+  late Future<List<Projector>> listProjector;
+  late Room room;
 
   void select_preset(Room room, int index) async {
     setState(() {
@@ -66,22 +69,22 @@ class _RoomManagerState extends State<RoomManager> {
     super.initState();
     // Đặt một Timer để cập nhật widget sau mỗi giây
     // _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-    //   Room room = rooms[
-    //       (current_page > 1) ? current_page - 1 : 1];
+    //   // Room room = rooms[
+    //   //     (current_page > 1) ? current_page - 1 : 1];
     //   setState(() {
-    //     if (current_page == 4) {
-    //       // for (Server server in room.servers!) {
-    //       if (room.servers![0].connected) {
-    //         OSCReceive();
-    //       }
-    //       // }
-    //     } else if (current_page == 3) {
-    //       // for (Server server in room.servers!) {
-    //       if (room.servers![0].connected) {
-    //         OSCReceive();
-    //       }
-    //       // }
-    //     }
+    //     // if (current_page == 4) {
+    //     //   // for (Server server in room.servers!) {
+    //     //   if (room.servers![0].connected) {
+    //     //     OSCReceive();
+    //     //   }
+    //     //   // }
+    //     // } else if (current_page == 3) {
+    //     //   // for (Server server in room.servers!) {
+    //     //   if (room.servers![0].connected) {
+    //     //     OSCReceive();
+    //     //   }
+    //     //   // }
+    //     // }
     //   });
     // });
     // _timer2 = Timer.periodic(
@@ -107,7 +110,8 @@ class _RoomManagerState extends State<RoomManager> {
 
   @override
   Widget build(BuildContext context) {
-    roomdata = getRoom('room_1');
+    roomdata = getRoomData('room_1');
+    listProjector = getListProjector(0);
     final page = (current_page > 0) ? current_page - 1 : 0;
     Room room = rooms[page];
     if (page != oldPage) {
@@ -132,10 +136,10 @@ class _RoomManagerState extends State<RoomManager> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FutureBuilder<Room>(
+                    FutureBuilder<RoomData>(
                         future: roomdata,
                         builder: (BuildContext context,
-                            AsyncSnapshot<Room> projector_snapshot) {
+                            AsyncSnapshot<RoomData> projector_snapshot) {
                           switch (projector_snapshot.connectionState) {
                             case ConnectionState.none:
                               return SizedBox();
@@ -143,21 +147,19 @@ class _RoomManagerState extends State<RoomManager> {
                               return const CircularProgressIndicator();
                             case ConnectionState.active:
                             case ConnectionState.done:
-                            print(projector_snapshot.data != null);
+                              print(projector_snapshot.data != null);
                               if (projector_snapshot.hasError) {
                                 return Text('${projector_snapshot.error}');
                               } else {
                                 return Column(
                                   children: [
-                                    Text(projector_snapshot.data!.nameUI.toString()),
-                                    Text(projector_snapshot.data!.nameDatabase.toString()),
-                                    Text(projector_snapshot.data!.power_room_projectors.toString()),
-                                    Text(projector_snapshot.data!.projectors!.length.toString()),
-                                    Text(projector_snapshot.data!.list_projectors!),
-                                    Text(projector_snapshot.data!.nameUI.toString()),
-                                    Text(projector_snapshot.data!.nameUI.toString()),
-                                    Text(projector_snapshot.data!.nameUI.toString()),
-
+                                    Text(projector_snapshot.data!.nameUI
+                                        .toString()),
+                                    Text(projector_snapshot.data!.nameDatabase
+                                        .toString()),
+                                    Text(projector_snapshot
+                                        .data!.power_room_projectors
+                                        .toString()),
                                   ],
                                 );
                                 //   Text(
@@ -166,6 +168,7 @@ class _RoomManagerState extends State<RoomManager> {
                               }
                           }
                         }),
+
                     Header(
                       room: room,
                     ),
@@ -209,8 +212,8 @@ class _RoomManagerState extends State<RoomManager> {
                                 SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
-                                    children: List.generate(room.presets!.length,
-                                        (index) {
+                                    children: List.generate(
+                                        room.presets!.length, (index) {
                                       bool isSelected =
                                           room.current_preset == index;
                                       return GestureDetector(
@@ -328,7 +331,8 @@ class _RoomManagerState extends State<RoomManager> {
                                                       duration: const Duration(
                                                           milliseconds: 200),
                                                       child: Text(room
-                                                          .presets![index].name),
+                                                          .presets![index]
+                                                          .name),
                                                     ),
                                                     // PrimaryText(
                                                     //     text: room.presets![index].name,
@@ -542,23 +546,30 @@ class _RoomManagerState extends State<RoomManager> {
                     /// Projector
                     Column(
                       children: [
-                        SizedBox(
-                          height: SizeConfig.blockSizeVertical * 8,
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                'assets/small_projector.png',
-                                height: 30,
-                              ),
-                              SizedBox(
-                                width: SizeConfig.blockSizeVertical,
-                              ),
-                              PrimaryText(
-                                  text: 'Quản lý máy chiếu'.toUpperCase(),
-                                  color: AppColors.grey,
-                                  size: 20,
-                                  fontWeight: FontWeight.w500),
-                            ],
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+
+                            });
+                          },
+                          child: SizedBox(
+                            height: SizeConfig.blockSizeVertical * 8,
+                            child: Row(
+                              children: [
+                                Image.asset(
+                                  'assets/small_projector.png',
+                                  height: 30,
+                                ),
+                                SizedBox(
+                                  width: SizeConfig.blockSizeVertical,
+                                ),
+                                PrimaryText(
+                                    text: 'Quản lý máy chiếu'.toUpperCase(),
+                                    color: AppColors.grey,
+                                    size: 20,
+                                    fontWeight: FontWeight.w500),
+                              ],
+                            ),
                           ),
                         ),
                         Container(
@@ -760,98 +771,256 @@ class _RoomManagerState extends State<RoomManager> {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          width: SizeConfig.screenWidth,
-                          child: room.projectors!.length > 0
-                              ? Wrap(
-                                  spacing: 20,
-                                  runSpacing: 20,
-                                  children: [
-                                    Wrap(
-                                      spacing: 20,
-                                      runSpacing: 20,
-                                      children: [
-                                        Container(
-                                          constraints: BoxConstraints(
-                                              minWidth: 280,
-                                              maxWidth:
-                                                  SizeConfig.screenWidth / 3 -
-                                                      110),
-                                          height: 245,
-                                          padding: EdgeInsets.all(20),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: AppColors.white,
-                                          ),
-                                          child: Center(
-                                            child: Hero(
-                                              tag: heroAddProjectorNew,
-                                              createRectTween: (begin, end) {
-                                                return CustomRectTween(
-                                                    begin: begin, end: end);
-                                              },
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Navigator.of(context).push(
-                                                      HeroDialogRoute(
-                                                          builder: (context) {
-                                                    return PopupAddProjectorNew();
-                                                  }));
-                                                },
-                                                child: PrimaryText(
-                                                  text: '+',
-                                                  fontWeight: FontWeight.w300,
-                                                  size: 80,
+                        FutureBuilder<List<Projector>>(
+                            future: listProjector,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<List<Projector>>
+                                    projectors_snapshot) {
+                              switch (projectors_snapshot.connectionState) {
+                                case ConnectionState.none:
+                                  return SizedBox();
+                                case ConnectionState.waiting:
+                                  return const CircularProgressIndicator();
+                                case ConnectionState.active:
+                                case ConnectionState.done:
+                                  if (projectors_snapshot.hasError) {
+                                    return Text('${projectors_snapshot.error}');
+                                  } else {
+                                    return SizedBox(
+                                      width: SizeConfig.screenWidth,
+                                      child: projectors_snapshot.data!.length >
+                                              0
+                                          ? Wrap(
+                                              spacing: 20,
+                                              runSpacing: 20,
+                                              children: [
+                                                Wrap(
+                                                  spacing: 20,
+                                                  runSpacing: 20,
+                                                  children: [
+                                                    Container(
+                                                      constraints: BoxConstraints(
+                                                          minWidth: 280,
+                                                          maxWidth: SizeConfig
+                                                                      .screenWidth /
+                                                                  3 -
+                                                              110),
+                                                      height: 245,
+                                                      padding:
+                                                          EdgeInsets.all(20),
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        color: AppColors.white,
+                                                      ),
+                                                      child: Center(
+                                                        child: Hero(
+                                                          tag:
+                                                              heroAddProjectorNew,
+                                                          createRectTween:
+                                                              (begin, end) {
+                                                            return CustomRectTween(
+                                                                begin: begin,
+                                                                end: end);
+                                                          },
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .push(HeroDialogRoute(
+                                                                      builder:
+                                                                          (context) {
+                                                                return PopupAddProjectorNew();
+                                                              }));
+                                                            },
+                                                            child: PrimaryText(
+                                                              text: '+',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w300,
+                                                              size: 80,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    InfoProjector(
+                                                        projector:
+                                                            projectors_snapshot
+                                                                .data![0])
+                                                  ],
                                                 ),
+                                                Wrap(
+                                                    spacing: 20,
+                                                    runSpacing: 20,
+                                                    alignment: WrapAlignment
+                                                        .spaceBetween,
+                                                    children: List.generate(
+                                                      projectors_snapshot
+                                                              .data!.length -
+                                                          1,
+                                                      (index) =>
+                                                          // if(index>0)
+                                                          InfoProjector(
+                                                              projector:
+                                                                  projectors_snapshot
+                                                                          .data![
+                                                                      index +
+                                                                          1]),
+                                                    )),
+                                              ],
+                                            )
+                                          : Container(
+                                              constraints: BoxConstraints(
+                                                  minWidth: 280,
+                                                  maxWidth:
+                                                      SizeConfig.screenWidth /
+                                                              3 -
+                                                          110),
+                                              height: 245,
+                                              padding: EdgeInsets.all(20),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                color: AppColors.white,
                                               ),
+                                              child: Center(
+                                                child: Hero(
+                                                  tag:
+                                                  heroAddProjectorNew,
+                                                  createRectTween:
+                                                      (begin, end) {
+                                                    return CustomRectTween(
+                                                        begin: begin,
+                                                        end: end);
+                                                  },
+                                                  child:
+                                                  GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.of(
+                                                          context)
+                                                          .push(HeroDialogRoute(
+                                                          builder:
+                                                              (context) {
+                                                            return PopupAddProjectorNew();
+                                                          }));
+                                                    },
+                                                    child: PrimaryText(
+                                                      text: '+',
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w300,
+                                                      size: 80,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
                                             ),
-                                          ),
-                                        ),
-                                        InfoProjector(
-                                            projector: room.projectors![0])
-                                      ],
-                                    ),
-                                    Wrap(
-                                        spacing: 20,
-                                        runSpacing: 20,
-                                        alignment: WrapAlignment.spaceBetween,
-                                        children: List.generate(
-                                          room.projectors!.length - 1,
-                                          (index) =>
-                                              // if(index>0)
-                                              InfoProjector(
-                                                  projector: room
-                                                      .projectors![index + 1]),
-                                        )),
-                                  ],
-                                )
-                              : Container(
-                                  constraints: BoxConstraints(
-                                      minWidth: 280,
-                                      maxWidth:
-                                          SizeConfig.screenWidth / 3 - 110),
-                                  height: 245,
-                                  padding: EdgeInsets.all(20),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: AppColors.white,
-                                  ),
-                                  child: Center(
-                                    child: GestureDetector(
-                                      child: PrimaryText(
-                                        text: '+',
-                                        fontWeight: FontWeight.w300,
-                                        size: 80,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                          // : SpinKitThreeBounce(
-                          //     color: AppColors.navy_blue,
-                          //     size: 20,
-                          //   ),
-                        ),
+                                      // : SpinKitThreeBounce(
+                                      //     color: AppColors.navy_blue,
+                                      //     size: 20,
+                                      //   ),
+                                    );
+                                    //   Text(
+                                    //   '${projectors_snapshot.data?.toJson().toString()}',
+                                    // );
+                                  }
+                              }
+                            }),
+                        // SizedBox(
+                        //   width: SizeConfig.screenWidth,
+                        //   child: room.projectors!.length > 0
+                        //       ? Wrap(
+                        //           spacing: 20,
+                        //           runSpacing: 20,
+                        //           children: [
+                        //             Wrap(
+                        //               spacing: 20,
+                        //               runSpacing: 20,
+                        //               children: [
+                        //                 Container(
+                        //                   constraints: BoxConstraints(
+                        //                       minWidth: 280,
+                        //                       maxWidth:
+                        //                           SizeConfig.screenWidth / 3 -
+                        //                               110),
+                        //                   height: 245,
+                        //                   padding: EdgeInsets.all(20),
+                        //                   decoration: BoxDecoration(
+                        //                     borderRadius:
+                        //                         BorderRadius.circular(20),
+                        //                     color: AppColors.white,
+                        //                   ),
+                        //                   child: Center(
+                        //                     child: Hero(
+                        //                       tag: heroAddProjectorNew,
+                        //                       createRectTween: (begin, end) {
+                        //                         return CustomRectTween(
+                        //                             begin: begin, end: end);
+                        //                       },
+                        //                       child: GestureDetector(
+                        //                         onTap: () {
+                        //                           Navigator.of(context).push(
+                        //                               HeroDialogRoute(
+                        //                                   builder: (context) {
+                        //                             return PopupAddProjectorNew();
+                        //                           }));
+                        //                         },
+                        //                         child: PrimaryText(
+                        //                           text: '+',
+                        //                           fontWeight: FontWeight.w300,
+                        //                           size: 80,
+                        //                         ),
+                        //                       ),
+                        //                     ),
+                        //                   ),
+                        //                 ),
+                        //                 InfoProjector(
+                        //                     projector: room.projectors![0])
+                        //               ],
+                        //             ),
+                        //             Wrap(
+                        //                 spacing: 20,
+                        //                 runSpacing: 20,
+                        //                 alignment: WrapAlignment.spaceBetween,
+                        //                 children: List.generate(
+                        //                   room.projectors!.length - 1,
+                        //                   (index) =>
+                        //                       // if(index>0)
+                        //                       InfoProjector(
+                        //                           projector: room
+                        //                               .projectors![index + 1]),
+                        //                 )),
+                        //           ],
+                        //         )
+                        //       : Container(
+                        //           constraints: BoxConstraints(
+                        //               minWidth: 280,
+                        //               maxWidth:
+                        //                   SizeConfig.screenWidth / 3 - 110),
+                        //           height: 245,
+                        //           padding: EdgeInsets.all(20),
+                        //           decoration: BoxDecoration(
+                        //             borderRadius: BorderRadius.circular(20),
+                        //             color: AppColors.white,
+                        //           ),
+                        //           child: Center(
+                        //             child: GestureDetector(
+                        //               child: PrimaryText(
+                        //                 text: '+',
+                        //                 fontWeight: FontWeight.w300,
+                        //                 size: 80,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //   // : SpinKitThreeBounce(
+                        //   //     color: AppColors.navy_blue,
+                        //   //     size: 20,
+                        //   //   ),
+                        // ),
                         SizedBox(
                           height: SizeConfig.blockSizeVertical * 4,
                         ),
