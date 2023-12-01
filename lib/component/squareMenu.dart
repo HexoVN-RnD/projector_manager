@@ -6,16 +6,20 @@ import 'package:responsive_dashboard/pages/side_menu.dart';
 
 
 class SideBar extends StatefulWidget {
-  const SideBar();
+  late List<Menu> sidebarMenus;
+   SideBar({
+     Key? key,
+     required this.sidebarMenus,
+   }) : super(key: key);
 
   @override
   State<SideBar> createState() => _SideBarState();
 }
 
 class _SideBarState extends State<SideBar> {
-  Menu selectedSideMenu = sidebarMenus.first;
   @override
   Widget build(BuildContext context) {
+    Menu selectedSideMenu = widget.sidebarMenus.first;
     return SafeArea(
       child: Container(
         width: 288,
@@ -41,7 +45,7 @@ class _SideBarState extends State<SideBar> {
                       ?.copyWith(color: Colors.white70),
                 ),
               ),
-              ...sidebarMenus
+              ...widget.sidebarMenus
                   .map((menu) => SideMenu(
                         menu: menu,
                         selectedMenu: selectedSideMenu,

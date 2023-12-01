@@ -6,16 +6,15 @@ import 'package:responsive_dashboard/style/style.dart';
 import 'package:rive/rive.dart';
 
 class SideMenu extends StatelessWidget {
-  const SideMenu(
-      {required this.menu,
-      required this.press,
-      required this.riveOnInit,
-      required this.selectedMenu});
-
   final Menu menu;
   final VoidCallback press;
   final ValueChanged<Artboard> riveOnInit;
   final Menu selectedMenu;
+  const SideMenu(
+      {required this.menu,
+        required this.press,
+        required this.riveOnInit,
+        required this.selectedMenu});
 
   @override
   Widget build(BuildContext context) {

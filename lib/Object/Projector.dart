@@ -176,6 +176,33 @@ Future<List<Projector>> getListProjector(int roomNumber) async {
   return projectorsInRoom;
 }
 
+List<Projector> getListProjector2(SharedPreferences prefs,int roomNumber) {
+  List<Projector> projectorsInRoom = [];
+
+  // Lấy danh sách các key trong SharedPreferences
+  Set<String> keys = prefs.getKeys();
+
+  // Lọc những key có dạng 'projector_'
+  List<String> projectorKeys =
+  keys.where((key) => key.startsWith('projector_')).toList();
+
+  // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'room'
+  for (String key in projectorKeys) {
+    String? jsonString = prefs.getString(key);
+    if (jsonString != null) {
+      Map<String, dynamic> jsonMap = json.decode(jsonString);
+
+      // Kiểm tra trường 'room'
+      if (jsonMap['room'] == roomNumber) {
+        Projector projector = Projector.fromJson(jsonMap);
+        projectorsInRoom.add(projector);
+      }
+    }
+  }
+  print(projectorsInRoom.length);
+  return projectorsInRoom;
+}
+
 void addNewProjector(Projector new_projector) async {
   final SharedPreferences new_prefs = await prefs;
   List<String> Keys = [];

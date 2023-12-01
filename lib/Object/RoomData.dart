@@ -75,7 +75,7 @@ class RoomData {
   }
 }
 
-final Future<RoomData> default_room = Future.value(RoomData(
+final Future<RoomData> default_roomdata = Future.value(RoomData(
   nameUI: 'Room',
   nameDatabase: 'Volume P',
   power_room_projectors: false,
@@ -96,8 +96,31 @@ Future<RoomData> getRoomData(String key) async {
     final Map<String, dynamic> jsonMap = json.decode(jsonString);
     return RoomData.fromJson(jsonMap);
   } else {
-    return default_room;
+    return default_roomdata;
   }
+}
+
+List<RoomData> getListRoom(SharedPreferences prefs) {
+  List<RoomData> listRoom = [];
+
+  // Lấy danh sách các key trong SharedPreferences
+  Set<String> keys = prefs.getKeys();
+
+  // Lọc những key có dạng 'projector_'
+  List<String> projectorKeys =
+      keys.where((key) => key.startsWith('room_')).toList();
+
+  // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'room'
+  for (String key in projectorKeys) {
+    String? jsonString = prefs.getString(key);
+    if (jsonString != null) {
+      Map<String, dynamic> jsonMap = json.decode(jsonString);
+      RoomData roomData = RoomData.fromJson(jsonMap);
+      listRoom.add(roomData);
+    }
+  }
+  print(listRoom.length);
+  return listRoom;
 }
 
 Future<void> deleteRoomData(String key) async {

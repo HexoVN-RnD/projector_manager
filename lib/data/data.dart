@@ -15,57 +15,57 @@ import 'package:valuable/valuable.dart';
 String email = 'Hexogon';
 String password = 'Hexogon';
 
-List<Menu> sidebarMenus = [
-  Menu(
-    title: "Tổng quan".toUpperCase(),
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "HOME",
-        stateMachineName: "HOME_interactivity"),
-  ),
-  Menu(
-    title: rooms[0].nameUI,
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "ROOM",
-        stateMachineName: "ROOM_interactivity"),
-  ),
-  Menu(
-    title: rooms[1].nameUI,
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "ROOM",
-        stateMachineName: "ROOM_interactivity"),
-  ),
-  Menu(
-    title: rooms[2].nameUI,
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "ROOM",
-        stateMachineName: "ROOM_interactivity"),
-  ),
-  Menu(
-    title: rooms[3].nameUI,
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "ROOM",
-        stateMachineName: "ROOM_interactivity"),
-  ),
-  Menu(
-    title: rooms[4].nameUI,
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "ROOM",
-        stateMachineName: "ROOM_interactivity"),
-  ),
-  Menu(
-    title: rooms[5].nameUI,
-    rive: RiveModel(
-        src: "assets/RiveAssets/icons.riv",
-        artboard: "ROOM",
-        stateMachineName: "ROOM_interactivity"),
-  ),
-];
+// List<Menu> sidebarMenus = [
+//   Menu(
+//     title: "Tổng quan".toUpperCase(),
+//     rive: RiveModel(
+//         src: "assets/RiveAssets/icons.riv",
+//         artboard: "HOME",
+//         stateMachineName: "HOME_interactivity"),
+//   ),
+//   Menu(
+//     title: rooms[0].nameUI,
+//     rive: RiveModel(
+//         src: "assets/RiveAssets/icons.riv",
+//         artboard: "ROOM",
+//         stateMachineName: "ROOM_interactivity"),
+//   ),
+//   Menu(
+//     title: rooms[1].nameUI,
+//     rive: RiveModel(
+//         src: "assets/RiveAssets/icons.riv",
+//         artboard: "ROOM",
+//         stateMachineName: "ROOM_interactivity"),
+//   ),
+//   Menu(
+//     title: rooms[2].nameUI,
+//     rive: RiveModel(
+//         src: "assets/RiveAssets/icons.riv",
+//         artboard: "ROOM",
+//         stateMachineName: "ROOM_interactivity"),
+//   ),
+//   Menu(
+//     title: rooms[3].nameUI,
+//     rive: RiveModel(
+//         src: "assets/RiveAssets/icons.riv",
+//         artboard: "ROOM",
+//         stateMachineName: "ROOM_interactivity"),
+//   ),
+//   Menu(
+//     title: rooms[4].nameUI,
+//     rive: RiveModel(
+//         src: "assets/RiveAssets/icons.riv",
+//         artboard: "ROOM",
+//         stateMachineName: "ROOM_interactivity"),
+//   ),
+//   Menu(
+//     title: rooms[5].nameUI,
+//     rive: RiveModel(
+//         src: "assets/RiveAssets/icons.riv",
+//         artboard: "ROOM",
+//         stateMachineName: "ROOM_interactivity"),
+//   ),
+// ];
 
 AllRoom allRoom = AllRoom(
   canRun: false,

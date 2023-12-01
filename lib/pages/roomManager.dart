@@ -33,8 +33,10 @@ import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomManager extends StatefulWidget {
+
   @override
   State<RoomManager> createState() => _RoomManagerState();
 }
@@ -42,11 +44,12 @@ class RoomManager extends StatefulWidget {
 class _RoomManagerState extends State<RoomManager> {
   Timer? _timer;
   Timer? _timer2;
+  late Future<RoomData> roomdata = default_roomdata;
   bool isSelectedPlay = false;
   bool isSelectedStop = false;
   int oldPage = 0;
-  late Future<RoomData> roomdata;
-  late Future<List<Projector>> listProjector;
+  // late Future<List<Projector>> listProjector;
+  late List<Projector> projectors = List.empty(growable: true);
   late Room room;
 
   void select_preset(Room room, int index) async {
@@ -108,10 +111,17 @@ class _RoomManagerState extends State<RoomManager> {
     super.dispose();
   }
 
+  Future<void> getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // roomdata = getRoomData('room_1');
+    // listProjector = getListProjector(0);
+    projectors = getListProjector2(prefs, 0);
+  }
+
   @override
   Widget build(BuildContext context) {
-    roomdata = getRoomData('room_1');
-    listProjector = getListProjector(0);
+    getData();
+
     final page = (current_page > 0) ? current_page - 1 : 0;
     Room room = rooms[page];
     if (page != oldPage) {
@@ -136,38 +146,38 @@ class _RoomManagerState extends State<RoomManager> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FutureBuilder<RoomData>(
-                        future: roomdata,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<RoomData> projector_snapshot) {
-                          switch (projector_snapshot.connectionState) {
-                            case ConnectionState.none:
-                              return SizedBox();
-                            case ConnectionState.waiting:
-                              return const CircularProgressIndicator();
-                            case ConnectionState.active:
-                            case ConnectionState.done:
-                              print(projector_snapshot.data != null);
-                              if (projector_snapshot.hasError) {
-                                return Text('${projector_snapshot.error}');
-                              } else {
-                                return Column(
-                                  children: [
-                                    Text(projector_snapshot.data!.nameUI
-                                        .toString()),
-                                    Text(projector_snapshot.data!.nameDatabase
-                                        .toString()),
-                                    Text(projector_snapshot
-                                        .data!.power_room_projectors
-                                        .toString()),
-                                  ],
-                                );
-                                //   Text(
-                                //   '${projector_snapshot.data?.toJson().toString()}',
-                                // );
-                              }
-                          }
-                        }),
+                    // FutureBuilder<RoomData>(
+                    //     future: roomdata,
+                    //     builder: (BuildContext context,
+                    //         AsyncSnapshot<RoomData> projector_snapshot) {
+                    //       switch (projector_snapshot.connectionState) {
+                    //         case ConnectionState.none:
+                    //           return SizedBox();
+                    //         case ConnectionState.waiting:
+                    //           return const CircularProgressIndicator();
+                    //         case ConnectionState.active:
+                    //         case ConnectionState.done:
+                    //           print(projector_snapshot.data != null);
+                    //           if (projector_snapshot.hasError) {
+                    //             return Text('${projector_snapshot.error}');
+                    //           } else {
+                    //             return Column(
+                    //               children: [
+                    //                 Text(projector_snapshot.data!.nameUI
+                    //                     .toString()),
+                    //                 Text(projector_snapshot.data!.nameDatabase
+                    //                     .toString()),
+                    //                 Text(projector_snapshot
+                    //                     .data!.power_room_projectors
+                    //                     .toString()),
+                    //               ],
+                    //             );
+                    //             //   Text(
+                    //             //   '${projector_snapshot.data?.toJson().toString()}',
+                    //             // );
+                    //           }
+                    //       }
+                    //     }),
 
                     Header(
                       room: room,
@@ -771,256 +781,255 @@ class _RoomManagerState extends State<RoomManager> {
                             ],
                           ),
                         ),
-                        FutureBuilder<List<Projector>>(
-                            future: listProjector,
-                            builder: (BuildContext context,
-                                AsyncSnapshot<List<Projector>>
-                                    projectors_snapshot) {
-                              switch (projectors_snapshot.connectionState) {
-                                case ConnectionState.none:
-                                  return SizedBox();
-                                case ConnectionState.waiting:
-                                  return const CircularProgressIndicator();
-                                case ConnectionState.active:
-                                case ConnectionState.done:
-                                  if (projectors_snapshot.hasError) {
-                                    return Text('${projectors_snapshot.error}');
-                                  } else {
-                                    return SizedBox(
-                                      width: SizeConfig.screenWidth,
-                                      child: projectors_snapshot.data!.length >
-                                              0
-                                          ? Wrap(
-                                              spacing: 20,
-                                              runSpacing: 20,
-                                              children: [
-                                                Wrap(
-                                                  spacing: 20,
-                                                  runSpacing: 20,
-                                                  children: [
-                                                    Container(
-                                                      constraints: BoxConstraints(
-                                                          minWidth: 280,
-                                                          maxWidth: SizeConfig
-                                                                      .screenWidth /
-                                                                  3 -
-                                                              110),
-                                                      height: 245,
-                                                      padding:
-                                                          EdgeInsets.all(20),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        color: AppColors.white,
-                                                      ),
-                                                      child: Center(
-                                                        child: Hero(
-                                                          tag:
-                                                              heroAddProjectorNew,
-                                                          createRectTween:
-                                                              (begin, end) {
-                                                            return CustomRectTween(
-                                                                begin: begin,
-                                                                end: end);
-                                                          },
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .push(HeroDialogRoute(
-                                                                      builder:
-                                                                          (context) {
-                                                                return PopupAddProjectorNew();
-                                                              }));
-                                                            },
-                                                            child: PrimaryText(
-                                                              text: '+',
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w300,
-                                                              size: 80,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    InfoProjector(
-                                                        projector:
-                                                            projectors_snapshot
-                                                                .data![0])
-                                                  ],
-                                                ),
-                                                Wrap(
-                                                    spacing: 20,
-                                                    runSpacing: 20,
-                                                    alignment: WrapAlignment
-                                                        .spaceBetween,
-                                                    children: List.generate(
-                                                      projectors_snapshot
-                                                              .data!.length -
-                                                          1,
-                                                      (index) =>
-                                                          // if(index>0)
-                                                          InfoProjector(
-                                                              projector:
-                                                                  projectors_snapshot
-                                                                          .data![
-                                                                      index +
-                                                                          1]),
-                                                    )),
-                                              ],
-                                            )
-                                          : Container(
-                                              constraints: BoxConstraints(
-                                                  minWidth: 280,
-                                                  maxWidth:
-                                                      SizeConfig.screenWidth /
-                                                              3 -
-                                                          110),
-                                              height: 245,
-                                              padding: EdgeInsets.all(20),
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                color: AppColors.white,
-                                              ),
-                                              child: Center(
-                                                child: Hero(
-                                                  tag:
-                                                  heroAddProjectorNew,
-                                                  createRectTween:
-                                                      (begin, end) {
-                                                    return CustomRectTween(
-                                                        begin: begin,
-                                                        end: end);
-                                                  },
-                                                  child:
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.of(
-                                                          context)
-                                                          .push(HeroDialogRoute(
-                                                          builder:
-                                                              (context) {
-                                                            return PopupAddProjectorNew();
-                                                          }));
-                                                    },
-                                                    child: PrimaryText(
-                                                      text: '+',
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .w300,
-                                                      size: 80,
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ),
-                                      // : SpinKitThreeBounce(
-                                      //     color: AppColors.navy_blue,
-                                      //     size: 20,
-                                      //   ),
-                                    );
-                                    //   Text(
-                                    //   '${projectors_snapshot.data?.toJson().toString()}',
-                                    // );
-                                  }
-                              }
-                            }),
-                        // SizedBox(
-                        //   width: SizeConfig.screenWidth,
-                        //   child: room.projectors!.length > 0
-                        //       ? Wrap(
-                        //           spacing: 20,
-                        //           runSpacing: 20,
-                        //           children: [
-                        //             Wrap(
-                        //               spacing: 20,
-                        //               runSpacing: 20,
-                        //               children: [
-                        //                 Container(
-                        //                   constraints: BoxConstraints(
-                        //                       minWidth: 280,
-                        //                       maxWidth:
-                        //                           SizeConfig.screenWidth / 3 -
-                        //                               110),
-                        //                   height: 245,
-                        //                   padding: EdgeInsets.all(20),
-                        //                   decoration: BoxDecoration(
-                        //                     borderRadius:
-                        //                         BorderRadius.circular(20),
-                        //                     color: AppColors.white,
-                        //                   ),
-                        //                   child: Center(
-                        //                     child: Hero(
-                        //                       tag: heroAddProjectorNew,
-                        //                       createRectTween: (begin, end) {
-                        //                         return CustomRectTween(
-                        //                             begin: begin, end: end);
-                        //                       },
-                        //                       child: GestureDetector(
-                        //                         onTap: () {
-                        //                           Navigator.of(context).push(
-                        //                               HeroDialogRoute(
-                        //                                   builder: (context) {
-                        //                             return PopupAddProjectorNew();
-                        //                           }));
-                        //                         },
-                        //                         child: PrimaryText(
-                        //                           text: '+',
-                        //                           fontWeight: FontWeight.w300,
-                        //                           size: 80,
+                        // FutureBuilder<List<Projector>>(
+                        //     future: listProjector,
+                        //     builder: (BuildContext context,
+                        //         AsyncSnapshot<List<Projector>>
+                        //             projectors_snapshot) {
+                        //       switch (projectors_snapshot.connectionState) {
+                        //         case ConnectionState.none:
+                        //           return SizedBox();
+                        //         case ConnectionState.waiting:
+                        //           return const CircularProgressIndicator();
+                        //         case ConnectionState.active:
+                        //         case ConnectionState.done:
+                        //           if (projectors_snapshot.hasError) {
+                        //             return Text('${projectors_snapshot.error}');
+                        //           } else {
+                        //             return SizedBox(
+                        //               width: SizeConfig.screenWidth,
+                        //               child: projectors_snapshot.data!.length >
+                        //                       0
+                        //                   ? Wrap(
+                        //                       spacing: 20,
+                        //                       runSpacing: 20,
+                        //                       children: [
+                        //                         Wrap(
+                        //                           spacing: 20,
+                        //                           runSpacing: 20,
+                        //                           children: [
+                        //                             Container(
+                        //                               constraints: BoxConstraints(
+                        //                                   minWidth: 280,
+                        //                                   maxWidth: SizeConfig
+                        //                                               .screenWidth /
+                        //                                           3 -
+                        //                                       110),
+                        //                               height: 245,
+                        //                               padding:
+                        //                                   EdgeInsets.all(20),
+                        //                               decoration: BoxDecoration(
+                        //                                 borderRadius:
+                        //                                     BorderRadius
+                        //                                         .circular(20),
+                        //                                 color: AppColors.white,
+                        //                               ),
+                        //                               child: Center(
+                        //                                 child: Hero(
+                        //                                   tag:
+                        //                                       heroAddProjectorNew,
+                        //                                   createRectTween:
+                        //                                       (begin, end) {
+                        //                                     return CustomRectTween(
+                        //                                         begin: begin,
+                        //                                         end: end);
+                        //                                   },
+                        //                                   child:
+                        //                                       GestureDetector(
+                        //                                     onTap: () {
+                        //                                       Navigator.of(
+                        //                                               context)
+                        //                                           .push(HeroDialogRoute(
+                        //                                               builder:
+                        //                                                   (context) {
+                        //                                         return PopupAddProjectorNew();
+                        //                                       }));
+                        //                                     },
+                        //                                     child: PrimaryText(
+                        //                                       text: '+',
+                        //                                       fontWeight:
+                        //                                           FontWeight
+                        //                                               .w300,
+                        //                                       size: 80,
+                        //                                     ),
+                        //                                   ),
+                        //                                 ),
+                        //                               ),
+                        //                             ),
+                        //                             InfoProjector(
+                        //                                 projector:
+                        //                                     projectors_snapshot
+                        //                                         .data![0])
+                        //                           ],
                         //                         ),
+                        //                         Wrap(
+                        //                             spacing: 20,
+                        //                             runSpacing: 20,
+                        //                             alignment: WrapAlignment
+                        //                                 .spaceBetween,
+                        //                             children: List.generate(
+                        //                               projectors_snapshot
+                        //                                       .data!.length -
+                        //                                   1,
+                        //                               (index) =>
+                        //                                   // if(index>0)
+                        //                                   InfoProjector(
+                        //                                       projector:
+                        //                                           projectors_snapshot
+                        //                                                   .data![
+                        //                                               index +
+                        //                                                   1]),
+                        //                             )),
+                        //                       ],
+                        //                     )
+                        //                   : Container(
+                        //                       constraints: BoxConstraints(
+                        //                           minWidth: 280,
+                        //                           maxWidth:
+                        //                               SizeConfig.screenWidth /
+                        //                                       3 -
+                        //                                   110),
+                        //                       height: 245,
+                        //                       padding: EdgeInsets.all(20),
+                        //                       decoration: BoxDecoration(
+                        //                         borderRadius:
+                        //                             BorderRadius.circular(20),
+                        //                         color: AppColors.white,
                         //                       ),
+                        //                       child: Center(
+                        //                         child: Hero(
+                        //                           tag:
+                        //                           heroAddProjectorNew,
+                        //                           createRectTween:
+                        //                               (begin, end) {
+                        //                             return CustomRectTween(
+                        //                                 begin: begin,
+                        //                                 end: end);
+                        //                           },
+                        //                           child:
+                        //                           GestureDetector(
+                        //                             onTap: () {
+                        //                               Navigator.of(
+                        //                                   context)
+                        //                                   .push(HeroDialogRoute(
+                        //                                   builder:
+                        //                                       (context) {
+                        //                                     return PopupAddProjectorNew();
+                        //                                   }));
+                        //                             },
+                        //                             child: PrimaryText(
+                        //                               text: '+',
+                        //                               fontWeight:
+                        //                               FontWeight
+                        //                                   .w300,
+                        //                               size: 80,
+                        //                             ),
+                        //                           ),
+                        //                         ),
+                        //                       )
                         //                     ),
-                        //                   ),
-                        //                 ),
-                        //                 InfoProjector(
-                        //                     projector: room.projectors![0])
-                        //               ],
-                        //             ),
-                        //             Wrap(
-                        //                 spacing: 20,
-                        //                 runSpacing: 20,
-                        //                 alignment: WrapAlignment.spaceBetween,
-                        //                 children: List.generate(
-                        //                   room.projectors!.length - 1,
-                        //                   (index) =>
-                        //                       // if(index>0)
-                        //                       InfoProjector(
-                        //                           projector: room
-                        //                               .projectors![index + 1]),
-                        //                 )),
-                        //           ],
-                        //         )
-                        //       : Container(
-                        //           constraints: BoxConstraints(
-                        //               minWidth: 280,
-                        //               maxWidth:
-                        //                   SizeConfig.screenWidth / 3 - 110),
-                        //           height: 245,
-                        //           padding: EdgeInsets.all(20),
-                        //           decoration: BoxDecoration(
-                        //             borderRadius: BorderRadius.circular(20),
-                        //             color: AppColors.white,
-                        //           ),
-                        //           child: Center(
-                        //             child: GestureDetector(
-                        //               child: PrimaryText(
-                        //                 text: '+',
-                        //                 fontWeight: FontWeight.w300,
-                        //                 size: 80,
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //   // : SpinKitThreeBounce(
-                        //   //     color: AppColors.navy_blue,
-                        //   //     size: 20,
-                        //   //   ),
-                        // ),
+                        //               // : SpinKitThreeBounce(
+                        //               //     color: AppColors.navy_blue,
+                        //               //     size: 20,
+                        //               //   ),
+                        //             );
+                        //             //   Text(
+                        //             //   '${projectors_snapshot.data?.toJson().toString()}',
+                        //             // );
+                        //           }
+                        //       }
+                        //     }),
+                        SizedBox(
+                          width: SizeConfig.screenWidth,
+                          child: projectors!.length > 0
+                              ? Wrap(
+                                  spacing: 20,
+                                  runSpacing: 20,
+                                  children: [
+                                    Wrap(
+                                      spacing: 20,
+                                      runSpacing: 20,
+                                      children: [
+                                        Container(
+                                          constraints: BoxConstraints(
+                                              minWidth: 280,
+                                              maxWidth:
+                                                  SizeConfig.screenWidth / 3 -
+                                                      110),
+                                          height: 245,
+                                          padding: EdgeInsets.all(20),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: AppColors.white,
+                                          ),
+                                          child: Center(
+                                            child: Hero(
+                                              tag: heroAddProjectorNew,
+                                              createRectTween: (begin, end) {
+                                                return CustomRectTween(
+                                                    begin: begin, end: end);
+                                              },
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      HeroDialogRoute(
+                                                          builder: (context) {
+                                                    return PopupAddProjectorNew();
+                                                  }));
+                                                },
+                                                child: PrimaryText(
+                                                  text: '+',
+                                                  fontWeight: FontWeight.w300,
+                                                  size: 80,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        InfoProjector(
+                                            projector: projectors![0])
+                                      ],
+                                    ),
+                                    Wrap(
+                                        spacing: 20,
+                                        runSpacing: 20,
+                                        alignment: WrapAlignment.spaceBetween,
+                                        children: List.generate(
+                                          projectors!.length - 1,
+                                          (index) =>
+                                              // if(index>0)
+                                              InfoProjector(
+                                                  projector: projectors![index + 1]),
+                                        )),
+                                  ],
+                                )
+                              : Container(
+                                  constraints: BoxConstraints(
+                                      minWidth: 280,
+                                      maxWidth:
+                                          SizeConfig.screenWidth / 3 - 110),
+                                  height: 245,
+                                  padding: EdgeInsets.all(20),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: AppColors.white,
+                                  ),
+                                  child: Center(
+                                    child: GestureDetector(
+                                      child: PrimaryText(
+                                        text: '+',
+                                        fontWeight: FontWeight.w300,
+                                        size: 80,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                          // : SpinKitThreeBounce(
+                          //     color: AppColors.navy_blue,
+                          //     size: 20,
+                          //   ),
+                        ),
                         SizedBox(
                           height: SizeConfig.blockSizeVertical * 4,
                         ),
