@@ -291,79 +291,47 @@ class _DashboardState extends State<Dashboard> {
           child: Container(
             color: Colors.transparent,
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+              filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
               child: const SizedBox(),
             ),
           ),
         ),
         if (allRoom.canRun.getValue() == false) Center(
-          child: SingleChildScrollView(
-            child: Container(
-              width: SizeConfig.screenWidth / 2,
-              height: SizeConfig.screenHeight / 3,
-              // decoration: BoxDecoration(
-              //     color: AppColors.gray,
-              //     borderRadius: BorderRadius.circular(30)),
-              child: Material(
-                color: Colors.white,
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32)),
-                child: Container(
-                  width: 300,
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 5),
-                        child: PrimaryText(
-                          text: 'License đã hết hạn'.toUpperCase(),
-                          size: 20,
-                          color: AppColors.gray,
-                          fontWeight: FontWeight.w500,
-                        ),
+          child: Stack(
+            children: [
+              Positioned(
+                bottom: 0,
+                // decoration: BoxDecoration(
+                //     color: AppColors.gray,
+                //     borderRadius: BorderRadius.circular(30)),
+                child:
+                Container(
+                  width: 200,
+                  height: 60,
+                  margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.red,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(topRight: Radius.circular(14), bottomRight: Radius.circular(29)),
                       ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(10, 10, 10, 60),
-                        child: PrimaryText(
-                          text: 'Vui lòng liên hệ nhà cung cấp để gia hạn'
-                              .toUpperCase(),
-                          size: 20,
-                          color: AppColors.gray,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Container(
-                        width: 160,
-                        height: 70,
-                        margin: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.red,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              exit(0);
-                              // print('exit: $license_status $canRun');
-                            });
-                          },
-                          child: PrimaryText(
-                            text: 'Exit'.toUpperCase(),
-                            size: 16,
-                            color: AppColors.white,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        exit(0);
+                        // print('exit: $license_status $canRun');
+                      });
+                    },
+                    child: PrimaryText(
+                      text: 'Exit',
+                      color: AppColors.white,
+                      fontWeight: FontWeight.w500,
+                      size: 17,
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ],
