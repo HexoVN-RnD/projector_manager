@@ -108,15 +108,17 @@ Future<void> deleteRoomData(String key) async {
 Future<void> addNewRoomData(RoomData new_Room) async {
   final SharedPreferences new_prefs = await prefs;
   List<String> Keys = [];
+  int number = 0;
   Keys = new_prefs.getKeys().where((key) => key.startsWith('room_')).toList();
-  // Sử dụng biểu thức chính quy để tìm số trong chuỗi
-  RegExp regExp = RegExp(r'\d+');
-  Match match = regExp.firstMatch(Keys.last)!;
-  // Lấy chuỗi số từ kết quả tìm kiếm
-  String numberString = match.group(0)!;
-  // Chuyển chuỗi số thành số nguyên
-  int number = int.parse(numberString);
-
+  if (Keys.length != 0) {
+    // Sử dụng biểu thức chính quy để tìm số trong chuỗi
+    RegExp regExp = RegExp(r'\d+');
+    Match match = regExp.firstMatch(Keys.last)!;
+    // Lấy chuỗi số từ kết quả tìm kiếm
+    String numberString = match.group(0)!;
+    // Chuyển chuỗi số thành số nguyên
+    number = int.parse(numberString);
+  }
   String newKey = 'room_${number + 1}';
   print(newKey);
   new_prefs.setString(newKey, json.encode(new_Room.toJson()));
