@@ -107,11 +107,11 @@ List<RoomData> getListRoom(SharedPreferences prefs) {
   Set<String> keys = prefs.getKeys();
 
   // Lọc những key có dạng 'projector_'
-  List<String> projectorKeys =
+  List<String> roomKeys =
       keys.where((key) => key.startsWith('room_')).toList();
 
   // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'room'
-  for (String key in projectorKeys) {
+  for (String key in roomKeys) {
     String? jsonString = prefs.getString(key);
     if (jsonString != null) {
       Map<String, dynamic> jsonMap = json.decode(jsonString);
@@ -119,7 +119,7 @@ List<RoomData> getListRoom(SharedPreferences prefs) {
       listRoom.add(roomData);
     }
   }
-  print(listRoom.length);
+  // print(listRoom.length);
   return listRoom;
 }
 

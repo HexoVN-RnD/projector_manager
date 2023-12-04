@@ -36,7 +36,6 @@ import 'package:responsive_dashboard/style/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomManager extends StatefulWidget {
-
   @override
   State<RoomManager> createState() => _RoomManagerState();
 }
@@ -558,9 +557,7 @@ class _RoomManagerState extends State<RoomManager> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            setState(() {
-
-                            });
+                            setState(() {});
                           },
                           child: SizedBox(
                             height: SizeConfig.blockSizeVertical * 8,
@@ -987,8 +984,7 @@ class _RoomManagerState extends State<RoomManager> {
                                             ),
                                           ),
                                         ),
-                                        InfoProjector(
-                                            projector: projectors![0])
+                                        InfoProjector(projector: projectors![0])
                                       ],
                                     ),
                                     Wrap(
@@ -1000,7 +996,8 @@ class _RoomManagerState extends State<RoomManager> {
                                           (index) =>
                                               // if(index>0)
                                               InfoProjector(
-                                                  projector: projectors![index + 1]),
+                                                  projector:
+                                                      projectors![index + 1]),
                                         )),
                                   ],
                                 )
@@ -1017,6 +1014,12 @@ class _RoomManagerState extends State<RoomManager> {
                                   ),
                                   child: Center(
                                     child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            HeroDialogRoute(builder: (context) {
+                                          return PopupAddProjectorNew();
+                                        }));
+                                      },
                                       child: PrimaryText(
                                         text: '+',
                                         fontWeight: FontWeight.w300,

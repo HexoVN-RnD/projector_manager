@@ -20,7 +20,7 @@ const projectId = 'toong-dd7c8';
 // const projectId = 'toong-23d79';
 // final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
+Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();

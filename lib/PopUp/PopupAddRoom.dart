@@ -70,6 +70,7 @@ class _PopupAddRoomState extends State<PopupAddRoom> {
         },
         child: SingleChildScrollView(
           child: Material(
+            color: Colors.transparent,
             child: Container(
               width: width,
               height: height,

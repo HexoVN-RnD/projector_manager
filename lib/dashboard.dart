@@ -9,6 +9,7 @@ import 'package:responsive_dashboard/PopUp/PopupAddRoom.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/component/rive_utils.dart';
+import 'package:responsive_dashboard/pages/home_menu.dart';
 import 'package:responsive_dashboard/pages/side_menu.dart';
 import 'package:responsive_dashboard/data/menu.dart';
 import 'package:responsive_dashboard/pages/select_page.dart';
@@ -32,14 +33,17 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   Timer? _timer;
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
-  late Menu selectedSideMenu;
-  List<Menu> sidebarMenus = [Menu(
-  title: "Tổng quan".toUpperCase(),
-  rive: RiveModel(
-  src: "assets/RiveAssets/icons.riv",
-  artboard: "HOME",
-  stateMachineName: "HOME_interactivity"),
-  )];
+  int selectedSideMenu = 0;
+  List<String> roomKeys = List.empty(growable: true);
+  List<Menu> sidebarMenus = [
+    Menu(
+      title: "Tổng quan".toUpperCase(),
+      rive: RiveModel(
+          src: "assets/RiveAssets/icons.riv",
+          artboard: "HOME",
+          stateMachineName: "HOME_interactivity"),
+    )
+  ];
   late List<RoomData> listRoom = List.empty(growable: true);
   CollectionReference licenseStatusCollection =
       Firestore.instance.collection('license_status');
@@ -53,13 +57,15 @@ class _DashboardState extends State<Dashboard> {
   void changePage(int index) {
     setState(() {
       _drawerKey.currentState?.closeDrawer();
-      selectedSideMenu = sidebarMenus[index];
+      selectedSideMenu = index;
+      // print(sidebarMenus.first == selectedSideMenu);
       current_page = index;
     });
   }
 
   @override
   void initState() {
+    getListKey();
     getRoom();
     sidebarMenus = [
       Menu(
@@ -71,35 +77,47 @@ class _DashboardState extends State<Dashboard> {
       ),
       ...listRoom
           .map((room) => Menu(
-        title: room.nameUI,
-        rive: RiveModel(
-            src: "assets/RiveAssets/icons.riv",
-            artboard: "ROOM",
-            stateMachineName: "ROOM_interactivity"),
-      ))
+                title: room.nameUI,
+                rive: RiveModel(
+                    src: "assets/RiveAssets/icons.riv",
+                    artboard: "ROOM",
+                    stateMachineName: "ROOM_interactivity"),
+              ))
           .toList()
     ];
-    selectedSideMenu = sidebarMenus.first;
+    // print('object');
+    // selectedSideMenu = sidebarMenus.first;
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 60), (timer) {
-      getLicenseStatus();
-      Future.delayed(
-        const Duration(milliseconds: 500),
-        () {
-          setState(() {
-            allRoom.canRun = license_status.any((status) {
-              final license_status = status['run'].toString();
-              return license_status == 'true';
-            });
-          });
-        },
-      );
+    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+      setState(() {
+
+      });
+      // getLicenseStatus();
+      // Future.delayed(
+      //   const Duration(milliseconds: 500),
+      //   () {
+      //     setState(() {
+      //       allRoom.canRun = license_status.any((status) {
+      //         final license_status = status['run'].toString();
+      //         return license_status == 'true';
+      //       });
+      //     });
+      //   },
+      // );
     });
   }
 
   Future<void> getRoom() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     listRoom = getListRoom(prefs);
+  }
+  Future<void> getListKey() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Lấy danh sách các key trong SharedPreferences
+    Set<String> keys = prefs.getKeys();
+
+    // Lọc những key có dạng 'projector_'
+    roomKeys = keys.where((key) => key.startsWith('room_')).toList();
   }
 
   @override
@@ -111,6 +129,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    getListKey();
     getRoom();
     sidebarMenus = [
       Menu(
@@ -118,7 +137,8 @@ class _DashboardState extends State<Dashboard> {
         rive: RiveModel(
             src: "assets/RiveAssets/icons.riv",
             artboard: "HOME",
-            stateMachineName: "HOME_interactivity"),
+            stateMachineName: "HOME_interactivity",
+        ),
       ),
       ...listRoom
           .map((room) => Menu(
@@ -158,46 +178,58 @@ class _DashboardState extends State<Dashboard> {
                             // filterQuality: FilterQuality.high,
                             fit: BoxFit.fitHeight,
                           )),
-                      SideMenu(
+                      HomeMenu(
                         menu: sidebarMenus.first,
+                        id: 0,
                         selectedMenu: selectedSideMenu,
                         press: () {
-                          RiveUtils.changeSMIBoolState(
-                              sidebarMenus[0].rive.status!);
+                          // RiveUtils.changeSMIBoolState(
+                          //     sidebarMenus.first.rive.status!);
                           setState(() {
                             changePage(0);
                           });
                         },
                         riveOnInit: (artboard) {
-                          sidebarMenus[0].rive.status = RiveUtils.getRiveInput(
-                              artboard,
-                              stateMachineName:
-                                  sidebarMenus[0].rive.stateMachineName);
+                          sidebarMenus.first.rive.status =
+                              RiveUtils.getRiveInput(artboard,
+                                  stateMachineName:
+                                      sidebarMenus.first.rive.stateMachineName);
                         },
                       ),
                       if (sidebarMenus.length > 0)
                         Container(
-                          height: 700,
+                          constraints: BoxConstraints(
+                              maxHeight: 700),
                           child: SingleChildScrollView(
                             child: Column(
                               children: List.generate(
-                                sidebarMenus.length - 1,
+                                sidebarMenus.length-1,
                                 (index) => SideMenu(
-                                  menu: sidebarMenus[index + 1],
+                                  menu: sidebarMenus[index+1],
+                                  id: index +1,
                                   selectedMenu: selectedSideMenu,
                                   press: () {
-                                    RiveUtils.changeSMIBoolState(
-                                        sidebarMenus[index + 1].rive.status!);
+                                    // print(sidebarMenus.length);
+                                    // RiveUtils.changeSMIBoolState(
+                                    //     sidebarMenus[index+1].rive.status!);
                                     setState(() {
-                                      print('index' + (index + 1).toString());
-                                      changePage(index + 1);
+                                      // print('index' + (index+1).toString());
+                                      changePage(index+1);
+                                    });
+                                  },
+                                  delete: (){
+                                    setState(() {
+                                      /// Room key bat dau tu 0-n
+                                      print(roomKeys[index]);
+                                      deleteRoomData(roomKeys[index]);
+                                      roomKeys.remove(roomKeys[index]);
                                     });
                                   },
                                   riveOnInit: (artboard) {
-                                    sidebarMenus[index + 1].rive.status =
+                                    sidebarMenus[index+1].rive.status =
                                         RiveUtils.getRiveInput(artboard,
                                             stateMachineName:
-                                                sidebarMenus[index + 1]
+                                                sidebarMenus[index+1]
                                                     .rive
                                                     .stateMachineName);
                                   },

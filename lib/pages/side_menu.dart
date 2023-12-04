@@ -7,14 +7,18 @@ import 'package:rive/rive.dart';
 
 class SideMenu extends StatelessWidget {
   final Menu menu;
+  final int id;
   final VoidCallback press;
+  final VoidCallback delete;
   final ValueChanged<Artboard> riveOnInit;
-  final Menu selectedMenu;
+  final int selectedMenu;
   const SideMenu(
       {required this.menu,
-        required this.press,
-        required this.riveOnInit,
-        required this.selectedMenu});
+      required this.id,
+      required this.press,
+      required this.delete,
+      required this.riveOnInit,
+      required this.selectedMenu});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class SideMenu extends StatelessWidget {
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.fastOutSlowIn,
-                width: selectedMenu == menu ? 200 : 0,
+                width: id == selectedMenu ? 200 : 0,
                 height: 70,
                 left: 0,
                 child: Container(
@@ -47,27 +51,57 @@ class SideMenu extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(20, 15, 0, 0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: 36,
-                        width: 36,
-                        child: RiveAnimation.asset(
-                          menu.rive.src,
-                          artboard: menu.rive.artboard,
-                          onInit: riveOnInit,
-                        ),
-                      ),
-                      SizedBox(width: SizeConfig.blockSizeHorizontal*0.5),
                       Padding(
-                        padding: const EdgeInsets.only(top: 7.0),
-                        child: PrimaryText(
-                          text: menu.title,
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.w500,
-                          size: 16,
+                        padding:  EdgeInsets.only(bottom: 18.0),
+                        child: SizedBox(
+                          height: 36,
+                          width: 36,
+                          child: RiveAnimation.asset(
+                            menu.rive.src,
+                            artboard: menu.rive.artboard,
+                            onInit: riveOnInit,
+                          ),
                         ),
                       ),
+                      SizedBox(width: SizeConfig.blockSizeHorizontal * 0.5),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.only(bottom: 10.0),
+                        width: 100, // Max width for the text
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown, // Scale down to fit within the box
+                          child: PrimaryText(
+                            text: menu.title,
+                            color: AppColors.primary,
+                            fontWeight: FontWeight.w500,
+                            size: 16,
+                          ),
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 7.0),
+                      //   child: PrimaryText(
+                      //     text: menu.title,
+                      //     color: AppColors.primary,
+                      //     fontWeight: FontWeight.w500,
+                      //     size: 16,
+                      //   ),
+                      // ),
                     ],
+                  ),
+                ),
+              ),
+              Positioned(
+                child: GestureDetector(
+                  onTap: delete,
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(165, 22, 0, 0),
+                    child: Icon(
+                      Icons.cancel_outlined,
+                      color: AppColors.red,
+                    ),
                   ),
                 ),
               ),
