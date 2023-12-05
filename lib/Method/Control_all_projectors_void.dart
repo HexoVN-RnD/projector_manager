@@ -2,6 +2,7 @@ import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/RoomData.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/data/data.dart';
 
@@ -73,13 +74,13 @@ void SetButtonControlRoom(Room room){
 void PowerAllProjectors(bool mode) async {
   allRoom.power_all_projectors=mode;
   for (var room in rooms) {
-    for (var projector in room.projectors!) {
+    for (var projector in room.listProjectors!) {
       checkConnectionProjector(projector);
     }
   }
   await Future.delayed(Duration(seconds: 1));
   for (var room in rooms) {
-    for (var projector in room.projectors!) {
+    for (var projector in room.listProjectors!) {
       // if (projector.power_status_button !=
       //     allRoom.power_all_projectors) {
       // checkConnectionProjector(projector);
@@ -117,7 +118,7 @@ void PowerAllProjectors(bool mode) async {
   }
 }
 
-void PowerRoomProjectors(Room room, bool mode) async {
+void PowerRoomProjectors(RoomData room, bool mode) async {
   room.power_room_projectors=mode;
     for (var projector in room.projectors!) {
       checkConnectionProjector(projector);
@@ -160,7 +161,7 @@ void PowerRoomProjectors(Room room, bool mode) async {
 void ShutterAllProjectors(bool mode) {
   allRoom.shutter_all_projectors=mode;
   for (var room in rooms) {
-    for (var projector in room.projectors!) {
+    for (var projector in room.listProjectors!) {
       if (mode) {
         if (projector.type == 'Christie') {
           print(projector.ip.toString() + '(SHU 1)');

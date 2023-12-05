@@ -6,6 +6,7 @@ import 'package:responsive_dashboard/Method/audio_void.dart';
 import 'package:responsive_dashboard/Method/excel.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Method/udp_void.dart';
+import 'package:responsive_dashboard/Object/BrightSign.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
@@ -16,11 +17,11 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
 class VolumeEdit extends StatefulWidget {
-  Room room;
+  // Room room;
   Server server;
 
   VolumeEdit({
-    required this.room,
+    // required this.room,
     required this.server,
   });
 
@@ -39,8 +40,8 @@ class _VolumeEditState extends State<VolumeEdit> {
     if (room.resolume) {
       SendAudioOSC(room, index);
     } else {
-      for (Server server in room.servers!) {
-        SendUDPAudioMessage(server, index);
+      for (BrightSign brightSign in room.brightSign!) {
+        SendUDPAudioMessage(brightSign, index);
       }
     }
     server.volume = index;
@@ -48,7 +49,7 @@ class _VolumeEditState extends State<VolumeEdit> {
 
   @override
   Widget build(BuildContext context) {
-    Room room = widget.room;
+    // Room room = widget.room;
     Server server = widget.server;
     return Container(
       margin: EdgeInsets.only(top: 20),

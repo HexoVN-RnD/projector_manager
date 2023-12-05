@@ -1,7 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Object/BrightSign.dart';
+import 'package:responsive_dashboard/Object/Led.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/RoomData.dart';
+import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -24,9 +29,17 @@ const String heroZoom6 = 'popup-zoom6';
 /// {@endtemplate}
 class PopupZoom extends StatefulWidget {
   /// {@macro add_todo_popup_card}
-  Room room;
+  RoomData room;
+  List<Projector> listProjectors = List.empty(growable: true);
+  List<Led> listLeds = List.empty(growable: true);
+  List<Sensor> listSensors = List.empty(growable: true);
+  List<BrightSign> listBrightSigns = List.empty(growable: true);
   int page;
   PopupZoom({
+    required this.listProjectors,
+    required this.listLeds,
+    required this.listSensors,
+    required this.listBrightSigns,
     required this.room,
     required this.page,
   });
@@ -54,7 +67,7 @@ class _PopupZoomState extends State<PopupZoom> {
 
   @override
   Widget build(BuildContext context) {
-    Room room = widget.room;
+    // RoomData room = widget.room;
     int page = widget.page;
     final width = Responsive.isDesktop(context)
         ? SizeConfig.screenWidth - 200
@@ -87,7 +100,7 @@ class _PopupZoomState extends State<PopupZoom> {
               ClipRRect(
                   borderRadius: BorderRadius.circular(30),
                   child: Image.asset(
-                    room.map,
+                    widget.room.map,
                     fit: BoxFit.fill,
                   )),
               Padding(
@@ -122,34 +135,34 @@ class _PopupZoomState extends State<PopupZoom> {
                   children: [
                     Stack(
                       children: List.generate(
-                        room.projectors!.length,
+                        widget.listProjectors.length,
                             (index) => Positioned(
-                          left: width * room.projectors![index].position_x,
-                          top: height * room.projectors![index].position_y,
+                          left: width * widget.listProjectors[index].position_x,
+                          top: height * widget.listProjectors[index].position_y,
                           // left: width * 0.445,
                           // top: height * 0.49,
                           width: width * 0.018,
                           height: width * 0.018,
                           child: Container(
                             color: AppColors.StatusColor[
-                            room.projectors![index].status],
+                            widget.listProjectors[index].status],
                           ),
                         ),
                       ),
                     ),
                     Stack(
                       children: List.generate(
-                        room.leds!.length,
+                        widget.listLeds.length,
                             (index) => Positioned(
-                          left: width * room.leds![index].position_x,
-                          top: height * room.leds![index].position_y,
+                          left: width * widget.listLeds[index].position_x,
+                          top: height * widget.listLeds[index].position_y,
                           // left: width * 0.725,
                           // top: height * 0.125,
                           width: width * 0.016,
                           height: width * 0.07,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: room.leds![index].connected
+                              color: widget.listLeds[index].connected
                                   ? AppColors.green
                                   : AppColors.red,
                               borderRadius: BorderRadius.circular(10),
@@ -163,15 +176,15 @@ class _PopupZoomState extends State<PopupZoom> {
               else if (page == 4)
                 Stack(
                   children: List.generate(
-                    room.projectors!.length,
+                    widget.listProjectors.length,
                     (index) => Positioned(
-                      left: width * room.projectors![index].position_x,
-                      top: height * room.projectors![index].position_y,
+                      left: width * widget.listProjectors[index].position_x,
+                      top: height * widget.listProjectors[index].position_y,
                       width: width * 0.0095,
                       height: width * 0.0095,
                       child: Container(
                         color: AppColors.StatusColor[
-                            room.projectors![index].status],
+                            widget.listProjectors[index].status],
                       ),
                     ),
                   ),
@@ -181,32 +194,32 @@ class _PopupZoomState extends State<PopupZoom> {
                   children: [
                     Stack(
                       children: List.generate(
-                        room.projectors!.length,
+                        widget.listProjectors.length,
                         (index) => Positioned(
-                          left: width * room.projectors![index].position_x,
-                          top: height * room.projectors![index].position_y,
+                          left: width * widget.listProjectors[index].position_x,
+                          top: height * widget.listProjectors[index].position_y,
                           width: width * 0.018,
                           height: width * 0.018,
                           child: Container(
                             color: AppColors.StatusColor[
-                                room.projectors![index].status],
+                                widget.listProjectors[index].status],
                           ),
                         ),
                       ),
                     ),
                     Stack(
                       children: List.generate(
-                        room.sensors!.length,
+                        widget.listSensors.length,
                         (index) => Positioned(
-                          left: width * room.sensors![index].position_x,
-                          top: height * room.sensors![index].position_y,
+                          left: width * widget.listSensors[index].position_x,
+                          top: height * widget.listSensors[index].position_y,
                           // left: width * 0.555,
                           // top: height * 0.858,
                           width: width * 0.016,
                           height: width * 0.016,
                           child: Container(
                             decoration: BoxDecoration(
-                              color: room.sensors![index].connected
+                              color: widget.listSensors[index].connected
                                   ? AppColors.green
                                   : AppColors.red,
                               borderRadius: BorderRadius.circular(10),
@@ -222,36 +235,36 @@ class _PopupZoomState extends State<PopupZoom> {
                   children: [
                     Stack(
                       children: List.generate(
-                        room.projectors!.length,
+                        widget.listProjectors.length,
                         (index) => Positioned(
-                          left: width * room.projectors![index].position_x,
-                          top: height * room.projectors![index].position_y,
+                          left: width * widget.listProjectors[index].position_x,
+                          top: height * widget.listProjectors[index].position_y,
                           width: width * 0.012,
                           height: width * 0.012,
                           child: Container(
                             color: AppColors.StatusColor[
-                                room.projectors![index].status],
+                                widget.listProjectors[index].status],
                           ),
                         ),
                       ),
                     ),
                     Positioned(
-                      left: width * room.servers![0].position_x,
-                      top: height * room.servers![0].position_y,
+                      left: width * widget.listBrightSigns![0].position_x,
+                      top: height * widget.listBrightSigns![0].position_y,
                       // left: width * 0.448,
                       // top: height * 0.45,
                       width: width * 0.1,
                       height: width * 0.1,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: room.servers![0].connected
+                            color: widget.listBrightSigns![0].connected
                                 ? AppColors.green
                                 : AppColors.red,
                             borderRadius: BorderRadius.circular(5),
-                            border: room.servers![0].isOnHover
+                            border: widget.listBrightSigns![0].isOnHover
                                 ? Border.all(
                                     strokeAlign: BorderSide.strokeAlignCenter,
-                                    color: room.servers![0].connected
+                                    color: widget.listBrightSigns![0].connected
                                         ? AppColors.green
                                         : AppColors.red,
                                     width: 10.0,
@@ -267,14 +280,14 @@ class _PopupZoomState extends State<PopupZoom> {
               else if (page == 2)
                 Stack(
                   children: List.generate(
-                    room.servers!.length,
+                    widget.listBrightSigns!.length,
                     (index) => Positioned(
-                      left: width * room.servers![index].position_x,
-                      top: height * room.servers![index].position_y,
+                      left: width * widget.listBrightSigns![index].position_x,
+                      top: height * widget.listBrightSigns![index].position_y,
                       width: width * 0.009,
                       height: height * 0.09,
                       child: Container(
-                        color: room.servers![index].connected
+                        color: widget.listBrightSigns![index].connected
                             ? AppColors.green
                             : AppColors.red,
                       ),

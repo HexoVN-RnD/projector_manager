@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Object/BrightSign.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 
 class PositionPage2 extends StatefulWidget {
-  Server server;
+  BrightSign brightSign;
   double width;
   double height;
   PositionPage2({
-    required this.server,
+    required this.brightSign,
     required this.width,
     required this.height,
   });
@@ -38,7 +39,7 @@ class _PositionPage2State extends State<PositionPage2> {
 
   @override
   Widget build(BuildContext context) {
-    Server server = widget.server;
+    BrightSign server = widget.brightSign;
     double width = widget.width;
     double height = widget.height;
     return Positioned(

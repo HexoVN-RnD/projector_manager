@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
+import 'package:responsive_dashboard/Object/BrightSign.dart';
+import 'package:responsive_dashboard/Object/Led.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/RoomData.dart';
+import 'package:responsive_dashboard/Object/Sensor.dart';
+import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/new_component/ledConnection.dart';
@@ -15,12 +21,22 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
 class CheckConnectionBar extends StatefulWidget {
-  Room room;
+  RoomData room;
+  List<Projector> listProjectors = List.empty(growable: true);
+  List<Server> listServers = List.empty(growable: true);
+  List<Led> listLeds = List.empty(growable: true);
+  List<Sensor> listSensors = List.empty(growable: true);
+  List<BrightSign> listBrightSigns = List.empty(growable: true);
   final VoidCallback? onUpdateState;
 
   CheckConnectionBar({
     Key? key,
     required this.room,
+    required this.listProjectors,
+    required this.listServers,
+    required this.listLeds,
+    required this.listSensors,
+    required this.listBrightSigns,
     this.onUpdateState,
   }) : super(key: key);
 
@@ -32,7 +48,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
 
   @override
   Widget build(BuildContext context) {
-    Room room = widget.room;
+    // RoomData room = widget.room;
     double width = Responsive.isDesktop(context)
         ? (MediaQuery.of(context).size.width-200) / 3
         : MediaQuery.of(context).size.width - 40;
@@ -45,10 +61,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
         children: [
           Expanded(
             child: PrimaryText(
-                text: rooms[(current_page  > 0)
-                        ? current_page  - 1
-                        : 1]
-                    .nameUI,
+                text: widget.room.nameUI,
                 size: 18,
                 fontWeight: FontWeight.w600),
           ),
@@ -82,13 +95,13 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
         height: SizeConfig.blockSizeVertical * 3,
       ),
 
-      if (room.servers!.length != 0)
+      if (widget.listServers!.length != 0)
       Column(
         children: [
           Container(
             alignment: Alignment.centerLeft,
             child: PrimaryText(
-              text: room.resolume? 'Kiểm tra tín hiệu server'.toUpperCase(): 'Kiểm tra tín hiệu Bright Sign'.toUpperCase(),
+              text: 'Kiểm tra tín hiệu server'.toUpperCase(),
               size: 16,
               fontWeight: FontWeight.w500,
               color: AppColors.iconDeepGrey,
@@ -99,8 +112,8 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
           ),
           Column(
             children: List.generate(
-              room.servers!.length,
-                  (index) =>  ServerConnection(room: room,server: room.servers![index],),
+              widget.listServers!.length,
+                  (index) =>  ServerConnection(server: widget.listServers![index],),
             ),
           ),
           SizedBox(
@@ -108,7 +121,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
           ),
         ],
       ),
-      if (room.sensors!.length != 0)
+      if (widget.listSensors.isNotEmpty)
         Column(
           children: [
             Container(
@@ -125,9 +138,9 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
             Column(
               children: List.generate(
-                room.sensors!.length,
+                widget.listSensors!.length,
                 (index) => SensorConnection(
-                  sensor: room.sensors![index],
+                  sensor: widget.listSensors![index],
                 ),
               ),
             ),
@@ -136,7 +149,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
           ],
         ),
-      if (room.leds!.length != 0)
+      if (widget.listLeds.isNotEmpty)
         Column(
           children: [
             Container(
@@ -153,9 +166,9 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
             Column(
               children: List.generate(
-                room.leds!.length,
+                widget.listLeds.length,
                 (index) => LedConnection(
-                  led: room.leds![index],
+                  led: widget.listLeds[index],
                 ),
               ),
             ),
@@ -164,7 +177,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
             ),
           ],
         ),
-      if (room.projectors!.length != 0)
+      if (widget.listProjectors.isNotEmpty)
         Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -181,9 +194,9 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
       ),
       Column(
         children: List.generate(
-          room.projectors!.length,
+          widget.listProjectors.length,
           (index) => ProjectorConnection(
-            projector: room.projectors![index],
+            projector: widget.listProjectors[index],
           ),
         ),
       ),

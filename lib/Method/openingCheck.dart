@@ -21,6 +21,6 @@ Future<void> OpeningCheck() async {
     allRoom.num_leds
          = (allRoom.num_leds + room.leds!.length);
     allRoom.num_projectors
-         = (allRoom.num_projectors + room.projectors!.length);
+         = (allRoom.num_projectors + widget.listProjectors.length);
   }
 }

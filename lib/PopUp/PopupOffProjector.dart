@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
@@ -15,10 +17,16 @@ const String heroOffProjector = 'add-off-projector';
 /// Uses a [Hero] with tag [_heroAddTodo].
 /// {@endtemplate}
 class PopupOffProjector extends StatefulWidget {
-  /// {@macro add_todo_popup_card}
+  List<Projector> listProjectors = List.empty(growable: true);
+  // Room room;
   final VoidCallback? onUpdateState;
-  const PopupOffProjector({Key? key,
-    this.onUpdateState,}) : super(key: key);
+
+  /// {@macro add_todo_popup_card}
+  PopupOffProjector({
+    Key? key,
+    // required this.room,
+    this.onUpdateState,
+  }) : super(key: key);
 
   @override
   State<PopupOffProjector> createState() => _PopupOffProjectorState();
@@ -39,7 +47,7 @@ class _PopupOffProjectorState extends State<PopupOffProjector> {
             color: AppColors.white,
             elevation: 2,
             shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
             child: Container(
               width: 450,
               padding: const EdgeInsets.all(16.0),
@@ -100,8 +108,9 @@ class _PopupOffProjectorState extends State<PopupOffProjector> {
                                 setState(() {
                                   if (current_page == 0) {
                                     PowerAllProjectors(false);
-                                  }else{
-                                    PowerRoomProjectors(rooms[current_page-1], false);
+                                  } else {
+                                    PowerRoomProjectors(
+                                        widget.room, false);
                                   }
                                   Navigator.of(context).pop();
                                   widget.onUpdateState?.call();

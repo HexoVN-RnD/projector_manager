@@ -135,6 +135,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                           Navigator.of(context)
                               .push(HeroDialogRoute(builder: (context) {
                             return PopupOffProjector(
+                              room: widget.,
                               onUpdateState: () {
                                 setState(() {});
                               },

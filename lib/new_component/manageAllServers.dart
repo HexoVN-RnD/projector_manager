@@ -175,19 +175,20 @@ class _ManageAllServersState extends State<ManageAllServers> {
           SizedBox(
             height: SizeConfig.blockSizeVertical,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
-                children: [
-                  AllServerStatus(room: rooms[0]),
-                  AllServerStatus(room: rooms[2]),
-                ],
-              ),
-              AllServerStatus(room: rooms[3]),
-              AllServerStatus(room: rooms[4]),
-            ],
-          )
+          /// Show server status
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Column(
+          //       children: [
+          //         AllServerStatus(room: rooms[0]),
+          //         AllServerStatus(room: rooms[2]),
+          //       ],
+          //     ),
+          //     AllServerStatus(room: rooms[3]),
+          //     AllServerStatus(room: rooms[4]),
+          //   ],
+          // )
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
+import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/data/data.dart';
@@ -15,9 +16,12 @@ const String heroOffShutter = 'add-off-shutter';
 /// Uses a [Hero] with tag [_heroAddTodo].
 /// {@endtemplate}
 class PopupOffShutter extends StatefulWidget {
-  /// {@macro add_todo_popup_card}
+  Room room;
   final VoidCallback? onUpdateState;
-  const PopupOffShutter({Key? key,
+  /// {@macro add_todo_popup_card}
+  PopupOffShutter({Key? key,
+
+    required this.room,
     this.onUpdateState,}) : super(key: key);
 
   @override
@@ -101,7 +105,7 @@ class _PopupOffShutterState extends State<PopupOffShutter> {
                                   if (current_page ==0) {
                                     ShutterAllProjectors(false);
                                   } else {
-                                    ShutterRoomProjectors(rooms[current_page-1], false);
+                                    ShutterRoomProjectors(widget.room, false);
                                   }
                                   Navigator.of(context).pop();
                                   widget.onUpdateState?.call();

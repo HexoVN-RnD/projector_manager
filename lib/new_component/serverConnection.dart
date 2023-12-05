@@ -11,11 +11,11 @@ import 'package:responsive_dashboard/style/style.dart';
 import 'package:auto_reload/auto_reload.dart';
 
 class ServerConnection extends StatefulWidget {
-  Room room;
+  // Room room;
   Server server;
   // final VoidCallback onUpdateState;
   ServerConnection({
-    required this.room,
+    // required this.room,
     required this.server,
     // required this.onUpdateState,
   });
@@ -27,7 +27,7 @@ class ServerConnection extends StatefulWidget {
 class _ServerConnection extends State<ServerConnection> {
   @override
   Widget build(BuildContext context) {
-    Room room = widget.room;
+    // Room room = widget.room;
     Server server = widget.server;
     return MouseRegion(
       onHover: (event){
@@ -84,8 +84,7 @@ class _ServerConnection extends State<ServerConnection> {
         onTap: () {
           setState(() {
             // check_connection(widget.server.ip, widget.server.connected);
-            checkConnectionServerResponse(
-                room,server);
+            checkConnectionServerResponse(server);
             // widget.onUpdateState?.call();
           });
           // startAutoReload();

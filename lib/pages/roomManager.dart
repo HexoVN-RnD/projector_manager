@@ -52,7 +52,7 @@ class _RoomManagerState extends State<RoomManager> {
   bool isSelectedStop = false;
   int oldPage = 0;
   // late Future<List<Projector>> listProjector;
-  late List<Projector> projectors = List.empty(growable: true);
+  late List<Projector> listProjectors = List.empty(growable: true);
   late List<String> projectorsKey = List.empty(growable: true);
   late Room room;
 
@@ -143,7 +143,7 @@ class _RoomManagerState extends State<RoomManager> {
 
   Future<void> getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    projectors = getListProjector(prefs, widget.roomKey);
+    listProjectors = getListProjector(prefs, widget.roomKey);
   }
 
   @override
@@ -152,7 +152,7 @@ class _RoomManagerState extends State<RoomManager> {
     getData();
 
     final page = (current_page > 0) ? current_page - 1 : 0;
-    Room room = rooms[page];
+    // Room room = rooms[page];
     if (page != oldPage) {
       oldPage = page;
       // room.setRoomVolume();
@@ -411,11 +411,11 @@ class _RoomManagerState extends State<RoomManager> {
                     /// Map
                     Column(
                       children: [
-                        MiniMap(
-                          room:
-                              rooms[(current_page > 0) ? current_page - 1 : 1],
-                          page: current_page,
-                        ),
+                        // MiniMap(
+                        //   room:
+                        //       rooms[(current_page > 0) ? current_page - 1 : 1],
+                        //   page: current_page,
+                        // ),
                         Row(
                           children: [
                             Container(
@@ -693,6 +693,7 @@ class _RoomManagerState extends State<RoomManager> {
                                                   HeroDialogRoute(
                                                       builder: (context) {
                                                 return PopupOffProjector(
+                                                  room: room,
                                                   onUpdateState: () {
                                                     setState(() {});
                                                   },
@@ -785,6 +786,7 @@ class _RoomManagerState extends State<RoomManager> {
                                                   HeroDialogRoute(
                                                       builder: (context) {
                                                 return PopupOffShutter(
+                                                  room: room,
                                                   onUpdateState: () {
                                                     setState(() {});
                                                   },
@@ -810,7 +812,7 @@ class _RoomManagerState extends State<RoomManager> {
                         ),
                         SizedBox(
                           width: SizeConfig.screenWidth,
-                          child: projectors.length > 0
+                          child: listProjectors.length > 0
                               ? Wrap(
                                   spacing: 20,
                                   runSpacing: 20,
@@ -859,7 +861,7 @@ class _RoomManagerState extends State<RoomManager> {
                                           ),
                                         ),
                                         InfoProjector(
-                                          projector: projectors[0],
+                                          projector: listProjectors[0],
                                           projectorKey: projectorsKey[0],
                                         )
                                       ],
@@ -869,12 +871,12 @@ class _RoomManagerState extends State<RoomManager> {
                                         runSpacing: 20,
                                         alignment: WrapAlignment.spaceBetween,
                                         children: List.generate(
-                                          projectors.length - 1,
+                                          listProjectors.length - 1,
                                           (index) =>
                                               // if(index>0)
                                               InfoProjector(
                                                   projector:
-                                                      projectors[index + 1],
+                                                      listProjectors[index + 1],
                                                   projectorKey:
                                                       projectorsKey[index + 1]),
                                         )),
@@ -943,9 +945,13 @@ class _RoomManagerState extends State<RoomManager> {
                 child: Column(
                   children: [
                     AppBarActionItems(),
-                    CheckConnectionBar(
-                      room: room,
-                    ),
+                    // CheckConnectionBar(
+                    //   room: room,
+                    //   listProjectors: widget.listProjectors,
+                    //   listLeds: widget.listLeds,
+                    //   listSensors: widget.listSensors,
+                    //   listBrightSigns: widget.listBrightSigns,
+                    // ),
                   ],
                 ),
               ),

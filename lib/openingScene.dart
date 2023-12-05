@@ -25,7 +25,7 @@ import 'package:valuable/valuable.dart';
 // StatefulValuable<double> opening_per = StatefulValuable<double>(0);
 
 double progressValue = 0.0;
-int half_length = (rooms[3].projectors!.length / 2).toInt() + 1;
+// int half_length = (rooms[3].projectors!.length / 2).toInt() + 1;
 
 class OpeningScene extends StatefulWidget {
   const OpeningScene({key});
@@ -389,232 +389,232 @@ class _OpeningSceneState extends State<OpeningScene>
               child: Row(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children:
-                        List.generate(rooms[2].projectors!.length, (index) {
-                      Projector projector = rooms[2].projectors![index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 150,
-                              child: PrimaryText(
-                                text: '${projector.name}',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 100,
-                              child: PrimaryText(
-                                text: '(${projector.ip})',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            PrimaryText(
-                              text: projector.connected
-                                  ? 'Đã kết nối '
-                                  : 'Mất kết nối',
-                              color: projector.connected
-                                  ? AppColors.green
-                                  : AppColors.red,
-                              size: 14,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: List.generate(half_length, (index) {
-                        Projector projector = rooms[3].projectors![index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              PrimaryText(
-                                text: projector.connected
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: List.generate(
-                          rooms[3].projectors!.length - half_length, (index) {
-                        Projector projector =
-                            rooms[3].projectors![index + half_length];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: SingleChildScrollView(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 150,
-                                  child: PrimaryText(
-                                    text: '${projector.name}',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width: 100,
-                                  child: PrimaryText(
-                                    text: '(${projector.ip})',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                PrimaryText(
-                                  text: projector.connected
-                                      ? 'Đã kết nối '
-                                      : 'Mất kết nối',
-                                  color: projector.connected
-                                      ? AppColors.green
-                                      : AppColors.red,
-                                  size: 14,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                  Column(children: [
-                    Column(
-                      children:
-                          List.generate(rooms[4].projectors!.length, (index) {
-                        Projector projector = rooms[4].projectors![index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              PrimaryText(
-                                text: projector.connected
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Column(
-                      children:
-                          List.generate(rooms[5].projectors!.length, (index) {
-                        Projector projector = rooms[5].projectors![index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              PrimaryText(
-                                text: projector.connected
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                  ]),
+                  // Column(
+                  //   children:
+                  //       List.generate(rooms[2].projectors!.length, (index) {
+                  //     Projector projector = rooms[2].projectors![index];
+                  //     return Padding(
+                  //       padding: const EdgeInsets.only(bottom: 10.0),
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: [
+                  //           Container(
+                  //             width: 150,
+                  //             child: PrimaryText(
+                  //               text: '${projector.name}',
+                  //               size: 14,
+                  //             ),
+                  //           ),
+                  //           SizedBox(
+                  //             width: 10,
+                  //           ),
+                  //           Container(
+                  //             width: 100,
+                  //             child: PrimaryText(
+                  //               text: '(${projector.ip})',
+                  //               size: 14,
+                  //             ),
+                  //           ),
+                  //           SizedBox(
+                  //             width: 10,
+                  //           ),
+                  //           PrimaryText(
+                  //             text: projector.connected
+                  //                 ? 'Đã kết nối '
+                  //                 : 'Mất kết nối',
+                  //             color: projector.connected
+                  //                 ? AppColors.green
+                  //                 : AppColors.red,
+                  //             size: 14,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     );
+                  //   }),
+                  // ),
+                  // Expanded(
+                  //   child: Column(
+                  //     children: List.generate(half_length, (index) {
+                  //       Projector projector = rooms[3].projectors![index];
+                  //       return Padding(
+                  //         padding: const EdgeInsets.only(bottom: 10.0),
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.center,
+                  //           children: [
+                  //             Container(
+                  //               width: 150,
+                  //               child: PrimaryText(
+                  //                 text: '${projector.name}',
+                  //                 size: 14,
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               width: 10,
+                  //             ),
+                  //             Container(
+                  //               width: 100,
+                  //               child: PrimaryText(
+                  //                 text: '(${projector.ip})',
+                  //                 size: 14,
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               width: 10,
+                  //             ),
+                  //             PrimaryText(
+                  //               text: projector.connected
+                  //                   ? 'Đã kết nối '
+                  //                   : 'Mất kết nối',
+                  //               color: projector.connected
+                  //                   ? AppColors.green
+                  //                   : AppColors.red,
+                  //               size: 14,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       );
+                  //     }),
+                  //   ),
+                  // ),
+                  // Expanded(
+                  //   child: Column(
+                  //     children: List.generate(
+                  //         rooms[3].projectors!.length - half_length, (index) {
+                  //       Projector projector =
+                  //           rooms[3].projectors![index + half_length];
+                  //       return Padding(
+                  //         padding: const EdgeInsets.only(bottom: 10.0),
+                  //         child: SingleChildScrollView(
+                  //           child: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.center,
+                  //             children: [
+                  //               Container(
+                  //                 width: 150,
+                  //                 child: PrimaryText(
+                  //                   text: '${projector.name}',
+                  //                   size: 14,
+                  //                 ),
+                  //               ),
+                  //               SizedBox(
+                  //                 width: 10,
+                  //               ),
+                  //               Container(
+                  //                 width: 100,
+                  //                 child: PrimaryText(
+                  //                   text: '(${projector.ip})',
+                  //                   size: 14,
+                  //                 ),
+                  //               ),
+                  //               SizedBox(
+                  //                 width: 10,
+                  //               ),
+                  //               PrimaryText(
+                  //                 text: projector.connected
+                  //                     ? 'Đã kết nối '
+                  //                     : 'Mất kết nối',
+                  //                 color: projector.connected
+                  //                     ? AppColors.green
+                  //                     : AppColors.red,
+                  //                 size: 14,
+                  //               ),
+                  //             ],
+                  //           ),
+                  //         ),
+                  //       );
+                  //     }),
+                  //   ),
+                  // ),
+                  // Column(children: [
+                  //   Column(
+                  //     children:
+                  //         List.generate(rooms[4].projectors!.length, (index) {
+                  //       Projector projector = rooms[4].projectors![index];
+                  //       return Padding(
+                  //         padding: const EdgeInsets.only(bottom: 10.0),
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.start,
+                  //           children: [
+                  //             Container(
+                  //               width: 150,
+                  //               child: PrimaryText(
+                  //                 text: '${projector.name}',
+                  //                 size: 14,
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               width: 10,
+                  //             ),
+                  //             Container(
+                  //               width: 100,
+                  //               child: PrimaryText(
+                  //                 text: '(${projector.ip})',
+                  //                 size: 14,
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               width: 10,
+                  //             ),
+                  //             PrimaryText(
+                  //               text: projector.connected
+                  //                   ? 'Đã kết nối '
+                  //                   : 'Mất kết nối',
+                  //               color: projector.connected
+                  //                   ? AppColors.green
+                  //                   : AppColors.red,
+                  //               size: 14,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       );
+                  //     }),
+                  //   ),
+                  //   SizedBox(
+                  //     height: 50,
+                  //   ),
+                  //   Column(
+                  //     children:
+                  //         List.generate(rooms[5].projectors!.length, (index) {
+                  //       Projector projector = rooms[5].projectors![index];
+                  //       return Padding(
+                  //         padding: const EdgeInsets.only(bottom: 10.0),
+                  //         child: Row(
+                  //           mainAxisAlignment: MainAxisAlignment.start,
+                  //           children: [
+                  //             Container(
+                  //               width: 150,
+                  //               child: PrimaryText(
+                  //                 text: '${projector.name}',
+                  //                 size: 14,
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               width: 10,
+                  //             ),
+                  //             Container(
+                  //               width: 100,
+                  //               child: PrimaryText(
+                  //                 text: '(${projector.ip})',
+                  //                 size: 14,
+                  //               ),
+                  //             ),
+                  //             SizedBox(
+                  //               width: 10,
+                  //             ),
+                  //             PrimaryText(
+                  //               text: projector.connected
+                  //                   ? 'Đã kết nối '
+                  //                   : 'Mất kết nối',
+                  //               color: projector.connected
+                  //                   ? AppColors.green
+                  //                   : AppColors.red,
+                  //               size: 14,
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       );
+                  //     }),
+                  //   ),
+                  // ]),
                 ],
               ),
             ),
@@ -629,92 +629,92 @@ class _OpeningSceneState extends State<OpeningScene>
               child: Column(
                 children: [
                   Column(
-                    children: List.generate(rooms[1].servers!.length, (index) {
-                      Server server = rooms[1].servers![index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 120,
-                              child: PrimaryText(
-                                text: '${server.name}',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 100,
-                              child: PrimaryText(
-                                text: '(${server.ip})',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            PrimaryText(
-                              text: server.connected
-                                  ? 'Đã kết nối '
-                                  : 'Mất kết nối',
-                              color: server.connected
-                                  ? AppColors.green
-                                  : AppColors.red,
-                              size: 14,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
+                    // children: List.generate(rooms[1].servers!.length, (index) {
+                    //   Server server = rooms[1].servers![index];
+                    //   return Padding(
+                    //     padding: const EdgeInsets.only(bottom: 10.0),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.start,
+                    //       children: [
+                    //         Container(
+                    //           width: 120,
+                    //           child: PrimaryText(
+                    //             text: '${server.name}',
+                    //             size: 14,
+                    //           ),
+                    //         ),
+                    //         SizedBox(
+                    //           width: 10,
+                    //         ),
+                    //         Container(
+                    //           width: 100,
+                    //           child: PrimaryText(
+                    //             text: '(${server.ip})',
+                    //             size: 14,
+                    //           ),
+                    //         ),
+                    //         SizedBox(
+                    //           width: 10,
+                    //         ),
+                    //         PrimaryText(
+                    //           text: server.connected
+                    //               ? 'Đã kết nối '
+                    //               : 'Mất kết nối',
+                    //           color: server.connected
+                    //               ? AppColors.green
+                    //               : AppColors.red,
+                    //           size: 14,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   );
+                    // }),
                   ),
                   SizedBox(
                     height: 50,
                   ),
-                  Column(
-                    children: List.generate(rooms[5].servers!.length, (index) {
-                      Server server = rooms[5].servers![index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 120,
-                              child: PrimaryText(
-                                text: '${server.name}',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 100,
-                              child: PrimaryText(
-                                text: '(${server.ip})',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            PrimaryText(
-                              text: server.connected
-                                  ? 'Đã kết nối '
-                                  : 'Mất kết nối',
-                              color: server.connected
-                                  ? AppColors.green
-                                  : AppColors.red,
-                              size: 14,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
+                  // Column(
+                  //   children: List.generate(rooms[5].servers!.length, (index) {
+                  //     Server server = rooms[5].servers![index];
+                  //     return Padding(
+                  //       padding: const EdgeInsets.only(bottom: 10.0),
+                  //       child: Row(
+                  //         mainAxisAlignment: MainAxisAlignment.start,
+                  //         children: [
+                  //           Container(
+                  //             width: 120,
+                  //             child: PrimaryText(
+                  //               text: '${server.name}',
+                  //               size: 14,
+                  //             ),
+                  //           ),
+                  //           SizedBox(
+                  //             width: 10,
+                  //           ),
+                  //           Container(
+                  //             width: 100,
+                  //             child: PrimaryText(
+                  //               text: '(${server.ip})',
+                  //               size: 14,
+                  //             ),
+                  //           ),
+                  //           SizedBox(
+                  //             width: 10,
+                  //           ),
+                  //           PrimaryText(
+                  //             text: server.connected
+                  //                 ? 'Đã kết nối '
+                  //                 : 'Mất kết nối',
+                  //             color: server.connected
+                  //                 ? AppColors.green
+                  //                 : AppColors.red,
+                  //             size: 14,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     );
+                  //   }),
+                  // ),
                   SizedBox(
                     height: 50,
                   ),

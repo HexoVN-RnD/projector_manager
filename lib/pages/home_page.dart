@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,10 @@ import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/audio_void.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
+import 'package:responsive_dashboard/Object/BrightSign.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/RoomData.dart';
 import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
@@ -23,6 +26,7 @@ import 'package:responsive_dashboard/new_component/manageAllServers.dart';
 import 'package:responsive_dashboard/pages/checkConnectionBar.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -35,6 +39,56 @@ class _HomePage extends State<HomePage> {
   bool isSelectedPlay = false;
   bool isSelectedStop = false;
   ScrollController scrollController = ScrollController();
+  late List<RoomData> allRooms = List.empty(growable: true);
+  late List<Projector> allProjectors = List.empty(growable: true);
+  late List<Server> allServers = List.empty(growable: true);
+  late List<BrightSign> allBrightSigns = List.empty(growable: true);
+
+  Future<void> getAllData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Set<String> keys = prefs.getKeys();
+    /// Get all rooms
+    // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'room'
+    for (String key in keys.where((key) => key.startsWith('room_')).toList()) {
+      String? jsonString = prefs.getString(key);
+      if (jsonString != null) {
+        Map<String, dynamic> jsonMap = json.decode(jsonString);
+        RoomData roomData = RoomData.fromJson(jsonMap);
+        allRooms.add(roomData);
+      }
+    }
+    /// Get all projectors
+    // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'projector_'
+    for (String key in keys.where((key) => key.startsWith('projector_')).toList()) {
+      String? jsonString = prefs.getString(key);
+      if (jsonString != null) {
+        Map<String, dynamic> jsonMap = json.decode(jsonString);
+        Projector projector = Projector.fromJson(jsonMap);
+        allProjectors.add(projector);
+      }
+    }
+    /// Get all servers
+    // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'server_'
+    for (String key in keys.where((key) => key.startsWith('server_')).toList()) {
+      String? jsonString = prefs.getString(key);
+      if (jsonString != null) {
+        Map<String, dynamic> jsonMap = json.decode(jsonString);
+        Server server = Server.fromJson(jsonMap);
+        allServers.add(server);
+      }
+    }
+    /// Get all brightSigns
+    // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'brightSign_'
+    for (String key in keys.where((key) => key.startsWith('brightSign_')).toList()) {
+      String? jsonString = prefs.getString(key);
+      if (jsonString != null) {
+        Map<String, dynamic> jsonMap = json.decode(jsonString);
+        BrightSign brightSign = BrightSign.fromJson(jsonMap);
+        allBrightSigns.add(brightSign);
+      }
+    }
+  }
+
   // CollectionReference volumeCollection =
   //     Firestore.instance.collection('volume');
   // List<Document> allVolume = [];
@@ -89,28 +143,26 @@ class _HomePage extends State<HomePage> {
 
   void EditAllAudio(index) {
     allRoom.volume_all = (index);
-    // writeCellValue(index.toStringAsFixed(2), 0, 1);
-    for (Room room in rooms) {
-      if (room.resolume) {
-        for (Server server in room.servers!) {
-          server.volume = index;
-        }
-      } else {
-        for (Server server in room.servers!) {
+      if (allServers.isNotEmpty) {
+        for (Server server in allServers) {
           server.volume = index;
         }
       }
-    }
+      if(allBrightSigns.isNotEmpty)
+        for (BrightSign brighSign in allBrightSigns) {
+          brighSign.volume = index;
+        }
+
   }
 
   void EditAllAudioAndSave(index) {
     allRoom.volume_all = (index);
     // allRoom.updateAllVolume(index);
     // setAllVolume();
-    for (Room room in rooms) {
+    // for (Room room in rooms) {
       // room.updateRoomVolume(index);
-      if (room.resolume) {
-        for (Server server in room.servers!) {
+      if (allServers.isNotEmpty) {
+        for (Server server in allServers) {
           server.volume = (index);
           // writeCellValue(index.toStringAsFixed(2), server.id, 1);
           SendOscMessage(server.ip, server.preset_port,
@@ -122,12 +174,12 @@ class _HomePage extends State<HomePage> {
           SendOscMessage(server.ip, server.preset_port,
               '/composition/layers/4/audio/volume', [index]);
         }
-      } else {
-        for (Server server in room.servers!) {
-          server.volume = index;
-          SendUDPAudioMessage(server, index);
+      } if (allBrightSigns.isNotEmpty)  {
+        for (BrightSign brighSign in allBrightSigns) {
+          brighSign.volume = index;
+          SendUDPAudioMessage(brighSign, index);
         }
-      }
+      // }
     }
   }
 
@@ -536,17 +588,21 @@ class _HomePage extends State<HomePage> {
                 ManageAllProjectors(),
               ],
             ),
-            // MiniMap(room: rooms[(current_page >0)? current_page -1:0], page: current_page +1,),
-            Wrap(
-              spacing: 40,
-              alignment: WrapAlignment.spaceBetween,
-              children: List.generate(rooms.length, (index) {
-                return MiniMap(
-                  room: rooms[index],
-                  page: index + 1,
-                );
-              }),
-            ),
+            /// Minimap
+            // Wrap(
+            //   spacing: 40,
+            //   alignment: WrapAlignment.spaceBetween,
+            //   children: List.generate(allRooms.length, (index) {
+            //     return MiniMap(
+            //       room: allRooms[index],
+            //       page: index + 1,
+            //       listProjectors: widget.listProjectors,
+            //       listLeds: widget.listLeds,
+            //       listSensors: widget.listSensors,
+            //       listBrightSigns: widget.listBrightSigns,
+            //     );
+            //   }),
+            // ),
 
             Row(
               children: [

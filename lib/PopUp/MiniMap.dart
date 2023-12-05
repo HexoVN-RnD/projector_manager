@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_dashboard/Object/BrightSign.dart';
+import 'package:responsive_dashboard/Object/Led.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/RoomData.dart';
+import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/PopupZoom.dart';
 import 'package:responsive_dashboard/PopUp/PositionPage2.dart';
@@ -17,10 +22,17 @@ import 'package:responsive_dashboard/style/style.dart';
 
 class MiniMap extends StatefulWidget {
   // final ValueNotifier<Room> roomNotifier;
-  Room room;
+  RoomData room;
+  List<Projector> listProjectors = List.empty(growable: true);
+  List<Led> listLeds = List.empty(growable: true);
+  List<Sensor> listSensors = List.empty(growable: true);
+  List<BrightSign> listBrightSigns = List.empty(growable: true);
   int page;
   MiniMap({
-    // required this.roomNotifier,
+    required this.listProjectors,
+    required this.listLeds,
+    required this.listSensors,
+    required this.listBrightSigns,
     required this.room,
     required this.page,
   });
@@ -32,7 +44,7 @@ class MiniMap extends StatefulWidget {
 class _MiniMapState extends State<MiniMap> {
   @override
   Widget build(BuildContext context) {
-    Room room = widget.room;
+    RoomData room = widget.room;
     int page = widget.page;
     double width = Responsive.isDesktop(context)
         ? ((current_page != 0)
@@ -90,6 +102,10 @@ class _MiniMapState extends State<MiniMap> {
                     return PopupZoom(
                       room: room,
                       page: page,
+                      listProjectors: widget.listProjectors,
+                      listLeds: widget.listLeds,
+                      listSensors: widget.listSensors,
+                      listBrightSigns: widget.listBrightSigns,
                     );
                   }));
                   // PowerAllServers(false);
@@ -115,27 +131,26 @@ class _MiniMapState extends State<MiniMap> {
               Stack(children: [
                 Stack(
                   children: List.generate(
-                    room.projectors!.length,
-                        (index) => PositionPage3(
-                        projector: room.projectors![index],
+                    widget.listProjectors.length,
+                    (index) => PositionPage3(
+                        projector: widget.listProjectors[index],
                         width: width,
                         height: height),
                   ),
                 ),
-
                 Stack(
                   children: List.generate(
-                    room.leds!.length,
-                        (index) => Positioned(
-                      left: width * room.leds![index].position_x,
-                      top: height * room.leds![index].position_y,
+                    widget.listLeds.length,
+                    (index) => Positioned(
+                      left: width * widget.listLeds[index].position_x,
+                      top: height * widget.listLeds[index].position_y,
                       // left: width * 0.28,
                       // top: height * 0.4,
                       width: width * 0.016,
                       height: width * 0.07,
                       child: Container(
                         decoration: BoxDecoration(
-                          color: room.leds![index].connected
+                          color: widget.listLeds[index].connected
                               ? AppColors.green
                               : AppColors.red,
                           borderRadius: BorderRadius.circular(5),
@@ -148,9 +163,9 @@ class _MiniMapState extends State<MiniMap> {
             else if (page == 4)
               Stack(
                 children: List.generate(
-                  room.projectors!.length,
+                  widget.listProjectors.length,
                   (index) => PositionPage4(
-                      projector: room.projectors![index],
+                      projector: widget.listProjectors[index],
                       width: width,
                       height: height),
                 ),
@@ -160,26 +175,26 @@ class _MiniMapState extends State<MiniMap> {
                 children: [
                   Stack(
                     children: List.generate(
-                      room.projectors!.length,
+                      widget.listProjectors.length,
                       (index) => PositionPage5(
-                          projector: room.projectors![index],
+                          projector: widget.listProjectors[index],
                           width: width,
                           height: height),
                     ),
                   ),
                   Stack(
                     children: List.generate(
-                      room.sensors!.length,
+                      widget.listSensors.length,
                       (index) => Positioned(
-                        // left: width * room.projectors![index].position_x,
-                        // top: height * room.projectors![index].position_y,
-                        left: width * room.sensors![index].position_x,
-                        top: height * room.sensors![index].position_y,
+                        // left: width * widget.listProjectors[index].position_x,
+                        // top: height * widget.listProjectors[index].position_y,
+                        left: width * widget.listSensors[index].position_x,
+                        top: height * widget.listSensors[index].position_y,
                         width: width * 0.018,
                         height: width * 0.018,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: room.sensors![index].connected
+                            color: widget.listSensors[index].connected
                                 ? AppColors.green
                                 : AppColors.red,
                             borderRadius: BorderRadius.circular(5),
@@ -194,30 +209,30 @@ class _MiniMapState extends State<MiniMap> {
               Stack(children: [
                 Stack(
                   children: List.generate(
-                    room.projectors!.length,
+                    widget.listProjectors.length,
                     (index) => PositionPage6(
-                        projector: room.projectors![index],
+                        projector: widget.listProjectors[index],
                         width: width,
                         height: height),
                   ),
                 ),
                 Positioned(
-                  left: width * room.servers![0].position_x,
-                  top: height * room.servers![0].position_y,
+                  left: width * widget.listBrightSigns[0].position_x,
+                  top: height * widget.listBrightSigns[0].position_y,
                   // left: width * 0.448,
                   // top: height * 0.45,
                   width: width * 0.1,
                   height: width * 0.1,
                   child: Container(
                     decoration: BoxDecoration(
-                        color: room.servers![0].connected
+                        color: widget.listBrightSigns[0].connected
                             ? AppColors.green
                             : AppColors.red,
                         borderRadius: BorderRadius.circular(5),
-                        border: room.servers![0].isOnHover
+                        border: widget.listBrightSigns[0].isOnHover
                             ? Border.all(
                                 strokeAlign: BorderSide.strokeAlignCenter,
-                                color: room.servers![0].connected
+                                color: widget.listBrightSigns[0].connected
                                     ? AppColors.green
                                     : AppColors.red,
                                 width: 10.0,
@@ -232,9 +247,9 @@ class _MiniMapState extends State<MiniMap> {
             else if (page == 2)
               Stack(
                 children: List.generate(
-                    room.servers!.length,
+                    widget.listBrightSigns.length,
                     (index) => PositionPage2(
-                        server: room.servers![index],
+                        brightSign: widget.listBrightSigns[index],
                         width: width,
                         height: height)),
               ),

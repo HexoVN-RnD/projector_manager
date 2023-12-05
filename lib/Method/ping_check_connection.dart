@@ -36,7 +36,7 @@ void checkConnectionServer(Room room, Server server) {
   ping.command;
 }
 
-void checkConnectionServerResponse(Room room, Server server) {
+void checkConnectionServerResponse(Server server) {
   int count = 0;
   final ping = Ping(server.ip, count: 1); // Thay đổi số lần ping tùy ý
 
@@ -44,11 +44,11 @@ void checkConnectionServerResponse(Room room, Server server) {
     // //print('ping server ${server.ip} response ${event.response?.time} ${count}');
     // //print('Ping to ${server.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
-      if(room.resolume && event.response?.ttl==128) {
+      if(event.response?.ttl==128) {
         server.connected = (true);
         server.power_status = (true);
         //print('Connected to ${server.ip}: ${event.response?.time} ms');
-      } else if (!room.resolume && event.response?.ttl==64) {
+      } else if (event.response?.ttl==64) {
         server.connected = (true);
         server.power_status = (true);
         //print('Connected to ${server.ip}: ${event.response?.time} ms');
@@ -158,7 +158,7 @@ Future<void> checkAllRoomConnection(int time) async {
     if (!room.servers!.isEmpty) {
       for (Server server in room.servers!) {
         await Future.delayed(Duration(milliseconds: time ~/ length));
-        checkConnectionServerResponse(room,server);
+        checkConnectionServerResponse(server);
       }
     }
   }
