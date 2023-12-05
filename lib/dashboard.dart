@@ -66,6 +66,21 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
+  Future<void> getRoom() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    listRoom = getListRoom(prefs);
+  }
+
+  Future<void> getListKey() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // Lấy danh sách các key trong SharedPreferences
+    Set<String> keys = prefs.getKeys();
+
+    // Lọc những key có dạng 'projector_'
+    roomKeys = keys.where((key) => key.startsWith('room_')).toList();
+    // print(roomKeys);
+  }
+
   @override
   void initState() {
     getListKey();
@@ -108,19 +123,6 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
-  Future<void> getRoom() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    listRoom = getListRoom(prefs);
-  }
-
-  Future<void> getListKey() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    // Lấy danh sách các key trong SharedPreferences
-    Set<String> keys = prefs.getKeys();
-
-    // Lọc những key có dạng 'projector_'
-    roomKeys = keys.where((key) => key.startsWith('room_')).toList();
-  }
 
   @override
   void dispose() {
@@ -229,7 +231,7 @@ class _DashboardState extends State<Dashboard> {
                                       /// Room key bat dau tu 0-n
                                       print(roomKeys[index]);
                                       deleteRoomData(roomKeys[index]);
-                                      roomKeys.remove(roomKeys[index]);
+                                      // roomKeys.remove(roomKeys[index]);
                                     });
                                   },
                                   riveOnInit: (artboard) {
@@ -245,35 +247,29 @@ class _DashboardState extends State<Dashboard> {
                             ),
                           ),
                         ),
-                      Hero(
-                        tag: heroAddRoom,
-                        createRectTween: (begin, end) {
-                          return CustomRectTween(begin: begin, end: end);
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context)
+                              .push(HeroDialogRoute(builder: (context) {
+                            return PopupAddRoom();
+                          }));
                         },
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .push(HeroDialogRoute(builder: (context) {
-                              return PopupAddRoom();
-                            }));
-                          },
+                        child: Container(
+                          alignment: Alignment.bottomCenter,
                           child: Container(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                  color: AppColors.navy_blue,
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(15),
-                                      bottomRight: Radius.circular(15))),
-                              // padding: const EdgeInsets.only(bottom: 7.0),
-                              child: PrimaryText(
-                                text: '+',
-                                color: AppColors.white,
-                                fontWeight: FontWeight.w600,
-                                size: 36,
-                              ),
+                            alignment: Alignment.center,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color: AppColors.navy_blue,
+                                borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(15),
+                                    bottomRight: Radius.circular(15))),
+                            // padding: const EdgeInsets.only(bottom: 7.0),
+                            child: PrimaryText(
+                              text: '+',
+                              color: AppColors.white,
+                              fontWeight: FontWeight.w600,
+                              size: 36,
                             ),
                           ),
                         ),

@@ -5,7 +5,7 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 import 'package:rive/rive.dart';
 
-class SideMenu extends StatelessWidget {
+class SideMenu extends StatefulWidget {
   final Menu menu;
   final int id;
   final VoidCallback press;
@@ -23,6 +23,13 @@ class SideMenu extends StatelessWidget {
       required this.selectedMenu});
 
   @override
+  State<SideMenu> createState() => _SideMenuState();
+}
+
+class _SideMenuState extends State<SideMenu> {
+  bool isEditFocused = false;
+  bool isDeleteFocused = false;
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -37,7 +44,7 @@ class SideMenu extends StatelessWidget {
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.fastOutSlowIn,
-                width: id == selectedMenu ? 200 : 0,
+                width: widget.id == widget.selectedMenu ? 200 : 0,
                 height: 70,
                 left: 0,
                 child: Container(
@@ -49,7 +56,7 @@ class SideMenu extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: press,
+                onTap: widget.press,
                 child: Container(
                   padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                   child: Row(
@@ -73,9 +80,10 @@ class SideMenu extends StatelessWidget {
                         // padding: EdgeInsets.only(left: .0),
                         width: 120, // Max width for the text
                         child: FittedBox(
-                          fit: BoxFit.scaleDown, // Scale down to fit within the box
+                          fit: BoxFit
+                              .scaleDown, // Scale down to fit within the box
                           child: PrimaryText(
-                            text: menu.title,
+                            text: widget.menu.title,
                             color: AppColors.primary,
                             fontWeight: FontWeight.w500,
                             size: 16,
@@ -100,20 +108,36 @@ class SideMenu extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(155, 25, 0, 0),
                   child: Row(
                     children: [
-                      GestureDetector(
-                        onTap: update,
+                      InkWell(
+                        onTap: widget.update,
+                        onHover: (bool focused) {
+                          setState(() {
+                            isEditFocused = focused;
+                          });
+                        },
                         child: Icon(
                           Icons.edit_outlined,
-                          color: AppColors.primary,
+                          color: isEditFocused
+                              ? AppColors.navy_blue
+                              : AppColors.primary,
                           size: 16,
                         ),
                       ),
-                      SizedBox(width: 5,),
-                      GestureDetector(
-                        onTap: delete,
+                      SizedBox(
+                        width: 5,
+                      ),
+                      InkWell(
+                        onTap: widget.delete,
+                        onHover: (bool focused) {
+                          setState(() {
+                            isDeleteFocused = focused;
+                          });
+                        },
                         child: Icon(
                           Icons.cancel_outlined,
-                          color: AppColors.primary,
+                          color: isDeleteFocused
+                              ? AppColors.red
+                              : AppColors.primary,
                           size: 16,
                         ),
                       ),

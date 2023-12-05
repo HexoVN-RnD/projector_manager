@@ -139,18 +139,18 @@ Future<void> addNewRoomData(RoomData new_Room) async {
     number = int.parse(numberString);
   }
   String newKey = 'room_${number + 1}';
-  print(newKey);
+  print('add room: '+ newKey);
   new_prefs.setString(newKey, json.encode(new_Room.toJson()));
 }
 
 Future<void> updateRoomData(RoomData new_Room, String key) async {
   final SharedPreferences new_prefs = await prefs;
-  print('update key: '+ key);
+  print('update room: '+ key);
   new_prefs.setString(key, json.encode(new_Room.toJson()));
 }
 
 Future<void> deleteRoomData(String key) async {
   final SharedPreferences new_prefs = await prefs;
-  print('delete key: '+ key);
+  print('delete room: '+ key);
   await new_prefs.remove(key);
 }

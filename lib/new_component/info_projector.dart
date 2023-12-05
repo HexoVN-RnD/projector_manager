@@ -5,6 +5,8 @@ import 'package:responsive_dashboard/Method/Control_projector_void.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Method/projector_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
+import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
+import 'package:responsive_dashboard/PopUp/PopupUpdateProjetor.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/style/colors.dart';
@@ -12,9 +14,11 @@ import 'package:responsive_dashboard/style/style.dart';
 
 class InfoProjector extends StatefulWidget {
   Projector projector;
+  String projectorKey;
 
   InfoProjector({
     required this.projector,
+    required this.projectorKey,
   });
 
   @override
@@ -25,7 +29,8 @@ class InfoProjector extends StatefulWidget {
 //   bool value = true;
 
 class _InfoProjector extends State<InfoProjector> {
-
+  bool isEditFocused = false;
+  bool isDeleteFocused = false;
 
   // void MuteVideoProjector() {
   //   projector.mute_video.setValue(!projector.mute_video );
@@ -44,7 +49,7 @@ class _InfoProjector extends State<InfoProjector> {
       constraints: BoxConstraints(
           minWidth: 280,
           maxWidth: SizeConfig.screenWidth / 3 - 110),
-      height: 245,
+      height: 250,
       padding: EdgeInsets.only(
           top: 20,
           bottom: 20,
@@ -73,8 +78,58 @@ class _InfoProjector extends State<InfoProjector> {
                   width: SizeConfig.blockSizeHorizontal,
                 ),
               ),
-              PrimaryText(
-                  text: projector.ip, color: AppColors.secondary, size: 14)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        setState(() {
+                          /// Room key bat dau tu 0-n
+                          Navigator.of(context).push(
+                              HeroDialogRoute(builder: (context) {
+                                return PopupUpdateProjector(projector: widget.projector, projectorKey: widget.projectorKey,
+                                );
+                              }));
+                          ;
+                        });
+                      },
+                      onHover: (bool focused) {
+                        setState(() {
+                          isEditFocused = focused;
+                        });
+                      },
+                      child: Icon(
+                        Icons.edit_outlined,
+                        color: isEditFocused
+                            ? AppColors.navy_blue
+                            : AppColors.primary,
+                        size: 20,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        deleteProjector(widget.projectorKey);
+                      },
+                      onHover: (bool focused) {
+                        setState(() {
+                          isDeleteFocused = focused;
+                        });
+                      },
+                      child: Icon(
+                        Icons.cancel_outlined,
+                        color: isDeleteFocused
+                            ? AppColors.red
+                            : AppColors.primary,
+                        size: 20,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
 
@@ -266,7 +321,13 @@ class _InfoProjector extends State<InfoProjector> {
               // ),
             ],
           ),
-          SizedBox(height: SizeConfig.blockSizeVertical,),
+          // SizedBox(height: SizeConfig.blockSizeVertical,),
+
+          Container(
+            alignment: Alignment.centerRight,
+            child: PrimaryText(
+                text: projector.ip, color: AppColors.secondary, size: 14),
+          )
           // Row(
           //   children: [
           //     PrimaryText(

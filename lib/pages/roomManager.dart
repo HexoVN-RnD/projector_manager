@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -16,7 +17,6 @@ import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/MiniMap.dart';
 import 'package:responsive_dashboard/PopUp/PopupAddProjetor.dart';
-import 'package:responsive_dashboard/PopUp/PopupAddProjetor_new.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffProjector.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffShutter.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
@@ -53,6 +53,7 @@ class _RoomManagerState extends State<RoomManager> {
   int oldPage = 0;
   // late Future<List<Projector>> listProjector;
   late List<Projector> projectors = List.empty(growable: true);
+  late List<String> projectorsKey = List.empty(growable: true);
   late Room room;
 
   void select_preset(Room room, int index) async {
@@ -114,15 +115,40 @@ class _RoomManagerState extends State<RoomManager> {
     super.dispose();
   }
 
+  Future<void> getListProjectsKey() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> projInRoom = List.empty(growable: true);
+    // Lấy danh sách các key trong SharedPreferences
+    Set<String> keys = prefs.getKeys();
+
+    // Lọc những key có dạng 'projector_'
+    List<String> proKeys =
+        keys.where((key) => key.startsWith('projector_')).toList();
+    // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'room'
+    for (String key in proKeys) {
+      String? jsonString = prefs.getString(key);
+      if (jsonString != null) {
+        Map<String, dynamic> jsonMap = json.decode(jsonString);
+
+        // Kiểm tra trường 'room'
+        if (jsonMap['room'] == widget.roomKey) {
+          // Projector projector = Projector.fromJson(jsonMap);
+          projInRoom.add(key);
+        }
+      }
+    }
+    projectorsKey = projInRoom;
+    print(projectorsKey);
+  }
+
   Future<void> getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // roomdata = getRoomData('room_1');
-    // listProjector = getListProjector(0);
     projectors = getListProjector(prefs, widget.roomKey);
   }
 
   @override
   Widget build(BuildContext context) {
+    getListProjectsKey();
     getData();
 
     final page = (current_page > 0) ? current_page - 1 : 0;
@@ -782,167 +808,9 @@ class _RoomManagerState extends State<RoomManager> {
                             ],
                           ),
                         ),
-                        // FutureBuilder<List<Projector>>(
-                        //     future: listProjector,
-                        //     builder: (BuildContext context,
-                        //         AsyncSnapshot<List<Projector>>
-                        //             projectors_snapshot) {
-                        //       switch (projectors_snapshot.connectionState) {
-                        //         case ConnectionState.none:
-                        //           return SizedBox();
-                        //         case ConnectionState.waiting:
-                        //           return const CircularProgressIndicator();
-                        //         case ConnectionState.active:
-                        //         case ConnectionState.done:
-                        //           if (projectors_snapshot.hasError) {
-                        //             return Text('${projectors_snapshot.error}');
-                        //           } else {
-                        //             return SizedBox(
-                        //               width: SizeConfig.screenWidth,
-                        //               child: projectors_snapshot.data!.length >
-                        //                       0
-                        //                   ? Wrap(
-                        //                       spacing: 20,
-                        //                       runSpacing: 20,
-                        //                       children: [
-                        //                         Wrap(
-                        //                           spacing: 20,
-                        //                           runSpacing: 20,
-                        //                           children: [
-                        //                             Container(
-                        //                               constraints: BoxConstraints(
-                        //                                   minWidth: 280,
-                        //                                   maxWidth: SizeConfig
-                        //                                               .screenWidth /
-                        //                                           3 -
-                        //                                       110),
-                        //                               height: 245,
-                        //                               padding:
-                        //                                   EdgeInsets.all(20),
-                        //                               decoration: BoxDecoration(
-                        //                                 borderRadius:
-                        //                                     BorderRadius
-                        //                                         .circular(20),
-                        //                                 color: AppColors.white,
-                        //                               ),
-                        //                               child: Center(
-                        //                                 child: Hero(
-                        //                                   tag:
-                        //                                       heroAddProjectorNew,
-                        //                                   createRectTween:
-                        //                                       (begin, end) {
-                        //                                     return CustomRectTween(
-                        //                                         begin: begin,
-                        //                                         end: end);
-                        //                                   },
-                        //                                   child:
-                        //                                       GestureDetector(
-                        //                                     onTap: () {
-                        //                                       Navigator.of(
-                        //                                               context)
-                        //                                           .push(HeroDialogRoute(
-                        //                                               builder:
-                        //                                                   (context) {
-                        //                                         return PopupAddProjectorNew();
-                        //                                       }));
-                        //                                     },
-                        //                                     child: PrimaryText(
-                        //                                       text: '+',
-                        //                                       fontWeight:
-                        //                                           FontWeight
-                        //                                               .w300,
-                        //                                       size: 80,
-                        //                                     ),
-                        //                                   ),
-                        //                                 ),
-                        //                               ),
-                        //                             ),
-                        //                             InfoProjector(
-                        //                                 projector:
-                        //                                     projectors_snapshot
-                        //                                         .data![0])
-                        //                           ],
-                        //                         ),
-                        //                         Wrap(
-                        //                             spacing: 20,
-                        //                             runSpacing: 20,
-                        //                             alignment: WrapAlignment
-                        //                                 .spaceBetween,
-                        //                             children: List.generate(
-                        //                               projectors_snapshot
-                        //                                       .data!.length -
-                        //                                   1,
-                        //                               (index) =>
-                        //                                   // if(index>0)
-                        //                                   InfoProjector(
-                        //                                       projector:
-                        //                                           projectors_snapshot
-                        //                                                   .data![
-                        //                                               index +
-                        //                                                   1]),
-                        //                             )),
-                        //                       ],
-                        //                     )
-                        //                   : Container(
-                        //                       constraints: BoxConstraints(
-                        //                           minWidth: 280,
-                        //                           maxWidth:
-                        //                               SizeConfig.screenWidth /
-                        //                                       3 -
-                        //                                   110),
-                        //                       height: 245,
-                        //                       padding: EdgeInsets.all(20),
-                        //                       decoration: BoxDecoration(
-                        //                         borderRadius:
-                        //                             BorderRadius.circular(20),
-                        //                         color: AppColors.white,
-                        //                       ),
-                        //                       child: Center(
-                        //                         child: Hero(
-                        //                           tag:
-                        //                           heroAddProjectorNew,
-                        //                           createRectTween:
-                        //                               (begin, end) {
-                        //                             return CustomRectTween(
-                        //                                 begin: begin,
-                        //                                 end: end);
-                        //                           },
-                        //                           child:
-                        //                           GestureDetector(
-                        //                             onTap: () {
-                        //                               Navigator.of(
-                        //                                   context)
-                        //                                   .push(HeroDialogRoute(
-                        //                                   builder:
-                        //                                       (context) {
-                        //                                     return PopupAddProjectorNew();
-                        //                                   }));
-                        //                             },
-                        //                             child: PrimaryText(
-                        //                               text: '+',
-                        //                               fontWeight:
-                        //                               FontWeight
-                        //                                   .w300,
-                        //                               size: 80,
-                        //                             ),
-                        //                           ),
-                        //                         ),
-                        //                       )
-                        //                     ),
-                        //               // : SpinKitThreeBounce(
-                        //               //     color: AppColors.navy_blue,
-                        //               //     size: 20,
-                        //               //   ),
-                        //             );
-                        //             //   Text(
-                        //             //   '${projectors_snapshot.data?.toJson().toString()}',
-                        //             // );
-                        //           }
-                        //       }
-                        //     }),
                         SizedBox(
                           width: SizeConfig.screenWidth,
-                          child: projectors!.length > 0
+                          child: projectors.length > 0
                               ? Wrap(
                                   spacing: 20,
                                   runSpacing: 20,
@@ -976,7 +844,9 @@ class _RoomManagerState extends State<RoomManager> {
                                                   Navigator.of(context).push(
                                                       HeroDialogRoute(
                                                           builder: (context) {
-                                                    return PopupAddProjectorNew(roomKey: widget.roomKey);
+                                                    return PopupAddProjector(
+                                                        roomKey:
+                                                            widget.roomKey);
                                                   }));
                                                 },
                                                 child: PrimaryText(
@@ -988,7 +858,10 @@ class _RoomManagerState extends State<RoomManager> {
                                             ),
                                           ),
                                         ),
-                                        InfoProjector(projector: projectors![0])
+                                        InfoProjector(
+                                          projector: projectors[0],
+                                          projectorKey: projectorsKey[0],
+                                        )
                                       ],
                                     ),
                                     Wrap(
@@ -996,12 +869,14 @@ class _RoomManagerState extends State<RoomManager> {
                                         runSpacing: 20,
                                         alignment: WrapAlignment.spaceBetween,
                                         children: List.generate(
-                                          projectors!.length - 1,
+                                          projectors.length - 1,
                                           (index) =>
                                               // if(index>0)
                                               InfoProjector(
                                                   projector:
-                                                      projectors![index + 1]),
+                                                      projectors[index + 1],
+                                                  projectorKey:
+                                                      projectorsKey[index + 1]),
                                         )),
                                   ],
                                 )
@@ -1021,7 +896,8 @@ class _RoomManagerState extends State<RoomManager> {
                                       onTap: () {
                                         Navigator.of(context).push(
                                             HeroDialogRoute(builder: (context) {
-                                          return PopupAddProjectorNew(roomKey: widget.roomKey);
+                                          return PopupAddProjector(
+                                              roomKey: widget.roomKey);
                                         }));
                                       },
                                       child: PrimaryText(

@@ -118,7 +118,7 @@ class Projector {
 //   final prefs = await SharedPreferences.getInstance();
 //   prefs.remove(keyPrefix);
 // }
-final Future<Projector> default_projector = Future.value(Projector(
+final Projector default_projector =Projector(
     roomKey: 'room_0',
     ip: '192.168.0.0',
     name: 'Projector',
@@ -135,10 +135,9 @@ final Future<Projector> default_projector = Future.value(Projector(
     position_x: 0.0,
     position_y: 0.0,
     color_state: false,
-    isOnHover: false));
+    isOnHover: false);
 
-Future<Projector> getProjector(String key) async {
-  final SharedPreferences new_prefs = await prefs;
+Projector getProjector(SharedPreferences new_prefs, String key) {
   final String? jsonString = new_prefs.getString(key);
   if (jsonString != null) {
     final Map<String, dynamic> jsonMap = json.decode(jsonString);
@@ -199,7 +198,7 @@ List<Projector> getListProjector(SharedPreferences prefs,String roomKey) {
       }
     }
   }
-  print(projectorsInRoom.length);
+  // print(projectorsInRoom.length);
   return projectorsInRoom;
 }
 
@@ -219,11 +218,17 @@ void addNewProjector(Projector new_projector) async {
   }
 
   String newKey = 'projector_${number + 1}';
-  print(newKey);
+  print('add projector: '+newKey);
   new_prefs.setString(newKey, json.encode(new_projector.toJson()));
 }
 
-void adjustProjector(Projector new_projector, String new_key) async {
+Future<void> updateProjector(Projector new_projector, String newKey) async {
   final SharedPreferences new_prefs = await prefs;
-  new_prefs.setString(new_key, json.encode(new_projector.toJson()));
+  print('update projector: '+newKey);
+  new_prefs.setString(newKey, json.encode(new_projector.toJson()));
+}
+Future<void> deleteProjector(String key) async {
+  final SharedPreferences new_prefs = await prefs;
+  print('delete projector: '+ key);
+  await new_prefs.remove(key);
 }
