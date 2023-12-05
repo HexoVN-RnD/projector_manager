@@ -24,6 +24,10 @@ const String heroAddProjectorNew = 'popupProjectorNew';
 /// Uses a [Hero] with tag [_heroAddTodo].
 /// {@endtemplate}
 class PopupAddProjectorNew extends StatefulWidget {
+  String roomKey;
+  PopupAddProjectorNew({
+    required this.roomKey,
+});
   /// {@macro add_todo_popup_card}
 
   @override
@@ -91,7 +95,7 @@ class _PopupAddProjectorNewState extends State<PopupAddProjectorNew> {
                             ),
                             onPressed: () async {
                               final Projector new_projector = Projector(
-                                room: 0,
+                                roomKey: widget.roomKey,
                                 ip: ipEditing.text,
                                 name: nameEditing.text,
                                 position_x: double.parse(position_x.text),

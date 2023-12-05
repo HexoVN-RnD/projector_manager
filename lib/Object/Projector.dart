@@ -6,7 +6,7 @@ import 'package:valuable/valuable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Projector {
-  int room;
+  String roomKey;
   String ip;
   String name;
   int port;
@@ -26,7 +26,7 @@ class Projector {
 
   // Constructor
   Projector({
-    required this.room,
+    required this.roomKey,
     required this.ip,
     required this.name,
     required this.port,
@@ -47,7 +47,7 @@ class Projector {
   });
 
   Map<String, dynamic> toJson() => {
-        'room': room,
+        'room': roomKey,
         'ip': ip,
         'name': name,
         'port': port,
@@ -68,7 +68,7 @@ class Projector {
 
   factory Projector.fromJson(Map<String, dynamic> json) {
     return Projector(
-      room: json['room'],
+      roomKey: json['room'],
       ip: json['ip'],
       name: json['name'],
       port: json['port'],
@@ -119,7 +119,7 @@ class Projector {
 //   prefs.remove(keyPrefix);
 // }
 final Future<Projector> default_projector = Future.value(Projector(
-    room: 0,
+    roomKey: 'room_0',
     ip: '192.168.0.0',
     name: 'Projector',
     port: 3002,
@@ -148,35 +148,35 @@ Future<Projector> getProjector(String key) async {
   }
 }
 
-Future<List<Projector>> getListProjector(int roomNumber) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  List<Projector> projectorsInRoom = [];
+// Future<List<Projector>> getListProjector(int roomNumber) async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   List<Projector> projectorsInRoom = [];
+//
+//   // Lấy danh sách các key trong SharedPreferences
+//   Set<String> keys = prefs.getKeys();
+//
+//   // Lọc những key có dạng 'projector_'
+//   List<String> projectorKeys =
+//       keys.where((key) => key.startsWith('projector_')).toList();
+//
+//   // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'room'
+//   for (String key in projectorKeys) {
+//     String? jsonString = prefs.getString(key);
+//     if (jsonString != null) {
+//       Map<String, dynamic> jsonMap = json.decode(jsonString);
+//
+//       // Kiểm tra trường 'room'
+//       if (jsonMap['room'] == roomNumber) {
+//         Projector projector = Projector.fromJson(jsonMap);
+//         projectorsInRoom.add(projector);
+//       }
+//     }
+//   }
+//   print(projectorsInRoom.length);
+//   return projectorsInRoom;
+// }
 
-  // Lấy danh sách các key trong SharedPreferences
-  Set<String> keys = prefs.getKeys();
-
-  // Lọc những key có dạng 'projector_'
-  List<String> projectorKeys =
-      keys.where((key) => key.startsWith('projector_')).toList();
-
-  // Lặp qua từng key, đọc dữ liệu và kiểm tra trường 'room'
-  for (String key in projectorKeys) {
-    String? jsonString = prefs.getString(key);
-    if (jsonString != null) {
-      Map<String, dynamic> jsonMap = json.decode(jsonString);
-
-      // Kiểm tra trường 'room'
-      if (jsonMap['room'] == roomNumber) {
-        Projector projector = Projector.fromJson(jsonMap);
-        projectorsInRoom.add(projector);
-      }
-    }
-  }
-  print(projectorsInRoom.length);
-  return projectorsInRoom;
-}
-
-List<Projector> getListProjector2(SharedPreferences prefs,int roomNumber) {
+List<Projector> getListProjector(SharedPreferences prefs,String roomKey) {
   List<Projector> projectorsInRoom = [];
 
   // Lấy danh sách các key trong SharedPreferences
@@ -193,7 +193,7 @@ List<Projector> getListProjector2(SharedPreferences prefs,int roomNumber) {
       Map<String, dynamic> jsonMap = json.decode(jsonString);
 
       // Kiểm tra trường 'room'
-      if (jsonMap['room'] == roomNumber) {
+      if (jsonMap['room'] == roomKey) {
         Projector projector = Projector.fromJson(jsonMap);
         projectorsInRoom.add(projector);
       }

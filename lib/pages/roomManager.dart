@@ -36,6 +36,10 @@ import 'package:responsive_dashboard/style/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomManager extends StatefulWidget {
+  String roomKey;
+  RoomManager({
+    required this.roomKey,
+  });
   @override
   State<RoomManager> createState() => _RoomManagerState();
 }
@@ -114,7 +118,7 @@ class _RoomManagerState extends State<RoomManager> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // roomdata = getRoomData('room_1');
     // listProjector = getListProjector(0);
-    projectors = getListProjector2(prefs, 0);
+    projectors = getListProjector(prefs, widget.roomKey);
   }
 
   @override
@@ -972,7 +976,7 @@ class _RoomManagerState extends State<RoomManager> {
                                                   Navigator.of(context).push(
                                                       HeroDialogRoute(
                                                           builder: (context) {
-                                                    return PopupAddProjectorNew();
+                                                    return PopupAddProjectorNew(roomKey: widget.roomKey);
                                                   }));
                                                 },
                                                 child: PrimaryText(
@@ -1017,7 +1021,7 @@ class _RoomManagerState extends State<RoomManager> {
                                       onTap: () {
                                         Navigator.of(context).push(
                                             HeroDialogRoute(builder: (context) {
-                                          return PopupAddProjectorNew();
+                                          return PopupAddProjectorNew(roomKey: widget.roomKey);
                                         }));
                                       },
                                       child: PrimaryText(

@@ -9,6 +9,7 @@ class SideMenu extends StatelessWidget {
   final Menu menu;
   final int id;
   final VoidCallback press;
+  final VoidCallback update;
   final VoidCallback delete;
   final ValueChanged<Artboard> riveOnInit;
   final int selectedMenu;
@@ -16,6 +17,7 @@ class SideMenu extends StatelessWidget {
       {required this.menu,
       required this.id,
       required this.press,
+      required this.update,
       required this.delete,
       required this.riveOnInit,
       required this.selectedMenu});
@@ -49,27 +51,27 @@ class SideMenu extends StatelessWidget {
               GestureDetector(
                 onTap: press,
                 child: Container(
-                  padding: const EdgeInsets.fromLTRB(20, 15, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding:  EdgeInsets.only(bottom: 18.0),
-                        child: SizedBox(
-                          height: 36,
-                          width: 36,
-                          child: RiveAnimation.asset(
-                            menu.rive.src,
-                            artboard: menu.rive.artboard,
-                            onInit: riveOnInit,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: SizeConfig.blockSizeHorizontal * 0.5),
+                      // Padding(
+                      //   padding:  EdgeInsets.only(bottom: 18.0),
+                      //   child: SizedBox(
+                      //     height: 36,
+                      //     width: 36,
+                      //     child: RiveAnimation.asset(
+                      //       menu.rive.src,
+                      //       artboard: menu.rive.artboard,
+                      //       onInit: riveOnInit,
+                      //     ),
+                      //   ),
+                      // ),
+                      // SizedBox(width: 3),
                       Container(
                         alignment: Alignment.centerLeft,
-                        padding: EdgeInsets.only(bottom: 10.0),
-                        width: 100, // Max width for the text
+                        // padding: EdgeInsets.only(left: .0),
+                        width: 120, // Max width for the text
                         child: FittedBox(
                           fit: BoxFit.scaleDown, // Scale down to fit within the box
                           child: PrimaryText(
@@ -94,14 +96,28 @@ class SideMenu extends StatelessWidget {
                 ),
               ),
               Positioned(
-                child: GestureDetector(
-                  onTap: delete,
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(165, 22, 0, 0),
-                    child: Icon(
-                      Icons.cancel_outlined,
-                      color: AppColors.red,
-                    ),
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(155, 25, 0, 0),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: update,
+                        child: Icon(
+                          Icons.edit_outlined,
+                          color: AppColors.primary,
+                          size: 16,
+                        ),
+                      ),
+                      SizedBox(width: 5,),
+                      GestureDetector(
+                        onTap: delete,
+                        child: Icon(
+                          Icons.cancel_outlined,
+                          color: AppColors.primary,
+                          size: 16,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

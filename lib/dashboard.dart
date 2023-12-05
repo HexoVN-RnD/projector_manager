@@ -6,10 +6,13 @@ import 'package:responsive_dashboard/Object/RoomData.dart';
 import 'package:responsive_dashboard/Object/rive_model.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/PopupAddRoom.dart';
+import 'package:responsive_dashboard/PopUp/PopupUpdateRoom.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/component/rive_utils.dart';
 import 'package:responsive_dashboard/pages/home_menu.dart';
+import 'package:responsive_dashboard/pages/home_page.dart';
+import 'package:responsive_dashboard/pages/roomManager.dart';
 import 'package:responsive_dashboard/pages/side_menu.dart';
 import 'package:responsive_dashboard/data/menu.dart';
 import 'package:responsive_dashboard/pages/select_page.dart';
@@ -89,9 +92,7 @@ class _DashboardState extends State<Dashboard> {
     // selectedSideMenu = sidebarMenus.first;
     super.initState();
     _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      setState(() {
-
-      });
+      setState(() {});
       // getLicenseStatus();
       // Future.delayed(
       //   const Duration(milliseconds: 500),
@@ -111,6 +112,7 @@ class _DashboardState extends State<Dashboard> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     listRoom = getListRoom(prefs);
   }
+
   Future<void> getListKey() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // Lấy danh sách các key trong SharedPreferences
@@ -135,9 +137,9 @@ class _DashboardState extends State<Dashboard> {
       Menu(
         title: "Tổng quan".toUpperCase(),
         rive: RiveModel(
-            src: "assets/RiveAssets/icons.riv",
-            artboard: "HOME",
-            stateMachineName: "HOME_interactivity",
+          src: "assets/RiveAssets/icons.riv",
+          artboard: "HOME",
+          stateMachineName: "HOME_interactivity",
         ),
       ),
       ...listRoom
@@ -150,9 +152,6 @@ class _DashboardState extends State<Dashboard> {
               ))
           .toList()
     ];
-    // final width = SizeConfig.screenWidth;
-    // final height = SizeConfig.screenHeight;
-    // Room room = rooms[(current_page > 0) ? current_page - 1 : 0];
 
     return Material(
       child: Stack(
@@ -198,26 +197,34 @@ class _DashboardState extends State<Dashboard> {
                       ),
                       if (sidebarMenus.length > 0)
                         Container(
-                          constraints: BoxConstraints(
-                              maxHeight: 700),
+                          constraints: BoxConstraints(maxHeight: 700),
                           child: SingleChildScrollView(
                             child: Column(
                               children: List.generate(
-                                sidebarMenus.length-1,
+                                sidebarMenus.length - 1,
                                 (index) => SideMenu(
-                                  menu: sidebarMenus[index+1],
-                                  id: index +1,
+                                  menu: sidebarMenus[index + 1],
+                                  id: index + 1,
                                   selectedMenu: selectedSideMenu,
                                   press: () {
-                                    // print(sidebarMenus.length);
-                                    // RiveUtils.changeSMIBoolState(
-                                    //     sidebarMenus[index+1].rive.status!);
                                     setState(() {
-                                      // print('index' + (index+1).toString());
-                                      changePage(index+1);
+                                      changePage(index + 1);
                                     });
                                   },
-                                  delete: (){
+                                  update: () {
+                                    setState(() {
+                                      /// Room key bat dau tu 0-n
+                                      Navigator.of(context).push(
+                                          HeroDialogRoute(builder: (context) {
+                                        return PopupUpdateRoom(
+                                          roomData: listRoom[index],
+                                          roomKey: roomKeys[index],
+                                        );
+                                      }));
+                                      ;
+                                    });
+                                  },
+                                  delete: () {
                                     setState(() {
                                       /// Room key bat dau tu 0-n
                                       print(roomKeys[index]);
@@ -226,10 +233,10 @@ class _DashboardState extends State<Dashboard> {
                                     });
                                   },
                                   riveOnInit: (artboard) {
-                                    sidebarMenus[index+1].rive.status =
+                                    sidebarMenus[index + 1].rive.status =
                                         RiveUtils.getRiveInput(artboard,
                                             stateMachineName:
-                                                sidebarMenus[index+1]
+                                                sidebarMenus[index + 1]
                                                     .rive
                                                     .stateMachineName);
                                   },
@@ -300,7 +307,12 @@ class _DashboardState extends State<Dashboard> {
                     ],
                   ),
                 ),
-                Expanded(child: SelectPage()),
+                Expanded(
+                    child: (current_page == 0)
+                        ? HomePage()
+                        : RoomManager(roomKey: roomKeys[current_page - 1])
+                    // SelectPage(roomKey: roomKeys[current_page],)),
+                    ),
               ],
             ),
           ),

@@ -123,10 +123,6 @@ List<RoomData> getListRoom(SharedPreferences prefs) {
   return listRoom;
 }
 
-Future<void> deleteRoomData(String key) async {
-  final SharedPreferences new_prefs = await prefs;
-  await new_prefs.remove(key);
-}
 
 Future<void> addNewRoomData(RoomData new_Room) async {
   final SharedPreferences new_prefs = await prefs;
@@ -145,4 +141,16 @@ Future<void> addNewRoomData(RoomData new_Room) async {
   String newKey = 'room_${number + 1}';
   print(newKey);
   new_prefs.setString(newKey, json.encode(new_Room.toJson()));
+}
+
+Future<void> updateRoomData(RoomData new_Room, String key) async {
+  final SharedPreferences new_prefs = await prefs;
+  print('update key: '+ key);
+  new_prefs.setString(key, json.encode(new_Room.toJson()));
+}
+
+Future<void> deleteRoomData(String key) async {
+  final SharedPreferences new_prefs = await prefs;
+  print('delete key: '+ key);
+  await new_prefs.remove(key);
 }
