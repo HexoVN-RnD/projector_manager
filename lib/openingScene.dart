@@ -15,6 +15,7 @@ import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
+import 'package:responsive_dashboard/dashboard_ipad.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:responsive_dashboard/new_component/animated_btn.dart';
 import 'package:responsive_dashboard/style/colors.dart';
@@ -25,7 +26,7 @@ import 'package:valuable/valuable.dart';
 // StatefulValuable<double> opening_per = StatefulValuable<double>(0);
 
 double progressValue = 0.0;
-int half_length = (rooms[3].projectors.length / 2).toInt() + 1;
+// int half_length = (rooms[3].projectors.length / 2).toInt() + 1;
 
 class OpeningScene extends StatefulWidget {
   const OpeningScene({key});
@@ -105,14 +106,14 @@ class _OpeningSceneState extends State<OpeningScene>
     return Scaffold(
       body: Stack(
         children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 450.0),
-              child: Image.asset(
-                "assets/logo2.png",
-                width: 600,
-                fit: BoxFit.fitWidth,
-              ),
+          Positioned(
+            top: 200,
+            left: MediaQuery.of(context).size.width * 0.2,
+            child: Image.asset(
+              "assets/logo2.png",
+              height: MediaQuery.of(context).size.width * 0.7 / 10646 * 3301,
+              width: MediaQuery.of(context).size.width * 0.7,
+              fit: BoxFit.fill,
             ),
           ),
           // Positioned.fill(
@@ -124,611 +125,662 @@ class _OpeningSceneState extends State<OpeningScene>
           // const RiveAnimation.asset(
           //   "assets/RiveAssets/shapes.riv",
           // ),
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-              child: const SizedBox(),
-            ),
-          ),
-          AnimatedPositioned(
-            // top: isShowSignInDialog ? -50 : 0,
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            duration: const Duration(milliseconds: 260),
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 32),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // const Spacer(),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      SizedBox(
-                        width: 260,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Hexogon",
-                              style: TextStyle(
-                                fontSize: 50,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Poppins",
-                                height: 1.2,
-                              ),
-                            ),
-                            // SizedBox(height: 16),
-                            Text('Please waiting for check connection'),
-                            // Text('Contact: duyminh-vn@hexogonsol.com'),
-                          ],
-                        ),
-                      ),
-                      const Spacer(flex: 5),
-
-                      Container(
-                        width: 300,
-                        child: TextFormField(
-                          controller: accountController,
-                          validator: (value) {
-                            isAccountCorrect = account.any((license) {
-                              final account = license['account'].toString();
-                              return account == accountController.text;
-                            });
-                            if (value == null || value.isEmpty) {
-                              return 'Hãy điền tài khoản';
-                            } else if (!isAccountCorrect) {
-                              return 'Tài khoản không chính xác hoặc license đã hết hạn';
-                            }
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Tên đăng nhập...',
-                            labelText: 'Tài khoản',
-                            // prefixIcon: Icon(Icons.mail),
-                            // icon: Icon(Icons.mail),
-                            suffixIcon: accountController.text.isEmpty
-                                ? Container(width: 0)
-                                : IconButton(
-                                    icon: Icon(Icons.close),
-                                    onPressed: () => accountController.clear(),
-                                  ),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: AppColors.navy_blue),
-                                borderRadius: BorderRadius.circular(20)),
-                          ),
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.done,
-                          // autofocus: true,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: 300,
-                        child: TextFormField(
-                          validator: (value) {
-                            // print('value: $value');
-                            isPasswordCorrect = password.any((license) {
-                              final password = license['password'].toString();
-                              return password == value;
-                            });
-                            if (value == null || value.isEmpty) {
-                              return 'Hãy điền mật khẩu';
-                            } else if (!isPasswordCorrect) {
-                              return 'Mật khẩu không chính xác hoặc license đã hết hạn';
-                            }
-                          },
-                          onChanged: (value) {
-                            setState(() {
-                              // print('value: $value');
-                              // passwordController.text = value;
-                            });
-                          },
-                          controller: passwordController,
-                          // onChanged: (value) => setState(() => this.password = value),
-                          // onSubmitted: (value) => setState(() => this.password = value),
-                          decoration: InputDecoration(
-                            hintText: 'Mật khẩu...',
-                            labelText: 'Mật khẩu',
-                            // errorText: 'Vui lòng thử lại',
-                            suffixIcon: IconButton(
-                              icon: isPasswordVisible
-                                  ? Icon(Icons.visibility_off)
-                                  : Icon(Icons.visibility),
-                              onPressed: () => setState(
-                                  () => isPasswordVisible = !isPasswordVisible),
-                            ),
-                            border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: AppColors.navy_blue),
-                                borderRadius: BorderRadius.circular(20)),
-                          ),
-                          obscureText: isPasswordVisible,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      // Container(
-                      //   height: 100,
-                      //   width: 200,
-                      //   child: FutureBuilder<List<Document>>(
-                      //     future: getAccount(),
-                      //     builder: (BuildContext context,
-                      //         AsyncSnapshot<List<Document>> snapshot) {
-                      //       if (!snapshot.hasData) {
-                      //         return const Center(child: Text('Loading...'));
-                      //       }
-                      //       return snapshot.data!.isEmpty
-                      //           ? const Center(child: Text('No account in List'))
-                      //           : ListView(
-                      //         children: snapshot.data!.map((license) {
-                      //           return Text(license['account'].toString());// ListTile
-                      //         }).toList(),
-                      //       );
-                      //     },
-                      //   ),
-                      // ), //
-
-                      // AnimatedBtn(
-                      //   btnAnimationController: _btnAnimationController,
-                      //   press: () async {
-                      //     _btnAnimationController.isActive = true;
-                      //     // getAccount();
-                      //     // getPassword();
-                      //     // isAccountCorrect = account.any((license) {
-                      //     //   final account = license['account'].toString();
-                      //     //   return account == accountController.text;
-                      //     // });
-                      //     // isPasswordCorrect = password.any((license) {
-                      //     //   final password = license['password'].toString();
-                      //     //   return password == passwordController.text;
-                      //     // });
-                      //     getAccount();
-                      //     // print('account: ${account}');
-                      //     getPassword();
-                      //     // print("isAccountCorrect: $isAccountCorrect ");
-                      //     Future.delayed(
-                      //       const Duration(milliseconds: 1000),
-                      //       () {
-                      //         setState(() {
-                      //           isShowSignInDialog = true;
-                      //         });
-                      //         if (_formKey.currentState!.validate()) {
-                      //           // The passwords match, you can proceed
-                      //           // For example, save the password to Firebase
-                      //           // Or navigate to another screen
-                      //         }
-                      //         if (isAccountCorrect && isPasswordCorrect) {
-                      //           Navigator.of(context).pushReplacement(
-                      //             MaterialPageRoute(
-                      //                 builder: (context) => Dashboard()),
-                      //           );
-                      //         }
-                      //       },
-                      //     );
-                      //   },
-                      // ),
-                      isChecked
-                          ? AnimatedBtn(
-                              btnAnimationController: _btnAnimationController,
-                        press: () async {
-                          _btnAnimationController.isActive = true;
-                          // getAccount();
-                          // getPassword();
-                          // isAccountCorrect = account.any((license) {
-                          //   final account = license['account'].toString();
-                          //   return account == accountController.text;
-                          // });
-                          // isPasswordCorrect = password.any((license) {
-                          //   final password = license['password'].toString();
-                          //   return password == passwordController.text;
-                          // });
-                          getAccount();
-                          getPassword();
-                          // print("isAccountCorrect: $isAccountCorrect ");
-                          Future.delayed(
-                            const Duration(milliseconds: 1000),
-                                () {
-                              setState(() {
-                                isShowSignInDialog = true;
-                              });
-                              if (_formKey.currentState!.validate()) {
-                                // The passwords match, you can proceed
-                                // For example, save the password to Firebase
-                                // Or navigate to another screen
-                              }
-                              if (isAccountCorrect && isPasswordCorrect) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => Dashboard()),
-                                );
-                              }
-                            },
-                          );
+          // Positioned.fill(
+          //   child: BackdropFilter(
+          //     filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+          //     child: const SizedBox(),
+          //   ),
+          // ),
+          Positioned(
+            top: 540,
+            left: MediaQuery.of(context).size.width * 0.25,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width *0.4,
+                      child: TextFormField(
+                        controller: accountController,
+                        validator: (value) {
+                          isAccountCorrect = account.any((license) {
+                            final account = license['account'].toString();
+                            return account == accountController.text;
+                          });
+                          if (value == null || value.isEmpty) {
+                            return 'Hãy điền tài khoản';
+                          } else if (!isAccountCorrect) {
+                            return 'Tài khoản không chính xác hoặc license đã hết hạn';
+                          }
                         },
-                            )
-                          : Container(
-                              height: 64,
-                            ),
-                      const SizedBox(
-                        height: 50,
+                        decoration: InputDecoration(
+                          hintText: 'Tên đăng nhập...',
+                          labelText: 'Tài khoản',
+                          // prefixIcon: Icon(Icons.mail),
+                          // icon: Icon(Icons.mail),
+                          suffixIcon: accountController.text.isEmpty
+                              ? Container(width: 0)
+                              : IconButton(
+                                  icon: Icon(Icons.close),
+                                  onPressed: () => accountController.clear(),
+                                ),
+                          border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: AppColors.navy_blue),
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.done,
+                        // autofocus: true,
                       ),
-                      // const Padding(
-                      //   padding: EdgeInsets.symmetric(vertical: 24),
-                      //   child: PrimaryText(
-                      //       size: 14,
-                      //       text:
-                      //           'Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates.'),
-                      // )
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width *0.4,
+                      child: TextFormField(
+                        validator: (value) {
+                          // print('value: $value');
+                          isPasswordCorrect = password.any((license) {
+                            final password = license['password'].toString();
+                            return password == value;
+                          });
+                          if (value == null || value.isEmpty) {
+                            return 'Hãy điền mật khẩu';
+                          } else if (!isPasswordCorrect) {
+                            return 'Mật khẩu không chính xác hoặc license đã hết hạn';
+                          }
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            // print('value: $value');
+                            // passwordController.text = value;
+                          });
+                        },
+                        controller: passwordController,
+                        // onChanged: (value) => setState(() => this.password = value),
+                        // onSubmitted: (value) => setState(() => this.password = value),
+                        decoration: InputDecoration(
+                          hintText: 'Mật khẩu...',
+                          labelText: 'Mật khẩu',
+                          // errorText: 'Vui lòng thử lại',
+                          suffixIcon: IconButton(
+                            icon: isPasswordVisible
+                                ? Icon(Icons.visibility_off)
+                                : Icon(Icons.visibility),
+                            onPressed: () => setState(
+                                () => isPasswordVisible = !isPasswordVisible),
+                          ),
+                          border: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: AppColors.navy_blue),
+                              borderRadius: BorderRadius.circular(20)),
+                        ),
+                        obscureText: isPasswordVisible,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    isChecked
+                        ? AnimatedBtn(
+                            btnAnimationController: _btnAnimationController,
+                            press: () async {
+                              _btnAnimationController.isActive = true;
+                              // getAccount();
+                              // getPassword();
+                              // isAccountCorrect = account.any((license) {
+                              //   final account = license['account'].toString();
+                              //   return account == accountController.text;
+                              // });
+                              // isPasswordCorrect = password.any((license) {
+                              //   final password = license['password'].toString();
+                              //   return password == passwordController.text;
+                              // });
+                              getAccount();
+                              getPassword();
+                              // print("isAccountCorrect: $isAccountCorrect ");
+                              Future.delayed(
+                                const Duration(milliseconds: 1000),
+                                () {
+                                  setState(() {
+                                    isShowSignInDialog = true;
+                                  });
+                                  if (_formKey.currentState!.validate()) {
+                                    // The passwords match, you can proceed
+                                    // For example, save the password to Firebase
+                                    // Or navigate to another screen
+                                  }
+                                  if (isAccountCorrect && isPasswordCorrect) {
+                                    Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) => DashboardIpad()),
+                                    );
+                                  }
+                                },
+                              );
+                            },
+                          )
+                        : Container(
+                            height: 64,
+                          ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    // const Padding(
+                    //   padding: EdgeInsets.symmetric(vertical: 24),
+                    //   child: PrimaryText(
+                    //       size: 14,
+                    //       text:
+                    //           'Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates.'),
+                    // )
+                  ],
                 ),
               ),
             ),
           ),
+          // Positioned(
+          //   // top: isShowSignInDialog ? -50 : 0,
+          //   // height: MediaQuery.of(context).size.height,
+          //   // width: MediaQuery.of(context).size.width,
+          //   // duration: const Duration(milliseconds: 260),
+          //   child: Padding(
+          //     padding: const EdgeInsets.symmetric(horizontal: 32),
+          //     child: Column(
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         Container(
+          //           width: 260,
+          //           padding: EdgeInsets.only(top: 20),
+          //           child: Column(
+          //             mainAxisAlignment: MainAxisAlignment.start,
+          //             children: [
+          //               Text(
+          //                 "Hexogon",
+          //                 style: TextStyle(
+          //                   fontSize: 50,
+          //                   fontWeight: FontWeight.w700,
+          //                   fontFamily: "Poppins",
+          //                   height: 1.2,
+          //                 ),
+          //               ),
+          //               // SizedBox(height: 16),
+          //               // Text('Contact: duyminh-vn@hexogonsol.com'),
+          //             ],
+          //           ),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // Positioned(
+          //   left: 30,
+          //   top: MediaQuery.of(context).size.height * 0.11,
+          //   width: MediaQuery.of(context).size.width - 80,
+          //   height: MediaQuery.of(context).size.height,
+          //   child: Padding(
+          //     padding: const EdgeInsets.fromLTRB(15.0, 60, 10, 10),
+          //     child: Row(
+          //       // mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Column(
+          //           children:
+          //               List.generate(rooms[2].projectors.length, (index) {
+          //             Projector projector = rooms[2].projectors[index];
+          //             return Padding(
+          //               padding: const EdgeInsets.only(bottom: 10.0),
+          //               child: Row(
+          //                 mainAxisAlignment: MainAxisAlignment.center,
+          //                 children: [
+          //                   Container(
+          //                     width: 150,
+          //                     child: PrimaryText(
+          //                       text: '${projector.name}',
+          //                       size: 14,
+          //                     ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 10,
+          //                   ),
+          //                   Container(
+          //                     width: 100,
+          //                     child: PrimaryText(
+          //                       text: '(${projector.ip})',
+          //                       size: 14,
+          //                     ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 10,
+          //                   ),
+          //                   PrimaryText(
+          //                     text: projector.connected.getValue()
+          //                         ? 'Đã kết nối '
+          //                         : 'Mất kết nối',
+          //                     color: projector.connected.getValue()
+          //                         ? AppColors.green
+          //                         : AppColors.red,
+          //                     size: 14,
+          //                   ),
+          //                 ],
+          //               ),
+          //             );
+          //           }),
+          //         ),
+          //         // Expanded(
+          //         //   child: Column(
+          //         //     children: List.generate(half_length, (index) {
+          //         //       Projector projector = rooms[3].projectors[index];
+          //         //       return Padding(
+          //         //         padding: const EdgeInsets.only(bottom: 10.0),
+          //         //         child: Row(
+          //         //           mainAxisAlignment: MainAxisAlignment.center,
+          //         //           children: [
+          //         //             Container(
+          //         //               width: 150,
+          //         //               child: PrimaryText(
+          //         //                 text: '${projector.name}',
+          //         //                 size: 14,
+          //         //               ),
+          //         //             ),
+          //         //             SizedBox(
+          //         //               width: 10,
+          //         //             ),
+          //         //             Container(
+          //         //               width: 100,
+          //         //               child: PrimaryText(
+          //         //                 text: '(${projector.ip})',
+          //         //                 size: 14,
+          //         //               ),
+          //         //             ),
+          //         //             SizedBox(
+          //         //               width: 10,
+          //         //             ),
+          //         //             PrimaryText(
+          //         //               text: projector.connected.getValue()
+          //         //                   ? 'Đã kết nối '
+          //         //                   : 'Mất kết nối',
+          //         //               color: projector.connected.getValue()
+          //         //                   ? AppColors.green
+          //         //                   : AppColors.red,
+          //         //               size: 14,
+          //         //             ),
+          //         //           ],
+          //         //         ),
+          //         //       );
+          //         //     }),
+          //         //   ),
+          //         // ),
+          //         // Expanded(
+          //         //   child: Column(
+          //         //     children: List.generate(
+          //         //         rooms[3].projectors.length - half_length, (index) {
+          //         //       Projector projector =
+          //         //           rooms[3].projectors[index + half_length];
+          //         //       return Padding(
+          //         //         padding: const EdgeInsets.only(bottom: 10.0),
+          //         //         child: SingleChildScrollView(
+          //         //           child: Row(
+          //         //             mainAxisAlignment: MainAxisAlignment.center,
+          //         //             children: [
+          //         //               Container(
+          //         //                 width: 150,
+          //         //                 child: PrimaryText(
+          //         //                   text: '${projector.name}',
+          //         //                   size: 14,
+          //         //                 ),
+          //         //               ),
+          //         //               SizedBox(
+          //         //                 width: 10,
+          //         //               ),
+          //         //               Container(
+          //         //                 width: 100,
+          //         //                 child: PrimaryText(
+          //         //                   text: '(${projector.ip})',
+          //         //                   size: 14,
+          //         //                 ),
+          //         //               ),
+          //         //               SizedBox(
+          //         //                 width: 10,
+          //         //               ),
+          //         //               PrimaryText(
+          //         //                 text: projector.connected.getValue()
+          //         //                     ? 'Đã kết nối '
+          //         //                     : 'Mất kết nối',
+          //         //                 color: projector.connected.getValue()
+          //         //                     ? AppColors.green
+          //         //                     : AppColors.red,
+          //         //                 size: 14,
+          //         //               ),
+          //         //             ],
+          //         //           ),
+          //         //         ),
+          //         //       );
+          //         //     }),
+          //         //   ),
+          //         // ),
+          //         // Column(children: [
+          //         //   Column(
+          //         //     children:
+          //         //         List.generate(rooms[4].projectors.length, (index) {
+          //         //       Projector projector = rooms[4].projectors[index];
+          //         //       return Padding(
+          //         //         padding: const EdgeInsets.only(bottom: 10.0),
+          //         //         child: Row(
+          //         //           mainAxisAlignment: MainAxisAlignment.start,
+          //         //           children: [
+          //         //             Container(
+          //         //               width: 150,
+          //         //               child: PrimaryText(
+          //         //                 text: '${projector.name}',
+          //         //                 size: 14,
+          //         //               ),
+          //         //             ),
+          //         //             SizedBox(
+          //         //               width: 10,
+          //         //             ),
+          //         //             Container(
+          //         //               width: 100,
+          //         //               child: PrimaryText(
+          //         //                 text: '(${projector.ip})',
+          //         //                 size: 14,
+          //         //               ),
+          //         //             ),
+          //         //             SizedBox(
+          //         //               width: 10,
+          //         //             ),
+          //         //             PrimaryText(
+          //         //               text: projector.connected.getValue()
+          //         //                   ? 'Đã kết nối '
+          //         //                   : 'Mất kết nối',
+          //         //               color: projector.connected.getValue()
+          //         //                   ? AppColors.green
+          //         //                   : AppColors.red,
+          //         //               size: 14,
+          //         //             ),
+          //         //           ],
+          //         //         ),
+          //         //       );
+          //         //     }),
+          //         //   ),
+          //         //   SizedBox(
+          //         //     height: 50,
+          //         //   ),
+          //         //   Column(
+          //         //     children:
+          //         //         List.generate(rooms[5].projectors.length, (index) {
+          //         //       Projector projector = rooms[5].projectors[index];
+          //         //       return Padding(
+          //         //         padding: const EdgeInsets.only(bottom: 10.0),
+          //         //         child: Row(
+          //         //           mainAxisAlignment: MainAxisAlignment.start,
+          //         //           children: [
+          //         //             Container(
+          //         //               width: 150,
+          //         //               child: PrimaryText(
+          //         //                 text: '${projector.name}',
+          //         //                 size: 14,
+          //         //               ),
+          //         //             ),
+          //         //             SizedBox(
+          //         //               width: 10,
+          //         //             ),
+          //         //             Container(
+          //         //               width: 100,
+          //         //               child: PrimaryText(
+          //         //                 text: '(${projector.ip})',
+          //         //                 size: 14,
+          //         //               ),
+          //         //             ),
+          //         //             SizedBox(
+          //         //               width: 10,
+          //         //             ),
+          //         //             PrimaryText(
+          //         //               text: projector.connected.getValue()
+          //         //                   ? 'Đã kết nối '
+          //         //                   : 'Mất kết nối',
+          //         //               color: projector.connected.getValue()
+          //         //                   ? AppColors.green
+          //         //                   : AppColors.red,
+          //         //               size: 14,
+          //         //             ),
+          //         //           ],
+          //         //         ),
+          //         //       );
+          //         //     }),
+          //         //   ),
+          //         // ]),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // Positioned(
+          //   left: 30,
+          //   top: 220,
+          //   width: MediaQuery.of(context).size.width - 80,
+          //   height: MediaQuery.of(context).size.height,
+          //   child: Padding(
+          //     padding: const EdgeInsets.fromLTRB(15.0, 60, 10, 10),
+          //     child: Column(
+          //       children: [
+          //         Column(
+          //           children: List.generate(rooms[1].servers.length, (index) {
+          //             Server server = rooms[1].servers[index];
+          //             return Padding(
+          //               padding: const EdgeInsets.only(bottom: 10.0),
+          //               child: Row(
+          //                 mainAxisAlignment: MainAxisAlignment.start,
+          //                 children: [
+          //                   Container(
+          //                     width: 120,
+          //                     child: PrimaryText(
+          //                       text: '${server.name}',
+          //                       size: 14,
+          //                     ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 10,
+          //                   ),
+          //                   Container(
+          //                     width: 100,
+          //                     child: PrimaryText(
+          //                       text: '(${server.ip})',
+          //                       size: 14,
+          //                     ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 10,
+          //                   ),
+          //                   PrimaryText(
+          //                     text: server.connected.getValue()
+          //                         ? 'Đã kết nối '
+          //                         : 'Mất kết nối',
+          //                     color: server.connected.getValue()
+          //                         ? AppColors.green
+          //                         : AppColors.red,
+          //                     size: 14,
+          //                   ),
+          //                 ],
+          //               ),
+          //             );
+          //           }),
+          //         ),
+          //         SizedBox(
+          //           height: 50,
+          //         ),
+          //         Column(
+          //           children: List.generate(rooms[5].servers.length, (index) {
+          //             Server server = rooms[5].servers[index];
+          //             return Padding(
+          //               padding: const EdgeInsets.only(bottom: 10.0),
+          //               child: Row(
+          //                 mainAxisAlignment: MainAxisAlignment.start,
+          //                 children: [
+          //                   Container(
+          //                     width: 120,
+          //                     child: PrimaryText(
+          //                       text: '${server.name}',
+          //                       size: 14,
+          //                     ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 10,
+          //                   ),
+          //                   Container(
+          //                     width: 100,
+          //                     child: PrimaryText(
+          //                       text: '(${server.ip})',
+          //                       size: 14,
+          //                     ),
+          //                   ),
+          //                   SizedBox(
+          //                     width: 10,
+          //                   ),
+          //                   PrimaryText(
+          //                     text: server.connected.getValue()
+          //                         ? 'Đã kết nối '
+          //                         : 'Mất kết nối',
+          //                     color: server.connected.getValue()
+          //                         ? AppColors.green
+          //                         : AppColors.red,
+          //                     size: 14,
+          //                   ),
+          //                 ],
+          //               ),
+          //             );
+          //           }),
+          //         ),
+          //         SizedBox(
+          //           height: 50,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // Positioned(
+          //     bottom: 300,
+          //     child: Container(
+          //         child: Column(
+          //             children:
+          //                 List.generate(rooms[0].projectors.length, (index) {
+          //       Projector projector = rooms[0].projectors[index];
+          //       return Padding(
+          //         padding: const EdgeInsets.only(bottom: 10.0),
+          //         child: Row(
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: [
+          //             Container(
+          //               width: 150,
+          //               child: PrimaryText(
+          //                 text: '${projector.name}',
+          //                 size: 14,
+          //               ),
+          //             ),
+          //             SizedBox(
+          //               width: 10,
+          //             ),
+          //             Container(
+          //               width: 100,
+          //               child: PrimaryText(
+          //                 text: '(${projector.ip})',
+          //                 size: 14,
+          //               ),
+          //             ),
+          //             SizedBox(
+          //               width: 10,
+          //             ),
+          //             PrimaryText(
+          //               text: projector.connected.getValue()
+          //                   ? 'Đã kết nối '
+          //                   : 'Mất kết nối',
+          //               color: projector.connected.getValue()
+          //                   ? AppColors.green
+          //                   : AppColors.red,
+          //               size: 14,
+          //             )
+          //           ],
+          //         ),
+          //       );
+          //     })))),
           Positioned(
-            left: 30,
-            top: MediaQuery.of(context).size.height * 0.11,
-            width: MediaQuery.of(context).size.width - 80,
-            height: MediaQuery.of(context).size.height,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(15.0, 60, 10, 10),
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children:
-                        List.generate(rooms[2].projectors.length, (index) {
-                      Projector projector = rooms[2].projectors[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 150,
-                              child: PrimaryText(
-                                text: '${projector.name}',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 100,
-                              child: PrimaryText(
-                                text: '(${projector.ip})',
-                                size: 14,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            PrimaryText(
-                              text: projector.connected.getValue()
-                                  ? 'Đã kết nối '
-                                  : 'Mất kết nối',
-                              color: projector.connected.getValue()
-                                  ? AppColors.green
-                                  : AppColors.red,
-                              size: 14,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: List.generate(half_length, (index) {
-                        Projector projector = rooms[3].projectors[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              PrimaryText(
-                                text: projector.connected.getValue()
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected.getValue()
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      children: List.generate(
-                          rooms[3].projectors.length - half_length, (index) {
-                        Projector projector =
-                            rooms[3].projectors[index + half_length];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: SingleChildScrollView(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 150,
-                                  child: PrimaryText(
-                                    text: '${projector.name}',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  width: 100,
-                                  child: PrimaryText(
-                                    text: '(${projector.ip})',
-                                    size: 14,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                PrimaryText(
-                                  text: projector.connected.getValue()
-                                      ? 'Đã kết nối '
-                                      : 'Mất kết nối',
-                                  color: projector.connected.getValue()
-                                      ? AppColors.green
-                                      : AppColors.red,
-                                  size: 14,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                  Column(children: [
-                    Column(
-                      children:
-                          List.generate(rooms[4].projectors.length, (index) {
-                        Projector projector = rooms[4].projectors[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              PrimaryText(
-                                text: projector.connected.getValue()
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected.getValue()
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                    SizedBox(
-                      height: 50,
-                    ),
-                    Column(
-                      children:
-                          List.generate(rooms[5].projectors.length, (index) {
-                        Projector projector = rooms[5].projectors[index];
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              PrimaryText(
-                                text: projector.connected.getValue()
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected.getValue()
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                  ]),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            left: 30,
-            top: 220,
-            width: MediaQuery.of(context).size.width - 80,
-            height: MediaQuery.of(context).size.height,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(15.0, 60, 10, 10),
+            left: MediaQuery.of(context).size.width * 0.2,
+            top: MediaQuery.of(context).size.height * 0.75,
+            width: MediaQuery.of(context).size.width * 0.6,
+            // height: 100,
+            child: SafeArea(
               child: Column(
                 children: [
+                  Container(
+                    height: 15,
+                    margin: EdgeInsets.only(bottom: 10),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: LinearProgressIndicator(
+                        value: progressValue,
+                        color: AppColors.navy_blue,
+                        backgroundColor: AppColors.white,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 50),
+                      child: Text('Please waiting for check connection')),
                   Column(
-                    children: List.generate(rooms[1].servers.length, (index) {
-                      Server server = rooms[1].servers[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 120,
-                              child: PrimaryText(
-                                text: '${server.name}',
-                                size: 14,
+                      children:
+                      List.generate(rooms[0].projectors.length, (index) {
+                        Projector projector = rooms[0].projectors[index];
+                        return Container(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 150,
+                                child: PrimaryText(
+                                  text: '${projector.name}',
+                                  size: 14,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 100,
-                              child: PrimaryText(
-                                text: '(${server.ip})',
-                                size: 14,
+                              SizedBox(
+                                width: 10,
                               ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            PrimaryText(
-                              text: server.connected.getValue()
-                                  ? 'Đã kết nối '
-                                  : 'Mất kết nối',
-                              color: server.connected.getValue()
-                                  ? AppColors.green
-                                  : AppColors.red,
-                              size: 14,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
-                  Column(
-                    children: List.generate(rooms[5].servers.length, (index) {
-                      Server server = rooms[5].servers[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 120,
-                              child: PrimaryText(
-                                text: '${server.name}',
-                                size: 14,
+                              Container(
+                                width: 100,
+                                child: PrimaryText(
+                                  text: '(${projector.ip})',
+                                  size: 14,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              width: 100,
-                              child: PrimaryText(
-                                text: '(${server.ip})',
-                                size: 14,
+                              Expanded(
+                                child: SizedBox(
+                                  width: 10,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            PrimaryText(
-                              text: server.connected.getValue()
-                                  ? 'Đã kết nối '
-                                  : 'Mất kết nối',
-                              color: server.connected.getValue()
-                                  ? AppColors.green
-                                  : AppColors.red,
-                              size: 14,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-                  SizedBox(
-                    height: 50,
-                  ),
+                              PrimaryText(
+                                text: projector.connected.getValue()
+                                    ? 'Đã kết nối '
+                                    : 'Mất kết nối',
+                                color: projector.connected.getValue()
+                                    ? AppColors.green
+                                    : AppColors.red,
+                                size: 14,
+                              )
+                            ],
+                          ),
+                        );
+                      })),
                 ],
               ),
             ),
           ),
           Positioned(
-            left: MediaQuery.of(context).size.width * 0.3,
-            bottom: 60,
-            width: MediaQuery.of(context).size.width * 0.4,
-            height: MediaQuery.of(context).size.height * 0.025,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: LinearProgressIndicator(
-                value: progressValue,
-                color: AppColors.navy_blue,
-                backgroundColor: AppColors.white,
-              ),
-            ),
-          ),
+            right: 30,
+              top: MediaQuery.of(context).size.height * 0.95,
+              child: Text('@Designed by HexogonVN'))
         ],
       ),
     );
