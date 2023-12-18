@@ -8,6 +8,7 @@ import 'package:responsive_dashboard/Method/projector_command.dart';
 import 'package:responsive_dashboard/Method/udp_void.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/RoomData.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
@@ -16,10 +17,10 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
 class AllServerStatus extends StatefulWidget {
-  Room room;
+  List<Server> listServers;
 
   AllServerStatus({
-    required this.room,
+    required this.listServers,
   });
 
   @override
@@ -30,34 +31,33 @@ class AllServerStatus extends StatefulWidget {
 //   bool value = true;
 
 class _AllServerStatusState extends State<AllServerStatus> {
-  void ChangeVolume(Room room, Server server, double index) {
+  void ChangeVolume(List<Server> listServers, Server server, double index) {
     // writeCellValue(index.toStringAsFixed(2), server.id, 1);
-    if (room.resolume) {
-      SendAudioOSC(room, index);
-    } else {
-      SendUDPAudioMessage(server, index);
-    }
+    SendAudioOSC(listServers, index);
+    // if (room.resolume) {
+    // } else {
+    //   SendUDPAudioMessage(server, index);
+    // }
     server.volume = (index);
   }
 
   @override
   Widget build(BuildContext context) {
-    Room room = widget.room;
     return Column(
         children: List.generate(
-      room.servers!.length,
+      widget.listServers!.length,
       (index) => Container(
         alignment: Alignment.center,
         width: 140,
         height: 45,
         margin: EdgeInsets.fromLTRB(20 , 10, 20, 0),
         decoration: BoxDecoration(
-            color: room.servers![index].connected
+            color: widget.listServers![index].connected
                 ? AppColors.green
                 : AppColors.red,
             borderRadius: BorderRadius.circular(15)),
         child: PrimaryText(
-          text: room.servers![index].shotname,
+          text: widget.listServers![index].shotname,
           size: 12,
           fontWeight: FontWeight.w500,
         ),

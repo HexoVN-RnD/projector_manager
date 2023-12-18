@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/searchMethod.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
+import 'package:responsive_dashboard/Object/RoomData.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
@@ -12,7 +13,7 @@ import 'package:valuable/valuable.dart';
 StatefulValuable<String> text_search = StatefulValuable<String>('');
 
 class Header extends StatefulWidget {
-  Room room;
+  RoomData room;
   Header({
     required this.room,
   });

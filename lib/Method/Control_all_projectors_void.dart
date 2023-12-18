@@ -22,7 +22,7 @@ void SetButtonControlAllSystem(){
         numServerPowerOn++;
       }
     }
-    for (Projector projector in room.projectors!) {
+    for (Projector projector in listProjectors) {
       if (projector.power_status) {
         numProjectorPowerOn++;
       }
@@ -51,7 +51,7 @@ void SetButtonControlAllSystem(){
 void SetButtonControlRoom(Room room){
   int numProjectorPowerOn = 0;
   int numProjectorShutterOn = 0;
-    for (Projector projector in room.projectors!) {
+    for (Projector projector in listProjectors) {
       if (projector.power_status) {
         numProjectorPowerOn++;
       }
@@ -59,12 +59,12 @@ void SetButtonControlRoom(Room room){
         numProjectorShutterOn++;
       }
     }
-  if(room.projectors!.length == numProjectorPowerOn){
+  if(listProjectors.length == numProjectorPowerOn){
     room.power_room_projectors=true;
   } else if(numProjectorPowerOn==0) {
     room.power_room_projectors=false;
   }
-  if(room.projectors!.length == numProjectorShutterOn){
+  if(listProjectors.length == numProjectorShutterOn){
     room.shutter_room_projectors=true;
   } else if(numProjectorShutterOn==0){
     room.shutter_room_projectors=false;
@@ -118,16 +118,16 @@ void PowerAllProjectors(bool mode) async {
   }
 }
 
-void PowerRoomProjectors(RoomData room, bool mode) async {
-  room.power_room_projectors=mode;
-    for (var projector in room.projectors!) {
+void PowerRoomProjectors(RoomData roomData,List<Projector> listProjectors, bool mode) async {
+  roomData.power_room_projectors=mode;
+    for (var projector in listProjectors) {
       checkConnectionProjector(projector);
     }
   await Future.delayed(Duration(seconds: 1));
-    for (var projector in room.projectors!) {
+    for (var projector in listProjectors) {
       if (projector.power_status != mode) {
         projector.power_status
-            =room.power_room_projectors;
+            = roomData.power_room_projectors;
         if (mode) {
           if (projector.type == 'Christie') {
             print(projector.ip.toString() + '(PWR 1)');
@@ -189,9 +189,9 @@ void ShutterAllProjectors(bool mode) {
   }
 }
 
-void ShutterRoomProjectors(Room room,bool mode) {
-  room.shutter_room_projectors=mode;
-  for (var projector in room.projectors!) {
+void ShutterRoomProjectors(RoomData roomdata, List<Projector> listProjectors,bool mode) {
+  roomdata.shutter_room_projectors=mode;
+  for (var projector in listProjectors) {
       if (mode) {
         if (projector.type == 'Christie') {
           print(projector.ip.toString() + '(SHU 1)');

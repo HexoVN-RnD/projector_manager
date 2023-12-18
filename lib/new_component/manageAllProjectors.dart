@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
+import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffProjector.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffShutter.dart';
@@ -14,6 +15,7 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
 class ManageAllProjectors extends StatefulWidget {
+  List<Projector> listProjectors = List.empty(growable: true);
   @override
   _ManageAllProjectorsState createState() => _ManageAllProjectorsState();
 }
@@ -135,7 +137,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                           Navigator.of(context)
                               .push(HeroDialogRoute(builder: (context) {
                             return PopupOffProjector(
-                              room: widget.,
+                              listProjectors: widget.listProjectors,
                               onUpdateState: () {
                                 setState(() {});
                               },

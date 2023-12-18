@@ -24,7 +24,7 @@ class PopupOffProjector extends StatefulWidget {
   /// {@macro add_todo_popup_card}
   PopupOffProjector({
     Key? key,
-    // required this.room,
+    required this.listProjectors,
     this.onUpdateState,
   }) : super(key: key);
 

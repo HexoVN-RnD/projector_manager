@@ -10,7 +10,7 @@ import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/data/data.dart';
 
-void checkConnectionServer(Room room, Server server) {
+void checkConnectionServer(Server server) {
   int count = 0;
   final ping = Ping(server.ip, count: 1); // Thay đổi số lần ping tùy ý
 
@@ -18,10 +18,10 @@ void checkConnectionServer(Room room, Server server) {
     // //print('ping server ${server.ip} response ${event.response?.time} ${count}');
     // //print('Ping to ${server.ip}: ${event.response?.time} ms');
     if (event.response?.time != null) {
-      if(room.resolume && event.response?.ttl==128) {
+      if(event.response?.ttl==128) {
         server.connected = (true);
-      } else if (!room.resolume && event.response?.ttl==64) {
-        server.connected = (true);
+      // } else if (!room.resolume && event.response?.ttl==64) {
+      //   server.connected = (true);
       } else {
         server.connected = (false);
       }
@@ -132,7 +132,7 @@ Future<void> checkAllRoomConnection(int time) async {
   //print('checkAllRoomConnection');
   int length =
       allRoom.num_servers + allRoom.num_projectors;
-  for (Room room in rooms) {
+  for (RoomData room in rooms) {
     if (!room.sensors!.isEmpty) {
       for (Sensor sensor in room.sensors!!) {
         checkConnectionSensor(sensor);

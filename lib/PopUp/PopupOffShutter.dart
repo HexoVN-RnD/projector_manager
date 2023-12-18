@@ -16,12 +16,12 @@ const String heroOffShutter = 'add-off-shutter';
 /// Uses a [Hero] with tag [_heroAddTodo].
 /// {@endtemplate}
 class PopupOffShutter extends StatefulWidget {
-  Room room;
+  // Room room;
   final VoidCallback? onUpdateState;
   /// {@macro add_todo_popup_card}
   PopupOffShutter({Key? key,
 
-    required this.room,
+    // required this.room,
     this.onUpdateState,}) : super(key: key);
 
   @override

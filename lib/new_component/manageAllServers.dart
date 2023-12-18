@@ -103,7 +103,7 @@ class _ManageAllServersState extends State<ManageAllServers> {
                     ),
                     onPressed: () {
                       setState(() {
-                        PowerOnAllServer();
+                        PowerOnAllServer(widget.listServers);
                       });
                     },
                     child: PrimaryText(
