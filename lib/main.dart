@@ -10,9 +10,9 @@ import 'package:responsive_dashboard/openingScene.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 // import 'package:window_manager/window_manager.dart';
 
-// const apiKey = 'AIzaSyDjq1K4uejMJbwp0qGYTLneOhiNm3H_KJc';
-const apiKey = 'AIzaSyBIJJfda5McG1_1DucYfVxwTdvZ9IozP7w';
-const projectId = 'toong-dd7c8';
+const apiKey = 'AIzaSyDzdBNoEyJZUxOZYibeT6X_aw0HdP24wUs';
+// const apiKey = 'AIzaSyBIJJfda5McG1_1DucYfVxwTdvZ9IozP7w';
+const projectId = 'controlocb-a9490';
 // const projectId = 'toong-23d79';
 // final FirebaseFirestore firestore = FirebaseFirestore.instance;
 

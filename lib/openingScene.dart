@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:firedart/firedart.dart';
 // import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:responsive_dashboard/Method/Control_projector_void.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
@@ -43,6 +44,7 @@ class _OpeningSceneState extends State<OpeningScene>
   Timer? _timer2;
   bool isShowSignInDialog = false;
   bool isChecked = false;
+  bool isUsingKeyboard = false;
   late AnimationController _animationController;
 
   final accountController = TextEditingController();
@@ -55,6 +57,8 @@ class _OpeningSceneState extends State<OpeningScene>
       Firestore.instance.collection('license');
   List<Document> account = [];
   List<Document> password = [];
+  List<Document> listIP = [];
+  List<Document> listServer = [];
 
   Future<List<Document>> getAccount() async {
     account = await licenseCollection.orderBy('account').get();
@@ -66,6 +70,33 @@ class _OpeningSceneState extends State<OpeningScene>
     return password;
   }
 
+  Future<List<Document>> getIP() async {
+    listIP = await Firestore.instance
+        .collection('listProjectors')
+        .orderBy('ip')
+        .get();
+    // print(listIP.length);
+    if (listIP.length == 2) {
+      rooms[0].projectors[0].ip = listIP[0]['ip'];
+      rooms[0].projectors[1].ip = listIP[1]['ip'];
+    }
+    return password;
+  }
+
+  Future<List<Document>> getServer() async {
+    final ip =
+        await Firestore.instance.collection('listServers').orderBy('ip').get();
+    final mac_address = await Firestore.instance
+        .collection('listServers')
+        .orderBy('mac_address')
+        .get();
+    // print(listIP.length);
+    rooms[0].servers[0].ip = ip[0]['ip'];
+    rooms[0].servers[0].mac_address = mac_address[0]['mac_address'];
+
+    return password;
+  }
+
   @override
   void initState() {
     _btnAnimationController = OneShotAnimation(
@@ -73,11 +104,21 @@ class _OpeningSceneState extends State<OpeningScene>
       autoplay: false,
     );
     super.initState();
-    _timer = Timer.periodic(Duration(milliseconds: 3000), (timer) {
-      checkAllRoomConnection(3000);
-    });
+    // // Đăng ký lắng nghe sự kiện hiện/ẩn bàn phím
+    // KeyboardVisibilityController().onChange.listen((bool visible) {
+    //   isUsingKeyboard = visible;
+    //   print(isUsingKeyboard);
+    //   // Thực hiện hành động phù hợp
+    // });
+    // _timer = Timer.periodic(Duration(milliseconds: 3000), (timer) {
+    //   checkAllRoomConnection(3000);
+    // });
     _timer2 = Timer.periodic(Duration(milliseconds: 500), (timer) {
-      setState(() {});
+      setState(() {
+        getIP();
+        getServer();
+        checkAllRoomConnection(500);
+      });
     });
     _animationController = AnimationController(
       duration: Duration(seconds: 15),
@@ -95,7 +136,7 @@ class _OpeningSceneState extends State<OpeningScene>
 
   @override
   void dispose() {
-    _timer?.cancel();
+    // _timer?.cancel();
     _timer2?.cancel();
     _animationController.dispose();
     super.dispose();
@@ -103,686 +144,589 @@ class _OpeningSceneState extends State<OpeningScene>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Positioned(
-            top: 200,
-            left: MediaQuery.of(context).size.width * 0.2,
-            child: Image.asset(
-              "assets/logo2.png",
-              height: MediaQuery.of(context).size.width * 0.7 / 10646 * 3301,
-              width: MediaQuery.of(context).size.width * 0.7,
-              fit: BoxFit.fill,
-            ),
-          ),
-          // Positioned.fill(
-          //   child: BackdropFilter(
-          //     filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-          //     child: const SizedBox(),
-          //   ),
-          // ),
-          // const RiveAnimation.asset(
-          //   "assets/RiveAssets/shapes.riv",
-          // ),
-          // Positioned.fill(
-          //   child: BackdropFilter(
-          //     filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-          //     child: const SizedBox(),
-          //   ),
-          // ),
-          Positioned(
-            top: 540,
-            left: MediaQuery.of(context).size.width * 0.25,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width *0.4,
-                      child: TextFormField(
-                        controller: accountController,
-                        validator: (value) {
-                          isAccountCorrect = account.any((license) {
-                            final account = license['account'].toString();
-                            return account == accountController.text;
-                          });
-                          if (value == null || value.isEmpty) {
-                            return 'Hãy điền tài khoản';
-                          } else if (!isAccountCorrect) {
-                            return 'Tài khoản không chính xác hoặc license đã hết hạn';
-                          }
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Tên đăng nhập...',
-                          labelText: 'Tài khoản',
-                          // prefixIcon: Icon(Icons.mail),
-                          // icon: Icon(Icons.mail),
-                          suffixIcon: accountController.text.isEmpty
-                              ? Container(width: 0)
-                              : IconButton(
-                                  icon: Icon(Icons.close),
-                                  onPressed: () => accountController.clear(),
-                                ),
-                          border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: AppColors.navy_blue),
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        textInputAction: TextInputAction.done,
-                        // autofocus: true,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width *0.4,
-                      child: TextFormField(
-                        validator: (value) {
-                          // print('value: $value');
-                          isPasswordCorrect = password.any((license) {
-                            final password = license['password'].toString();
-                            return password == value;
-                          });
-                          if (value == null || value.isEmpty) {
-                            return 'Hãy điền mật khẩu';
-                          } else if (!isPasswordCorrect) {
-                            return 'Mật khẩu không chính xác hoặc license đã hết hạn';
-                          }
-                        },
-                        onChanged: (value) {
-                          setState(() {
-                            // print('value: $value');
-                            // passwordController.text = value;
-                          });
-                        },
-                        controller: passwordController,
-                        // onChanged: (value) => setState(() => this.password = value),
-                        // onSubmitted: (value) => setState(() => this.password = value),
-                        decoration: InputDecoration(
-                          hintText: 'Mật khẩu...',
-                          labelText: 'Mật khẩu',
-                          // errorText: 'Vui lòng thử lại',
-                          suffixIcon: IconButton(
-                            icon: isPasswordVisible
-                                ? Icon(Icons.visibility_off)
-                                : Icon(Icons.visibility),
-                            onPressed: () => setState(
-                                () => isPasswordVisible = !isPasswordVisible),
-                          ),
-                          border: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: AppColors.navy_blue),
-                              borderRadius: BorderRadius.circular(20)),
-                        ),
-                        obscureText: isPasswordVisible,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    isChecked
-                        ? AnimatedBtn(
-                            btnAnimationController: _btnAnimationController,
-                            press: () async {
-                              _btnAnimationController.isActive = true;
-                              // getAccount();
-                              // getPassword();
-                              // isAccountCorrect = account.any((license) {
-                              //   final account = license['account'].toString();
-                              //   return account == accountController.text;
-                              // });
-                              // isPasswordCorrect = password.any((license) {
-                              //   final password = license['password'].toString();
-                              //   return password == passwordController.text;
-                              // });
-                              getAccount();
-                              getPassword();
-                              // print("isAccountCorrect: $isAccountCorrect ");
-                              Future.delayed(
-                                const Duration(milliseconds: 1000),
-                                () {
-                                  setState(() {
-                                    isShowSignInDialog = true;
-                                  });
-                                  if (_formKey.currentState!.validate()) {
-                                    // The passwords match, you can proceed
-                                    // For example, save the password to Firebase
-                                    // Or navigate to another screen
-                                  }
-                                  if (isAccountCorrect && isPasswordCorrect) {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) => DashboardIpad()),
-                                    );
-                                  }
-                                },
-                              );
-                            },
-                          )
-                        : Container(
-                            height: 64,
-                          ),
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    // const Padding(
-                    //   padding: EdgeInsets.symmetric(vertical: 24),
-                    //   child: PrimaryText(
-                    //       size: 14,
-                    //       text:
-                    //           'Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates.'),
-                    // )
-                  ],
-                ),
-              ),
-            ),
-          ),
-          // Positioned(
-          //   // top: isShowSignInDialog ? -50 : 0,
-          //   // height: MediaQuery.of(context).size.height,
-          //   // width: MediaQuery.of(context).size.width,
-          //   // duration: const Duration(milliseconds: 260),
-          //   child: Padding(
-          //     padding: const EdgeInsets.symmetric(horizontal: 32),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         Container(
-          //           width: 260,
-          //           padding: EdgeInsets.only(top: 20),
-          //           child: Column(
-          //             mainAxisAlignment: MainAxisAlignment.start,
-          //             children: [
-          //               Text(
-          //                 "Hexogon",
-          //                 style: TextStyle(
-          //                   fontSize: 50,
-          //                   fontWeight: FontWeight.w700,
-          //                   fontFamily: "Poppins",
-          //                   height: 1.2,
-          //                 ),
-          //               ),
-          //               // SizedBox(height: 16),
-          //               // Text('Contact: duyminh-vn@hexogonsol.com'),
-          //             ],
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // Positioned(
-          //   left: 30,
-          //   top: MediaQuery.of(context).size.height * 0.11,
-          //   width: MediaQuery.of(context).size.width - 80,
-          //   height: MediaQuery.of(context).size.height,
-          //   child: Padding(
-          //     padding: const EdgeInsets.fromLTRB(15.0, 60, 10, 10),
-          //     child: Row(
-          //       // mainAxisAlignment: MainAxisAlignment.center,
-          //       children: [
-          //         Column(
-          //           children:
-          //               List.generate(rooms[2].projectors.length, (index) {
-          //             Projector projector = rooms[2].projectors[index];
-          //             return Padding(
-          //               padding: const EdgeInsets.only(bottom: 10.0),
-          //               child: Row(
-          //                 mainAxisAlignment: MainAxisAlignment.center,
-          //                 children: [
-          //                   Container(
-          //                     width: 150,
-          //                     child: PrimaryText(
-          //                       text: '${projector.name}',
-          //                       size: 14,
-          //                     ),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 10,
-          //                   ),
-          //                   Container(
-          //                     width: 100,
-          //                     child: PrimaryText(
-          //                       text: '(${projector.ip})',
-          //                       size: 14,
-          //                     ),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 10,
-          //                   ),
-          //                   PrimaryText(
-          //                     text: projector.connected.getValue()
-          //                         ? 'Đã kết nối '
-          //                         : 'Mất kết nối',
-          //                     color: projector.connected.getValue()
-          //                         ? AppColors.green
-          //                         : AppColors.red,
-          //                     size: 14,
-          //                   ),
-          //                 ],
-          //               ),
-          //             );
-          //           }),
-          //         ),
-          //         // Expanded(
-          //         //   child: Column(
-          //         //     children: List.generate(half_length, (index) {
-          //         //       Projector projector = rooms[3].projectors[index];
-          //         //       return Padding(
-          //         //         padding: const EdgeInsets.only(bottom: 10.0),
-          //         //         child: Row(
-          //         //           mainAxisAlignment: MainAxisAlignment.center,
-          //         //           children: [
-          //         //             Container(
-          //         //               width: 150,
-          //         //               child: PrimaryText(
-          //         //                 text: '${projector.name}',
-          //         //                 size: 14,
-          //         //               ),
-          //         //             ),
-          //         //             SizedBox(
-          //         //               width: 10,
-          //         //             ),
-          //         //             Container(
-          //         //               width: 100,
-          //         //               child: PrimaryText(
-          //         //                 text: '(${projector.ip})',
-          //         //                 size: 14,
-          //         //               ),
-          //         //             ),
-          //         //             SizedBox(
-          //         //               width: 10,
-          //         //             ),
-          //         //             PrimaryText(
-          //         //               text: projector.connected.getValue()
-          //         //                   ? 'Đã kết nối '
-          //         //                   : 'Mất kết nối',
-          //         //               color: projector.connected.getValue()
-          //         //                   ? AppColors.green
-          //         //                   : AppColors.red,
-          //         //               size: 14,
-          //         //             ),
-          //         //           ],
-          //         //         ),
-          //         //       );
-          //         //     }),
-          //         //   ),
-          //         // ),
-          //         // Expanded(
-          //         //   child: Column(
-          //         //     children: List.generate(
-          //         //         rooms[3].projectors.length - half_length, (index) {
-          //         //       Projector projector =
-          //         //           rooms[3].projectors[index + half_length];
-          //         //       return Padding(
-          //         //         padding: const EdgeInsets.only(bottom: 10.0),
-          //         //         child: SingleChildScrollView(
-          //         //           child: Row(
-          //         //             mainAxisAlignment: MainAxisAlignment.center,
-          //         //             children: [
-          //         //               Container(
-          //         //                 width: 150,
-          //         //                 child: PrimaryText(
-          //         //                   text: '${projector.name}',
-          //         //                   size: 14,
-          //         //                 ),
-          //         //               ),
-          //         //               SizedBox(
-          //         //                 width: 10,
-          //         //               ),
-          //         //               Container(
-          //         //                 width: 100,
-          //         //                 child: PrimaryText(
-          //         //                   text: '(${projector.ip})',
-          //         //                   size: 14,
-          //         //                 ),
-          //         //               ),
-          //         //               SizedBox(
-          //         //                 width: 10,
-          //         //               ),
-          //         //               PrimaryText(
-          //         //                 text: projector.connected.getValue()
-          //         //                     ? 'Đã kết nối '
-          //         //                     : 'Mất kết nối',
-          //         //                 color: projector.connected.getValue()
-          //         //                     ? AppColors.green
-          //         //                     : AppColors.red,
-          //         //                 size: 14,
-          //         //               ),
-          //         //             ],
-          //         //           ),
-          //         //         ),
-          //         //       );
-          //         //     }),
-          //         //   ),
-          //         // ),
-          //         // Column(children: [
-          //         //   Column(
-          //         //     children:
-          //         //         List.generate(rooms[4].projectors.length, (index) {
-          //         //       Projector projector = rooms[4].projectors[index];
-          //         //       return Padding(
-          //         //         padding: const EdgeInsets.only(bottom: 10.0),
-          //         //         child: Row(
-          //         //           mainAxisAlignment: MainAxisAlignment.start,
-          //         //           children: [
-          //         //             Container(
-          //         //               width: 150,
-          //         //               child: PrimaryText(
-          //         //                 text: '${projector.name}',
-          //         //                 size: 14,
-          //         //               ),
-          //         //             ),
-          //         //             SizedBox(
-          //         //               width: 10,
-          //         //             ),
-          //         //             Container(
-          //         //               width: 100,
-          //         //               child: PrimaryText(
-          //         //                 text: '(${projector.ip})',
-          //         //                 size: 14,
-          //         //               ),
-          //         //             ),
-          //         //             SizedBox(
-          //         //               width: 10,
-          //         //             ),
-          //         //             PrimaryText(
-          //         //               text: projector.connected.getValue()
-          //         //                   ? 'Đã kết nối '
-          //         //                   : 'Mất kết nối',
-          //         //               color: projector.connected.getValue()
-          //         //                   ? AppColors.green
-          //         //                   : AppColors.red,
-          //         //               size: 14,
-          //         //             ),
-          //         //           ],
-          //         //         ),
-          //         //       );
-          //         //     }),
-          //         //   ),
-          //         //   SizedBox(
-          //         //     height: 50,
-          //         //   ),
-          //         //   Column(
-          //         //     children:
-          //         //         List.generate(rooms[5].projectors.length, (index) {
-          //         //       Projector projector = rooms[5].projectors[index];
-          //         //       return Padding(
-          //         //         padding: const EdgeInsets.only(bottom: 10.0),
-          //         //         child: Row(
-          //         //           mainAxisAlignment: MainAxisAlignment.start,
-          //         //           children: [
-          //         //             Container(
-          //         //               width: 150,
-          //         //               child: PrimaryText(
-          //         //                 text: '${projector.name}',
-          //         //                 size: 14,
-          //         //               ),
-          //         //             ),
-          //         //             SizedBox(
-          //         //               width: 10,
-          //         //             ),
-          //         //             Container(
-          //         //               width: 100,
-          //         //               child: PrimaryText(
-          //         //                 text: '(${projector.ip})',
-          //         //                 size: 14,
-          //         //               ),
-          //         //             ),
-          //         //             SizedBox(
-          //         //               width: 10,
-          //         //             ),
-          //         //             PrimaryText(
-          //         //               text: projector.connected.getValue()
-          //         //                   ? 'Đã kết nối '
-          //         //                   : 'Mất kết nối',
-          //         //               color: projector.connected.getValue()
-          //         //                   ? AppColors.green
-          //         //                   : AppColors.red,
-          //         //               size: 14,
-          //         //             ),
-          //         //           ],
-          //         //         ),
-          //         //       );
-          //         //     }),
-          //         //   ),
-          //         // ]),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // Positioned(
-          //   left: 30,
-          //   top: 220,
-          //   width: MediaQuery.of(context).size.width - 80,
-          //   height: MediaQuery.of(context).size.height,
-          //   child: Padding(
-          //     padding: const EdgeInsets.fromLTRB(15.0, 60, 10, 10),
-          //     child: Column(
-          //       children: [
-          //         Column(
-          //           children: List.generate(rooms[1].servers.length, (index) {
-          //             Server server = rooms[1].servers[index];
-          //             return Padding(
-          //               padding: const EdgeInsets.only(bottom: 10.0),
-          //               child: Row(
-          //                 mainAxisAlignment: MainAxisAlignment.start,
-          //                 children: [
-          //                   Container(
-          //                     width: 120,
-          //                     child: PrimaryText(
-          //                       text: '${server.name}',
-          //                       size: 14,
-          //                     ),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 10,
-          //                   ),
-          //                   Container(
-          //                     width: 100,
-          //                     child: PrimaryText(
-          //                       text: '(${server.ip})',
-          //                       size: 14,
-          //                     ),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 10,
-          //                   ),
-          //                   PrimaryText(
-          //                     text: server.connected.getValue()
-          //                         ? 'Đã kết nối '
-          //                         : 'Mất kết nối',
-          //                     color: server.connected.getValue()
-          //                         ? AppColors.green
-          //                         : AppColors.red,
-          //                     size: 14,
-          //                   ),
-          //                 ],
-          //               ),
-          //             );
-          //           }),
-          //         ),
-          //         SizedBox(
-          //           height: 50,
-          //         ),
-          //         Column(
-          //           children: List.generate(rooms[5].servers.length, (index) {
-          //             Server server = rooms[5].servers[index];
-          //             return Padding(
-          //               padding: const EdgeInsets.only(bottom: 10.0),
-          //               child: Row(
-          //                 mainAxisAlignment: MainAxisAlignment.start,
-          //                 children: [
-          //                   Container(
-          //                     width: 120,
-          //                     child: PrimaryText(
-          //                       text: '${server.name}',
-          //                       size: 14,
-          //                     ),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 10,
-          //                   ),
-          //                   Container(
-          //                     width: 100,
-          //                     child: PrimaryText(
-          //                       text: '(${server.ip})',
-          //                       size: 14,
-          //                     ),
-          //                   ),
-          //                   SizedBox(
-          //                     width: 10,
-          //                   ),
-          //                   PrimaryText(
-          //                     text: server.connected.getValue()
-          //                         ? 'Đã kết nối '
-          //                         : 'Mất kết nối',
-          //                     color: server.connected.getValue()
-          //                         ? AppColors.green
-          //                         : AppColors.red,
-          //                     size: 14,
-          //                   ),
-          //                 ],
-          //               ),
-          //             );
-          //           }),
-          //         ),
-          //         SizedBox(
-          //           height: 50,
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
-          // Positioned(
-          //     bottom: 300,
-          //     child: Container(
-          //         child: Column(
-          //             children:
-          //                 List.generate(rooms[0].projectors.length, (index) {
-          //       Projector projector = rooms[0].projectors[index];
-          //       return Padding(
-          //         padding: const EdgeInsets.only(bottom: 10.0),
-          //         child: Row(
-          //           mainAxisAlignment: MainAxisAlignment.center,
-          //           children: [
-          //             Container(
-          //               width: 150,
-          //               child: PrimaryText(
-          //                 text: '${projector.name}',
-          //                 size: 14,
-          //               ),
-          //             ),
-          //             SizedBox(
-          //               width: 10,
-          //             ),
-          //             Container(
-          //               width: 100,
-          //               child: PrimaryText(
-          //                 text: '(${projector.ip})',
-          //                 size: 14,
-          //               ),
-          //             ),
-          //             SizedBox(
-          //               width: 10,
-          //             ),
-          //             PrimaryText(
-          //               text: projector.connected.getValue()
-          //                   ? 'Đã kết nối '
-          //                   : 'Mất kết nối',
-          //               color: projector.connected.getValue()
-          //                   ? AppColors.green
-          //                   : AppColors.red,
-          //               size: 14,
-          //             )
-          //           ],
-          //         ),
-          //       );
-          //     })))),
-          Positioned(
-            left: MediaQuery.of(context).size.width * 0.2,
-            top: MediaQuery.of(context).size.height * 0.75,
-            width: MediaQuery.of(context).size.width * 0.6,
-            // height: 100,
-            child: SafeArea(
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        if (orientation == Orientation.portrait) {
+          // Thiết bị đang ở chế độ xoay dọc
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    height: 15,
-                    margin: EdgeInsets.only(bottom: 10),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: LinearProgressIndicator(
-                        value: progressValue,
-                        color: AppColors.navy_blue,
-                        backgroundColor: AppColors.white,
+                  Center(
+                    // top: MediaQuery.of(context).size.height*0.2,
+                    // left: (MediaQuery.of(context).size.width-500)/2,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.15,
+                          bottom: 150),
+                      child: Image.asset(
+                        "assets/LogoOCB.png",
+                        height: 500 / 1200 * 450,
+                        width: 500,
+                        fit: BoxFit.fill,
                       ),
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(bottom: 50),
-                      child: Text('Please waiting for check connection')),
-                  Column(
-                      children:
-                      List.generate(rooms[0].projectors.length, (index) {
-                        Projector projector = rooms[0].projectors[index];
-                        return Container(
-                          width: MediaQuery.of(context).size.width * 0.6,
-                          padding: const EdgeInsets.only(bottom: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 150,
-                                child: PrimaryText(
-                                  text: '${projector.name}',
-                                  size: 14,
+                    // top: MediaQuery.of(context).size.width*0.3,
+                    // left: MediaQuery.of(context).size.width * 0.25,
+                    margin: EdgeInsets.only(bottom: 100),
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: TextFormField(
+                              controller: accountController,
+                              validator: (value) {
+                                isAccountCorrect = account.any((license) {
+                                  final account = license['account'].toString();
+                                  return account == accountController.text;
+                                });
+                                if (value == null || value.isEmpty) {
+                                  return 'Hãy điền tài khoản';
+                                } else if (!isAccountCorrect) {
+                                  return 'Tài khoản không chính xác';
+                                }
+                              },
+                              decoration: InputDecoration(
+                                hintText: 'Tên đăng nhập...',
+                                labelText: 'Tài khoản',
+                                labelStyle: TextStyle(color: AppColors.navy_blue),
+                                // prefixIcon: Icon(Icons.mail),
+                                // icon: Icon(Icons.mail),
+                                suffixIcon: accountController.text.isEmpty
+                                    ? Container(width: 0)
+                                    : IconButton(
+                                        icon: Icon(Icons.close),
+                                        onPressed: () =>
+                                            accountController.clear(),
+                                      ),
+                                border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: AppColors.navy_blue),
+                                    borderRadius: BorderRadius.circular(20)),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColors.navy_blue,
+                                      width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Container(
-                                width: 100,
-                                child: PrimaryText(
-                                  text: '(${projector.ip})',
-                                  size: 14,
-                                ),
-                              ),
-                              Expanded(
-                                child: SizedBox(
-                                  width: 10,
-                                ),
-                              ),
-                              PrimaryText(
-                                text: projector.connected.getValue()
-                                    ? 'Đã kết nối '
-                                    : 'Mất kết nối',
-                                color: projector.connected.getValue()
-                                    ? AppColors.green
-                                    : AppColors.red,
-                                size: 14,
-                              )
-                            ],
+                              keyboardType: TextInputType.emailAddress,
+                              textInputAction: TextInputAction.done,
+                              // autofocus: true,
+                            ),
                           ),
-                        );
-                      })),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            child: TextFormField(
+                              validator: (value) {
+                                // print('value: $value');
+                                isPasswordCorrect = password.any((license) {
+                                  final password =
+                                      license['password'].toString();
+                                  return password == value;
+                                });
+                                if (value == null || value.isEmpty) {
+                                  return 'Hãy điền mật khẩu';
+                                } else if (!isPasswordCorrect) {
+                                  return 'Mật khẩu không chính xác';
+                                }
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  // print('value: $value');
+                                  // passwordController.text = value;
+                                });
+                              },
+                              controller: passwordController,
+                              // onChanged: (value) => setState(() => this.password = value),
+                              // onSubmitted: (value) => setState(() => this.password = value),
+                              decoration: InputDecoration(
+                                hintText: 'Mật khẩu...',
+                                labelText: 'Mật khẩu',
+                                labelStyle: TextStyle(color: AppColors.navy_blue),
+                                // errorText: 'Vui lòng thử lại',
+                                suffixIcon: IconButton(
+                                  icon: isPasswordVisible
+                                      ? Icon(Icons.visibility_off)
+                                      : Icon(Icons.visibility),
+                                  onPressed: () => setState(() =>
+                                      isPasswordVisible = !isPasswordVisible),
+                                ),
+                                border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: AppColors.navy_blue),
+                                    borderRadius: BorderRadius.circular(20)),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: AppColors.navy_blue,
+                                      width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                              ),
+                              obscureText: isPasswordVisible,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          // AnimatedBtn(
+                          //   btnAnimationController: _btnAnimationController,
+                          //   press: () async {
+                          //     _btnAnimationController.isActive = true;
+                          //     Navigator.of(context).pushReplacement(
+                          //       MaterialPageRoute(
+                          //           builder: (context) => DashboardIpad()),
+                          //     );
+                          //   },
+                          // ),
+                          isChecked
+                              ? AnimatedBtn(
+                                  btnAnimationController:
+                                      _btnAnimationController,
+                                  press: () async {
+                                    _btnAnimationController.isActive = true;
+                                    // getAccount();
+                                    // getPassword();
+                                    // isAccountCorrect = account.any((license) {
+                                    //   final account = license['account'].toString();
+                                    //   return account == accountController.text;
+                                    // });
+                                    // isPasswordCorrect = password.any((license) {
+                                    //   final password = license['password'].toString();
+                                    //   return password == passwordController.text;
+                                    // });
+                                    getAccount();
+                                    getPassword();
+                                    // print("isAccountCorrect: $isAccountCorrect ");
+                                    Future.delayed(
+                                      const Duration(milliseconds: 1000),
+                                      () {
+                                        setState(() {
+                                          isShowSignInDialog = true;
+                                        });
+                                        if (_formKey.currentState!.validate()) {
+                                          // The passwords match, you can proceed
+                                          // For example, save the password to Firebase
+                                          // Or navigate to another screen
+                                        }
+                                        if (isAccountCorrect &&
+                                            isPasswordCorrect) {
+                                          Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DashboardIpad()),
+                                          );
+                                        }
+                                      },
+                                    );
+                                  },
+                                )
+                              : Container(
+                                  height: 70,
+                                  width: 100,
+                                ),
+                          const SizedBox(
+                            height: 50,
+                          ),
+                          // const Padding(
+                          //   padding: EdgeInsets.symmetric(vertical: 24),
+                          //   child: PrimaryText(
+                          //       size: 14,
+                          //       text:
+                          //           'Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates.'),
+                          // )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    // left: MediaQuery.of(context).size.width * 0.2,
+                    // top: MediaQuery.of(context).size.height * 0.75,
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    // height: 100,
+                    child: SafeArea(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 15,
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: LinearProgressIndicator(
+                                value: progressValue,
+                                color: AppColors.navy_blue,
+                                backgroundColor: AppColors.white,
+                              ),
+                            ),
+                          ),
+                          Container(
+                              margin: EdgeInsets.only(bottom: 50),
+                              child:
+                                  Text('Please waiting for check connection')),
+                          Column(
+                              children: List.generate(
+                                  rooms[0].projectors.length, (index) {
+                            Projector projector = rooms[0].projectors[index];
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 150,
+                                    child: PrimaryText(
+                                      text: '${projector.name}',
+                                      size: 14,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    width: 110,
+                                    child: PrimaryText(
+                                      text: '(${projector.ip})',
+                                      size: 14,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      width: 10,
+                                    ),
+                                  ),
+                                  PrimaryText(
+                                    text: projector.connected.getValue()
+                                        ? 'Đã kết nối '
+                                        : 'Mất kết nối',
+                                    color: projector.connected.getValue()
+                                        ? AppColors.green
+                                        : AppColors.red,
+                                    size: 14,
+                                  )
+                                ],
+                              ),
+                            );
+                          })),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                      // right: 30,
+                      //   top: MediaQuery.of(context).size.height * 0.95,
+                      margin: EdgeInsets.fromLTRB(0, 0, 30, 30),
+                      alignment: Alignment.bottomRight,
+                      child: Text('@Designed by HexogonVN'))
                 ],
               ),
             ),
-          ),
-          Positioned(
-            right: 30,
-              top: MediaQuery.of(context).size.height * 0.95,
-              child: Text('@Designed by HexogonVN'))
-        ],
-      ),
+          );
+        } else {
+          // Thiết bị đang ở chế độ xoay ngang
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(
+                    // top: MediaQuery.of(context).size.height*0.2,
+                    // left: (MediaQuery.of(context).size.width-500)/2,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.1,
+                          bottom: 80),
+                      child: Image.asset(
+                        "assets/LogoOCB.png",
+                        height: 400 / 1200 * 450,
+                        width: 400,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Container(
+                      // top: MediaQuery.of(context).size.width*0.3,
+                      // left: MediaQuery.of(context).size.width * 0.25,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(bottom: 40),
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              child: TextFormField(
+                                controller: accountController,
+                                validator: (value) {
+                                  isAccountCorrect = account.any((license) {
+                                    final account =
+                                        license['account'].toString();
+                                    return account == accountController.text;
+                                  });
+                                  if (value == null || value.isEmpty) {
+                                    return 'Hãy điền tài khoản';
+                                  } else if (!isAccountCorrect) {
+                                    return 'Tài khoản không chính xác';
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                  hintText: 'Tên đăng nhập...',
+                                  labelText: 'Tài khoản',
+                                  labelStyle: TextStyle(color: AppColors.navy_blue),
+                                  // prefixIcon: Icon(Icons.mail),
+                                  // icon: Icon(Icons.mail),
+                                  suffixIcon: accountController.text.isEmpty
+                                      ? Container(width: 0)
+                                      : IconButton(
+                                          icon: Icon(Icons.close),
+                                          onPressed: () =>
+                                              accountController.clear(),
+                                        ),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: AppColors.navy_blue),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.navy_blue,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                keyboardType: TextInputType.emailAddress,
+                                textInputAction: TextInputAction.done,
+                                // autofocus: true,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              child: TextFormField(
+                                validator: (value) {
+                                  // print('value: $value');
+                                  isPasswordCorrect = password.any((license) {
+                                    final password =
+                                        license['password'].toString();
+                                    return password == value;
+                                  });
+                                  if (value == null || value.isEmpty) {
+                                    return 'Hãy điền mật khẩu';
+                                  } else if (!isPasswordCorrect) {
+                                    return 'Mật khẩu không chính xác';
+                                  }
+                                },
+                                onChanged: (value) {
+                                  setState(() {
+                                    // print('value: $value');
+                                    // passwordController.text = value;
+                                  });
+                                },
+                                controller: passwordController,
+                                // onChanged: (value) => setState(() => this.password = value),
+                                // onSubmitted: (value) => setState(() => this.password = value),
+                                decoration: InputDecoration(
+                                  hintText: 'Mật khẩu...',
+                                  labelText: 'Mật khẩu',
+                                  labelStyle: TextStyle(color: AppColors.navy_blue),
+                                  // errorText: 'Vui lòng thử lại',
+                                  suffixIcon: IconButton(
+                                    icon: isPasswordVisible
+                                        ? Icon(Icons.visibility_off)
+                                        : Icon(Icons.visibility),
+                                    onPressed: () => setState(() =>
+                                        isPasswordVisible = !isPasswordVisible),
+                                  ),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: AppColors.navy_blue),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: AppColors.navy_blue,
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                ),
+                                obscureText: isPasswordVisible,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            isChecked
+                                ? AnimatedBtn(
+                                    btnAnimationController:
+                                        _btnAnimationController,
+                                    press: () async {
+                                      _btnAnimationController.isActive = true;
+                                      // getAccount();
+                                      // getPassword();
+                                      // isAccountCorrect = account.any((license) {
+                                      //   final account = license['account'].toString();
+                                      //   return account == accountController.text;
+                                      // });
+                                      // isPasswordCorrect = password.any((license) {
+                                      //   final password = license['password'].toString();
+                                      //   return password == passwordController.text;
+                                      // });
+                                      getAccount();
+                                      getPassword();
+                                      // print("isAccountCorrect: $isAccountCorrect ");
+                                      Future.delayed(
+                                        const Duration(milliseconds: 1000),
+                                        () {
+                                          setState(() {
+                                            isShowSignInDialog = true;
+                                          });
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            // The passwords match, you can proceed
+                                            // For example, save the password to Firebase
+                                            // Or navigate to another screen
+                                          }
+                                          if (isAccountCorrect &&
+                                              isPasswordCorrect) {
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DashboardIpad()),
+                                            );
+                                          }
+                                        },
+                                      );
+                                    },
+                                  )
+                                : Container(
+                                    height: 70,
+                                    width: 100,
+                                  ),
+                            // const SizedBox(
+                            //   height: 50,
+                            // ),
+                            // const Padding(
+                            //   padding: EdgeInsets.symmetric(vertical: 24),
+                            //   child: PrimaryText(
+                            //       size: 14,
+                            //       text:
+                            //           'Purchase includes access to 30+ courses, 240+ premium tutorials, 120+ hours of videos, source files and certificates.'),
+                            // )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Expanded(child: SizedBox()),
+                  Container(
+                    // left: MediaQuery.of(context).size.width * 0.2,
+                    // top: MediaQuery.of(context).size.height * 0.75,
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    // height: 100,
+                    child: SafeArea(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 15,
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: LinearProgressIndicator(
+                                value: progressValue,
+                                color: AppColors.navy_blue,
+                                backgroundColor: AppColors.white,
+                              ),
+                            ),
+                          ),
+                          Container(
+                              margin: EdgeInsets.only(bottom: 30),
+                              child:
+                                  Text('Please waiting for check connection')),
+                          Column(
+                              children: List.generate(
+                                  rooms[0].projectors.length, (index) {
+                            Projector projector = rooms[0].projectors[index];
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 150,
+                                    child: PrimaryText(
+                                      text: '${projector.name}',
+                                      size: 14,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    width: 110,
+                                    child: PrimaryText(
+                                      text: '(${projector.ip})',
+                                      size: 14,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      width: 10,
+                                    ),
+                                  ),
+                                  PrimaryText(
+                                    text: projector.connected.getValue()
+                                        ? 'Đã kết nối '
+                                        : 'Mất kết nối',
+                                    color: projector.connected.getValue()
+                                        ? AppColors.green
+                                        : AppColors.red,
+                                    size: 14,
+                                  )
+                                ],
+                              ),
+                            );
+                          })),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                      // right: 30,
+                      //   top: MediaQuery.of(context).size.height * 0.95,
+                      alignment: Alignment.bottomRight,
+                      margin: EdgeInsets.only(right: 30, bottom: 30),
+                      child: Text('@Designed by HexogonVN')),
+                  if (isUsingKeyboard)
+                    SizedBox(
+                      height: 300,
+                    ),
+                ],
+              ),
+            ),
+          );
+        }
+      },
     );
   }
 }

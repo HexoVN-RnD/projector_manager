@@ -100,7 +100,7 @@ class _InfoProjector extends State<InfoProjector> {
 
               Container(
                 height: 40,
-                width: 60,
+                width: 70,
                 child: ElevatedButton(
                   style:ElevatedButton.styleFrom(
                     backgroundColor: AppColors.PowerOnButtonColor[projector.status.getValue()],
@@ -123,7 +123,7 @@ class _InfoProjector extends State<InfoProjector> {
                 padding: const EdgeInsets.fromLTRB(15,0,0,0),
                 child: Container(
                   height: 40,
-                  width: 60,
+                  width: 70,
                   child: ElevatedButton(
                     style:ElevatedButton.styleFrom(
                       backgroundColor: AppColors.PowerOffButtonColor[projector.status.getValue()],
@@ -195,7 +195,7 @@ class _InfoProjector extends State<InfoProjector> {
               ),
               Container(
                 height: 40,
-                width: 60,
+                width: 70,
                 child: ElevatedButton(
                   style:ElevatedButton.styleFrom(
                     backgroundColor:AppColors.ShutterOnButtonColor[projector.status.getValue()],
@@ -218,7 +218,7 @@ class _InfoProjector extends State<InfoProjector> {
                 padding: const EdgeInsets.fromLTRB(15,0,0,0),
                 child: Container(
                   height: 40,
-                  width: 60,
+                  width: 70,
                   child: ElevatedButton(
                     style:ElevatedButton.styleFrom(
                       backgroundColor: AppColors.ShutterOffButtonColor[projector.status.getValue()],

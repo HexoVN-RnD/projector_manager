@@ -39,9 +39,9 @@ class _InfoServer extends State<InfoServer> {
           minWidth: room.servers.length>1
               ? 300
               : SizeConfig.screenWidth / 2 - 75,
-          maxWidth: room.servers.length>1
+          maxWidth: room.servers.length >1
               ? SizeConfig.screenWidth / 3 - 110
-              : SizeConfig.screenWidth / 3*2 - 45),
+              : SizeConfig.screenWidth - 60),
       padding: EdgeInsets.only(
           top: 20,
           bottom: 20,
@@ -91,7 +91,7 @@ class _InfoServer extends State<InfoServer> {
               ),
               Container(
                 height: 40,
-                width: 60,
+                width: 70,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: server.power_status.getValue()
@@ -118,7 +118,7 @@ class _InfoServer extends State<InfoServer> {
                 padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                 child: Container(
                   height: 40,
-                  width: 60,
+                  width: 70,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: server.power_status.getValue()

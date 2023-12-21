@@ -108,10 +108,9 @@ AllRoom allRoom = AllRoom(
 List<Room> rooms = [
   Room(
     nameDatabase: 'volumeP1',
-    nameUI:
-     'SOÁT VÉ',
+    nameUI: 'OCB',
     map: 'assets/Map/SoatVe.png',
-    general: 'Khu vực soát vé',
+    general: 'Phần mềm quản lý',
     resolume: true,
     power_room_projectors: StatefulValuable<bool>(false),
     shutter_room_projectors: StatefulValuable<bool>(false),
@@ -123,7 +122,38 @@ List<Room> rooms = [
     roomVolumeId: StatefulValuable<String>(''),
     roomVolumeCollection: Firestore.instance.collection('volume'),
     current_preset: StatefulValuable<int>(10),
-    presets: [],
+    presets: [
+      Preset(
+          name: 'Mọi Miền Tiềm Thức',
+          image: 'assets/Preset4.1.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Như Một Dòng Chảy',
+          image: 'assets/Preset4.2.png',
+          osc_message: 'column 2',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Một Trăm',
+          image: 'assets/Preset4.3.png',
+          osc_message: 'column 3',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Mọi Miền Tiềm Thức',
+          image: 'assets/Preset4.1.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Như Một Dòng Chảy',
+          image: 'assets/Preset4.2.png',
+          osc_message: 'column 2',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Một Trăm',
+          image: 'assets/Preset4.3.png',
+          osc_message: 'column 3',
+          transport: StatefulValuable<double>(0)),
+    ],
     projectors: [
       Projector(
         ip: '192.168.1.37',
@@ -143,7 +173,7 @@ List<Room> rooms = [
         color_state: StatefulValuable<bool>(false),
       ),
       Projector(
-        ip: '192.168.1.102',
+        ip: '192.168.0.105',
         name: 'Máy chiếu 2',
         port: 3002,
         position: Offset(0.442, 0.48),
@@ -161,27 +191,26 @@ List<Room> rooms = [
       ),
     ],
     servers: [
-      // Server(
-      //   shotname: 'SV Soát Vé',
-      //   id: 11,
-      //   ip: '192.168.1.246',
-      //   name: 'Server soát vé',
-      //   preset_port: 7000,
-      //   power_port: 1234,
-      //   position: Offset(0, 0),
-      //   mac_address: '00:4e:01:b9:42:a0',
-      //   password: 'admin',
-      //   power_status: StatefulValuable<bool>(false),
-      //   volume: StatefulValuable<double>(1),
-      //   connected: StatefulValuable<bool>(false),
-      //   isOnHover: StatefulValuable<bool>(false),
-      // ),
+      Server(
+        shotname: 'Server mapping',
+        id: 11,
+        ip: '192.168.1.20',
+        name: 'Server mapping',
+        preset_port: 7000,
+        power_port: 1234,
+        position: Offset(0, 0),
+        mac_address: 'd4:5d:64:d0:54:c7',
+        password: 'admin',
+        power_status: StatefulValuable<bool>(false),
+        volume: StatefulValuable<double>(1),
+        connected: StatefulValuable<bool>(false),
+        isOnHover: StatefulValuable<bool>(false),
+      ),
     ],
   ),
   Room(
     nameDatabase: 'volumeP2',
-    nameUI:
-     'PHÒNG 2',
+    nameUI: 'PHÒNG 2',
     map: 'assets/Map/P2.png',
     general: 'Sảnh đón tiếp',
     resolume: false,
@@ -202,9 +231,7 @@ List<Room> rooms = [
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
     ],
-    projectors: [
-
-    ],
+    projectors: [],
     servers: [
       // Server(
       //   shotname: '',
@@ -330,8 +357,7 @@ List<Room> rooms = [
   ),
   Room(
     nameDatabase: 'volumeP3',
-    nameUI:
-     'PHÒNG 3',
+    nameUI: 'PHÒNG 3',
     map: 'assets/Map/P3.png',
     general: 'Khu vực nghệ thuật tự do',
     resolume: true,
@@ -421,8 +447,7 @@ List<Room> rooms = [
   ),
   Room(
     nameDatabase: 'volumeP4',
-    nameUI:
-     'PHÒNG 4',
+    nameUI: 'PHÒNG 4',
     map: 'assets/Map/P4.png',
     general: 'Phòng trải nghiệm không gian đa chiều',
     resolume: true,
@@ -458,8 +483,8 @@ List<Room> rooms = [
       //     osc_message: 'column 4',
       //     transport: StatefulValuable<double>(0)),
     ],
-    projectors:[],
-      // [
+    projectors: [],
+    // [
     //   Projector(
     //     ip: '192.168.1.101',
     //     name: 'Máy chiếu sàn 01',
@@ -989,8 +1014,7 @@ List<Room> rooms = [
   ),
   Room(
     nameDatabase: 'volumeP5',
-    nameUI:
-     'PHÒNG 5',
+    nameUI: 'PHÒNG 5',
     map: 'assets/Map/P5.png',
     general: 'Khu vực tương tác',
     resolume: true,
@@ -1169,8 +1193,7 @@ List<Room> rooms = [
   ),
   Room(
     nameDatabase: 'volumeP6',
-    nameUI:
-     'PHÒNG 6',
+    nameUI: 'PHÒNG 6',
     map: 'assets/Map/P6.png',
     general: 'Khu vực hội thảo event',
     resolume: false,

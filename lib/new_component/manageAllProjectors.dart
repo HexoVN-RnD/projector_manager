@@ -104,7 +104,7 @@ class _ManageAllProjectorsState extends State<ManageAllProjectors> {
                   },
                   child: PrimaryText(
                     text: 'On',
-                    size: 14,
+                    size: 10,
                     color: AppColors.white,
                     fontWeight: FontWeight.w500,
                   ),

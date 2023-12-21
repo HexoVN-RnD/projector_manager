@@ -35,7 +35,7 @@ class _VolumeEditState extends State<VolumeEdit> {
   void ChangeVolume(Room room, Server server, double index) {
     // writeCellValue(index.toStringAsFixed(2), server.id, 1);
     room.updateRoomVolume(index);
-    print('volumeP${current_page.getValue()}'+index.toString());
+    print('volumeP${current_page.getValue()}' + index.toString());
     if (room.resolume) {
       SendAudioOSC(room, index);
     } else {
@@ -61,7 +61,7 @@ class _VolumeEditState extends State<VolumeEdit> {
               setState(() {
                 room.isSelectedStop.setValue(true);
                 room.isSelectedPlay.setValue(false);
-                StopPreset(current_page.getValue());
+                StopPreset(1);
                 // for (Server server in rooms[0].servers) {
                 //   SendUDPMessage(server, 'Preset0');
                 // }
@@ -96,7 +96,7 @@ class _VolumeEditState extends State<VolumeEdit> {
               setState(() {
                 room.isSelectedPlay.setValue(true);
                 room.isSelectedStop.setValue(false);
-                PlayPreset(current_page.getValue());
+                PlayPreset(1);
               });
             },
             child: Column(
@@ -139,6 +139,24 @@ class _VolumeEditState extends State<VolumeEdit> {
           // SizedBox(
           //   width: SizeConfig.blockSizeHorizontal,
           // ),
+          // Expanded(
+          //   child: Container(
+          //     margin: EdgeInsets.fromLTRB(10, 0, 30, 0),
+          //     height: 20,
+          //     child: ClipRRect(
+          //       borderRadius: BorderRadius.circular(20),
+          //       child: LinearProgressIndicator(
+          //         value: (room.current_preset.getValue() < room.presets.length)
+          //             ? room.presets[room.current_preset.getValue()].transport
+          //             .getValue()
+          //             : 0,
+          //         semanticsLabel: 'Linear progress indicator',
+          //         color: AppColors.navy_blue,
+          //         backgroundColor: AppColors.white,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Icon(
             (server.volume.getValue() != 0)
                 ? Icons.music_note
@@ -148,8 +166,8 @@ class _VolumeEditState extends State<VolumeEdit> {
           ),
           Expanded(
             child: Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-              // width: 400,
+              margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+              width: 200,
               child: Transform.scale(
                 scale: 1,
                 child: Slider(

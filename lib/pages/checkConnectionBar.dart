@@ -45,10 +45,7 @@ class CheckConnectionBarState extends State<CheckConnectionBar> {
         children: [
           Expanded(
             child: PrimaryText(
-                text: rooms[(current_page.getValue() > 0)
-                        ? current_page.getValue() - 1
-                        : 1]
-                    .nameUI,
+                text: 'Kiểm tra tín hiệu',
                 size: 18,
                 fontWeight: FontWeight.w600),
           ),

@@ -115,10 +115,16 @@ void checkConnectionProjector(Projector projector) {
   final ping = Ping(projector.ip, count: 1); // Thay đổi số lần ping tùy ý
 
   ping.stream.listen((event) {
-    // //print('Ping to ${projector.ip}: ${event.response?.time} ms');
+    // print('Ping to ${projector.ip}: ${event.response?.time} ms ${event.response?.ttl} ms');
     if (event.response?.time != null) {
-      projector.connected.setValue(true);
-      ping.stop();
+      if(event.response?.ttl == 128 || event.response?.ttl == 64) {
+        projector.connected.setValue(true);
+        ping.stop();
+        //print('Connected to ${server.ip}: ${event.response?.time} ms');
+      } else {
+        projector.connected.setValue(false);
+        //print('Disconnected to ${server.ip}: ${event.response?.time} ms');
+      }
     } else if (event.response?.ip == null && count != 1) {
       projector.connected.setValue(false);
       // //print('Error');

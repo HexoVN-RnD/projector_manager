@@ -52,6 +52,10 @@ void SendStopOSC(String ip, int port, int column) async {
 
 void PlayPreset(int index) {
   switch (index) {
+    case 1:
+      SendPlayOSC(rooms[0].servers[0].ip, rooms[0].servers[0].preset_port,
+          rooms[0].current_preset.getValue());
+      break;
     case 2:
       for (Server server in rooms[1].servers) {
         SendUDPMessage(server,
@@ -85,6 +89,10 @@ void PlayPreset(int index) {
 
 void StopPreset(int index) {
   switch (index) {
+    case 1:
+      SendStopOSC(rooms[0].servers[0].ip, rooms[0].servers[0].preset_port,
+          rooms[0].current_preset.getValue());
+      break;
     case 2:
       for (Server server in rooms[1].servers) {
         SendUDPMessage(server, 'Preset0');
@@ -217,10 +225,12 @@ void OSCReceive() async {
     // final socket = await OSCSocket( serverAddress: InternetAddress(server.ip), serverPort: 7001);
     final socket =
         // await RawDatagramSocket.bind(InternetAddress.anyIPv4, 7001);
-        await RawDatagramSocket.bind(InternetAddress('192.168.1.241'), 7001);
+        await RawDatagramSocket.bind(
+            InternetAddress('192.168.0.102'), 7001);
     // Đặt cổng lắng nghe OSC (ví dụ: 7001)
     OSCMessage oscMessage;
     socket.listen((event) async {
+      print('object');
       if (event == RawSocketEvent.read) {
         final datagram = socket.receive();
         if (datagram != null) {
@@ -229,6 +239,7 @@ void OSCReceive() async {
           double transport =
               double.tryParse(oscMessage.arguments[0].toString()) ?? 0.0;
           String address = oscMessage.address;
+          print(transport);
           // if (allRoom.presets[allRoom.current_preset.getValue()].transport
           //         .getValue() <=
           //     1) {
@@ -270,7 +281,7 @@ void OSCReceive() async {
               //print('switch done');
               allRoom.is_switch_colume.setValue(false);
             }
-            ////print(allRoom.current_preset.getValue());
+            print(allRoom.current_preset.getValue());
             if (allRoom.current_preset.getValue() == 0) {
               if (address ==
                   '/composition/layers/1/clips/1/transport/position') {
@@ -333,24 +344,9 @@ void OSCReceive() async {
               }
             }
           }
-          if (rooms[(current_page.getValue() > 1)
-                      ? current_page.getValue() - 1
-                      : 1]
-                  .presets
-                  .length >
-              rooms[(current_page.getValue() > 1)
-                      ? current_page.getValue() - 1
-                      : 1]
-                  .current_preset
-                  .getValue()) {
-            rooms[(current_page.getValue() > 1)
-                    ? current_page.getValue() - 1
-                    : 1]
-                .presets[rooms[(current_page.getValue() > 1)
-                        ? current_page.getValue() - 1
-                        : 1]
-                    .current_preset
-                    .getValue()]
+          if (rooms[0].presets.length > rooms[0].current_preset.getValue()) {
+            rooms[0]
+                .presets[rooms[0].current_preset.getValue()]
                 .transport
                 .setValue(transport);
           }

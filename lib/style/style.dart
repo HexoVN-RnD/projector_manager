@@ -23,7 +23,7 @@ class PrimaryText extends StatelessWidget {
         style: TextStyle(
           color: color,
           height: height,
-          fontFamily: 'Poppins',
+          // fontFamily: 'Poppins',
           fontSize: size,
           fontWeight: fontWeight,
         ),);

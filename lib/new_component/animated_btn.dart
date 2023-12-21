@@ -19,7 +19,7 @@ class AnimatedBtn extends StatelessWidget {
       onTap: press,
       child: SizedBox(
         height: 70,
-        width: MediaQuery.of(context).size.width *0.4,
+        width: MediaQuery.of(context).size.width *0.3,
         child: Stack(
           children: [
             RiveAnimation.asset(
