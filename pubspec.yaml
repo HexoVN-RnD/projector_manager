@@ -45,12 +45,12 @@ dependencies:
   shared_preferences: ^2.1.1
 #  fluent_ui: ^4.6.1
   excel: ^2.1.0
-  firedart: ^0.9.2
-  cloud_firestore: ^4.7.1
-  firebase_auth:
-  firebase_database:
-  firebase_core:
-  firebase_storage:
+#  firedart: ^0.9.2
+#  cloud_firestore: ^4.7.1
+#  firebase_auth:
+#  firebase_database:
+#  firebase_core:
+#  firebase_storage:
   flutter_keyboard_visibility: ^5.4.1
 
 dev_dependencies:

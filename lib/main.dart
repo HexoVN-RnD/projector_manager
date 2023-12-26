@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:dart_ping_ios/dart_ping_ios.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firedart/firedart.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/openingCheck.dart';
 import 'package:responsive_dashboard/dashboard.dart';
@@ -24,7 +24,7 @@ Future<void> main() async {
     DartPingIOS.register();
   }
   WidgetsFlutterBinding.ensureInitialized();
-  Firestore.initialize(projectId);
+  // Firestore.initialize(projectId);
   // Firebase.initializeApp(
   //     options: // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   //         FirebaseOptions(

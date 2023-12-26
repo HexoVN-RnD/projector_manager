@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:ui';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:firedart/firedart.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
@@ -52,19 +52,19 @@ class DashboardIpad extends StatefulWidget {
 }
 
 class _DashboardIpadState extends State<DashboardIpad> {
-  Timer? _timer;
-  Timer? _timer2;
+  // Timer? _timer;
+  // Timer? _timer2;
   Timer? _timer3;
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   Menu selectedSideMenu = sidebarMenus.first;
-  CollectionReference licenseStatusCollection =
-      Firestore.instance.collection('license_status');
-  List<Document> license_status = [];
-
-  Future<List<Document>> getLicenseStatus() async {
-    license_status = await licenseStatusCollection.orderBy('run').get();
-    return license_status;
-  }
+  // CollectionReference licenseStatusCollection =
+  //     Firestore.instance.collection('license_status');
+  // List<Document> license_status = [];
+  //
+  // Future<List<Document>> getLicenseStatus() async {
+  //   license_status = await licenseStatusCollection.orderBy('run').get();
+  //   return license_status;
+  // }
   // Future<dynamic> getImageUrl(String imagePath) async {
   //   final ref = FirebaseStorage.instance.ref().child(imagePath);
   //   final url = await ref.getDownloadURL();
@@ -104,21 +104,21 @@ class _DashboardIpadState extends State<DashboardIpad> {
     Room room = rooms[0];
     // getImageUrl('gs://'+projectId+'.appspot.com/Preset2.png');
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 60), (timer) {
-      getLicenseStatus();
-      Future.delayed(
-        const Duration(milliseconds: 500),
-            () {
-          setState(() {
-            allRoom.canRun.setValue(license_status.any((status) {
-              final license_status =
-              status['run'].toString();
-              return license_status == 'true';
-            }));
-          });
-        },
-      );
-    });
+    // _timer = Timer.periodic(Duration(seconds: 60), (timer) {
+    //   // getLicenseStatus();
+    //   Future.delayed(
+    //     const Duration(milliseconds: 500),
+    //         () {
+    //       setState(() {
+    //         allRoom.canRun.setValue(license_status.any((status) {
+    //           final license_status =
+    //           status['run'].toString();
+    //           return license_status == 'true';
+    //         }));
+    //       });
+    //     },
+    //   );
+    // });
     // _timer2 = Timer.periodic(Duration(milliseconds: 100), (timer) {
     //   setState(() {
     //     if (room.servers[0].connected.getValue()) {
@@ -138,7 +138,7 @@ class _DashboardIpadState extends State<DashboardIpad> {
 
   @override
   void dispose() {
-    _timer?.cancel();
+    // _timer?.cancel();
     // _timer2?.cancel();
     _timer3?.cancel();
     super.dispose();

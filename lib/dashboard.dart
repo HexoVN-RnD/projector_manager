@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:ui';
-import 'package:firedart/firedart.dart';
+// import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
@@ -40,14 +40,14 @@ class _DashboardState extends State<Dashboard> {
   Timer? _timer;
   GlobalKey<ScaffoldState> _drawerKey = GlobalKey();
   Menu selectedSideMenu = sidebarMenus.first;
-  CollectionReference licenseStatusCollection =
-      Firestore.instance.collection('license_status');
-  List<Document> license_status = [];
-
-  Future<List<Document>> getLicenseStatus() async {
-    license_status = await licenseStatusCollection.orderBy('run').get();
-    return license_status;
-  }
+  // CollectionReference licenseStatusCollection =
+  //     Firestore.instance.collection('license_status');
+  // List<Document> license_status = [];
+  //
+  // Future<List<Document>> getLicenseStatus() async {
+  //   license_status = await licenseStatusCollection.orderBy('run').get();
+  //   return license_status;
+  // }
 
   void changePage(int index) {
     setState(() {
@@ -61,16 +61,16 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(Duration(seconds: 60), (timer) {
-      getLicenseStatus();
+      // getLicenseStatus();
       Future.delayed(
         const Duration(milliseconds: 500),
             () {
           setState(() {
-            allRoom.canRun.setValue(license_status.any((status) {
-              final license_status =
-              status['run'].toString();
-              return license_status == 'true';
-            }));
+            // allRoom.canRun.setValue(license_status.any((status) {
+            //   final license_status =
+            //   status['run'].toString();
+            //   return license_status == 'true';
+            // }));
           });
         },
       );
