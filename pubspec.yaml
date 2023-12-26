@@ -49,6 +49,8 @@ dependencies:
   cloud_firestore: ^4.7.1
   firebase_auth:
   firebase_database:
+  firebase_core:
+  firebase_storage:
   flutter_keyboard_visibility: ^5.4.1
 
 dev_dependencies:

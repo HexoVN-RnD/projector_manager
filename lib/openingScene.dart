@@ -10,6 +10,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:responsive_dashboard/Method/Control_projector_void.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/projector_command.dart';
+import 'package:responsive_dashboard/Object/Preset.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Sensor.dart';
@@ -97,12 +98,36 @@ class _OpeningSceneState extends State<OpeningScene>
     return password;
   }
 
+  Future<List<Document>> getPreset() async {
+    final querySnapshot =
+        await Firestore.instance.collection('listPresets').get();
+
+    rooms[0].presets = querySnapshot.map((doc) {
+      return Preset(
+        name: doc['name'] ?? 'Preset',
+        image: doc['image'] ??
+            'https://firebasestorage.googleapis.com/v0/b/ocbmanager-bc645.appspot.com/o/default.png?alt=media&token=1e5266f9-74a9-4bbb-a784-bbe29024e79b',
+        osc_message: 'colume',
+        transport: StatefulValuable<double>(0),
+      );
+    }).toList();
+    print(rooms[0].presets.length);
+
+    // rooms[0].servers[0].ip = ip[0]['ip'];
+    // rooms[0].servers[0].mac_address = mac_address[0]['mac_address'];
+
+    return password;
+  }
+
   @override
   void initState() {
     _btnAnimationController = OneShotAnimation(
       "active",
       autoplay: false,
     );
+    getIP();
+    getServer();
+    getPreset();
     super.initState();
     // // Đăng ký lắng nghe sự kiện hiện/ẩn bàn phím
     // KeyboardVisibilityController().onChange.listen((bool visible) {
@@ -115,8 +140,6 @@ class _OpeningSceneState extends State<OpeningScene>
     // });
     _timer2 = Timer.periodic(Duration(milliseconds: 500), (timer) {
       setState(() {
-        getIP();
-        getServer();
         checkAllRoomConnection(500);
       });
     });
@@ -197,7 +220,8 @@ class _OpeningSceneState extends State<OpeningScene>
                               decoration: InputDecoration(
                                 hintText: 'Tên đăng nhập...',
                                 labelText: 'Tài khoản',
-                                labelStyle: TextStyle(color: AppColors.navy_blue),
+                                labelStyle:
+                                    TextStyle(color: AppColors.navy_blue),
                                 // prefixIcon: Icon(Icons.mail),
                                 // icon: Icon(Icons.mail),
                                 suffixIcon: accountController.text.isEmpty
@@ -214,7 +238,7 @@ class _OpeningSceneState extends State<OpeningScene>
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: AppColors.navy_blue,
-                                      width: 2,
+                                    width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
@@ -255,7 +279,8 @@ class _OpeningSceneState extends State<OpeningScene>
                               decoration: InputDecoration(
                                 hintText: 'Mật khẩu...',
                                 labelText: 'Mật khẩu',
-                                labelStyle: TextStyle(color: AppColors.navy_blue),
+                                labelStyle:
+                                    TextStyle(color: AppColors.navy_blue),
                                 // errorText: 'Vui lòng thử lại',
                                 suffixIcon: IconButton(
                                   icon: isPasswordVisible
@@ -271,7 +296,7 @@ class _OpeningSceneState extends State<OpeningScene>
                                 focusedBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                     color: AppColors.navy_blue,
-                                      width: 2,
+                                    width: 2,
                                   ),
                                   borderRadius: BorderRadius.circular(20),
                                 ),
@@ -489,7 +514,8 @@ class _OpeningSceneState extends State<OpeningScene>
                                 decoration: InputDecoration(
                                   hintText: 'Tên đăng nhập...',
                                   labelText: 'Tài khoản',
-                                  labelStyle: TextStyle(color: AppColors.navy_blue),
+                                  labelStyle:
+                                      TextStyle(color: AppColors.navy_blue),
                                   // prefixIcon: Icon(Icons.mail),
                                   // icon: Icon(Icons.mail),
                                   suffixIcon: accountController.text.isEmpty
@@ -547,7 +573,8 @@ class _OpeningSceneState extends State<OpeningScene>
                                 decoration: InputDecoration(
                                   hintText: 'Mật khẩu...',
                                   labelText: 'Mật khẩu',
-                                  labelStyle: TextStyle(color: AppColors.navy_blue),
+                                  labelStyle:
+                                      TextStyle(color: AppColors.navy_blue),
                                   // errorText: 'Vui lòng thử lại',
                                   suffixIcon: IconButton(
                                     icon: isPasswordVisible
@@ -580,18 +607,11 @@ class _OpeningSceneState extends State<OpeningScene>
                                         _btnAnimationController,
                                     press: () async {
                                       _btnAnimationController.isActive = true;
-                                      // getAccount();
-                                      // getPassword();
-                                      // isAccountCorrect = account.any((license) {
-                                      //   final account = license['account'].toString();
-                                      //   return account == accountController.text;
-                                      // });
-                                      // isPasswordCorrect = password.any((license) {
-                                      //   final password = license['password'].toString();
-                                      //   return password == passwordController.text;
-                                      // });
                                       getAccount();
                                       getPassword();
+                                      getIP();
+                                      getServer();
+                                      getPreset();
                                       // print("isAccountCorrect: $isAccountCorrect ");
                                       Future.delayed(
                                         const Duration(milliseconds: 1000),

@@ -124,39 +124,15 @@ List<Room> rooms = [
     current_preset: StatefulValuable<int>(10),
     presets: [
       Preset(
-          name: 'Mọi Miền Tiềm Thức',
-          image: 'assets/Preset4.1.png',
+          name: 'Preset 1',
+          image:
+              'https://firebasestorage.googleapis.com/v0/b/ocbmanager-bc645.appspot.com/o/default.png?alt=media&token=1e5266f9-74a9-4bbb-a784-bbe29024e79b',
           osc_message: 'column 1',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Như Một Dòng Chảy',
-          image: 'assets/Preset4.2.png',
-          osc_message: 'column 2',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Một Trăm',
-          image: 'assets/Preset4.3.png',
-          osc_message: 'column 3',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Mọi Miền Tiềm Thức',
-          image: 'assets/Preset4.1.png',
-          osc_message: 'column 1',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Như Một Dòng Chảy',
-          image: 'assets/Preset4.2.png',
-          osc_message: 'column 2',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Một Trăm',
-          image: 'assets/Preset4.3.png',
-          osc_message: 'column 3',
           transport: StatefulValuable<double>(0)),
     ],
     projectors: [
       Projector(
-        ip: '192.168.1.37',
+        ip: '192.168.0.0',
         name: 'Máy chiếu 1',
         port: 3002,
         position: Offset(0.442, 0.48),
@@ -173,7 +149,7 @@ List<Room> rooms = [
         color_state: StatefulValuable<bool>(false),
       ),
       Projector(
-        ip: '192.168.0.105',
+        ip: '192.168.0.0',
         name: 'Máy chiếu 2',
         port: 3002,
         position: Offset(0.442, 0.48),
@@ -194,7 +170,7 @@ List<Room> rooms = [
       Server(
         shotname: 'Server mapping',
         id: 11,
-        ip: '192.168.1.20',
+        ip: '192.168.0.0',
         name: 'Server mapping',
         preset_port: 7000,
         power_port: 1234,

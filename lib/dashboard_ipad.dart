@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:ui';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -8,6 +9,7 @@ import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
 import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Method/udp_void.dart';
+import 'package:responsive_dashboard/Object/Preset.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/PopUp/HeroDialogRoute.dart';
@@ -16,6 +18,7 @@ import 'package:responsive_dashboard/PopUp/PopupOffProjector.dart';
 import 'package:responsive_dashboard/PopUp/PopupOffShutter.dart';
 import 'package:responsive_dashboard/PopUp/customRectTween.dart';
 import 'package:responsive_dashboard/data/data.dart';
+import 'package:responsive_dashboard/main.dart';
 import 'package:responsive_dashboard/new_component/header.dart';
 import 'package:responsive_dashboard/new_component/info_projector.dart';
 import 'package:responsive_dashboard/new_component/info_server.dart';
@@ -62,6 +65,16 @@ class _DashboardIpadState extends State<DashboardIpad> {
     license_status = await licenseStatusCollection.orderBy('run').get();
     return license_status;
   }
+  // Future<dynamic> getImageUrl(String imagePath) async {
+  //   final ref = FirebaseStorage.instance.ref().child(imagePath);
+  //   final url = await ref.getDownloadURL();
+  //   print(url);
+  //   for (Preset preset in rooms[0].presets)
+  //     {
+  //       preset.image = url;
+  //     }
+  //   return url;
+  // }
 
   void changePage(int index) {
     setState(() {
@@ -89,6 +102,7 @@ class _DashboardIpadState extends State<DashboardIpad> {
   @override
   void initState() {
     Room room = rooms[0];
+    // getImageUrl('gs://'+projectId+'.appspot.com/Preset2.png');
     super.initState();
     _timer = Timer.periodic(Duration(seconds: 60), (timer) {
       getLicenseStatus();
@@ -373,9 +387,27 @@ class _DashboardIpadState extends State<DashboardIpad> {
                                               borderRadius:
                                               BorderRadius.circular(
                                                   isSelected ? 15.0 : 10),
-                                              child: Image.asset(
-                                                room.presets[index].image,
+                                              child:
+                                              Image.network(
+                                                room.presets[room.presets.length - index -1].image,
                                               ),
+                                              // FutureBuilder(
+                                              //   future: getImageUrl('gs://'+projectId+'.appspot.com/Preset2.png'),
+                                              //   // future: _getImageUrl(room.presets[index].image),
+                                              //   builder: (context, snapshot) {
+                                              //     if (snapshot.connectionState == ConnectionState.waiting) {
+                                              //       return Image.asset(
+                                              //         'assets/watching-a-movie_black.png',
+                                              //       );
+                                              //     } else if (snapshot.hasError) {
+                                              //       return  Image.asset(
+                                              //         'assets/watching-a-movie_black.png',
+                                              //       );
+                                              //     } else {
+                                              //       return Image(image: NetworkImage(snapshot.data.toString()));
+                                              //     }
+                                              //   },
+                                              // ),
                                             ),
                                           ),
                                         ),
@@ -450,7 +482,7 @@ class _DashboardIpadState extends State<DashboardIpad> {
                                                   duration: const Duration(
                                                       milliseconds: 200),
                                                   child: Text(
-                                                      room.presets[index].name),
+                                                      room.presets[room.presets.length - index -1].name),
                                                 ),
                                                 // PrimaryText(
                                                 //     text: room.presets[index].name,
