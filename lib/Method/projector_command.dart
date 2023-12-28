@@ -74,6 +74,15 @@ String sendTCPIPCommandStatus(Projector projector) {
             print('${projector.ip} status: ${projector.status.getValue()}');
           }
         }
+        else {
+          if (projector.power_status.getValue()){
+            projector.status.setValue(7);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          } else {
+            projector.status.setValue(7);
+            print('${projector.ip} status: ${projector.status.getValue()}');
+          }
+        }
       } else if (response.contains('PWR!03') || response.contains('PWR!00')) {
         projector.power_status.setValue(true);
         if (projector.shutter_status.getValue()) {
@@ -96,10 +105,10 @@ String sendTCPIPCommandStatus(Projector projector) {
       } else if (response.contains('PWR!04')) {
         if (projector.shutter_status.getValue()) {
           if (projector.power_status.getValue()) {
-            projector.status.setValue(5);
+            projector.status.setValue(6);
             print('${projector.ip} status: ${projector.status.getValue()}');
           } else {
-            projector.status.setValue(6);
+            projector.status.setValue(5);
             print('${projector.ip} status: ${projector.status.getValue()}');
           }
         }
@@ -160,7 +169,7 @@ void sendPJLinkCommandNoResponse(Projector projector, String command) {
 String sendPJLinkCommandStatus(Projector projector) {
   String response = '';
   Socket.connect(projector.ip, 4352).then((socket) {
-    // print('Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
+    print('Connected to ${socket.remoteAddress.address}:${socket.remotePort}');
     socket.write('%1POWR ?[CR]');
     socket.write('%1AVMT ?[CR]');
     socket.listen((data) async {

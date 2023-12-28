@@ -1,10 +1,14 @@
-import 'package:firedart/firedart.dart';
+import 'dart:convert';
+
+// import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Led.dart';
 import 'package:responsive_dashboard/Object/Preset.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
+import 'package:responsive_dashboard/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:valuable/valuable.dart';
 
 class Room {
@@ -23,8 +27,8 @@ class Room {
   List<Preset> presets; // : 1,2,3
   List<Projector> projectors;
   List<Server> servers;
-  List<Document> roomVolumeFB;
-  CollectionReference roomVolumeCollection;
+  double roomVolumeFB;
+  // CollectionReference roomVolumeCollection;
   StatefulValuable<String> roomVolumeId;
 
   // Constructor
@@ -45,35 +49,73 @@ class Room {
     required this.projectors,
     required this.servers,
     required this.roomVolumeFB,
-    required this.roomVolumeCollection,
+    // required this.roomVolumeCollection,
     required this.roomVolumeId,
   });
+  Map<String, dynamic> toJson() => {
+        'nameUI': nameUI,
+        'nameDatabase': nameDatabase,
+        'power_room_projectors': power_room_projectors,
+        'shutter_room_projectors': shutter_room_projectors,
+        'isSelectedPlay': isSelectedPlay,
+        'isSelectedStop': isSelectedStop,
+        'map': map,
+        'general': general,
+        'resolume': resolume,
+        'current_preset': current_preset,
+        'roomVolumeId': roomVolumeId,
+      };
 
-  void setRoomVolume() async {
-    // List<Document> allVolume =
-    roomVolumeFB = await roomVolumeCollection.orderBy(nameDatabase).get();
-    final getData =  roomVolumeFB.map((volume) {
-      roomVolumeId.setValue(volume.id);
-      // print('roomVolumeId: ${roomVolumeId.getValue()}');
-      final checkVolume = volume[nameDatabase].toString();
-      // print('roomVolume: $checkVolume');
-      return checkVolume;
-    });
-    print('roomVolume: ${getData.first}');
-    for (Server server in servers) {
-      server.volume
-          .setValue((double.tryParse(getData.first) ?? 0.0));
-      // print('roomVolume: ${server.volume.getValue()}');
-    }
-    // return check.toString();
+  factory Room.fromJson(Map<String, dynamic> json) {
+    return Room(
+      nameUI: json['nameUI'],
+      nameDatabase: json['nameDatabase'],
+      power_room_projectors: json['power_room_projectors'],
+      shutter_room_projectors: json['shutter_room_projectors'],
+      isSelectedPlay: json['isSelectedPlay'],
+      isSelectedStop: json['isSelectedStop'],
+      map: json['map'],
+      general: json['general'],
+      resolume: json['resolume'],
+      current_preset: json['current_preset'],
+      roomVolumeId: json['roomVolumeId'],
+      sensors: json['sensor'],
+      leds: json['leds'],
+      presets: json['presets'],
+      projectors: json['projectors'],
+      servers: json['servers'],
+      roomVolumeFB: json['roomVolumeFB'],
+    );
   }
 
-  updateRoomVolume(double roomVolumeValue) async {
-    // roomVolumeId = allVolume.id;
-    await roomVolumeCollection.document(roomVolumeId.getValue()).update({
-      // await roomVolumeCollection.document(roomVolumeId!).update({
-      nameDatabase : roomVolumeValue,
-      //   'volumeP3' : roomVolumeValue,
-    });
-  }
+  // Future<void> addNewRoom(Room new_Room) async {
+  //   final SharedPreferences new_prefs = await prefs;
+  //   List<String> Keys = [];
+  //   int number = 0;
+  //   Keys = new_prefs.getKeys().where((key) => key.startsWith('room_')).toList();
+  //   if (Keys.length != 0) {
+  //     // Sử dụng biểu thức chính quy để tìm số trong chuỗi
+  //     RegExp regExp = RegExp(r'\d+');
+  //     Match match = regExp.firstMatch(Keys.last)!;
+  //     // Lấy chuỗi số từ kết quả tìm kiếm
+  //     String numberString = match.group(0)!;
+  //     // Chuyển chuỗi số thành số nguyên
+  //     number = int.parse(numberString);
+  //   }
+  //   String newKey = 'room_${number + 1}';
+  //   print('add room: '+ newKey);
+  //   new_prefs.setString(newKey, json.encode(new_Room.toJson()));
+  // }
+}
+
+Future<void> updateRoom(Room new_Room, String key) async {
+  final SharedPreferences new_prefs = await prefs;
+  print('update room: ' + key);
+  new_prefs.setString(key, json.encode(new_Room.toJson()));
+}
+
+Future<void> deleteRoom(String key) async {
+  final SharedPreferences new_prefs = await prefs;
+  print('delete room: ' + key);
+  await new_prefs.remove(key);
 }

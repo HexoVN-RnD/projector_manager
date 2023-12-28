@@ -217,11 +217,13 @@ Future<void> checkRoomProjectorConnection(Room room, int time) async {
           Duration(milliseconds: time ~/ room.projectors.length));
       checkConnectionProjector(projector);
       if (projector.type == 'Christie') {
-        String response = sendTCPIPCommandStatus(projector);
-        //print(response);
+        sendTCPIPCommandStatus(projector);
+        // String response = sendTCPIPCommandStatus(projector);
+        // print(response);
       } else {
-        String response = sendPJLinkCommandStatus(projector);
-        //print(response);
+        sendPJLinkCommandStatus(projector);
+        // String response = sendPJLinkCommandStatus(projector);
+        // print('PJlink'+projector.ip);
       }
     }
   }

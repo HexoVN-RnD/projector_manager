@@ -3,6 +3,8 @@ import 'package:responsive_dashboard/Method/ping_check_connection.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/data/data.dart';
+import 'package:udp/udp.dart';
+import 'package:wake_on_lan/wake_on_lan.dart';
 
 Future<void> PowerOnAllServer() async {
   allRoom.power_all_servers.setValue(true);
@@ -75,7 +77,71 @@ Future<void> ShutdownServer(Room room, Server server) async {
   checkConnectionServerResponse(room,server);
 }
 
-void WakeonLan(Room room, Server server, {int port = 9}) async {
+// void WakeonLan(Room room, Server server, {int port = 9}) async {
+//   server.power_status.setValue(true);
+//
+//   String ipv4 = server.ip;
+//   String mac = server.mac_address.toUpperCase();
+//   print(mac);
+//   // Validate that the IP address is correctly formatted
+//   final ipValidation = IPAddress.validate(ipv4);
+//   if (!ipValidation.state) {
+//     throw ipValidation.error!;
+//   }
+//
+//   // Validate that the MAC address is correctly formatted
+//   final macValidation = MACAddress.validate(mac);
+//   if (!macValidation.state) {
+//     throw macValidation.error!;
+//   }
+//   print(ipValidation.state.toString()+macValidation.state.toString());
+//   // Create the IP and MAC addresses
+//   IPAddress ipv4Address = IPAddress(ipv4);
+//   MACAddress macAddress = MACAddress(mac);
+//
+//   // Send the Wake-on-LAN packet
+//   WakeOnLAN(ipv4Address, macAddress).wake();
+//
+//   print("Starting wake server...");
+//   await Future.delayed(Duration(seconds: 90));
+//   print("90 seconds have passed!");
+//   checkConnectionServer(room,server);
+// }
+Future<void> WakeonLan(Room room, Server server, {int port = 9}) async {
+  server.power_status.setValue(true);
+  // Validate MAC address format
+  if (!RegExp(r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$').hasMatch(server.mac_address.toUpperCase())) {
+    print('Invalid MAC address format');
+    return;
+  }
+
+  // Convert MAC address from string to bytes
+  List<int> macBytes = server.mac_address.split(':').map((e) => int.parse(e, radix: 16)).toList();
+
+  // Create WOL packet
+  List<int> packet = List<int>.filled(102, 0xFF);
+  for (int i = 6; i < 102; i += 6) {
+    packet.setRange(i, i + 6, macBytes);
+  }
+
+  // Send WOL packet
+  try {
+    RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((socket) {
+      socket.broadcastEnabled = true;
+      socket.send(packet, InternetAddress(server.ip), port);
+      print('sent package'+packet.toString());
+      socket.close();
+    });
+  } catch (e) {
+    print('Error: $e');
+  }
+
+  print("Starting wake server...");
+  await Future.delayed(Duration(seconds: 50));
+  print("50 seconds have passed!");
+  checkConnectionServer(room,server);
+}
+void WakeonLanOld(Room room, Server server, {int port = 9}) async {
   server.power_status.setValue(true);
 
   final boardcastIP = InternetAddress('255.255.255.255');
@@ -87,11 +153,12 @@ void WakeonLan(Room room, Server server, {int port = 9}) async {
   RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((socket) {
     socket.broadcastEnabled = true;
     socket.send(magicPacket, boardcastIP, port);
+    print('sent package');
     socket.close();
   });
   print("Starting wake server...");
-  await Future.delayed(Duration(seconds: 90));
-  print("90 seconds have passed!");
+  await Future.delayed(Duration(seconds: 30));
+  print("30 seconds have passed!");
   checkConnectionServer(room,server);
 }
 

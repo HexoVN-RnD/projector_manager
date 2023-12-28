@@ -9,6 +9,7 @@ import 'package:responsive_dashboard/Method/openingCheck.dart';
 import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/openingScene.dart';
 import 'package:responsive_dashboard/style/colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:window_manager/window_manager.dart';
 
 // const apiKey = 'AIzaSyDzdBNoEyJZUxOZYibeT6X_aw0HdP24wUs';
@@ -16,6 +17,7 @@ import 'package:responsive_dashboard/style/colors.dart';
 const projectId = 'ocbmanager-bc645';
 // const projectId = 'toong-23d79';
 // final FirebaseFirestore firestore = FirebaseFirestore.instance;
+Future<SharedPreferences> prefs = SharedPreferences.getInstance();
 
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
