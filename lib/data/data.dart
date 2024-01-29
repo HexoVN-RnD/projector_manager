@@ -121,7 +121,7 @@ List<Room> rooms = [
     roomVolumeFB: 1,
     roomVolumeId: StatefulValuable<String>(''),
     // roomVolumeCollection: Firestore.instance.collection('volume'),
-    current_preset: StatefulValuable<int>(10),
+    current_preset: StatefulValuable<int>(100),
     presets: [
       Preset(
           name: 'Video 1',
@@ -170,6 +170,106 @@ List<Room> rooms = [
           transport: StatefulValuable<double>(0)),
       Preset(
           name: 'Video 10',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 11',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 12',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 13',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 14',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 15',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 16',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 17',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 18',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 19',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 20',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 21',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 22',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 23',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 24',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 25',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 26',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 27',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 28',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 29',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 30',
           image: 'assets/watching-a-movie_black.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
