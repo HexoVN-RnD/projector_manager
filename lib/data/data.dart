@@ -129,7 +129,7 @@ List<Room> rooms = [
       Server(
         shotname: 'SV Soát Vé',
         id: 11,
-        ip: '192.168.1.246',
+        ip: '192.168.1.250',
         name: 'Server soát vé',
         preset_port: 7000,
         power_port: 1234,
