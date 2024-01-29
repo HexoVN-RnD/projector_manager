@@ -4,6 +4,7 @@ import 'dart:ui';
 // import 'package:firebase_storage/firebase_storage.dart';
 // import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
@@ -38,6 +39,8 @@ import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 import 'package:rive/rive.dart';
 import 'package:valuable/valuable.dart';
+
+import 'new_component/Preset.dart';
 
 final StatefulValuable<int> current_page = StatefulValuable<int>(1);
 
@@ -84,21 +87,21 @@ class _DashboardIpadState extends State<DashboardIpad> {
     });
   }
 
-  void select_preset(Room room, int index) async {
-    setState(() {
-      room.current_preset.setValue(index);
-      for (Server server in room.servers) {
-        if (room.resolume) {
-          SendPresetOSC(
-              server.ip, server.preset_port, room.current_preset.getValue());
-          PlayPreset(current_page.getValue());
-        } else {
-          SendUDPMessage(server,
-              'Preset' + (room.current_preset.getValue() + 1).toString());
-        }
-      }
-    });
-  }
+  // void select_preset(Room room, int index) async {
+  //   setState(() {
+  //     room.current_preset.setValue(index);
+  //     for (Server server in room.servers) {
+  //       if (room.resolume) {
+  //         SendPresetOSC(
+  //             server.ip, server.preset_port, room.current_preset.getValue());
+  //         PlayPreset(current_page.getValue());
+  //       } else {
+  //         SendUDPMessage(server,
+  //             'Preset' + (room.current_preset.getValue() + 1).toString());
+  //       }
+  //     }
+  //   });
+  // }
 
   @override
   void initState() {
@@ -129,8 +132,10 @@ class _DashboardIpadState extends State<DashboardIpad> {
     //   });
     // });
     _timer3 = Timer.periodic(Duration(milliseconds: 500), (timer) async {
-      checkRoomProjectorConnection(room, 400);
-      SetButtonControlRoom(room);
+      setState(() {
+        checkRoomProjectorConnection(room, 500);
+        SetButtonControlRoom(room);
+      });
     });
   }
 
@@ -288,7 +293,7 @@ class _DashboardIpadState extends State<DashboardIpad> {
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
                     margin: EdgeInsets.fromLTRB(0, 20, 0, 30),
                     decoration: BoxDecoration(
-                      color: AppColors.gray,
+                      color: AppColors.ocb,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Column(
@@ -314,18 +319,18 @@ class _DashboardIpadState extends State<DashboardIpad> {
                                   size: 20,
                                   fontWeight: FontWeight.w500),
                               Expanded(
-                                  child: SizedBox(
-                                width: 10,
-                              )),
+                                child: SizedBox(),
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 30.0),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     PrimaryText(
                                         color: AppColors.white,
                                         text: (DateTime.now().hour < 10)
                                             ? '0' +
-                                                DateTime.now().hour.toString()
+                                            DateTime.now().hour.toString()
                                             : DateTime.now().hour.toString(),
                                         size: 20,
                                         fontWeight: FontWeight.w500),
@@ -333,22 +338,26 @@ class _DashboardIpadState extends State<DashboardIpad> {
                                         color: AppColors.white,
                                         text: (DateTime.now().minute < 10)
                                             ? ':0' +
-                                                DateTime.now().minute.toString()
+                                            DateTime.now()
+                                                .minute
+                                                .toString()
                                             : ':' +
-                                                DateTime.now()
-                                                    .minute
-                                                    .toString(),
+                                            DateTime.now()
+                                                .minute
+                                                .toString(),
                                         size: 20,
                                         fontWeight: FontWeight.w500),
                                     PrimaryText(
                                         color: AppColors.white,
                                         text: (DateTime.now().second < 10)
                                             ? ':0' +
-                                                DateTime.now().second.toString()
+                                            DateTime.now()
+                                                .second
+                                                .toString()
                                             : ':' +
-                                                DateTime.now()
-                                                    .second
-                                                    .toString(),
+                                            DateTime.now()
+                                                .second
+                                                .toString(),
                                         size: 20,
                                         fontWeight: FontWeight.w500),
                                   ],
@@ -357,152 +366,34 @@ class _DashboardIpadState extends State<DashboardIpad> {
                             ],
                           ),
                         ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                            child: Row(
-                              children:
-                                  List.generate(room.presets.length, (index) {
-                                bool isSelected =
-                                    room.current_preset.getValue() == index;
-                                return GestureDetector(
-                                  onTap: () {
-                                    select_preset(room, index);
-                                  },
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      AnimatedContainer(
-                                        duration: Duration(milliseconds: 500),
-                                        curve: Curves.easeInOut,
-                                        width: isSelected ? 250.0 : 160.0,
-                                        height: isSelected ? 250.0 : 160.0,
-                                        margin: EdgeInsets.all(20.0),
-                                        decoration: BoxDecoration(
-                                          color: isSelected
-                                              ? AppColors.navy_blue2
-                                              : AppColors.white,
-                                          borderRadius: BorderRadius.circular(
-                                              isSelected ? 20.0 : 15),
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(
-                                              isSelected ? 8.0 : 5.0),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                                isSelected ? 15.0 : 10),
-                                            child: Image.asset(
-                                              room.presets[index].image,
-                                            ),
-                                            // FutureBuilder(
-                                            //   future: getImageUrl('gs://'+projectId+'.appspot.com/Preset2.png'),
-                                            //   // future: _getImageUrl(room.presets[index].image),
-                                            //   builder: (context, snapshot) {
-                                            //     if (snapshot.connectionState == ConnectionState.waiting) {
-                                            //       return Image.asset(
-                                            //         'assets/watching-a-movie_black.png',
-                                            //       );
-                                            //     } else if (snapshot.hasError) {
-                                            //       return  Image.asset(
-                                            //         'assets/watching-a-movie_black.png',
-                                            //       );
-                                            //     } else {
-                                            //       return Image(image: NetworkImage(snapshot.data.toString()));
-                                            //     }
-                                            //   },
-                                            // ),
-                                          ),
+                        Container(
+                          padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
+                          // constraints: BoxConstraints(
+                          //   minHeight: 200.0,
+                          //   maxHeight: 500.0,
+                          // ),
+                          // width: SizeConfig.screenWidth-100,
+                          // color: Colors.transparent,
+                          child:
+                                 Scrollbar(
+                                  // thumbVisibility: true,
+                                  trackVisibility: true,
+                                  interactive: true,
+                                  radius: Radius.circular(10),
+                                  thickness: 8,
+                                  child:
+                                  SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                        children:
+                                            List.generate(room.presets.length, (index) {
+                                          return PresetUI(index: index);
+                                        }
                                         ),
                                       ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          // if (isSelected)
-                                          //   SizedBox(
-                                          //     height: 15,
-                                          //     width: 230,
-                                          //     child: Container(
-                                          //       child: ClipRRect(
-                                          //         borderRadius:
-                                          //         BorderRadius.circular(
-                                          //             10),
-                                          //         child:
-                                          //         LinearProgressIndicator(
-                                          //           value: (room.current_preset
-                                          //               .getValue() <
-                                          //               room.presets
-                                          //                   .length)
-                                          //               ? room
-                                          //               .presets[room
-                                          //               .current_preset
-                                          //               .getValue()]
-                                          //               .transport
-                                          //               .getValue()
-                                          //               : 0,
-                                          //           semanticsLabel:
-                                          //           'Linear progress indicator',
-                                          //           color:
-                                          //           AppColors.navy_blue2,
-                                          //           backgroundColor:
-                                          //           AppColors.white,
-                                          //         ),
-                                          //       ),
-                                          //     ),
-                                          //   ),
-                                          if (isSelected)
-                                            SizedBox(
-                                                height: SizeConfig
-                                                        .blockSizeVertical *
-                                                    1.5),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Icon(
-                                                Icons.local_movies_outlined,
-                                                size: isSelected ? 26 : 18,
-                                                color: AppColors.white,
-                                              ),
-                                              SizedBox(
-                                                  width: SizeConfig
-                                                          .blockSizeHorizontal *
-                                                      (isSelected
-                                                          ? 1.5
-                                                          : 0.75)),
-                                              AnimatedDefaultTextStyle(
-                                                style: isSelected
-                                                    ? TextStyle(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: 17.0,
-                                                        fontWeight:
-                                                            FontWeight.w600)
-                                                    : TextStyle(
-                                                        fontFamily: 'Poppins',
-                                                        fontSize: 12.0,
-                                                        fontWeight:
-                                                            FontWeight.w600),
-                                                duration: const Duration(
-                                                    milliseconds: 200),
-                                                child: Text(
-                                                    room.presets[index].name),
-                                              ),
-                                              // PrimaryText(
-                                              //     text: room.presets[index].name,
-                                              //     size: isSelected ? 17 : 12,
-                                              //     color: AppColors.white,
-                                              //     fontWeight: FontWeight.w600),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
                                   ),
-                                );
-                              }),
-                            ),
-                          ),
+                                )
+                            ,
                         ),
                         // (current_page.getValue() == 1)?
                         // Container(

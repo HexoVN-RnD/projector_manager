@@ -10,6 +10,8 @@ import 'package:responsive_dashboard/dashboard.dart';
 import 'package:responsive_dashboard/openingScene.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'data/Shared_pref.dart';
 // import 'package:window_manager/window_manager.dart';
 
 // const apiKey = 'AIzaSyDzdBNoEyJZUxOZYibeT6X_aw0HdP24wUs';
@@ -39,6 +41,7 @@ Future<void> main() async {
   //             measurementId: "G-XQ4LBGPT2R")
   //           );
   OpeningCheck();
+  LoadData();
   // Firestore.initialize('toong-23d79');
   // await windowManager.ensureInitialized();
 

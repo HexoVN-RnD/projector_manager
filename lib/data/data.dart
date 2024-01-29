@@ -153,6 +153,26 @@ List<Room> rooms = [
           image: 'assets/watching-a-movie_black.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 7',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 8',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 9',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'Video 10',
+          image: 'assets/watching-a-movie_black.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
     ],
     projectors: [
       Projector(
@@ -161,7 +181,7 @@ List<Room> rooms = [
         port: 3002,
         position: Offset(0.442, 0.48),
         UsernameAndPassword: 'admin',
-        type: 'Christie',
+        type: 'PJLink',
         power_status_button: StatefulValuable<bool>(false),
         shutter_status_button: StatefulValuable<bool>(false),
         power_status: StatefulValuable<bool>(false),
@@ -178,7 +198,7 @@ List<Room> rooms = [
         port: 3002,
         position: Offset(0.442, 0.48),
         UsernameAndPassword: 'admin',
-        type: 'Christie',
+        type: 'PJLink',
         power_status_button: StatefulValuable<bool>(false),
         shutter_status_button: StatefulValuable<bool>(false),
         power_status: StatefulValuable<bool>(false),

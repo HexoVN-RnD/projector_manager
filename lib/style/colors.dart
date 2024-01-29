@@ -16,6 +16,7 @@ class AppColors {
   static const navy_blue = Color.fromRGBO(76, 173, 106, 1.0);
   static const white_trans = Color.fromRGBO(224, 224, 224, 0.05);
   static const navy_blue2 = Color.fromRGBO(76, 173, 106, 1.0);
+  static const ocb = Color.fromRGBO(54, 122, 76, 1.0);
   static const red = Color.fromRGBO(246, 75, 75, 1.0);
   static const green = Color.fromRGBO(60, 231, 77, 1.0);
   static const yellow1 = Color.fromRGBO(248, 242, 229, 1.0);

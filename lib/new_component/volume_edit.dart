@@ -12,6 +12,7 @@ import 'package:responsive_dashboard/Object/Server.dart';
 import 'package:responsive_dashboard/config/responsive.dart';
 import 'package:responsive_dashboard/config/size_config.dart';
 import 'package:responsive_dashboard/dashboard.dart';
+import 'package:responsive_dashboard/data/Shared_pref.dart';
 import 'package:responsive_dashboard/style/colors.dart';
 import 'package:responsive_dashboard/style/style.dart';
 
@@ -41,6 +42,7 @@ class _VolumeEditState extends State<VolumeEdit> {
         SendUDPAudioMessage(server, index);
       }
     }
+    SaveData('all_volume', index.toString());
     server.volume.setValue(index);
   }
 
@@ -169,8 +171,8 @@ class _VolumeEditState extends State<VolumeEdit> {
               child: Transform.scale(
                 scale: 1,
                 child: Slider(
-                  activeColor: AppColors.navy_blue,
-                  inactiveColor: AppColors.light_navy_blue,
+                  activeColor: AppColors.yellow4,
+                  inactiveColor: AppColors.yellow2,
                   value: server.volume.getValue(),
                   onChanged: (index) {
                     setState(() {
