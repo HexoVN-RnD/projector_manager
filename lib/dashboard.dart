@@ -125,15 +125,16 @@ class _DashboardState extends State<Dashboard> {
                               // onInit: riveOnInit,
                             ),
                             onPressed: () => changePage(1)),
-                        IconButton(
-                            iconSize: 30,
-                            padding: EdgeInsets.symmetric(vertical: 20.0),
-                            icon: RiveAnimation.asset(
-                              "assets/RiveAssets/icons.riv",
-                              artboard: "ROOM",
-                              // onInit: riveOnInit,
-                            ),
-                            onPressed: () => changePage(2)),
+                        Container(),
+                        // IconButton(
+                        //     iconSize: 30,
+                        //     padding: EdgeInsets.symmetric(vertical: 20.0),
+                        //     icon: RiveAnimation.asset(
+                        //       "assets/RiveAssets/icons.riv",
+                        //       artboard: "ROOM",
+                        //       // onInit: riveOnInit,
+                        //     ),
+                        //     onPressed: () => changePage(2)),
                         IconButton(
                             iconSize: 30,
                             padding: EdgeInsets.symmetric(vertical: 20.0),
@@ -234,7 +235,8 @@ class _DashboardState extends State<Dashboard> {
                       Column(
                         children: List.generate(
                           sidebarMenus.length,
-                          (index) => SideMenu(
+                          (index) {
+                              return index !=1? SideMenu(
                             menu: sidebarMenus[index],
                             selectedMenu: selectedSideMenu,
                             press: () {
@@ -251,7 +253,7 @@ class _DashboardState extends State<Dashboard> {
                                           .rive
                                           .stateMachineName);
                             },
-                          ),
+                          ): Container();},
                         ),
                       ),
                       Expanded(

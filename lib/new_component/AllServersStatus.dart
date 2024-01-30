@@ -43,7 +43,7 @@ class _AllServerStatusState extends State<AllServerStatus> {
   @override
   Widget build(BuildContext context) {
     Room room = widget.room;
-    return Column(
+    return room.servers.length>1 ? Column(
         children: List.generate(
       room.servers.length,
       (index) => Container(
@@ -62,6 +62,22 @@ class _AllServerStatusState extends State<AllServerStatus> {
           fontWeight: FontWeight.w500,
         ),
       ),
-    ));
+    )):
+    Container(
+      alignment: Alignment.center,
+      width: 140,
+      height: 100,
+      margin: EdgeInsets.fromLTRB(20 , 10, 20, 0),
+      decoration: BoxDecoration(
+          color: room.servers[0].connected.getValue()
+              ? AppColors.green
+              : AppColors.red,
+          borderRadius: BorderRadius.circular(20)),
+      child: PrimaryText(
+        text: room.servers[0].shotname,
+        size: 12,
+        fontWeight: FontWeight.w500,
+      ),
+    );
   }
 }
