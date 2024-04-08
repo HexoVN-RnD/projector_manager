@@ -1,4 +1,4 @@
-import 'package:firedart/firedart.dart';
+// import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Led.dart';
 import 'package:responsive_dashboard/Object/Preset.dart';
@@ -85,7 +85,7 @@ AllRoom allRoom = AllRoom(
   num_projectors: StatefulValuable<int>(0),
   allVolumeFB: [],
   volumeId: StatefulValuable<String>(''),
-  volumeCollection: Firestore.instance.collection('volume'),
+  volumeCollection: 1.0,
   presets: [
     Preset(
         name: '123',
@@ -108,8 +108,7 @@ AllRoom allRoom = AllRoom(
 List<Room> rooms = [
   Room(
     nameDatabase: 'volumeP1',
-    nameUI:
-     'SOÁT VÉ',
+    nameUI: 'SOÁT VÉ',
     map: 'assets/Map/SoatVe.png',
     general: 'Khu vực soát vé',
     resolume: true,
@@ -121,7 +120,7 @@ List<Room> rooms = [
     leds: [],
     roomVolumeFB: [],
     roomVolumeId: StatefulValuable<String>(''),
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    roomVolumeCollection: 1.0,
     current_preset: StatefulValuable<int>(10),
     presets: [],
     projectors: [],
@@ -145,8 +144,7 @@ List<Room> rooms = [
   ),
   Room(
     nameDatabase: 'volumeP2',
-    nameUI:
-     'PHÒNG 2',
+    nameUI: 'PHÒNG 2',
     map: 'assets/Map/P2.png',
     general: 'Sảnh đón tiếp',
     resolume: false,
@@ -154,7 +152,7 @@ List<Room> rooms = [
     leds: [],
     roomVolumeFB: [],
     roomVolumeId: StatefulValuable<String>(''),
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    roomVolumeCollection: 1.0,
     power_room_projectors: StatefulValuable<bool>(false),
     shutter_room_projectors: StatefulValuable<bool>(false),
     isSelectedPlay: StatefulValuable<bool>(false),
@@ -293,8 +291,7 @@ List<Room> rooms = [
   ),
   Room(
     nameDatabase: 'volumeP3',
-    nameUI:
-     'PHÒNG 3',
+    nameUI: 'PHÒNG 3',
     map: 'assets/Map/P3.png',
     general: 'Khu vực nghệ thuật tự do',
     resolume: true,
@@ -305,7 +302,7 @@ List<Room> rooms = [
     current_preset: StatefulValuable<int>(10),
     roomVolumeFB: [],
     roomVolumeId: StatefulValuable<String>(''),
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    roomVolumeCollection: 1.0,
     sensors: [],
     leds: [
       Led(
@@ -384,8 +381,7 @@ List<Room> rooms = [
   ),
   Room(
     nameDatabase: 'volumeP4',
-    nameUI:
-     'PHÒNG 4',
+    nameUI: 'PHÒNG 4',
     map: 'assets/Map/P4.png',
     general: 'Phòng trải nghiệm không gian đa chiều',
     resolume: true,
@@ -398,7 +394,7 @@ List<Room> rooms = [
     leds: [],
     roomVolumeFB: [],
     roomVolumeId: StatefulValuable<String>(''),
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    roomVolumeCollection: 1.0,
     presets: [
       Preset(
           name: 'Mọi Miền Tiềm Thức',
@@ -951,8 +947,7 @@ List<Room> rooms = [
   ),
   Room(
     nameDatabase: 'volumeP5',
-    nameUI:
-     'PHÒNG 5',
+    nameUI: 'PHÒNG 5',
     map: 'assets/Map/P5.png',
     general: 'Khu vực tương tác',
     resolume: true,
@@ -964,7 +959,7 @@ List<Room> rooms = [
     leds: [],
     roomVolumeFB: [],
     roomVolumeId: StatefulValuable<String>(''),
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    roomVolumeCollection: 1.0,
     sensors: [
       Sensor(
           ip: '192.168.1.11',
@@ -1131,8 +1126,7 @@ List<Room> rooms = [
   ),
   Room(
     nameDatabase: 'volumeP6',
-    nameUI:
-     'PHÒNG 6',
+    nameUI: 'PHÒNG 6',
     map: 'assets/Map/P6.png',
     general: 'Khu vực hội thảo event',
     resolume: false,
@@ -1144,7 +1138,7 @@ List<Room> rooms = [
     leds: [],
     roomVolumeFB: [],
     roomVolumeId: StatefulValuable<String>(''),
-    roomVolumeCollection: Firestore.instance.collection('volume'),
+    roomVolumeCollection: 1.0,
     current_preset: StatefulValuable<int>(10),
     presets: [
       Preset(

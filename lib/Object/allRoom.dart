@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Object/Preset.dart';
-import 'package:firedart/firedart.dart';
+// import 'package:firedart/firedart.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/data/data.dart';
 import 'package:valuable/valuable.dart';
@@ -22,8 +22,8 @@ class AllRoom {
   StatefulValuable<int> num_leds;
   StatefulValuable<int> num_projectors;
   List<Preset> presets;
-  List<Document> allVolumeFB;
-  CollectionReference volumeCollection;
+  List<String> allVolumeFB;
+  dynamic volumeCollection;
   StatefulValuable<String> volumeId;
   // : 1,2,3
   // List<Projector> projectors;
@@ -51,50 +51,50 @@ class AllRoom {
     required this.volumeCollection,
     required this.volumeId,
   });
-  void setLicenseStatus() async {
-    CollectionReference licenseStatusCollection =
-        Firestore.instance.collection('license_status');
-    List<Document> license_status = [];
-    license_status = await licenseStatusCollection.orderBy('run').get();
-    Future.delayed(
-      const Duration(milliseconds: 500),
-      () {
-        allRoom.canRun.setValue(license_status.any((status) {
-          final license_status = status['run'].toString();
-          return license_status == 'true';
-        }));
-      },
-    );
-    print('setLicenseStatus');
-  }
+  // void setLicenseStatus() async {
+  //   // CollectionReference licenseStatusCollection =
+  //   //     Firestore.instance.collection('license_status');
+  //   // List<Document> license_status = [];
+  //   license_status = await licenseStatusCollection.orderBy('run').get();
+  //   Future.delayed(
+  //     const Duration(milliseconds: 500),
+  //     () {
+  //       allRoom.canRun.setValue(license_status.any((status) {
+  //         final license_status = status['run'].toString();
+  //         return license_status == 'true';
+  //       }));
+  //     },
+  //   );
+  //   print('setLicenseStatus');
+  // }
 
   void setAllVolume() async {
     // List<Document> allVolume =
-    allVolumeFB = await volumeCollection.orderBy('allVolume').get();
-    final check = allVolumeFB.map((volume) {
-      volumeId.setValue(volume.id);
-      // print('volumeId: ${volumeId.getValue()}');
-      final checkVolume = volume['allVolume'].toString();
-      // print('allVolume: $checkVolume');
-      volume_all.setValue((double.tryParse(checkVolume.toString()) ?? 0.0));
-      return [volumeId.getValue(), checkVolume];
-    });
-    print('allVolume: ${check}');
+    // allVolumeFB = await volumeCollection.orderBy('allVolume').get();
+    // final check = allVolumeFB.map((volume) {
+    //   volumeId.setValue(volume.id);
+    //   // print('volumeId: ${volumeId.getValue()}');
+    //   final checkVolume = volume['allVolume'].toString();
+    //   // print('allVolume: $checkVolume');
+    //   volume_all.setValue((double.tryParse(checkVolume.toString()) ?? 0.0));
+    //   return [volumeId.getValue(), checkVolume];
+    // });
+    // print('allVolume: ${check}');
   }
 
   void updateAllVolume(double allVolumeValue) async {
     // volumeId = allVolume.id;
     // print('ENLH4hL9FNkV87USu2Iv');
-    await volumeCollection.document(volumeId.getValue()).update({
-      // await volumeCollection.document(volumeId!).update({
-      'allVolume': allVolumeValue,
-    });
-    for (Room room in rooms) {
-      await room.roomVolumeCollection.document(volumeId.getValue()).update({
-        // await roomVolumeCollection.document(roomVolumeId!).update({
-        room.nameDatabase: allVolumeValue,
-        //   'volumeP3' : roomVolumeValue,
-      });
-    }
+    // await volumeCollection.document(volumeId.getValue()).update({
+    //   // await volumeCollection.document(volumeId!).update({
+    //   'allVolume': allVolumeValue,
+    // });
+    // for (Room room in rooms) {
+    //   await room.roomVolumeCollection.document(volumeId.getValue()).update({
+    //     // await roomVolumeCollection.document(roomVolumeId!).update({
+    //     room.nameDatabase: allVolumeValue,
+    //     //   'volumeP3' : roomVolumeValue,
+    //   });
+    // }
   }
 }

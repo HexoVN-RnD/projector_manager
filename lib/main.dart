@@ -1,5 +1,5 @@
 
-import 'package:firedart/firedart.dart';
+// import 'package:firedart/firedart.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_dashboard/Method/openingCheck.dart';
 import 'package:responsive_dashboard/dashboard.dart';
@@ -16,7 +16,7 @@ const projectId = 'toong-dd7c8';
 Future<void> main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp(name: projectId);
-  Firestore.initialize(projectId);
+  // Firestore.initialize(projectId);
   // Firestore.initialize('toong-23d79');
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();

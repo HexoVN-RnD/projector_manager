@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firedart/firedart.dart';
+// import 'package:firedart/firedart.dart';
 // import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -50,20 +50,20 @@ class _OpeningSceneState extends State<OpeningScene>
   bool isPasswordVisible = true;
   bool isAccountCorrect = false;
   bool isPasswordCorrect = false;
-  CollectionReference licenseCollection =
-      Firestore.instance.collection('license');
-  List<Document> account = [];
-  List<Document> password = [];
+  // CollectionReference licenseCollection =
+  //     Firestore.instance.collection('license');
+  String account = 'HexogonToong';
+  String password = 'Toong2023';
 
-  Future<List<Document>> getAccount() async {
-    account = await licenseCollection.orderBy('account').get();
-    return account;
-  }
-
-  Future<List<Document>> getPassword() async {
-    password = await licenseCollection.orderBy('password').get();
-    return password;
-  }
+  // Future<List<Document>> getAccount() async {
+  //   account = await licenseCollection.orderBy('account').get();
+  //   return account;
+  // }
+  //
+  // Future<List<Document>> getPassword() async {
+  //   password = await licenseCollection.orderBy('password').get();
+  //   return password;
+  // }
 
   @override
   void initState() {
@@ -174,10 +174,8 @@ class _OpeningSceneState extends State<OpeningScene>
                         child: TextFormField(
                           controller: accountController,
                           validator: (value) {
-                            isAccountCorrect = account.any((license) {
-                              final account = license['account'].toString();
-                              return account == accountController.text;
-                            });
+                            isAccountCorrect =  account == value;
+
                             if (value == null || value.isEmpty) {
                               return 'Hãy điền tài khoản';
                             } else if (!isAccountCorrect) {
@@ -213,10 +211,7 @@ class _OpeningSceneState extends State<OpeningScene>
                         child: TextFormField(
                           validator: (value) {
                             // print('value: $value');
-                            isPasswordCorrect = password.any((license) {
-                              final password = license['password'].toString();
-                              return password == value;
-                            });
+                            isPasswordCorrect = (password == value);
                             if (value == null || value.isEmpty) {
                               return 'Hãy điền mật khẩu';
                             } else if (!isPasswordCorrect) {
@@ -317,41 +312,41 @@ class _OpeningSceneState extends State<OpeningScene>
                       isChecked
                           ? AnimatedBtn(
                               btnAnimationController: _btnAnimationController,
-                        press: () async {
-                          _btnAnimationController.isActive = true;
-                          // getAccount();
-                          // getPassword();
-                          // isAccountCorrect = account.any((license) {
-                          //   final account = license['account'].toString();
-                          //   return account == accountController.text;
-                          // });
-                          // isPasswordCorrect = password.any((license) {
-                          //   final password = license['password'].toString();
-                          //   return password == passwordController.text;
-                          // });
-                          getAccount();
-                          getPassword();
-                          // print("isAccountCorrect: $isAccountCorrect ");
-                          Future.delayed(
-                            const Duration(milliseconds: 1000),
-                                () {
-                              setState(() {
-                                isShowSignInDialog = true;
-                              });
-                              if (_formKey.currentState!.validate()) {
-                                // The passwords match, you can proceed
-                                // For example, save the password to Firebase
-                                // Or navigate to another screen
-                              }
-                              if (isAccountCorrect && isPasswordCorrect) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => Dashboard()),
+                              press: () async {
+                                _btnAnimationController.isActive = true;
+                                // getAccount();
+                                // getPassword();
+                                // isAccountCorrect = account.any((license) {
+                                //   final account = license['account'].toString();
+                                //   return account == accountController.text;
+                                // });
+                                // isPasswordCorrect = password.any((license) {
+                                //   final password = license['password'].toString();
+                                //   return password == passwordController.text;
+                                // });
+                                // getAccount();
+                                // getPassword();
+                                // print("isAccountCorrect: $isAccountCorrect ");
+                                Future.delayed(
+                                  const Duration(milliseconds: 1000),
+                                  () {
+                                    setState(() {
+                                      isShowSignInDialog = true;
+                                    });
+                                    if (_formKey.currentState!.validate()) {
+                                      // The passwords match, you can proceed
+                                      // For example, save the password to Firebase
+                                      // Or navigate to another screen
+                                    }
+                                    if (isAccountCorrect && isPasswordCorrect) {
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) => Dashboard()),
+                                      );
+                                    }
+                                  },
                                 );
-                              }
-                            },
-                          );
-                        },
+                              },
                             )
                           : Container(
                               height: 64,
