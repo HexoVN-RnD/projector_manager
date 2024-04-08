@@ -5,6 +5,7 @@ import 'package:responsive_dashboard/Object/Preset.dart';
 import 'package:responsive_dashboard/Object/Projector.dart';
 import 'package:responsive_dashboard/Object/Sensor.dart';
 import 'package:responsive_dashboard/Object/Server.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:valuable/valuable.dart';
 
 class Room {
@@ -49,26 +50,34 @@ class Room {
     required this.roomVolumeId,
   });
 
+  static Future<void> saveVolume(double volume) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('allVolume', volume);
+  }
+
+  // Retrieve the volume from local storage
+  static Future<double> getAllVolume() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble('allVolume') ??
+        1.0; // Default value is 1.0 if not found
+  }
+
   void setRoomVolume() async {
-    // List<Document> allVolume =
-    // roomVolumeFB = await roomVolumeCollection.orderBy(nameDatabase).get();
-    // final getData =  roomVolumeFB.map((volume) {
-    //   roomVolumeId.setValue(volume.id);
-    //   // print('roomVolumeId: ${roomVolumeId.getValue()}');
-    //   final checkVolume = volume[nameDatabase].toString();
-    //   // print('roomVolume: $checkVolume');
-    //   return checkVolume;
-    // });
-    // print('roomVolume: ${getData.first}');
-    // for (Server server in servers) {
-    //   server.volume
-    //       .setValue((double.tryParse(getData.first) ?? 0.0));
-    //   // print('roomVolume: ${server.volume.getValue()}');
-    // }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    for (Server server in servers) {
+      server.volume.setValue(prefs.getDouble(server.name) ?? 1.0);
+      print('roomVolume: ${server.name} ${server.volume.getValue()}');
+    }
     // return check.toString();
   }
 
   updateRoomVolume(double roomVolumeValue) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await prefs.setDouble('allVolume', volume);
+    for (Server server in servers) {
+      prefs.setDouble(server.name, roomVolumeValue);
+    }
     // roomVolumeId = allVolume.id;
     // await roomVolumeCollection.document(roomVolumeId.getValue()).update({
     //   // await roomVolumeCollection.document(roomVolumeId!).update({

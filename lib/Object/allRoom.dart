@@ -3,6 +3,7 @@ import 'package:responsive_dashboard/Object/Preset.dart';
 // import 'package:firedart/firedart.dart';
 import 'package:responsive_dashboard/Object/Room.dart';
 import 'package:responsive_dashboard/data/data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:valuable/valuable.dart';
 
 class AllRoom {
@@ -51,6 +52,17 @@ class AllRoom {
     required this.volumeCollection,
     required this.volumeId,
   });
+  // Save the volume locally
+  static Future<void> saveVolume(double volume) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('allVolume', volume);
+  }
+
+  // Retrieve the volume from local storage
+  static Future<double> getAllVolume() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getDouble('allVolume') ?? 1.0; // Default value is 1.0 if not found
+  }
   // void setLicenseStatus() async {
   //   // CollectionReference licenseStatusCollection =
   //   //     Firestore.instance.collection('license_status');
@@ -69,32 +81,17 @@ class AllRoom {
   // }
 
   void setAllVolume() async {
-    // List<Document> allVolume =
-    // allVolumeFB = await volumeCollection.orderBy('allVolume').get();
-    // final check = allVolumeFB.map((volume) {
-    //   volumeId.setValue(volume.id);
-    //   // print('volumeId: ${volumeId.getValue()}');
-    //   final checkVolume = volume['allVolume'].toString();
-    //   // print('allVolume: $checkVolume');
-    //   volume_all.setValue((double.tryParse(checkVolume.toString()) ?? 0.0));
-    //   return [volumeId.getValue(), checkVolume];
-    // });
-    // print('allVolume: ${check}');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double volume = prefs.getDouble('allVolume') ?? 1.0;
+    volume_all.setValue(volume);
+    print('allVolume: ${volume}');
   }
 
   void updateAllVolume(double allVolumeValue) async {
-    // volumeId = allVolume.id;
-    // print('ENLH4hL9FNkV87USu2Iv');
-    // await volumeCollection.document(volumeId.getValue()).update({
-    //   // await volumeCollection.document(volumeId!).update({
-    //   'allVolume': allVolumeValue,
-    // });
-    // for (Room room in rooms) {
-    //   await room.roomVolumeCollection.document(volumeId.getValue()).update({
-    //     // await roomVolumeCollection.document(roomVolumeId!).update({
-    //     room.nameDatabase: allVolumeValue,
-    //     //   'volumeP3' : roomVolumeValue,
-    //   });
-    // }
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('allVolume', allVolumeValue);
+    for (Room room in rooms) {
+      room.updateRoomVolume(allVolumeValue);
+    }
   }
 }
