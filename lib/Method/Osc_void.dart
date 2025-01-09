@@ -183,13 +183,13 @@ void PlayAllPreset() {
 
   if (rooms[2].current_preset.getValue() == 0) {
     if (rooms[2].resolume) {
-      SendPresetOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 0);
+      SendPlayOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 0);
     } else {
       SendUDPMessage(rooms[2].servers[0], 'Preset1');
     }
   } else {
     if (rooms[2].resolume) {
-      SendPresetOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 4);
+      SendPlayOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 4);
     } else {
       SendUDPMessage(rooms[2].servers[0], 'Preset5');
     }
