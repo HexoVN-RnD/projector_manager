@@ -53,33 +53,70 @@ void SendStopOSC(String ip, int port, int column) async {
 void PlayPreset(int index) {
   switch (index) {
     case 2:
-      for (Server server in rooms[1].servers) {
-        SendUDPMessage(server,
-            'Preset' + (rooms[1].current_preset.getValue() + 1).toString());
+      if (rooms[1].current_preset.getValue() == 0) {
+        for (Server server in rooms[1].servers) {
+          SendUDPMessage(server, 'Preset1');
+        }
+      } else {
+        for (Server server in rooms[1].servers) {
+          SendUDPMessage(server, 'Preset5');
+        }
       }
+
       break;
     case 3:
-      if (rooms[2].resolume) {
-        SendPlayOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port,
-            rooms[2].current_preset.getValue());
+      if (rooms[2].current_preset.getValue() == 0) {
+        if (rooms[2].resolume) {
+          SendPlayOSC(
+              rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 0);
+        } else {
+          SendUDPMessage(rooms[2].servers[0], 'Preset1');
+        }
       } else {
-        SendUDPMessage(rooms[2].servers[0], 'Preset1');
+        if (rooms[2].resolume) {
+          SendPlayOSC(
+              rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 4);
+        } else {
+          SendUDPMessage(rooms[2].servers[0], 'Preset5');
+        }
       }
+
       break;
     case 4:
-      SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port,
-          rooms[3].current_preset.getValue());
-      SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port,
-          rooms[3].current_preset.getValue());
+      if (rooms[3].current_preset.getValue() == 0) {
+        SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 0);
+        SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 0);
+        SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 1);
+        SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 1);
+        SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 2);
+        SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 2);
+      } else {
+        SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 4);
+        SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 4);
+        SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 5);
+        SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 5);
+        SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 6);
+        SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 6);
+      }
+
       break;
     case 5:
-      SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 0);
+      if (rooms[4].current_preset.getValue() == 0) {
+        SendPresetOSC(
+            rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 0);
+      } else {
+        SendPresetOSC(
+            rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 4);
+      }
       break;
     case 6:
-      SendUDPMessage(rooms[5].servers[0],
-          'Preset' + (rooms[5].current_preset.getValue() + 1).toString());
-      SendUDPMessage(rooms[5].servers[1],
-          'Preset' + (rooms[5].current_preset.getValue() + 1).toString());
+      if (rooms[5].current_preset.getValue() == 0) {
+        SendUDPMessage(rooms[5].servers[0], 'Preset1');
+        SendUDPMessage(rooms[5].servers[1], 'Preset1');
+      } else {
+        SendUDPMessage(rooms[5].servers[0], 'Preset5');
+        SendUDPMessage(rooms[5].servers[1], 'Preset5');
+      }
   }
 }
 
@@ -92,20 +129,40 @@ void StopPreset(int index) {
       break;
     case 3:
       if (rooms[2].resolume) {
-        SendStopOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port,
-            rooms[2].current_preset.getValue());
+        if (rooms[2].current_preset.getValue() == 0) {
+          SendStopOSC(
+              rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 0);
+        } else {
+          SendStopOSC(
+              rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 4);
+        }
       } else {
         SendUDPMessage(rooms[2].servers[0], 'Preset0');
       }
       break;
     case 4:
-      SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port,
-          rooms[3].current_preset.getValue());
-      SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port,
-          rooms[3].current_preset.getValue());
+      if (rooms[3].current_preset.getValue() == 0) {
+        SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 0);
+        SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 0);
+        SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 1);
+        SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 1);
+        SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 2);
+        SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 2);
+      } else {
+        SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 4);
+        SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 4);
+        SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 5);
+        SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 5);
+        SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 6);
+        SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 6);
+      }
       break;
     case 5:
-      SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 1);
+      if (rooms[4].current_preset.getValue() == 0) {
+        SendStopOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 0);
+      } else {
+        SendStopOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 4);
+      }
       break;
     case 6:
       SendUDPMessage(rooms[5].servers[0], 'Preset0');
@@ -114,24 +171,59 @@ void StopPreset(int index) {
 }
 
 void PlayAllPreset() {
-  for (Server server in rooms[1].servers) {
-    SendUDPMessage(
-        server, 'Preset' + (rooms[1].current_preset.getValue() + 1).toString());
-  }
-  if (rooms[2].resolume) {
-    SendPresetOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 0);
+  if (rooms[1].current_preset.getValue() == 0) {
+    for (Server server in rooms[1].servers) {
+      SendUDPMessage(server, 'Preset1');
+    }
   } else {
-    SendUDPMessage(rooms[2].servers[0], 'Preset1');
+    for (Server server in rooms[1].servers) {
+      SendUDPMessage(server, 'Preset5');
+    }
   }
-  SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port,
-      rooms[3].current_preset.getValue());
-  SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port,
-      rooms[3].current_preset.getValue());
-  SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 0);
-  SendUDPMessage(rooms[5].servers[0],
-      'Preset' + (rooms[5].current_preset.getValue() + 1).toString());
-  SendUDPMessage(rooms[5].servers[1],
-      'Preset' + (rooms[5].current_preset.getValue() + 1).toString());
+
+  if (rooms[2].current_preset.getValue() == 0) {
+    if (rooms[2].resolume) {
+      SendPresetOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 0);
+    } else {
+      SendUDPMessage(rooms[2].servers[0], 'Preset1');
+    }
+  } else {
+    if (rooms[2].resolume) {
+      SendPresetOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 4);
+    } else {
+      SendUDPMessage(rooms[2].servers[0], 'Preset5');
+    }
+  }
+
+  if (rooms[3].current_preset.getValue() == 0) {
+    SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 0);
+    SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 0);
+    SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 1);
+    SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 1);
+    SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 2);
+    SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 2);
+  } else {
+    SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 4);
+    SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 4);
+    SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 5);
+    SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 5);
+    SendPlayOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 6);
+    SendPlayOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 6);
+  }
+
+  if (rooms[4].current_preset.getValue() == 0) {
+    SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 0);
+  } else {
+    SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 4);
+  }
+
+  if (rooms[5].current_preset.getValue() == 0) {
+    SendUDPMessage(rooms[5].servers[0], 'Preset1');
+    SendUDPMessage(rooms[5].servers[1], 'Preset1');
+  } else {
+    SendUDPMessage(rooms[5].servers[0], 'Preset5');
+    SendUDPMessage(rooms[5].servers[1], 'Preset5');
+  }
 }
 
 void StopAllPreset() {
@@ -139,15 +231,36 @@ void StopAllPreset() {
     SendUDPMessage(server, 'Preset0');
   }
   if (rooms[2].resolume) {
-    SendPresetOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 1);
+    if (rooms[2].current_preset.getValue() == 0) {
+      SendStopOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 0);
+    } else {
+      SendStopOSC(rooms[2].servers[0].ip, rooms[2].servers[0].preset_port, 4);
+    }
   } else {
     SendUDPMessage(rooms[2].servers[0], 'Preset0');
   }
-  SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port,
-      rooms[3].current_preset.getValue());
-  SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port,
-      rooms[3].current_preset.getValue());
-  SendPresetOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 1);
+  if (rooms[3].current_preset.getValue() == 0) {
+    SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 0);
+    SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 0);
+    SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 1);
+    SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 1);
+    SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 2);
+    SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 2);
+  } else {
+    SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 4);
+    SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 4);
+    SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 5);
+    SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 5);
+    SendStopOSC(rooms[3].servers[0].ip, rooms[3].servers[0].preset_port, 6);
+    SendStopOSC(rooms[3].servers[1].ip, rooms[3].servers[1].preset_port, 6);
+  }
+
+  if (rooms[4].current_preset.getValue() == 0) {
+    SendStopOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 0);
+  } else {
+    SendStopOSC(rooms[4].servers[1].ip, rooms[4].servers[1].preset_port, 4);
+  }
+
   SendUDPMessage(rooms[5].servers[0], 'Preset0');
   SendUDPMessage(rooms[5].servers[1], 'Preset0');
 }
@@ -160,22 +273,18 @@ void SelectAllPreset(index) {
       room.current_preset.setValue(0);
       for (Server server in room.servers) {
         if (room.resolume) {
-          SendPresetOSC(
-              server.ip, server.preset_port, 0);
+          SendPresetOSC(server.ip, server.preset_port, 0);
         } else {
-          SendUDPMessage(server,
-              'Preset' + (1).toString());
+          SendUDPMessage(server, 'Preset1');
         }
       }
     } else {
       room.current_preset.setValue(1);
       for (Server server in room.servers) {
         if (room.resolume) {
-          SendPresetOSC(
-              server.ip, server.preset_port, 4);
+          SendPresetOSC(server.ip, server.preset_port, 4);
         } else {
-          SendUDPMessage(server,
-              'Preset' + (5).toString());
+          SendUDPMessage(server, 'Preset5');
         }
       }
     }

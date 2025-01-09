@@ -317,15 +317,6 @@ class _RoomManagerState extends State<RoomManager> {
                               room: room,
                               server: room.servers[0],
                             ),
-                            // (current_page.getValue() == 2)
-                            //     ? VolumeEdit(
-                            //         room: room,
-                            //         server: room.servers[7],
-                            //       )
-                            //     : VolumeEdit(
-                            //         room: room,
-                            //         server: room.servers[0],
-                            //       ),
                           ],
                         ),
                       ),
