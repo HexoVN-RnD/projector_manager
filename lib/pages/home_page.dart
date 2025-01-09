@@ -68,14 +68,14 @@ class _HomePage extends State<HomePage> {
   void initState() {
     super.initState();
     allRoom.setAllVolume();
-    _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
-      setState(() {
-        if (rooms[3].servers[0].connected.getValue() &&
-            allRoom.current_preset.getValue() < allRoom.presets.length) {
-          OSCReceive();
-        }
-      });
-    });
+    // _timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+    //   setState(() {
+    //     if (rooms[3].servers[0].connected.getValue() &&
+    //         allRoom.current_preset.getValue() < allRoom.presets.length) {
+    //       OSCReceive();
+    //     }
+    //   });
+    // });
     _timer2 = Timer.periodic(Duration(seconds: 3), (timer) async {
       checkAllRoomConnection(3000);
     });
@@ -259,8 +259,6 @@ class _HomePage extends State<HomePage> {
                     ),
                   ),
                   SingleChildScrollView(
-                    // padding: EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                    // controller: controller,
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: List.generate(allRoom.presets.length, (index) {
@@ -343,128 +341,127 @@ class _HomePage extends State<HomePage> {
                   ),
                   Container(
                     margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isSelectedStop = true;
-                                isSelectedPlay = false;
-                                StopAllPreset();
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.easeInOut,
-                                  width: 65.0,
-                                  height: 50.0,
-                                  margin: EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                    color: isSelectedStop
-                                        ? AppColors.navy_blue2
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Icon(
-                                    Icons.pause,
-                                    size: 32,
-                                    color: AppColors.white,
-                                  ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isSelectedStop = true;
+                              isSelectedPlay = false;
+                              StopAllPreset();
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AnimatedContainer(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                                width: 65.0,
+                                height: 50.0,
+                                margin: EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                  color: isSelectedStop
+                                      ? AppColors.navy_blue2
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
-                                // AnimatedDefaultTextStyle(
-                                //   style: isSelectedPlay
-                                //       ? TextStyle(
-                                //           fontFamily: 'Poppins',
-                                //           fontSize: 17.0,
-                                //           fontWeight: FontWeight.w600)
-                                //       : TextStyle(
-                                //           fontFamily: 'Poppins',
-                                //           fontSize: 12.0,
-                                //           fontWeight: FontWeight.w600),
-                                //   duration: const Duration(milliseconds: 200),
-                                //   child: Text('Play All'),
-                                // ),
-                              ],
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                isSelectedPlay = true;
-                                isSelectedStop = false;
-                                PlayAllPreset();
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                AnimatedContainer(
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.easeInOut,
-                                  width: 65.0,
-                                  height: 50.0,
-                                  margin: EdgeInsets.all(10.0),
-                                  decoration: BoxDecoration(
-                                    color: isSelectedPlay
-                                        ? AppColors.navy_blue2
-                                        : Colors.transparent,
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Icon(
-                                    Icons.play_arrow,
-                                    size: 32,
-                                    color: AppColors.white,
-                                  ),
-                                ),
-                                // AnimatedDefaultTextStyle(
-                                //   style: isSelectedPlay
-                                //       ? TextStyle(
-                                //           fontFamily: 'Poppins',
-                                //           fontSize: 17.0,
-                                //           fontWeight: FontWeight.w600)
-                                //       : TextStyle(
-                                //           fontFamily: 'Poppins',
-                                //           fontSize: 12.0,
-                                //           fontWeight: FontWeight.w600),
-                                //   duration: const Duration(milliseconds: 200),
-                                //   child: Text('Stop All'),
-                                // ),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              height: 30,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: LinearProgressIndicator(
-                                  value: (allRoom.current_preset.getValue() <
-                                          allRoom.presets.length)
-                                      ? allRoom
-                                          .presets[
-                                              allRoom.current_preset.getValue()]
-                                          .transport
-                                          .getValue()
-                                      : 0,
-                                  semanticsLabel: 'Linear progress indicator',
-                                  color: allRoom.current_colume.getValue() == 1
-                                      ? AppColors.column1
-                                      : allRoom.current_colume.getValue() == 2
-                                          ? AppColors.column2
-                                          : AppColors.column3,
-                                  backgroundColor: AppColors.white,
+                                child: Icon(
+                                  Icons.pause,
+                                  size: 32,
+                                  color: AppColors.white,
                                 ),
                               ),
-                            ),
+                              // AnimatedDefaultTextStyle(
+                              //   style: isSelectedPlay
+                              //       ? TextStyle(
+                              //           fontFamily: 'Poppins',
+                              //           fontSize: 17.0,
+                              //           fontWeight: FontWeight.w600)
+                              //       : TextStyle(
+                              //           fontFamily: 'Poppins',
+                              //           fontSize: 12.0,
+                              //           fontWeight: FontWeight.w600),
+                              //   duration: const Duration(milliseconds: 200),
+                              //   child: Text('Play All'),
+                              // ),
+                            ],
                           ),
-                          Container(
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isSelectedPlay = true;
+                              isSelectedStop = false;
+                              PlayAllPreset();
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AnimatedContainer(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.easeInOut,
+                                width: 65.0,
+                                height: 50.0,
+                                margin: EdgeInsets.all(10.0),
+                                decoration: BoxDecoration(
+                                  color: isSelectedPlay
+                                      ? AppColors.navy_blue2
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Icon(
+                                  Icons.play_arrow,
+                                  size: 32,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                              // AnimatedDefaultTextStyle(
+                              //   style: isSelectedPlay
+                              //       ? TextStyle(
+                              //           fontFamily: 'Poppins',
+                              //           fontSize: 17.0,
+                              //           fontWeight: FontWeight.w600)
+                              //       : TextStyle(
+                              //           fontFamily: 'Poppins',
+                              //           fontSize: 12.0,
+                              //           fontWeight: FontWeight.w600),
+                              //   duration: const Duration(milliseconds: 200),
+                              //   child: Text('Stop All'),
+                              // ),
+                            ],
+                          ),
+                        ),
+                        // Expanded(
+                        //   child: Container(
+                        //     margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                        //     height: 30,
+                        //     child: ClipRRect(
+                        //       borderRadius: BorderRadius.circular(20),
+                        //       child: LinearProgressIndicator(
+                        //         value: (allRoom.current_preset.getValue() <
+                        //                 allRoom.presets.length)
+                        //             ? allRoom
+                        //                 .presets[
+                        //                     allRoom.current_preset.getValue()]
+                        //                 .transport
+                        //                 .getValue()
+                        //             : 0,
+                        //         semanticsLabel: 'Linear progress indicator',
+                        //         color: allRoom.current_colume.getValue() == 1
+                        //             ? AppColors.column1
+                        //             : allRoom.current_colume.getValue() == 2
+                        //                 ? AppColors.column2
+                        //                 : AppColors.column3,
+                        //         backgroundColor: AppColors.white,
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        Expanded(
+                          child: Container(
                             margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
                             // padding: EdgeInsets.fromLTRB(20, 0, 50, 0),
                             alignment: Alignment.center,
@@ -497,8 +494,7 @@ class _HomePage extends State<HomePage> {
                                       scale: 1,
                                       child: Slider(
                                         activeColor: AppColors.navy_blue,
-                                        inactiveColor:
-                                            AppColors.light_navy_blue,
+                                        inactiveColor: AppColors.light_navy_blue,
                                         value: allRoom.volume_all.getValue(),
                                         onChanged: (index) {
                                           setState(() => EditAllAudio(index));
@@ -522,8 +518,8 @@ class _HomePage extends State<HomePage> {
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

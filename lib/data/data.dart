@@ -88,19 +88,14 @@ AllRoom allRoom = AllRoom(
   volumeCollection: Firestore.instance.collection('volume'),
   presets: [
     Preset(
-        name: '123',
+        name: 'Old Content',
         image: 'assets/Preset4.1.png',
         osc_message: 'column 1',
         transport: StatefulValuable<double>(0)),
     Preset(
-        name: '231',
+        name: 'New Content',
         image: 'assets/Preset4.2.png',
-        osc_message: 'column 2',
-        transport: StatefulValuable<double>(0)),
-    Preset(
-        name: '312',
-        image: 'assets/Preset4.3.png',
-        osc_message: 'column 3',
+        osc_message: 'column 5',
         transport: StatefulValuable<double>(0)),
   ],
 );
@@ -162,7 +157,12 @@ List<Room> rooms = [
     current_preset: StatefulValuable<int>(10),
     presets: [
       Preset(
-          name: 'Đâm Chồi Nảy Lộc',
+          name: 'Old Content',
+          image: 'assets/Preset2.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'New Content',
           image: 'assets/Preset2.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
@@ -323,7 +323,12 @@ List<Room> rooms = [
     ],
     presets: [
       Preset(
-          name: 'Hồng Sắc Long',
+          name: 'Old Content',
+          image: 'assets/Preset3.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'New Content',
           image: 'assets/Preset3.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
@@ -401,19 +406,14 @@ List<Room> rooms = [
     roomVolumeCollection: Firestore.instance.collection('volume'),
     presets: [
       Preset(
-          name: 'Mọi Miền Tiềm Thức',
+          name: 'Old Content',
           image: 'assets/Preset4.1.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
       Preset(
-          name: 'Như Một Dòng Chảy',
+          name: 'New Content',
           image: 'assets/Preset4.2.png',
           osc_message: 'column 2',
-          transport: StatefulValuable<double>(0)),
-      Preset(
-          name: 'Một Trăm',
-          image: 'assets/Preset4.3.png',
-          osc_message: 'column 3',
           transport: StatefulValuable<double>(0)),
       // Preset(
       //     name: 'Nội dung 4',
@@ -987,7 +987,12 @@ List<Room> rooms = [
     ],
     presets: [
       Preset(
-          name: 'Phản Chiếu',
+          name: 'Old Content',
+          image: 'assets/Preset5.png',
+          osc_message: 'column 1',
+          transport: StatefulValuable<double>(0)),
+      Preset(
+          name: 'New Content',
           image: 'assets/Preset5.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
@@ -1148,12 +1153,12 @@ List<Room> rooms = [
     current_preset: StatefulValuable<int>(10),
     presets: [
       Preset(
-          name: 'Hạnh Phúc Sinh Sôi ',
+          name: 'Old Content',
           image: 'assets/Preset6.1.png',
           osc_message: 'column 1',
           transport: StatefulValuable<double>(0)),
       Preset(
-          name: 'Ấm Thực Trừu Tượng',
+          name: 'New Content',
           image: 'assets/Preset6.2.png',
           osc_message: 'column 2',
           transport: StatefulValuable<double>(0)),

@@ -154,27 +154,28 @@ void StopAllPreset() {
 
 void SelectAllPreset(index) {
   allRoom.current_preset.setValue(index);
+
   for (Room room in rooms) {
-    if (index < room.presets.length) {
-      room.current_preset.setValue(index);
+    if (index == 0) {
+      room.current_preset.setValue(0);
       for (Server server in room.servers) {
         if (room.resolume) {
           SendPresetOSC(
-              server.ip, server.preset_port, room.current_preset.getValue());
+              server.ip, server.preset_port, 0);
         } else {
           SendUDPMessage(server,
-              'Preset' + (room.current_preset.getValue() + 1).toString());
+              'Preset' + (1).toString());
         }
       }
     } else {
-      room.current_preset.setValue(room.presets.length - 1);
+      room.current_preset.setValue(1);
       for (Server server in room.servers) {
         if (room.resolume) {
           SendPresetOSC(
-              server.ip, server.preset_port, room.current_preset.getValue());
+              server.ip, server.preset_port, 4);
         } else {
           SendUDPMessage(server,
-              'Preset' + (room.current_preset.getValue() + 1).toString());
+              'Preset' + (5).toString());
         }
       }
     }

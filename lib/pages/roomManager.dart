@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:responsive_dashboard/Method/Control_all_projectors_void.dart';
 import 'package:responsive_dashboard/Method/Osc_void.dart';
@@ -45,14 +46,28 @@ class _RoomManagerState extends State<RoomManager> {
   void select_preset(Room room, int index) async {
     setState(() {
       room.current_preset.setValue(index);
-      for (Server server in room.servers) {
-        if (room.resolume) {
-          SendPresetOSC(
-              server.ip, server.preset_port, room.current_preset.getValue());
-          PlayPreset(current_page.getValue());
-        } else {
-          SendUDPMessage(server,
-              'Preset' + (room.current_preset.getValue() + 1).toString());
+      if (index == 0){
+        for (Server server in room.servers) {
+          if (room.resolume) {
+            SendPresetOSC(
+                server.ip, server.preset_port, 0);
+            PlayPreset(0);
+          } else {
+            SendUDPMessage(server,
+                'Preset1');
+          }
+        }
+      }
+      else {
+        for (Server server in room.servers) {
+          if (room.resolume) {
+            SendPresetOSC(
+                server.ip, server.preset_port, 4);
+            PlayPreset(4);
+          } else {
+            SendUDPMessage(server,
+                'Preset5');
+          }
         }
       }
     });
@@ -62,25 +77,25 @@ class _RoomManagerState extends State<RoomManager> {
   void initState() {
     super.initState();
     // Đặt một Timer để cập nhật widget sau mỗi giây
-    _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      Room room = rooms[
-          (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
-      setState(() {
-        if (current_page.getValue() == 4) {
-          // for (Server server in room.servers) {
-          if (room.servers[0].connected.getValue()) {
-            OSCReceive();
-          }
-          // }
-        } else if (current_page.getValue() == 3) {
-          // for (Server server in room.servers) {
-          if (room.servers[0].connected.getValue()) {
-            OSCReceive();
-          }
-          // }
-        }
-      });
-    });
+    // _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
+    //   Room room = rooms[
+    //       (current_page.getValue() > 1) ? current_page.getValue() - 1 : 1];
+    //   setState(() {
+    //     if (current_page.getValue() == 4) {
+    //       // for (Server server in room.servers) {
+    //       if (room.servers[0].connected.getValue()) {
+    //         OSCReceive();
+    //       }
+    //       // }
+    //     } else if (current_page.getValue() == 3) {
+    //       // for (Server server in room.servers) {
+    //       if (room.servers[0].connected.getValue()) {
+    //         OSCReceive();
+    //       }
+    //       // }
+    //     }
+    //   });
+    // });
     _timer2 = Timer.periodic(
         Duration(seconds: (current_page.getValue() == 4) ? 3 : 1),
         (timer) async {
@@ -104,9 +119,10 @@ class _RoomManagerState extends State<RoomManager> {
 
   @override
   Widget build(BuildContext context) {
-    final page = (current_page.getValue() > 0) ? current_page.getValue() - 1 : 0;
+    final page =
+        (current_page.getValue() > 0) ? current_page.getValue() - 1 : 0;
     Room room = rooms[page];
-    if (page != oldPage){
+    if (page != oldPage) {
       oldPage = page;
       room.setRoomVolume();
       print('oldPage: $oldPage');
@@ -210,41 +226,41 @@ class _RoomManagerState extends State<RoomManager> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            if (isSelected &&
-                                                (current_page.getValue() == 3 ||
-                                                    current_page.getValue() ==
-                                                        4))
-                                              SizedBox(
-                                                height: 15,
-                                                width: 230,
-                                                child: Container(
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    child:
-                                                        LinearProgressIndicator(
-                                                      value: (room.current_preset
-                                                                  .getValue() <
-                                                              room.presets
-                                                                  .length)
-                                                          ? room
-                                                              .presets[room
-                                                                  .current_preset
-                                                                  .getValue()]
-                                                              .transport
-                                                              .getValue()
-                                                          : 0,
-                                                      semanticsLabel:
-                                                          'Linear progress indicator',
-                                                      color:
-                                                          AppColors.navy_blue2,
-                                                      backgroundColor:
-                                                          AppColors.white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
+                                            // if (isSelected &&
+                                            //     (current_page.getValue() == 3 ||
+                                            //         current_page.getValue() ==
+                                            //             4))
+                                            //   SizedBox(
+                                            //     height: 15,
+                                            //     width: 230,
+                                            //     child: Container(
+                                            //       child: ClipRRect(
+                                            //         borderRadius:
+                                            //             BorderRadius.circular(
+                                            //                 10),
+                                            //         child:
+                                            //             LinearProgressIndicator(
+                                            //           value: (room.current_preset
+                                            //                       .getValue() <
+                                            //                   room.presets
+                                            //                       .length)
+                                            //               ? room
+                                            //                   .presets[room
+                                            //                       .current_preset
+                                            //                       .getValue()]
+                                            //                   .transport
+                                            //                   .getValue()
+                                            //               : 0,
+                                            //           semanticsLabel:
+                                            //               'Linear progress indicator',
+                                            //           color:
+                                            //               AppColors.navy_blue2,
+                                            //           backgroundColor:
+                                            //               AppColors.white,
+                                            //         ),
+                                            //       ),
+                                            //     ),
+                                            //   ),
                                             if (isSelected)
                                               SizedBox(
                                                   height: SizeConfig
@@ -267,14 +283,13 @@ class _RoomManagerState extends State<RoomManager> {
                                                             : 0.75)),
                                                 AnimatedDefaultTextStyle(
                                                   style: isSelected
-                                                      ? TextStyle(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 17.0,
+                                                      ? GoogleFonts.quicksand(
+                                                          fontSize: 17,
                                                           fontWeight:
-                                                              FontWeight.w600)
-                                                      : TextStyle(
-                                                          fontFamily: 'Poppins',
-                                                          fontSize: 12.0,
+                                                              FontWeight.w600,
+                                                        )
+                                                      : GoogleFonts.quicksand(
+                                                          fontSize: 13.0,
                                                           fontWeight:
                                                               FontWeight.w600),
                                                   duration: const Duration(
